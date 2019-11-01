@@ -3,4 +3,5 @@
 /Client/ScreenCapture/x64
 /Client/Updater/obj
 *.user
+*.pfx
 *.vs
