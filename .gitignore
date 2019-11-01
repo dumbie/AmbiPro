@@ -3,5 +3,6 @@
 /Client/ScreenCapture/x64
 /Client/Updater/obj
 *.user
+*.aps
 *.pfx
 *.vs
