@@ -1,0 +1,120 @@
+﻿/* Body
+-------------------------------------------------*/
+html, body {
+    height: 98% !important;
+    width: 98% !important;
+    margin: 0 auto;
+}
+
+body {
+    font-family: "Segoe UI", Verdana, Tahoma, Geneva, Helvetica, sans-serif;
+    font-size: medium;
+    background: #222;
+    color: #F1F1F1;
+}
+/* Divisions
+-------------------------------------------------*/
+.clearBoth {
+    clear: both;
+}
+
+.marginCenter {
+    clear: both;
+    display: table;
+    margin: 0 auto;
+}
+
+.marginCenterTop {
+    clear: both;
+    display: table;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.Bottom {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+/* Text
+-------------------------------------------------*/
+.txtSettings {
+    font-weight: lighter;
+    font-size: large;
+    color: #f2f2f2;
+}
+
+.txtButton {
+    font-weight: lighter;
+    font-size: x-large;
+    color: #f2f2f2;
+}
+/* Input
+-------------------------------------------------*/
+input {
+    border: 1px #d9d9d9 solid;
+    padding: 4px;
+    margin-left: 5px;
+    background: #F1F1F1;
+}
+/* Buttons
+-------------------------------------------------*/
+.buttonAccent {
+    background-color: #00c7ff;
+    padding: 5px;
+}
+
+    .buttonAccent:hover {
+        opacity: 0.75;
+    }
+/* Sliders
+-------------------------------------------------*/
+.slider {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 250px;
+    background: #F1F1F1;
+    padding: 2px;
+    border: 0;
+    outline: none;
+}
+
+    .slider::-webkit-slider-thumb {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 25px;
+        height: 25px;
+        background: #00c7ff;
+        border: 0;
+        outline: none;
+    }
+
+    .slider:hover {
+        opacity: 0.75;
+    }
+/* Selector
+-------------------------------------------------*/
+.select {
+    width: 250px;
+    height: 25px;
+    background: #F1F1F1;
+    padding: 2px;
+    border: 0;
+    outline: none;
+}
+/* Images
+-------------------------------------------------*/
+img {
+    border: 0;
+}
+/* Links
+-------------------------------------------------*/
+a {
+    text-decoration: none;
+}
+/* Effects
+-------------------------------------------------*/
+.effOpacity {
+    opacity: 0.65;
+}
