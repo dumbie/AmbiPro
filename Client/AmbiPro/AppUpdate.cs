@@ -24,7 +24,7 @@ namespace AmbiPro
                 {
                     vCheckingForUpdate = true;
 
-                    string ResCurrentVersion = await AVDownloader.DownloadStringAsync(5000, "AmbiPro", null, new Uri("http://version.arnoldvink.com/AmbiPro.zip-version.txt" + "?nc=" + Environment.TickCount));
+                    string ResCurrentVersion = await AVDownloader.DownloadStringAsync(5000, "AmbiPro", null, new Uri("http://download.arnoldvink.com/AmbiPro.zip-version.txt" + "?nc=" + Environment.TickCount));
                     if (ResCurrentVersion != String.Empty && ResCurrentVersion != Assembly.GetExecutingAssembly().FullName.Split('=')[1].Split(',')[0])
                     {
                         Int32 MsgBoxResult = await AVMessageBox.Popup("A newer version has been found: v" + ResCurrentVersion, "Would you like to update the application to the newest version available?", "Update", "Cancel", "", "");
