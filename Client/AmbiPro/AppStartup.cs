@@ -2,8 +2,9 @@
 using System;
 using System.Configuration;
 using System.Diagnostics;
-using System.Globalization;
 using System.Threading.Tasks;
+using static AmbiPro.AppLaunchCheck;
+using static AmbiPro.AppVariables;
 
 namespace AmbiPro
 {
@@ -16,8 +17,8 @@ namespace AmbiPro
             {
                 Debug.WriteLine("Welcome to AmbiPro.");
 
-                //Check application files
-                AppCheck.AppLaunchCheck();
+                //Check the application status
+                Application_LaunchCheck("AmbiPro", "AmbiPro", false, false);
 
                 //Check application settings
                 FormSettings.SettingsCheck();
@@ -38,10 +39,9 @@ namespace AmbiPro
                 }
 
                 //Start updating the leds
-                CultureInfo AppCultureInfo = CultureInfo.InvariantCulture;
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["LedAutoOnOff"]))
                 {
-                    DateTime LedTime = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTime"], AppCultureInfo);
+                    DateTime LedTime = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTime"], vAppCultureInfo);
                     if (DateTime.Now.TimeOfDay >= LedTime.TimeOfDay)
                     {
                         await SerialMonitor.LedSwitch(false, false);
@@ -60,7 +60,7 @@ namespace AmbiPro
                 await Socket.SocketServerSwitch(false, false);
 
                 //Check for available application update
-                if (DateTime.Now.Subtract(DateTime.Parse(ConfigurationManager.AppSettings["AppUpdateCheck2"], AppCultureInfo)).Days >= 5)
+                if (DateTime.Now.Subtract(DateTime.Parse(ConfigurationManager.AppSettings["AppUpdateCheck2"], vAppCultureInfo)).Days >= 5)
                 {
                     await AppUpdate.CheckForAppUpdate(true);
                 }
@@ -68,7 +68,7 @@ namespace AmbiPro
             catch { }
         }
 
-        //Application Startup
+        //Application Exit
         public static async Task ApplicationExit()
         {
             try

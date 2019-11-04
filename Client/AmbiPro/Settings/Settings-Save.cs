@@ -2,12 +2,12 @@
 using System;
 using System.Configuration;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
 using System.Windows.Threading;
+using static AmbiPro.AppVariables;
 
 namespace AmbiPro.Settings
 {
@@ -65,8 +65,7 @@ namespace AmbiPro.Settings
                 {
                     try
                     {
-                        CultureInfo AppCultureInfo = CultureInfo.InvariantCulture;
-                        SettingsFunction.Save("LedAutoTime", dateTime.Value.ToString(AppCultureInfo));
+                        SettingsFunction.Save("LedAutoTime", dateTime.Value.ToString(vAppCultureInfo));
                     }
                     catch { }
                 };

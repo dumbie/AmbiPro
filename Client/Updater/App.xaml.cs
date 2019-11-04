@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using static AmbiPro.AppLaunchCheck;
 
 namespace Updater
 {
@@ -13,7 +14,7 @@ namespace Updater
             try
             {
                 //Check the application status
-                vWindowMain.Application_LaunchCheck();
+                Application_LaunchCheck("Application Updater", "Updater", false, true);
 
                 //Open the window main from application
                 vWindowMain.Show();

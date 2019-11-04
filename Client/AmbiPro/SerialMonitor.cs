@@ -1,6 +1,6 @@
 ﻿using AmbiPro.Settings;
-using ArnoldVinkMessageBox;
 using ArnoldVinkCode;
+using ArnoldVinkMessageBox;
 using System;
 using System.Configuration;
 using System.Diagnostics;
@@ -12,7 +12,6 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 
 namespace AmbiPro
 {
@@ -141,7 +140,10 @@ namespace AmbiPro
                 AppTasks.LedToken = new CancellationTokenSource();
                 AppTasks.LedTask = Task.Run(async () => await UpdateLeds(), AppTasks.LedToken.Token);
             }
-            catch (Exception ex) { Debug.WriteLine("Failed to enable the led updates: " + ex.Message); }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed to enable the led updates: " + ex.Message);
+            }
         }
 
         //Disable the led updates
@@ -192,7 +194,10 @@ namespace AmbiPro
                     vSerialComPort.Dispose();
                 }
             }
-            catch (Exception ex) { Debug.WriteLine("Failed to disable the led updates: " + ex.Message); }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed to disable the led updates: " + ex.Message);
+            }
         }
 
         //Show the settings window
@@ -201,11 +206,11 @@ namespace AmbiPro
             try
             {
                 System.Windows.Application CurrentApp = System.Windows.Application.Current;
-                CurrentApp.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+                AVActions.ActionDispatcherInvoke(delegate
                 {
                     FormSettings FormSettings = new FormSettings();
                     FormSettings.Show();
-                }));
+                });
             }
             catch { }
         }
@@ -216,7 +221,7 @@ namespace AmbiPro
             try
             {
                 System.Windows.Application CurrentApp = System.Windows.Application.Current;
-                CurrentApp.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(async () =>
+                AVActions.ActionDispatcherInvoke(async delegate
                 {
                     Int32 MsgBoxResult = await AVMessageBox.Popup("Failed to connect to your com port device", "Please make sure the device is not in use by another application, the correct com port is set and that the required drivers are installed on your system.", "Change com port", "Retry to connect", "Close application", "");
                     if (MsgBoxResult == 1)
@@ -226,7 +231,7 @@ namespace AmbiPro
                     }
                     else if (MsgBoxResult == 2) { await LedSwitch(false, true); }
                     else if (MsgBoxResult == 3) { await AppStartup.ApplicationExit(); }
-                }));
+                });
             }
             catch { }
         }
@@ -237,7 +242,7 @@ namespace AmbiPro
             try
             {
                 System.Windows.Application CurrentApp = System.Windows.Application.Current;
-                CurrentApp.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(async () =>
+                AVActions.ActionDispatcherInvoke(async delegate
                 {
                     Int32 MsgBoxResult = await AVMessageBox.Popup("Failed to start capturing your monitor screen", "Please make sure the correct monitor screen is selected, Microsoft Visual C++ 2017 Redistributable is installed on your PC, that you have a 64bit Windows installation and that you have a DirectX 11 or higher capable graphics adapter installed.", "Change monitor setting", "Change the led mode", "Retry to capture", "Close application");
                     if (MsgBoxResult == 1)
@@ -252,7 +257,7 @@ namespace AmbiPro
                     }
                     else if (MsgBoxResult == 3) { await LedSwitch(false, true); }
                     else if (MsgBoxResult == 4) { await AppStartup.ApplicationExit(); }
-                }));
+                });
             }
             catch { }
         }

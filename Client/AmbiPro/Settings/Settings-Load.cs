@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Configuration;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Windows.Media;
+using static AmbiPro.AppVariables;
 
 namespace AmbiPro.Settings
 {
@@ -42,8 +42,7 @@ namespace AmbiPro.Settings
                 }
 
                 //Load - Led Automatic Time
-                CultureInfo AppCultureInfo = CultureInfo.InvariantCulture;
-                timepicker_LedAutoTime.DateTimeValue = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTime"], AppCultureInfo);
+                timepicker_LedAutoTime.DateTimeValue = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTime"], vAppCultureInfo);
 
                 //Load - Remote Port
                 tb_RemotePort.Text = ConfigurationManager.AppSettings["RemotePort"].ToString();

@@ -1,6 +1,7 @@
 /Client/AmbiPro/obj
 /Client/AmbiPro/bin
 /Client/ScreenCapture/x64
+/Client/Updater/bin
 /Client/Updater/obj
 *.user
 *.aps

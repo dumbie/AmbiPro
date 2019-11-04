@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Diagnostics;
-using System.Globalization;
+using static AmbiPro.AppVariables;
 
 namespace AmbiPro.Settings
 {
@@ -23,8 +23,7 @@ namespace AmbiPro.Settings
                 //Check - Last update check
                 if (ConfigurationManager.AppSettings["AppUpdateCheck2"] == null)
                 {
-                    CultureInfo AppCultureInfo = CultureInfo.InvariantCulture;
-                    SettingsFunction.Save("AppUpdateCheck2", DateTime.Now.ToString(AppCultureInfo));
+                    SettingsFunction.Save("AppUpdateCheck2", DateTime.Now.ToString(vAppCultureInfo));
                 }
 
                 //Check - Com Port

@@ -7,7 +7,7 @@ using System.IO.Compression;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
-using static Updater.Processes;
+using static ArnoldVinkCode.ProcessWin32Functions;
 
 namespace Updater
 {
@@ -50,13 +50,13 @@ namespace Updater
             {
                 //Check if previous update files are in the way
                 if (File.Exists("UpdaterNew.exe")) { try { File.Delete("UpdaterNew.exe"); } catch { } }
-                if (File.Exists("AmbiPro-Update.zip")) { try { File.Delete("AmbiPro-Update.zip"); } catch { } }
+                if (File.Exists("AppUpdate.zip")) { try { File.Delete("AppUpdate.zip"); } catch { } }
 
-                //Check if AmbiPro is running and close it
-                bool AmbiProRunning = false;
+                //Check if application is running and close it
+                bool AppRunning = false;
                 foreach (Process CloseProcess in Process.GetProcessesByName("AmbiPro"))
                 {
-                    AmbiProRunning = true;
+                    AppRunning = true;
                     CloseProcess.Kill();
                 }
 
@@ -67,13 +67,13 @@ namespace Updater
                 try
                 {
                     WebClient WebClient = new WebClient();
-                    WebClient.Headers[HttpRequestHeader.UserAgent] = "AmbiPro Updater";
+                    WebClient.Headers[HttpRequestHeader.UserAgent] = "Application Updater";
                     WebClient.DownloadProgressChanged += (object Object, DownloadProgressChangedEventArgs Args) =>
                     {
                         ProgressBarUpdate(Args.ProgressPercentage, false);
                         TextBlockUpdate("Downloading update file: " + Args.ProgressPercentage + "%");
                     };
-                    await WebClient.DownloadFileTaskAsync(new Uri("http://download.arnoldvink.com/?dl=AmbiPro.zip"), "AmbiPro-Update.zip");
+                    await WebClient.DownloadFileTaskAsync(new Uri("http://download.arnoldvink.com/?dl=AmbiPro.zip"), "AppUpdate.zip");
                     Debug.WriteLine("Update file has been downloaded");
                 }
                 catch
@@ -86,7 +86,7 @@ namespace Updater
                 {
                     //Extract the downloaded update archive
                     TextBlockUpdate("Updating the application to the latest version.");
-                    using (ZipArchive ZipArchive = ZipFile.OpenRead("AmbiPro-Update.zip"))
+                    using (ZipArchive ZipArchive = ZipFile.OpenRead("AppUpdate.zip"))
                     {
                         foreach (ZipArchiveEntry ZipFile in ZipArchive.Entries)
                         {
@@ -117,22 +117,22 @@ namespace Updater
                 }
 
                 //Delete the update installation zip file
-                TextBlockUpdate("Cleaning up the update installation files...");
-                if (File.Exists("AmbiPro-Update.zip"))
+                TextBlockUpdate("Cleaning up the update installation files.");
+                if (File.Exists("AppUpdate.zip"))
                 {
-                    Debug.WriteLine("Removing: AmbiPro-Update.zip");
-                    File.Delete("AmbiPro-Update.zip");
+                    Debug.WriteLine("Removing: AppUpdate.zip");
+                    File.Delete("AppUpdate.zip");
                 }
 
-                //Start AmbiPro after the update has completed.
-                if (AmbiProRunning)
+                //Start application after the update has completed.
+                if (AppRunning)
                 {
-                    TextBlockUpdate("Running the updated version of AmbiPro.");
-                    LaunchProcessManuallyWin32("AmbiPro.exe", "", "", false);
+                    TextBlockUpdate("Running the updated version of the application.");
+                    ProcessLauncherWin32("AmbiPro.exe", "", "", false, false);
                 }
 
                 //Close the application
-                await Application_Exit("AmbiPro has been updated, closing in a bit.");
+                await Application_Exit("Application has been updated, closing in a bit.");
             }
             catch { }
         }
@@ -152,11 +152,13 @@ namespace Updater
         {
             try
             {
+                Debug.WriteLine("Exiting Updater.");
+
                 //Delete the update installation zip file
-                if (File.Exists("CtrlUI-Update.zip"))
+                if (File.Exists("AppUpdate.zip"))
                 {
-                    Debug.WriteLine("Removing: AmbiPro-Update.zip");
-                    File.Delete("AmbiPro-Update.zip");
+                    Debug.WriteLine("Removing: AppUpdate.zip");
+                    File.Delete("AppUpdate.zip");
                 }
 
                 //Set the exit reason text message

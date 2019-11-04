@@ -71,13 +71,22 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkColorPicker\ColorPicker.xaml.cs">
-      <Link>Resources\ArnoldVinkColorPicker\ColorPicker.xaml.cs</Link>
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkColorPicker\ColorPicker.xaml.cs</Link>
+      <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkColorPicker\ColorSelector.xaml.cs">
-      <Link>Resources\ArnoldVinkColorPicker\ColorSelector.xaml.cs</Link>
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkColorPicker\ColorSelector.xaml.cs</Link>
+      <DependentUpon>ColorSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkProcesses\ProcessWin32Functions.cs">
+      <Link>Resources\ArnoldVinkCode\Functions\Processes\ProcessWin32Functions.cs</Link>
     </Compile>
     <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkTimePicker\TimePicker.xaml.cs">
-      <Link>Resources\ArnoldVinkTimePicker\TimePicker.xaml.cs</Link>
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkTimePicker\TimePicker.xaml.cs</Link>
+      <DependentUpon>TimePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\AVActions.cs">
+      <Link>ArnoldVinkCode\Functions\AVActions.cs</Link>
     </Compile>
     <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\AVDownloader.cs">
       <Link>Resources\ArnoldVinkCode\Functions\AVDownloader.cs</Link>
@@ -85,10 +94,18 @@
     <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\AVFunctions.cs">
       <Link>Resources\ArnoldVinkCode\Functions\AVFunctions.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Xaml\Desktop\ControlTemplates.xaml.cs">
+      <Link>Styles\ControlTemplates.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Xaml\Desktop\MainStyles.xaml.cs">
+      <Link>Styles\MainStyles.xaml.cs</Link>
+    </Compile>
     <Compile Include="AdjustBlackBars.cs" />
     <Compile Include="AdjustLedColors.cs" />
-    <Compile Include="AppCheck.cs" />
+    <Compile Include="AppLaunchCheck.cs" />
     <Compile Include="AppImport.cs" />
+    <Compile Include="AppStartup.cs" />
+    <Compile Include="AppVariables.cs" />
     <Compile Include="AppTasks.cs" />
     <Compile Include="AppTimers.cs" />
     <Compile Include="AppUpdate.cs" />
@@ -118,22 +135,33 @@
     <Compile Include="Settings\Settings-Save.cs" />
     <Compile Include="Settings\Settings-Check.cs" />
     <Compile Include="AppTray.cs" />
-    <Compile Include="Styles\ControlTemplates.xaml.cs">
-      <DependentUpon>ControlTemplates.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Styles\MainStyles.xaml.cs" />
     <Page Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkColorPicker\ColorPicker.xaml">
-      <Link>Resources\ArnoldVinkColorPicker\ColorPicker.xaml</Link>
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkColorPicker\ColorPicker.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkColorPicker\ColorSelector.xaml">
-      <Link>Resources\ArnoldVinkColorPicker\ColorSelector.xaml</Link>
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkColorPicker\ColorSelector.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkTimePicker\TimePicker.xaml">
-      <Link>Resources\ArnoldVinkTimePicker\TimePicker.xaml</Link>
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkTimePicker\TimePicker.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\..\ArnoldVinkCode\Xaml\Desktop\ControlTemplates.xaml">
+      <Link>Styles\ControlTemplates.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\..\ArnoldVinkCode\Xaml\Desktop\MainStyles.xaml">
+      <Link>Styles\MainStyles.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\..\ArnoldVinkCode\Xaml\Desktop\Scrollbar.xaml">
+      <Link>Styles\Scrollbar.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -157,18 +185,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AppStartup.cs" />
     <Compile Include="Settings\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Styles\ControlTemplates.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </Page>
-    <Page Include="Styles\MainStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -212,7 +232,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkColorPicker\ColorSelector.png">
-      <Link>Resources\ArnoldVinkColorPicker\ColorSelector.png</Link>
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkColorPicker\ColorSelector.png</Link>
     </Resource>
     <Content Include="Script\Script.ino">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
