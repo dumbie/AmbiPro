@@ -91,13 +91,11 @@ namespace AmbiPro.Settings
                     }
                     else if (SelStackPanel.Name == "menuButtonCalibrate")
                     {
-                        FormCalibrate FormCalibrate = new FormCalibrate();
-                        FormCalibrate.Show();
+                        App.FormCalibrate.Show();
                     }
                     else if (SelStackPanel.Name == "menuButtonHelp")
                     {
-                        FormHelp FormHelp = new FormHelp();
-                        FormHelp.Show();
+                        App.FormHelp.Show();
                     }
                     else if (SelStackPanel.Name == "menuButtonUpdate")
                     {

@@ -1,5 +1,4 @@
-﻿using AmbiPro.Settings;
-using System;
+﻿using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -11,7 +10,7 @@ namespace AmbiPro
     class AppStartup
     {
         //Application Startup
-        public async Task ApplicationStartup()
+        public async Task Application_Startup()
         {
             try
             {
@@ -21,7 +20,7 @@ namespace AmbiPro
                 Application_LaunchCheck("AmbiPro", "AmbiPro", false, false);
 
                 //Check application settings
-                FormSettings.SettingsCheck();
+                App.FormSettings.SettingsCheck();
 
                 //Create application tray menu
                 AppTray.CreateTrayMenu();
@@ -29,12 +28,17 @@ namespace AmbiPro
                 //Register application timers
                 AppTimers.ApplicationTimersRegister();
 
+                //Enable the socket server
+                vSocketServer.vTcpListenerPort = Convert.ToInt32(ConfigurationManager.AppSettings["ServerPort"]);
+                vSocketServer.SocketServerEnable();
+                vSocketServer.EventBytesReceived += SocketHandlers.ReceivedSocketHandler;
+
                 //Settings screen if first run
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
                 {
                     Debug.WriteLine("First launch, showing the settings screen.");
-                    FormSettings FormSettings = new FormSettings();
-                    FormSettings.Show();
+
+                    App.FormSettings.Show();
                     return;
                 }
 
@@ -44,20 +48,17 @@ namespace AmbiPro
                     DateTime LedTime = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTime"], vAppCultureInfo);
                     if (DateTime.Now.TimeOfDay >= LedTime.TimeOfDay)
                     {
-                        await SerialMonitor.LedSwitch(false, false);
+                        SerialMonitor.LedsEnable();
                     }
                     else
                     {
-                        await SerialMonitor.LedSwitch(true, false);
+                        await SerialMonitor.LedsDisable(false);
                     }
                 }
                 else
                 {
-                    await SerialMonitor.LedSwitch(false, false);
+                    SerialMonitor.LedsEnable();
                 }
-
-                //Start remote server
-                await Socket.SocketServerSwitch(false, false);
 
                 //Check for available application update
                 if (DateTime.Now.Subtract(DateTime.Parse(ConfigurationManager.AppSettings["AppUpdateCheck2"], vAppCultureInfo)).Days >= 5)
@@ -69,14 +70,17 @@ namespace AmbiPro
         }
 
         //Application Exit
-        public static async Task ApplicationExit()
+        public static async Task Application_Exit()
         {
             try
             {
                 Debug.WriteLine("Exiting AmbiPro...");
 
                 //Stop updating the leds
-                await SerialMonitor.LedSwitch(true, false); //Improve never completes when timed out?
+                await SerialMonitor.LedsDisable(false);
+
+                //Disable the socket server
+                await vSocketServer.SocketServerDisable();
 
                 //Disable application timers
                 AppTimers.ApplicationTimersDisable();
@@ -90,16 +94,7 @@ namespace AmbiPro
                 //Exit the application
                 Environment.Exit(0);
             }
-            catch
-            {
-                Debug.WriteLine("Force exiting AmbiPro...");
-
-                //Hide the tray icon
-                AppTray.NotifyIcon.Visible = false;
-
-                //Exit the application
-                Environment.Exit(0);
-            }
+            catch { }
         }
     }
 }

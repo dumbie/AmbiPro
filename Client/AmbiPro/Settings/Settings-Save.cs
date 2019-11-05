@@ -15,7 +15,7 @@ namespace AmbiPro.Settings
     {
         //Application variables
         private static DispatcherTimer vTextBoxTimer_LedCount = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
-        private static DispatcherTimer vTextBoxTimer_RemotePort = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
+        private static DispatcherTimer vTextBoxTimer_ServerPort = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
 
         //Save - Application Settings
         public void SettingsSave()
@@ -28,7 +28,7 @@ namespace AmbiPro.Settings
                 cb_ComPort.SelectionChanged += async (sender, e) =>
                 {
                     SettingsFunction.Save("ComPort", (cb_ComPort.SelectedIndex + 1).ToString());
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"])) { await SerialMonitor.LedSwitch(false, true); }
+                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"])) { await SerialMonitor.LedsRestart(); }
                 };
 
                 //Save - Baud Rate
@@ -42,7 +42,7 @@ namespace AmbiPro.Settings
                     else if (cb_BaudRate.SelectedIndex == 5) { SettingsFunction.Save("BaudRate", "57600"); }
                     else if (cb_BaudRate.SelectedIndex == 6) { SettingsFunction.Save("BaudRate", "115200"); }
 
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"])) { await SerialMonitor.LedSwitch(false, true); }
+                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"])) { await SerialMonitor.LedsRestart(); }
                 };
 
                 //Save - Enable or Disable Led Automatic
@@ -71,29 +71,29 @@ namespace AmbiPro.Settings
                 };
 
                 //Save - Remote Port
-                vTextBoxTimer_RemotePort.Tick += vTextBoxTimer_RemotePort_Tick;
-                tb_RemotePort.TextChanged += (sender, e) => { AVFunctions.ResetTimer(vTextBoxTimer_RemotePort); };
+                vTextBoxTimer_ServerPort.Tick += vTextBoxTimer_ServerPort_Tick;
+                tb_ServerPort.TextChanged += (sender, e) => { AVFunctions.ResetTimer(vTextBoxTimer_ServerPort); };
 
                 //Save - Adjust Black Bars
                 cb_AdjustBlackBars.Click += async (sender, e) =>
                 {
                     if ((bool)cb_AdjustBlackBars.IsChecked) { SettingsFunction.Save("AdjustBlackBars", "True"); }
                     else { SettingsFunction.Save("AdjustBlackBars", "False"); }
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"])) { await SerialMonitor.LedSwitch(false, true); }
+                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"])) { await SerialMonitor.LedsRestart(); }
                 };
 
                 //Save - Monitor Capture
                 cb_MonitorCapture.SelectionChanged += async (sender, e) =>
                 {
                     SettingsFunction.Save("MonitorCapture", cb_MonitorCapture.SelectedIndex.ToString());
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"])) { await SerialMonitor.LedSwitch(false, true); }
+                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"])) { await SerialMonitor.LedsRestart(); }
                 };
 
                 //Save - Led Mode
                 cb_LedMode.SelectionChanged += async (sender, e) =>
                 {
                     SettingsFunction.Save("LedMode", cb_LedMode.SelectedIndex.ToString());
-                    await SerialMonitor.LedSwitch(false, true);
+                    await SerialMonitor.LedsRestart();
                 };
 
                 //Save - Led Brightness
@@ -233,7 +233,10 @@ namespace AmbiPro.Settings
                 //Save - Windows Startup
                 cb_WindowsStartup.Click += (sender, e) => { ManageShortcutStartup(); };
             }
-            catch { Debug.WriteLine("Failed to save the settings."); }
+            catch
+            {
+                Debug.WriteLine("Failed to save the settings.");
+            }
         }
 
         //Update led count after delay
@@ -255,18 +258,22 @@ namespace AmbiPro.Settings
 
                 SettingsFunction.Save("LedCount", tb_LedCount.Text);
                 tb_LedCount.BorderBrush = BrushValid;
-                if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"])) { await SerialMonitor.LedSwitch(false, true); }
+
+                if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
+                {
+                    await SerialMonitor.LedsRestart();
+                }
             }
             catch { }
         }
 
         //Update remote port after delay
-        private async void vTextBoxTimer_RemotePort_Tick(object sender, EventArgs e)
+        private async void vTextBoxTimer_ServerPort_Tick(object sender, EventArgs e)
         {
             try
             {
                 //Stop the timer
-                vTextBoxTimer_RemotePort.Stop();
+                vTextBoxTimer_ServerPort.Stop();
 
                 //Color brushes
                 BrushConverter BrushConvert = new BrushConverter();
@@ -274,24 +281,25 @@ namespace AmbiPro.Settings
                 Brush BrushValid = BrushConvert.ConvertFromString("#1db954") as Brush;
 
                 //Check for text input and length
-                if (tb_RemotePort.Text.Length > 5) { tb_RemotePort.BorderBrush = BrushInvalid; return; }
-                if (String.IsNullOrWhiteSpace(tb_RemotePort.Text)) { tb_RemotePort.BorderBrush = BrushInvalid; return; }
+                if (tb_ServerPort.Text.Length > 5) { tb_ServerPort.BorderBrush = BrushInvalid; return; }
+                if (String.IsNullOrWhiteSpace(tb_ServerPort.Text)) { tb_ServerPort.BorderBrush = BrushInvalid; return; }
 
                 //Check if text input has invalid characters
-                if (tb_RemotePort.Text.Contains("-")) { tb_RemotePort.Text = tb_RemotePort.Text.Replace("-", ""); tb_RemotePort.SelectionStart = tb_RemotePort.Text.Length; }
-                if (tb_RemotePort.Text.Contains(",")) { tb_RemotePort.Text = tb_RemotePort.Text.Replace(",", ""); tb_RemotePort.SelectionStart = tb_RemotePort.Text.Length; }
-                if (tb_RemotePort.Text.Contains(".")) { tb_RemotePort.Text = tb_RemotePort.Text.Replace(".", ""); tb_RemotePort.SelectionStart = tb_RemotePort.Text.Length; }
-                if (Regex.IsMatch(tb_RemotePort.Text, "(\\D+)")) { tb_RemotePort.BorderBrush = BrushInvalid; return; }
+                if (tb_ServerPort.Text.Contains("-")) { tb_ServerPort.Text = tb_ServerPort.Text.Replace("-", ""); tb_ServerPort.SelectionStart = tb_ServerPort.Text.Length; }
+                if (tb_ServerPort.Text.Contains(",")) { tb_ServerPort.Text = tb_ServerPort.Text.Replace(",", ""); tb_ServerPort.SelectionStart = tb_ServerPort.Text.Length; }
+                if (tb_ServerPort.Text.Contains(".")) { tb_ServerPort.Text = tb_ServerPort.Text.Replace(".", ""); tb_ServerPort.SelectionStart = tb_ServerPort.Text.Length; }
+                if (Regex.IsMatch(tb_ServerPort.Text, "(\\D+)")) { tb_ServerPort.BorderBrush = BrushInvalid; return; }
 
                 //Convert text input to number
-                Int32 ServerPort = Convert.ToInt32(tb_RemotePort.Text);
-                if (ServerPort < 1 || ServerPort > 65535) { tb_RemotePort.BorderBrush = BrushInvalid; return; }
+                Int32 ServerPort = Convert.ToInt32(tb_ServerPort.Text);
+                if (ServerPort < 1 || ServerPort > 65535) { tb_ServerPort.BorderBrush = BrushInvalid; return; }
 
-                SettingsFunction.Save("RemotePort", tb_RemotePort.Text);
-                tb_RemotePort.BorderBrush = BrushValid;
+                SettingsFunction.Save("ServerPort", tb_ServerPort.Text);
+                tb_ServerPort.BorderBrush = BrushValid;
 
-                //Restart the remote server
-                await Socket.SocketServerSwitch(false, true);
+                //Restart the socket server
+                vSocketServer.vTcpListenerPort = Convert.ToInt32(tb_ServerPort.Text);
+                await vSocketServer.SocketServerRestart();
             }
             catch { }
         }

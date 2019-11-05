@@ -21,13 +21,13 @@ namespace AmbiPro
                     vCheckingForUpdate = true;
 
                     string ResCurrentVersion = await AVDownloader.DownloadStringAsync(5000, "AmbiPro", null, new Uri("http://download.arnoldvink.com/AmbiPro.zip-version.txt" + "?nc=" + Environment.TickCount));
-                    if (ResCurrentVersion != String.Empty && ResCurrentVersion != Assembly.GetExecutingAssembly().FullName.Split('=')[1].Split(',')[0])
+                    if (!string.IsNullOrWhiteSpace(ResCurrentVersion) && ResCurrentVersion != Assembly.GetExecutingAssembly().FullName.Split('=')[1].Split(',')[0])
                     {
                         int MsgBoxResult = await AVMessageBox.Popup("A newer version has been found: v" + ResCurrentVersion, "Would you like to update the application to the newest version available?", "Update", "Cancel", "", "");
                         if (MsgBoxResult == 1)
                         {
-                            ProcessLauncherWin32("Updater.exe", "", "", false, false);
-                            await AppStartup.ApplicationExit();
+                            await ProcessLauncherWin32Async("Updater.exe", "", "", false, false);
+                            await AppStartup.Application_Exit();
                         }
                     }
                     else

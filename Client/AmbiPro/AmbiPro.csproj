@@ -81,6 +81,15 @@
     <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkProcesses\ProcessWin32Functions.cs">
       <Link>Resources\ArnoldVinkCode\Functions\Processes\ProcessWin32Functions.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkSockets\SocketClass.cs">
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkSockets\SocketClass.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkSockets\SocketServer.cs">
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkSockets\SocketServer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkSockets\SocketServerVariables.cs">
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkSockets\SocketServerVariables.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkTimePicker\TimePicker.xaml.cs">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkTimePicker\TimePicker.xaml.cs</Link>
       <DependentUpon>TimePicker.xaml</DependentUpon>
@@ -120,8 +129,7 @@
     </Compile>
     <Compile Include="ModeColorSpectrum.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
-    <Compile Include="SocketServer.cs" />
-    <Compile Include="SocketHandle.cs" />
+    <Compile Include="SocketHandlers.cs" />
     <Compile Include="Resources\BitmapProcessing.cs" />
     <Compile Include="Resources\HslColor.cs" />
     <Compile Include="ModeSolidColor.cs" />

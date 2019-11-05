@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArnoldVinkCode;
+using System;
 using System.Drawing;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace AmbiPro
                 AppTray.NotifyIcon.Icon = new Icon(Assembly.GetExecutingAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
 
                 //Current byte information
-                while (AppTasks.LedRunning())
+                while (AVActions.TaskRunningCheck(AppTasks.LedToken))
                 {
                     //Set the used colors and adjust it
                     Color CurrentColor = ColorTranslator.FromHtml(setSolidLedColor);

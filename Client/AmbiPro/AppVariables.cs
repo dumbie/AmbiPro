@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using ArnoldVinkCode;
+using System.Configuration;
 using System.Globalization;
 
 namespace AmbiPro
@@ -13,6 +14,6 @@ namespace AmbiPro
         public static bool vCheckingForUpdate = false;
 
         //Socket Variables
-        //public static ArnoldVinkSocketServer vSocketServer = new ArnoldVinkSocketServer();
+        public static ArnoldVinkSocketServer vSocketServer = new ArnoldVinkSocketServer();
     }
 }

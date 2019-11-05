@@ -7,7 +7,7 @@ namespace AmbiPro.Resources
     public class BitmapProcessing
     {
         //Get the color of a pixel
-        static public unsafe Color GetPixelColor(byte* BitmapData, Int32 Width, Int32 Height, Int32 HorX, Int32 VerY)
+        public static unsafe Color GetPixelColor(byte* BitmapData, Int32 Width, Int32 Height, Int32 HorX, Int32 VerY)
         {
             Color PixelColor = Color.Empty;
             try
@@ -27,7 +27,7 @@ namespace AmbiPro.Resources
         }
 
         //Set the color of a pixel
-        static public unsafe void SetPixelColor(byte* BitmapData, Int32 Width, Int32 Height, Int32 HorX, Int32 VerY, Color NewColor)
+        public static unsafe void SetPixelColor(byte* BitmapData, Int32 Width, Int32 Height, Int32 HorX, Int32 VerY, Color NewColor)
         {
             try
             {

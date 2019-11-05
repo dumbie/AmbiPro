@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArnoldVinkCode;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
@@ -38,7 +39,7 @@ namespace AmbiPro
                 AppTray.NotifyIcon.Icon = new Icon(Assembly.GetExecutingAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
 
                 //Start updating the leds
-                while (AppTasks.LedRunning())
+                while (AVActions.TaskRunningCheck(AppTasks.LedToken))
                 {
                     IntPtr IntPtrBitmap = IntPtr.Zero;
                     try { IntPtrBitmap = AppImport.CaptureScreenshot(out vScreenWidth, out vScreenHeight, out vOutputSize); } catch { }

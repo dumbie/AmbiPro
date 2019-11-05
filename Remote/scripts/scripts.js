@@ -19,7 +19,8 @@ function sendSocket(SendData) {
     var xHttpRequest = new XMLHttpRequest();
     xHttpRequest.open("GET", ServerUrl, true);
 
-    if (!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)) {
+    if (!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/))
+    {
         xHttpRequest.setRequestHeader("If-Unmodified-Since", new Date().getTime());
     }
 

@@ -17,9 +17,6 @@ namespace AmbiPro
 {
     partial class SerialMonitor
     {
-        //Application variables
-        private static bool vSwitching = false;
-
         //Serial port
         private static SerialPort vSerialComPort = null;
 
@@ -89,56 +86,42 @@ namespace AmbiPro
                 string ScreenRatio = AVFunctions.ScreenAspectRatio(vScreenWidth, vScreenHeight, false);
                 if (SettingsFunction.Check("LedRotate" + ScreenRatio)) { setLedRotate = Convert.ToInt32(ConfigurationManager.AppSettings["LedRotate" + ScreenRatio]); } else { setLedRotate = 0; }
             }
-            catch { Debug.WriteLine("Failed updating the settings."); }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed updating the settings: " + ex.Message);
+            }
         }
 
         //Turn the leds on or off
-        public static async Task LedSwitch(bool ForceOff, bool Restart)
+        public static async Task LedSwitch()
         {
             try
             {
-                if (!vSwitching)
+                if (AVActions.TaskRunningCheck(AppTasks.LedToken))
                 {
-                    vSwitching = true;
-                    if (Restart)
-                    {
-                        Debug.WriteLine("Restarting the led updates...");
-                        await DisableLeds(Restart);
-                        EnableLeds();
-                        vSwitching = false;
-                        return;
-                    }
-
-                    if (AppTasks.LedRunning() || ForceOff)
-                    {
-                        Debug.WriteLine("Disabling the led updates...");
-                        await DisableLeds(Restart);
-                        vSwitching = false;
-                        return;
-                    }
-                    else
-                    {
-                        Debug.WriteLine("Enabling the led updates...");
-                        EnableLeds();
-                        vSwitching = false;
-                        return;
-                    }
+                    await LedsDisable(false);
+                    return;
+                }
+                else
+                {
+                    LedsEnable();
+                    return;
                 }
             }
             catch
             {
                 Debug.WriteLine("Failed switching the leds on or off.");
-                vSwitching = false;
             }
         }
 
         //Enable the led updates
-        private static void EnableLeds()
+        public static void LedsEnable()
         {
             try
             {
+                Debug.WriteLine("Enabling the led updates.");
                 AppTasks.LedToken = new CancellationTokenSource();
-                AppTasks.LedTask = Task.Run(async () => await UpdateLeds(), AppTasks.LedToken.Token);
+                AppTasks.LedTask = AVActions.TaskStart(UpdateLeds, AppTasks.LedToken);
             }
             catch (Exception ex)
             {
@@ -147,12 +130,17 @@ namespace AmbiPro
         }
 
         //Disable the led updates
-        private static async Task DisableLeds(bool Restart)
+        public static async Task LedsDisable(bool Restart)
         {
             try
             {
+                Debug.WriteLine("Disabling the led updates.");
+
                 //Update the tray icon
-                if (!Restart) { AppTray.NotifyIcon.Icon = new Icon(Assembly.GetExecutingAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon-Disabled.ico")); }
+                if (!Restart)
+                {
+                    AppTray.NotifyIcon.Icon = new Icon(Assembly.GetExecutingAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon-Disabled.ico"));
+                }
 
                 //Cancel the led task
                 AppTasks.LedToken.Cancel();
@@ -177,9 +165,9 @@ namespace AmbiPro
                     if (!Restart)
                     {
                         //Calculate bytes size
-                        Int32 InitialByteSize = 3;
-                        Int32 ByteLedSize = (setLedCount * 3);
-                        Int32 TotalBytes = InitialByteSize + ByteLedSize;
+                        int InitialByteSize = 3;
+                        int ByteLedSize = (setLedCount * 3);
+                        int TotalBytes = InitialByteSize + ByteLedSize;
 
                         //Create led byte array
                         byte[] SerialBytes = new byte[TotalBytes];
@@ -200,16 +188,30 @@ namespace AmbiPro
             }
         }
 
+        //Restart the led updates
+        public static async Task LedsRestart()
+        {
+            try
+            {
+                Debug.WriteLine("Restarting the led updates.");
+                await LedsDisable(true);
+                LedsEnable();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed to disable the led updates: " + ex.Message);
+            }
+        }
+
         //Show the settings window
-        private static void ShowSettings()
+        public static void ShowSettings()
         {
             try
             {
                 System.Windows.Application CurrentApp = System.Windows.Application.Current;
                 AVActions.ActionDispatcherInvoke(delegate
                 {
-                    FormSettings FormSettings = new FormSettings();
-                    FormSettings.Show();
+                    App.FormSettings.Show();
                 });
             }
             catch { }
@@ -223,14 +225,20 @@ namespace AmbiPro
                 System.Windows.Application CurrentApp = System.Windows.Application.Current;
                 AVActions.ActionDispatcherInvoke(async delegate
                 {
-                    Int32 MsgBoxResult = await AVMessageBox.Popup("Failed to connect to your com port device", "Please make sure the device is not in use by another application, the correct com port is set and that the required drivers are installed on your system.", "Change com port", "Retry to connect", "Close application", "");
+                    int MsgBoxResult = await AVMessageBox.Popup("Failed to connect to your com port device", "Please make sure the device is not in use by another application, the correct com port is set and that the required drivers are installed on your system.", "Change com port", "Retry to connect", "Close application", "");
                     if (MsgBoxResult == 1)
                     {
-                        await LedSwitch(true, false);
+                        await LedsDisable(false);
                         ShowSettings();
                     }
-                    else if (MsgBoxResult == 2) { await LedSwitch(false, true); }
-                    else if (MsgBoxResult == 3) { await AppStartup.ApplicationExit(); }
+                    else if (MsgBoxResult == 2)
+                    {
+                        await LedsRestart();
+                    }
+                    else if (MsgBoxResult == 3)
+                    {
+                        await AppStartup.Application_Exit();
+                    }
                 });
             }
             catch { }
@@ -247,16 +255,16 @@ namespace AmbiPro
                     Int32 MsgBoxResult = await AVMessageBox.Popup("Failed to start capturing your monitor screen", "Please make sure the correct monitor screen is selected, Microsoft Visual C++ 2017 Redistributable is installed on your PC, that you have a 64bit Windows installation and that you have a DirectX 11 or higher capable graphics adapter installed.", "Change monitor setting", "Change the led mode", "Retry to capture", "Close application");
                     if (MsgBoxResult == 1)
                     {
-                        await LedSwitch(true, false);
+                        await LedsDisable(false);
                         ShowSettings();
                     }
                     if (MsgBoxResult == 2)
                     {
-                        await LedSwitch(true, false);
+                        await LedsDisable(false);
                         ShowSettings();
                     }
-                    else if (MsgBoxResult == 3) { await LedSwitch(false, true); }
-                    else if (MsgBoxResult == 4) { await AppStartup.ApplicationExit(); }
+                    else if (MsgBoxResult == 3) { await LedsRestart(); }
+                    else if (MsgBoxResult == 4) { await AppStartup.Application_Exit(); }
                 });
             }
             catch { }
@@ -277,7 +285,7 @@ namespace AmbiPro
         }
 
         //Update the leds based on screenshot
-        private static async Task UpdateLeds()
+        private static async void UpdateLeds()
         {
             try
             {
@@ -285,9 +293,9 @@ namespace AmbiPro
                 UpdateSettings();
 
                 //Calculate bytes size
-                Int32 InitByteSize = 3;
-                Int32 LedByteSize = setLedCount * 3;
-                Int32 TotalByteSize = InitByteSize + LedByteSize;
+                int InitByteSize = 3;
+                int LedByteSize = setLedCount * 3;
+                int TotalByteSize = InitByteSize + LedByteSize;
 
                 //Connect to the device
                 try
@@ -318,9 +326,7 @@ namespace AmbiPro
             catch (Exception ex)
             {
                 Debug.WriteLine("Failed to update the leds: " + ex.Message);
-
-                //Restart the led updates
-                LedSwitch(false, true).RunSynchronously();
+                await LedsRestart();
             }
         }
 

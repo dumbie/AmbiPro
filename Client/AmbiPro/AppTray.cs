@@ -1,6 +1,4 @@
-﻿using AmbiPro.Calibrate;
-using AmbiPro.Help;
-using AmbiPro.Settings;
+﻿using AmbiPro.Settings;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -59,22 +57,37 @@ namespace AmbiPro
         {
             try
             {
-                FormSettings FormSettings = new FormSettings();
-                FormSettings.Show();
+                App.FormSettings.Show();
             }
             catch { }
         }
 
-        private static async void NotifyIcon_MiddleClick(object Sender, MouseEventArgs e) { try { if (e.Button == MouseButtons.Middle) { await SerialMonitor.LedSwitch(false, false); } } catch { } }
+        private static async void NotifyIcon_MiddleClick(object Sender, MouseEventArgs e)
+        {
+            try
+            {
+                if (e.Button == MouseButtons.Middle)
+                {
+                    await SerialMonitor.LedSwitch();
+                }
+            }
+            catch { }
+        }
 
-        private static async void OnSwitchOnOff(object sender, EventArgs e) { try { await SerialMonitor.LedSwitch(false, false); } catch { } }
+        private static async void OnSwitchOnOff(object sender, EventArgs e)
+        {
+            try
+            {
+                await SerialMonitor.LedSwitch();
+            }
+            catch { }
+        }
 
         private static void OnSettings(object sender, EventArgs e)
         {
             try
             {
-                FormSettings FormSettings = new FormSettings();
-                FormSettings.Show();
+                App.FormSettings.Show();
             }
             catch { }
         }
@@ -88,7 +101,7 @@ namespace AmbiPro
                 else if (ClickMenuItem.Text == "Solid color") { SettingsFunction.Save("LedMode", "1"); }
                 else if (ClickMenuItem.Text == "Colors loop") { SettingsFunction.Save("LedMode", "2"); }
                 else if (ClickMenuItem.Text == "Color spectrum") { SettingsFunction.Save("LedMode", "3"); }
-                await SerialMonitor.LedSwitch(false, true);
+                await SerialMonitor.LedsRestart();
             }
             catch { }
         }
@@ -97,8 +110,7 @@ namespace AmbiPro
         {
             try
             {
-                FormCalibrate FormCalibrate = new FormCalibrate();
-                FormCalibrate.Show();
+                App.FormCalibrate.Show();
             }
             catch { }
         }
@@ -109,12 +121,11 @@ namespace AmbiPro
         {
             try
             {
-                FormHelp FormHelp = new FormHelp();
-                FormHelp.Show();
+                App.FormHelp.Show();
             }
             catch { }
         }
 
-        private static async void OnExit(object sender, EventArgs e) { try { await AppStartup.ApplicationExit(); } catch { } }
+        private static async void OnExit(object sender, EventArgs e) { try { await AppStartup.Application_Exit(); } catch { } }
     }
 }

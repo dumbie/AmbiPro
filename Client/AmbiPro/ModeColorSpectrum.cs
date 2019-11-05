@@ -14,15 +14,15 @@ namespace AmbiPro
         {
             try
             {
-                Nullable<Int32> PreviousLedOutput = null;
-                Nullable<double> PreviousBrightness = null;
+                int? PreviousLedOutput = null;
+                double? PreviousBrightness = null;
                 DateTime PreviousRotation = DateTime.Now;
 
                 //Update the tray icon
                 AppTray.NotifyIcon.Icon = new Icon(Assembly.GetExecutingAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
 
                 //Current byte information
-                while (AppTasks.LedRunning())
+                while (AVActions.TaskRunningCheck(AppTasks.LedToken))
                 {
                     //Reset the colors when brightness has changed.
                     if (PreviousBrightness != setLedBrightness || PreviousLedOutput != setLedOutput)
@@ -32,9 +32,9 @@ namespace AmbiPro
                         PreviousLedOutput = setLedOutput;
 
                         //Rotate color variables
-                        Int32 UsedColors = 0;
-                        Int32 CurrentLedRange = 0;
-                        Int32 TotalLedRange = setLedCount / 13;
+                        int UsedColors = 0;
+                        int CurrentLedRange = 0;
+                        int TotalLedRange = setLedCount / 13;
 
                         //Set the used colors and adjust them
                         Color CurrentColor = ColorTranslator.FromHtml("#f8d000"); CurrentColor = AdjustLedColors(CurrentColor);

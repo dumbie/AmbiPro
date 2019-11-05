@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArnoldVinkCode;
+using System;
 using System.Drawing;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace AmbiPro
         private static Color CurrentColor = Color.FromArgb(20, 0, 0);
 
         //Loop through the set colors
-        private static async Task ModeColorLoop(Int32 InitByteSize, byte[] SerialBytes)
+        private static async Task ModeColorLoop(int InitByteSize, byte[] SerialBytes)
         {
             try
             {
@@ -19,10 +20,10 @@ namespace AmbiPro
                 AppTray.NotifyIcon.Icon = new Icon(Assembly.GetExecutingAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
 
                 //Loop color variables
-                Int32 ColorLoopState = 0;
+                int ColorLoopState = 0;
 
                 //Current byte information
-                while (AppTasks.LedRunning())
+                while (AVActions.TaskRunningCheck(AppTasks.LedToken))
                 {
                     //Set the used colors
                     if (ColorLoopState == 0) //Red

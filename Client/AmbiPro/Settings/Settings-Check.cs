@@ -8,7 +8,7 @@ namespace AmbiPro.Settings
     public partial class FormSettings
     {
         //Check - Application Settings
-        public static void SettingsCheck()
+        public void SettingsCheck()
         {
             try
             {
@@ -51,9 +51,9 @@ namespace AmbiPro.Settings
                 }
 
                 //Check - Remote Port
-                if (ConfigurationManager.AppSettings["RemotePort"] == null)
+                if (ConfigurationManager.AppSettings["ServerPort"] == null)
                 {
-                    SettingsFunction.Save("RemotePort", "4446");
+                    SettingsFunction.Save("ServerPort", "1020");
                 }
 
                 //Check - Monitor Capture

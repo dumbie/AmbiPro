@@ -45,7 +45,7 @@ namespace AmbiPro.Settings
                 timepicker_LedAutoTime.DateTimeValue = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTime"], vAppCultureInfo);
 
                 //Load - Remote Port
-                tb_RemotePort.Text = ConfigurationManager.AppSettings["RemotePort"].ToString();
+                tb_ServerPort.Text = ConfigurationManager.AppSettings["ServerPort"].ToString();
 
                 //Load - Monitor Capture
                 cb_MonitorCapture.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["MonitorCapture"]);

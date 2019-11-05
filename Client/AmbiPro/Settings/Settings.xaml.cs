@@ -7,8 +7,8 @@ using System.IO.Ports;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading.Tasks;
 using System.Windows;
+using static AmbiPro.AppVariables;
 
 namespace AmbiPro.Settings
 {
@@ -54,7 +54,7 @@ namespace AmbiPro.Settings
                         //Set the first connected device
                         foreach (string PortName in SerialPort.GetPortNames())
                         {
-                            Int32 PortNumberRaw = Convert.ToInt32(PortName.Replace("COM", "")) - 1;
+                            int PortNumberRaw = Convert.ToInt32(PortName.Replace("COM", "")) - 1;
                             cb_ComPort.SelectedIndex = PortNumberRaw;
                         }
                     }
@@ -75,31 +75,49 @@ namespace AmbiPro.Settings
                         txt_Remote_IpAdres.Text = AVFunctions.StringReplaceFirst(txt_Remote_IpAdres.Text, ", ", "", false);
                     }
                     else
-                    { txt_Remote_IpAdres.Text = "Not connected"; }
+                    {
+                        txt_Remote_IpAdres.Text = "Not connected";
+                    }
 
                     //Check current socket status
-                    if (!AppTasks.SocketServerRunning()) { txt_RemoteErrorServerPort.Visibility = Visibility.Visible; }
+                    if (!vSocketServer.vIsServerRunning()) { txt_RemoteErrorServerPort.Visibility = Visibility.Visible; }
                 };
             }
             catch { }
         }
 
-        private void Timepicker_LedAutoTime_SelectedTimeChanged(DateTime? obj)
+        //Open remote site
+        private void btn_Remote_Open_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Changed time to: " + obj);
+            try
+            {
+                Process.Start("https://ambipro.arnoldvink.com?ip=" + tb_RemoteIp.Text + "&port=" + tb_ServerPort.Text);
+            }
+            catch { }
         }
 
-        //Open remote site
-        private void btn_Remote_Open_Click(object sender, RoutedEventArgs e) { try { Process.Start("http://ambipro.arnoldvink.com?ip=" + tb_RemoteIp.Text + "&port=" + tb_RemotePort.Text); } catch { } }
-
         //Handle start button
-        private void btn_WelcomeStart_Click(object sender, RoutedEventArgs e) { try { this.Close(); } catch { } }
+        private void btn_WelcomeStart_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.Close();
+            }
+            catch { }
+        }
 
         //Handle switch button
-        private async void btn_SwitchLedsOnorOff_Click(object sender, RoutedEventArgs e) { try { await SerialMonitor.LedSwitch(false, false); } catch { } }
+        private async void btn_SwitchLedsOnorOff_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await SerialMonitor.LedSwitch();
+            }
+            catch { }
+        }
 
         //Check the first launch setting
-        private static async Task WelcomeCheck()
+        private static void WelcomeCheck()
         {
             try
             {
@@ -109,24 +127,21 @@ namespace AmbiPro.Settings
                     SettingsFunction.Save("FirstLaunch", "False");
 
                     //Start updating the leds
-                    await SerialMonitor.LedSwitch(false, false);
-
-                    //Start remote server
-                    await Socket.SocketServerSwitch(false, false);
+                    SerialMonitor.LedsEnable();
                 }
             }
             catch { }
         }
 
         //Handle window closing event
-        protected override async void OnClosing(CancelEventArgs e)
+        protected override void OnClosing(CancelEventArgs e)
         {
             try
             {
                 e.Cancel = true;
                 Debug.WriteLine("Closing the settings window.");
 
-                await WelcomeCheck();
+                WelcomeCheck();
 
                 this.Hide();
             }
