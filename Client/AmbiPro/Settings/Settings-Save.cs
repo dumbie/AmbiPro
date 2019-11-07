@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Media;
 using System.Windows.Threading;
 using static AmbiPro.AppVariables;
+using static AmbiPro.SerialMonitor;
 
 namespace AmbiPro.Settings
 {
@@ -28,7 +29,10 @@ namespace AmbiPro.Settings
                 cb_ComPort.SelectionChanged += async (sender, e) =>
                 {
                     SettingsFunction.Save("ComPort", (cb_ComPort.SelectedIndex + 1).ToString());
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"])) { await SerialMonitor.LedsRestart(); }
+                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
+                    {
+                        await LedSwitch(LedSwitches.Restart);
+                    }
                 };
 
                 //Save - Baud Rate
@@ -41,8 +45,10 @@ namespace AmbiPro.Settings
                     else if (cb_BaudRate.SelectedIndex == 4) { SettingsFunction.Save("BaudRate", "38400"); }
                     else if (cb_BaudRate.SelectedIndex == 5) { SettingsFunction.Save("BaudRate", "57600"); }
                     else if (cb_BaudRate.SelectedIndex == 6) { SettingsFunction.Save("BaudRate", "115200"); }
-
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"])) { await SerialMonitor.LedsRestart(); }
+                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
+                    {
+                        await LedSwitch(LedSwitches.Restart);
+                    }
                 };
 
                 //Save - Enable or Disable Led Automatic
@@ -72,28 +78,37 @@ namespace AmbiPro.Settings
 
                 //Save - Remote Port
                 vTextBoxTimer_ServerPort.Tick += vTextBoxTimer_ServerPort_Tick;
-                tb_ServerPort.TextChanged += (sender, e) => { AVFunctions.ResetTimer(vTextBoxTimer_ServerPort); };
+                tb_ServerPort.TextChanged += (sender, e) =>
+                {
+                    AVFunctions.ResetTimer(vTextBoxTimer_ServerPort);
+                };
 
                 //Save - Adjust Black Bars
                 cb_AdjustBlackBars.Click += async (sender, e) =>
                 {
                     if ((bool)cb_AdjustBlackBars.IsChecked) { SettingsFunction.Save("AdjustBlackBars", "True"); }
                     else { SettingsFunction.Save("AdjustBlackBars", "False"); }
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"])) { await SerialMonitor.LedsRestart(); }
+                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
+                    {
+                        await LedSwitch(LedSwitches.Restart);
+                    }
                 };
 
                 //Save - Monitor Capture
                 cb_MonitorCapture.SelectionChanged += async (sender, e) =>
                 {
                     SettingsFunction.Save("MonitorCapture", cb_MonitorCapture.SelectedIndex.ToString());
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"])) { await SerialMonitor.LedsRestart(); }
+                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
+                    {
+                        await LedSwitch(LedSwitches.Restart);
+                    }
                 };
 
                 //Save - Led Mode
                 cb_LedMode.SelectionChanged += async (sender, e) =>
                 {
                     SettingsFunction.Save("LedMode", cb_LedMode.SelectedIndex.ToString());
-                    await SerialMonitor.LedsRestart();
+                    await LedSwitch(LedSwitches.Restart);
                 };
 
                 //Save - Led Brightness
@@ -261,7 +276,7 @@ namespace AmbiPro.Settings
 
                 if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
                 {
-                    await SerialMonitor.LedsRestart();
+                    await LedSwitch(LedSwitches.Restart);
                 }
             }
             catch { }

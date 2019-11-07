@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using static AmbiPro.SerialMonitor;
 
 namespace AmbiPro
 {
@@ -65,7 +66,7 @@ namespace AmbiPro
 
                 if (messageType.Contains("LedSwitch"))
                 {
-                    await SerialMonitor.LedSwitch();
+                    await LedSwitch(LedSwitches.Automatic);
                 }
                 else if (messageType.Contains("LedBrightness"))
                 {
@@ -74,7 +75,7 @@ namespace AmbiPro
                 else if (messageType.Contains("LedMode"))
                 {
                     SettingsFunction.Save("LedMode", messageValue);
-                    await SerialMonitor.LedsRestart();
+                    await LedSwitch(LedSwitches.Restart);
                 }
             }
             catch { }

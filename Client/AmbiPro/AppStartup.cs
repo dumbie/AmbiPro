@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using static AmbiPro.AppLaunchCheck;
 using static AmbiPro.AppVariables;
+using static AmbiPro.SerialMonitor;
 
 namespace AmbiPro
 {
@@ -20,7 +21,7 @@ namespace AmbiPro
                 Application_LaunchCheck("AmbiPro", "AmbiPro", false, false);
 
                 //Check application settings
-                App.FormSettings.SettingsCheck();
+                App.vFormSettings.SettingsCheck();
 
                 //Create application tray menu
                 AppTray.CreateTrayMenu();
@@ -38,7 +39,7 @@ namespace AmbiPro
                 {
                     Debug.WriteLine("First launch, showing the settings screen.");
 
-                    App.FormSettings.Show();
+                    App.vFormSettings.Show();
                     return;
                 }
 
@@ -48,16 +49,16 @@ namespace AmbiPro
                     DateTime LedTime = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTime"], vAppCultureInfo);
                     if (DateTime.Now.TimeOfDay >= LedTime.TimeOfDay)
                     {
-                        SerialMonitor.LedsEnable();
+                        await LedSwitch(LedSwitches.Automatic);
                     }
                     else
                     {
-                        await SerialMonitor.LedsDisable(false);
+                        await LedSwitch(LedSwitches.Disable);
                     }
                 }
                 else
                 {
-                    SerialMonitor.LedsEnable();
+                    await LedSwitch(LedSwitches.Automatic);
                 }
 
                 //Check for available application update
@@ -74,10 +75,10 @@ namespace AmbiPro
         {
             try
             {
-                Debug.WriteLine("Exiting AmbiPro...");
+                Debug.WriteLine("Exiting application.");
 
                 //Stop updating the leds
-                await SerialMonitor.LedsDisable(false);
+                await LedSwitch(LedSwitches.Disable);
 
                 //Disable the socket server
                 await vSocketServer.SocketServerDisable();

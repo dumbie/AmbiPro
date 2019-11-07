@@ -10,21 +10,21 @@ namespace AmbiPro
     partial class SerialMonitor
     {
         //Screen size
-        private static Int32 vScreenWidth = 0;
-        private static Int32 vScreenHeight = 0;
-        private static Int32 vOutputSize = 0;
+        private static int vScreenWidth = 0;
+        private static int vScreenHeight = 0;
+        private static int vOutputSize = 0;
 
         //Loop cature the screen
-        private static async Task ModeScreenCapture(Int32 InitByteSize, byte[] SerialBytes)
+        private static async Task ModeScreenCapture(int InitByteSize, byte[] SerialBytes)
         {
             try
             {
                 //Update side margins (Atleast 1)
-                Int32 OffsetMargin = 5;
-                Int32 HorizontalMargin0 = 5;
-                Int32 HorizontalMargin2 = 5;
-                Int32 VerticalMargin1 = 5;
-                Int32 VerticalMargin3 = 5;
+                int OffsetMargin = 5;
+                int HorizontalMargin0 = 5;
+                int HorizontalMargin2 = 5;
+                int VerticalMargin1 = 5;
+                int VerticalMargin3 = 5;
 
                 //Initialize Screen Capturer
                 bool CapturerInitialized = await InitializeScreenCapturer();
@@ -42,7 +42,12 @@ namespace AmbiPro
                 while (AVActions.TaskRunningCheck(AppTasks.LedToken))
                 {
                     IntPtr IntPtrBitmap = IntPtr.Zero;
-                    try { IntPtrBitmap = AppImport.CaptureScreenshot(out vScreenWidth, out vScreenHeight, out vOutputSize); } catch { }
+                    try
+                    {
+                        IntPtrBitmap = AppImport.CaptureScreenshot(out vScreenWidth, out vScreenHeight, out vOutputSize);
+                    }
+                    catch { }
+
                     if (IntPtrBitmap == IntPtr.Zero)
                     {
                         Debug.WriteLine("Failed capturing screenshot.");
@@ -54,8 +59,8 @@ namespace AmbiPro
                     double WidthPercentage = ((double)vScreenHeight / (double)vScreenWidth) * 100;
                     double HeightPercentage = 100 - WidthPercentage;
 
-                    Int32 HorizontalLeds = Convert.ToInt32(((WidthPercentage / 100) * setLedCount) / 2);
-                    Int32 VerticalLeds = Convert.ToInt32(((HeightPercentage / 100) * setLedCount) / 2);
+                    int HorizontalLeds = Convert.ToInt32(((WidthPercentage / 100) * setLedCount) / 2);
+                    int VerticalLeds = Convert.ToInt32(((HeightPercentage / 100) * setLedCount) / 2);
 
                     //Rotate the leds as calibrated for current ratio
                     if (setLedRotate >= 0)
@@ -69,11 +74,11 @@ namespace AmbiPro
                         VerticalLeds += Math.Abs(setLedRotate);
                     }
 
-                    Int32 HorizontalStep = (vScreenWidth / HorizontalLeds);
-                    Int32 VerticalStep = (vScreenHeight / VerticalLeds);
+                    int HorizontalStep = (vScreenWidth / HorizontalLeds);
+                    int VerticalStep = (vScreenHeight / VerticalLeds);
 
                     //Current byte information
-                    Int32 CurrentSerialByte = InitByteSize;
+                    int CurrentSerialByte = InitByteSize;
 
                     unsafe
                     {

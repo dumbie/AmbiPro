@@ -8,9 +8,9 @@ namespace AmbiPro
     public partial class App : Application
     {
         //Application Windows
-        public static FormSettings FormSettings = new FormSettings();
-        public static FormCalibrate FormCalibrate = new FormCalibrate();
-        public static FormHelp FormHelp = new FormHelp();
+        public static FormSettings vFormSettings = new FormSettings();
+        public static FormCalibrate vFormCalibrate = new FormCalibrate();
+        public static FormHelp vFormHelp = new FormHelp();
 
         protected override async void OnStartup(StartupEventArgs e)
         {

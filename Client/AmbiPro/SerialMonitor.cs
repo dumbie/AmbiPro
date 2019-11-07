@@ -17,37 +17,40 @@ namespace AmbiPro
 {
     partial class SerialMonitor
     {
+        //Application variables
+        private static bool vSwitching = false;
+
         //Serial port
         private static SerialPort vSerialComPort = null;
 
         //Device settings
-        private static string setSerialPortName = String.Empty;
-        private static Int32 setSerialBaudRate = 0;
+        private static string setSerialPortName = string.Empty;
+        private static int setSerialBaudRate = 0;
 
         //Led settings
         private static bool setAdjustBlackBars = true;
-        private static Int32 setAdjustBlackBarLevel = 0;
-        private static Int32 setLedCount = 0;
-        private static Int32 setUpdateRate = 0;
+        private static int setAdjustBlackBarLevel = 0;
+        private static int setLedCount = 0;
+        private static int setUpdateRate = 0;
         private static double setLedBrightness = 0;
-        private static Int32 setLedMinBrightness = 0;
+        private static int setLedMinBrightness = 0;
         private static double setLedGamma = 0;
         private static double setLedVibrance = 0;
-        private static Int32 setColorLoopSpeed = 0;
-        private static Int32 setSpectrumRotationSpeed = 0;
-        private static string setSolidLedColor = String.Empty;
+        private static int setColorLoopSpeed = 0;
+        private static int setSpectrumRotationSpeed = 0;
+        private static string setSolidLedColor = string.Empty;
         private static double setLedHue = 0;
-        private static Int32 setLedColorCut = 0;
+        private static int setLedColorCut = 0;
         private static double setLedColorRed = 0;
         private static double setLedColorGreen = 0;
         private static double setLedColorBlue = 0;
-        private static Int32 setLedOutput = 0;
-        private static Int32 setLedSides = 0;
-        private static Int32 setLedDirection = 0;
-        private static Int32 setLedCaptureRange = 0;
-        private static Int32 setLedSmoothing = 0;
-        private static Int32 setLedRotate = 0;
-        private static Int32 setLedMode = 0;
+        private static int setLedOutput = 0;
+        private static int setLedSides = 0;
+        private static int setLedDirection = 0;
+        private static int setLedCaptureRange = 0;
+        private static int setLedSmoothing = 0;
+        private static int setLedRotate = 0;
+        private static int setLedMode = 0;
 
         //Update the led settings
         public static void UpdateSettings()
@@ -84,7 +87,14 @@ namespace AmbiPro
 
                 //Update the rotation based on ratio
                 string ScreenRatio = AVFunctions.ScreenAspectRatio(vScreenWidth, vScreenHeight, false);
-                if (SettingsFunction.Check("LedRotate" + ScreenRatio)) { setLedRotate = Convert.ToInt32(ConfigurationManager.AppSettings["LedRotate" + ScreenRatio]); } else { setLedRotate = 0; }
+                if (SettingsFunction.Check("LedRotate" + ScreenRatio))
+                {
+                    setLedRotate = Convert.ToInt32(ConfigurationManager.AppSettings["LedRotate" + ScreenRatio]);
+                }
+                else
+                {
+                    setLedRotate = 0;
+                }
             }
             catch (Exception ex)
             {
@@ -92,30 +102,54 @@ namespace AmbiPro
             }
         }
 
+        //Led Switch Types
+        public enum LedSwitches
+        {
+            Disable,
+            Restart,
+            Automatic
+        }
+
         //Turn the leds on or off
-        public static async Task LedSwitch()
+        public static async Task LedSwitch(LedSwitches ledSwitch)
         {
             try
             {
-                if (AVActions.TaskRunningCheck(AppTasks.LedToken))
+                if (!vSwitching)
                 {
-                    await LedsDisable(false);
-                    return;
-                }
-                else
-                {
+                    vSwitching = true;
+
+                    //Restart the leds
+                    if (ledSwitch == LedSwitches.Restart)
+                    {
+                        await LedsRestart();
+                        vSwitching = false;
+                        return;
+                    }
+
+                    //Disable the leds
+                    if (AVActions.TaskRunningCheck(AppTasks.LedToken) || ledSwitch == LedSwitches.Disable)
+                    {
+                        await LedsDisable(false);
+                        vSwitching = false;
+                        return;
+                    }
+
+                    //Enable the leds
                     LedsEnable();
+                    vSwitching = false;
                     return;
                 }
             }
             catch
             {
                 Debug.WriteLine("Failed switching the leds on or off.");
+                vSwitching = false;
             }
         }
 
         //Enable the led updates
-        public static void LedsEnable()
+        private static void LedsEnable()
         {
             try
             {
@@ -130,7 +164,7 @@ namespace AmbiPro
         }
 
         //Disable the led updates
-        public static async Task LedsDisable(bool Restart)
+        private static async Task LedsDisable(bool Restart)
         {
             try
             {
@@ -143,17 +177,7 @@ namespace AmbiPro
                 }
 
                 //Cancel the led task
-                AppTasks.LedToken.Cancel();
-
-                //Wait for previous task
-                while (!AppTasks.LedTask.IsCompleted)
-                {
-                    Debug.WriteLine("Waiting for task to complete...");
-                    await Task.Delay(100);
-                }
-
-                AppTasks.LedTask.Dispose();
-                AppTasks.LedToken.Dispose();
+                await AVActions.TaskStop(AppTasks.LedTask, AppTasks.LedToken);
 
                 //Reset the screen capturer
                 AppImport.CaptureReset();
@@ -189,7 +213,7 @@ namespace AmbiPro
         }
 
         //Restart the led updates
-        public static async Task LedsRestart()
+        private static async Task LedsRestart()
         {
             try
             {
@@ -199,19 +223,19 @@ namespace AmbiPro
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Failed to disable the led updates: " + ex.Message);
+                Debug.WriteLine("Failed to restart the led updates: " + ex.Message);
             }
         }
 
         //Show the settings window
-        public static void ShowSettings()
+        private static void ShowSettings()
         {
             try
             {
                 System.Windows.Application CurrentApp = System.Windows.Application.Current;
                 AVActions.ActionDispatcherInvoke(delegate
                 {
-                    App.FormSettings.Show();
+                    App.vFormSettings.Show();
                 });
             }
             catch { }
@@ -228,12 +252,12 @@ namespace AmbiPro
                     int MsgBoxResult = await AVMessageBox.Popup("Failed to connect to your com port device", "Please make sure the device is not in use by another application, the correct com port is set and that the required drivers are installed on your system.", "Change com port", "Retry to connect", "Close application", "");
                     if (MsgBoxResult == 1)
                     {
-                        await LedsDisable(false);
+                        await LedSwitch(LedSwitches.Disable);
                         ShowSettings();
                     }
                     else if (MsgBoxResult == 2)
                     {
-                        await LedsRestart();
+                        await LedSwitch(LedSwitches.Restart);
                     }
                     else if (MsgBoxResult == 3)
                     {
@@ -252,19 +276,25 @@ namespace AmbiPro
                 System.Windows.Application CurrentApp = System.Windows.Application.Current;
                 AVActions.ActionDispatcherInvoke(async delegate
                 {
-                    Int32 MsgBoxResult = await AVMessageBox.Popup("Failed to start capturing your monitor screen", "Please make sure the correct monitor screen is selected, Microsoft Visual C++ 2017 Redistributable is installed on your PC, that you have a 64bit Windows installation and that you have a DirectX 11 or higher capable graphics adapter installed.", "Change monitor setting", "Change the led mode", "Retry to capture", "Close application");
+                    int MsgBoxResult = await AVMessageBox.Popup("Failed to start capturing your monitor screen", "Please make sure the correct monitor screen is selected, Microsoft Visual C++ 2017 Redistributable is installed on your PC, that you have a 64bit Windows installation and that you have a DirectX 11 or higher capable graphics adapter installed.", "Change monitor setting", "Change the led mode", "Retry to capture", "Close application");
                     if (MsgBoxResult == 1)
                     {
-                        await LedsDisable(false);
+                        await LedSwitch(LedSwitches.Disable);
                         ShowSettings();
                     }
-                    if (MsgBoxResult == 2)
+                    else if (MsgBoxResult == 2)
                     {
-                        await LedsDisable(false);
+                        await LedSwitch(LedSwitches.Disable);
                         ShowSettings();
                     }
-                    else if (MsgBoxResult == 3) { await LedsRestart(); }
-                    else if (MsgBoxResult == 4) { await AppStartup.Application_Exit(); }
+                    else if (MsgBoxResult == 3)
+                    {
+                        await LedSwitch(LedSwitches.Restart);
+                    }
+                    else if (MsgBoxResult == 4)
+                    {
+                        await AppStartup.Application_Exit();
+                    }
                 });
             }
             catch { }
@@ -326,7 +356,7 @@ namespace AmbiPro
             catch (Exception ex)
             {
                 Debug.WriteLine("Failed to update the leds: " + ex.Message);
-                await LedsRestart();
+                await LedSwitch(LedSwitches.Restart);
             }
         }
 
@@ -348,7 +378,10 @@ namespace AmbiPro
                 long milliseconds = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
                 ScreenBitmap.Save("E:\\Debug\\" + milliseconds + ".bmp", ImageFormat.Bmp);
             }
-            catch { Debug.WriteLine("Failed to export debug bitmap."); }
+            catch
+            {
+                Debug.WriteLine("Failed to export debug bitmap.");
+            }
         }
     }
 }

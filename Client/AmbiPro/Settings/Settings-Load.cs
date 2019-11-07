@@ -138,7 +138,10 @@ namespace AmbiPro.Settings
                 string TargetFileStartup_Normal = Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\" + TargetName_Normal + ".url";
                 if (File.Exists(TargetFileStartup_Normal)) { cb_WindowsStartup.IsChecked = true; }
             }
-            catch { Debug.WriteLine("Failed to load the settings."); }
+            catch
+            {
+                Debug.WriteLine("Failed to load the settings.");
+            }
         }
     }
 }

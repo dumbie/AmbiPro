@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
+using static AmbiPro.SerialMonitor;
 
 namespace AmbiPro
 {
@@ -57,7 +58,7 @@ namespace AmbiPro
         {
             try
             {
-                App.FormSettings.Show();
+                App.vFormSettings.Show();
             }
             catch { }
         }
@@ -68,7 +69,7 @@ namespace AmbiPro
             {
                 if (e.Button == MouseButtons.Middle)
                 {
-                    await SerialMonitor.LedSwitch();
+                    await LedSwitch(LedSwitches.Automatic);
                 }
             }
             catch { }
@@ -78,7 +79,7 @@ namespace AmbiPro
         {
             try
             {
-                await SerialMonitor.LedSwitch();
+                await LedSwitch(LedSwitches.Automatic);
             }
             catch { }
         }
@@ -87,7 +88,7 @@ namespace AmbiPro
         {
             try
             {
-                App.FormSettings.Show();
+                App.vFormSettings.Show();
             }
             catch { }
         }
@@ -101,7 +102,7 @@ namespace AmbiPro
                 else if (ClickMenuItem.Text == "Solid color") { SettingsFunction.Save("LedMode", "1"); }
                 else if (ClickMenuItem.Text == "Colors loop") { SettingsFunction.Save("LedMode", "2"); }
                 else if (ClickMenuItem.Text == "Color spectrum") { SettingsFunction.Save("LedMode", "3"); }
-                await SerialMonitor.LedsRestart();
+                await LedSwitch(LedSwitches.Restart);
             }
             catch { }
         }
@@ -110,22 +111,35 @@ namespace AmbiPro
         {
             try
             {
-                App.FormCalibrate.Show();
+                App.vFormCalibrate.Show();
             }
             catch { }
         }
 
-        private static void OnWebsite(object sender, EventArgs e) { Process.Start("http://projects.arnoldvink.com"); }
-
+        private static void OnWebsite(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start("https://projects.arnoldvink.com");
+            }
+            catch { }
+        }
         private static void OnHelp(object Sender, EventArgs e)
         {
             try
             {
-                App.FormHelp.Show();
+                App.vFormHelp.Show();
             }
             catch { }
         }
 
-        private static async void OnExit(object sender, EventArgs e) { try { await AppStartup.Application_Exit(); } catch { } }
+        private static async void OnExit(object sender, EventArgs e)
+        {
+            try
+            {
+                await AppStartup.Application_Exit();
+            }
+            catch { }
+        }
     }
 }

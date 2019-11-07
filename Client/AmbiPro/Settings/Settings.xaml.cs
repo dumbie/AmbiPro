@@ -9,82 +9,14 @@ using System.Net;
 using System.Net.Sockets;
 using System.Windows;
 using static AmbiPro.AppVariables;
+using static AmbiPro.SerialMonitor;
 
 namespace AmbiPro.Settings
 {
     public partial class FormSettings : Window
     {
-        //Application Variables
-        private static Configuration vConfiguration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-
         //Form initialization
-        public FormSettings()
-        {
-            try
-            {
-                InitializeComponent();
-                Loaded += (sender, args) =>
-                {
-                    //Check connected com ports
-                    foreach (string PortName in SerialPort.GetPortNames())
-                    {
-                        Int32 PortNumberRaw = Convert.ToInt32(PortName.Replace("COM", "")) - 1;
-                        cb_ComPort.Items[PortNumberRaw] = PortName + " (Connected)";
-                    }
-
-                    //Load and save the settings
-                    SettingsLoad();
-                    SettingsSave();
-
-                    //Check for first launch
-                    if (Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
-                    {
-                        txt_Welcome.Visibility = Visibility.Visible;
-                        btn_Welcome_Start1.Visibility = Visibility.Visible;
-                        btn_Welcome_Start2.Visibility = Visibility.Visible;
-                        btn_Welcome_Start3.Visibility = Visibility.Visible;
-                        btn_Welcome_Start4.Visibility = Visibility.Visible;
-                        menuButtonModes.Visibility = Visibility.Collapsed;
-                        menuButtonCalibrate.Visibility = Visibility.Collapsed;
-                        menuButtonRemote.Visibility = Visibility.Collapsed;
-                        menuButtonUpdate.Visibility = Visibility.Collapsed;
-                        menuButtonHelp.Visibility = Visibility.Collapsed;
-                        btn_SwitchLedsOnorOff.Visibility = Visibility.Collapsed;
-
-                        //Set the first connected device
-                        foreach (string PortName in SerialPort.GetPortNames())
-                        {
-                            int PortNumberRaw = Convert.ToInt32(PortName.Replace("COM", "")) - 1;
-                            cb_ComPort.SelectedIndex = PortNumberRaw;
-                        }
-                    }
-
-                    //Load current device's ipv4 adres
-                    IPAddress[] ListIpAdresses = Dns.GetHostEntry(Dns.GetHostName()).AddressList;
-                    if (ListIpAdresses.Any())
-                    {
-                        foreach (IPAddress ip in ListIpAdresses)
-                        {
-                            if (ip.AddressFamily == AddressFamily.InterNetwork)
-                            {
-                                tb_RemoteIp.Text = ip.ToString();
-                                if (ListIpAdresses.Count() == 1) { txt_Remote_IpAdres.Text = ip.ToString(); }
-                                else if (ListIpAdresses.Count() > 1) { txt_Remote_IpAdres.Text = txt_Remote_IpAdres.Text + ", " + ip.ToString(); }
-                            }
-                        }
-                        txt_Remote_IpAdres.Text = AVFunctions.StringReplaceFirst(txt_Remote_IpAdres.Text, ", ", "", false);
-                    }
-                    else
-                    {
-                        txt_Remote_IpAdres.Text = "Not connected";
-                    }
-
-                    //Check current socket status
-                    if (!vSocketServer.vIsServerRunning()) { txt_RemoteErrorServerPort.Visibility = Visibility.Visible; }
-                };
-            }
-            catch { }
-        }
+        public FormSettings() { InitializeComponent(); }
 
         //Open remote site
         private void btn_Remote_Open_Click(object sender, RoutedEventArgs e)
@@ -97,10 +29,17 @@ namespace AmbiPro.Settings
         }
 
         //Handle start button
-        private void btn_WelcomeStart_Click(object sender, RoutedEventArgs e)
+        private async void btn_WelcomeStart_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                //Set first launch setting to false
+                SettingsFunction.Save("FirstLaunch", "False");
+
+                //Start updating the leds
+                await LedSwitch(LedSwitches.Automatic);
+
+                //Close the settings window
                 this.Close();
             }
             catch { }
@@ -111,24 +50,101 @@ namespace AmbiPro.Settings
         {
             try
             {
-                await SerialMonitor.LedSwitch();
+                await LedSwitch(LedSwitches.Automatic);
             }
             catch { }
         }
 
-        //Check the first launch setting
-        private static void WelcomeCheck()
+        //Handle window initialized event
+        protected override void OnSourceInitialized(EventArgs e)
         {
             try
             {
+                //Check connected com ports
+                foreach (string PortName in SerialPort.GetPortNames())
+                {
+                    int PortNumberRaw = Convert.ToInt32(PortName.Replace("COM", "")) - 1;
+                    cb_ComPort.Items[PortNumberRaw] = PortName + " (Connected)";
+                }
+
+                //Load and save the settings
+                SettingsLoad();
+                SettingsSave();
+
+                Debug.WriteLine("Settings window initialized.");
+            }
+            catch { }
+        }
+
+        //Handle window activated event
+        protected override void OnActivated(EventArgs e)
+        {
+            try
+            {
+                //Check for first launch
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
                 {
-                    //Set first launch setting to false
-                    SettingsFunction.Save("FirstLaunch", "False");
+                    txt_Welcome.Visibility = Visibility.Visible;
+                    btn_Welcome_Start1.Visibility = Visibility.Visible;
+                    btn_Welcome_Start2.Visibility = Visibility.Visible;
+                    btn_Welcome_Start3.Visibility = Visibility.Visible;
+                    btn_Welcome_Start4.Visibility = Visibility.Visible;
+                    menuButtonModes.Visibility = Visibility.Collapsed;
+                    menuButtonCalibrate.Visibility = Visibility.Collapsed;
+                    menuButtonRemote.Visibility = Visibility.Collapsed;
+                    menuButtonUpdate.Visibility = Visibility.Collapsed;
+                    menuButtonHelp.Visibility = Visibility.Collapsed;
+                    btn_SwitchLedsOnorOff.Visibility = Visibility.Collapsed;
 
-                    //Start updating the leds
-                    SerialMonitor.LedsEnable();
+                    //Set the first connected device
+                    foreach (string PortName in SerialPort.GetPortNames())
+                    {
+                        int PortNumberRaw = Convert.ToInt32(PortName.Replace("COM", "")) - 1;
+                        cb_ComPort.SelectedIndex = PortNumberRaw;
+                    }
                 }
+                else
+                {
+                    txt_Welcome.Visibility = Visibility.Collapsed;
+                    btn_Welcome_Start1.Visibility = Visibility.Collapsed;
+                    btn_Welcome_Start2.Visibility = Visibility.Collapsed;
+                    btn_Welcome_Start3.Visibility = Visibility.Collapsed;
+                    btn_Welcome_Start4.Visibility = Visibility.Collapsed;
+                    menuButtonModes.Visibility = Visibility.Visible;
+                    menuButtonCalibrate.Visibility = Visibility.Visible;
+                    menuButtonRemote.Visibility = Visibility.Visible;
+                    menuButtonUpdate.Visibility = Visibility.Visible;
+                    menuButtonHelp.Visibility = Visibility.Visible;
+                    btn_SwitchLedsOnorOff.Visibility = Visibility.Visible;
+                }
+
+                //Load current device's ipv4 adres
+                IPAddress[] ListIpAdresses = Dns.GetHostEntry(Dns.GetHostName()).AddressList;
+                if (ListIpAdresses.Any())
+                {
+                    foreach (IPAddress ip in ListIpAdresses)
+                    {
+                        if (ip.AddressFamily == AddressFamily.InterNetwork)
+                        {
+                            tb_RemoteIp.Text = ip.ToString();
+                            if (ListIpAdresses.Count() == 1) { txt_Remote_IpAdres.Text = ip.ToString(); }
+                            else if (ListIpAdresses.Count() > 1) { txt_Remote_IpAdres.Text = txt_Remote_IpAdres.Text + ", " + ip.ToString(); }
+                        }
+                    }
+                    txt_Remote_IpAdres.Text = AVFunctions.StringReplaceFirst(txt_Remote_IpAdres.Text, ", ", "", false);
+                }
+                else
+                {
+                    txt_Remote_IpAdres.Text = "Not connected";
+                }
+
+                //Check current socket status
+                if (!vSocketServer.vIsServerRunning())
+                {
+                    txt_RemoteErrorServerPort.Visibility = Visibility.Visible;
+                }
+
+                Debug.WriteLine("Settings window activated.");
             }
             catch { }
         }
@@ -139,10 +155,7 @@ namespace AmbiPro.Settings
             try
             {
                 e.Cancel = true;
-                Debug.WriteLine("Closing the settings window.");
-
-                WelcomeCheck();
-
+                Debug.WriteLine("Settings window closing.");
                 this.Hide();
             }
             catch { }

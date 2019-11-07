@@ -6,7 +6,7 @@ namespace AmbiPro
     class AppTasks
     {
         //Application Tasks
-        public static Task LedTask;
-        public static CancellationTokenSource LedToken;
+        public static Task LedTask = null;
+        public static CancellationTokenSource LedToken = null;
     }
 }
