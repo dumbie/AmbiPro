@@ -19,7 +19,7 @@
 
     <div class="clearBoth marginCenterTop">
         <span class="txtSettings marginCenter">Change led brightness:</span>
-        <input id="LedBrightness" class="slider" type="range" min="5" max="100" value="50" oninput="sendLedBrightness();">
+        <input id="LedBrightness" class="slider" type="range" min="5" max="100" step="5" value="50" oninput="sendLedBrightness();">
     </div>
 
     <div class="clearBoth marginCenterTop">
