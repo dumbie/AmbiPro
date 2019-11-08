@@ -49,7 +49,7 @@ namespace AmbiPro.Help
 
                         //Set the version text
                         sp_Help.Children.Add(new TextBlock() { Text = "\r\nApplication made by Arnold Vink", Style = (Style)App.Current.Resources["TextBlockBlack"] });
-                        sp_Help.Children.Add(new TextBlock() { Text = "Version: v" + Assembly.GetExecutingAssembly().FullName.Split('=')[1].Split(',')[0], Style = (Style)App.Current.Resources["TextBlockGrayLight"], TextWrapping = TextWrapping.Wrap });
+                        sp_Help.Children.Add(new TextBlock() { Text = "Version: v" + Assembly.GetEntryAssembly().FullName.Split('=')[1].Split(',')[0], Style = (Style)App.Current.Resources["TextBlockGrayLight"], TextWrapping = TextWrapping.Wrap });
                     }
                 };
             }

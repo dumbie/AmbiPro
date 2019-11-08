@@ -173,7 +173,7 @@ namespace AmbiPro
                 //Update the tray icon
                 if (!Restart)
                 {
-                    AppTray.NotifyIcon.Icon = new Icon(Assembly.GetExecutingAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon-Disabled.ico"));
+                    AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon-Disabled.ico"));
                 }
 
                 //Cancel the led task

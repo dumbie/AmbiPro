@@ -17,7 +17,7 @@ namespace AmbiPro
             try
             {
                 //Update the tray icon
-                AppTray.NotifyIcon.Icon = new Icon(Assembly.GetExecutingAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
+                AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
 
                 //Loop color variables
                 int ColorLoopState = 0;

@@ -134,7 +134,7 @@ namespace AmbiPro.Settings
                 cb_LedDirection.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedDirection"]);
 
                 //Check if application is set to launch on Windows startup
-                string TargetName_Normal = Assembly.GetExecutingAssembly().GetName().Name;
+                string TargetName_Normal = Assembly.GetEntryAssembly().GetName().Name;
                 string TargetFileStartup_Normal = Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\" + TargetName_Normal + ".url";
                 if (File.Exists(TargetFileStartup_Normal)) { cb_WindowsStartup.IsChecked = true; }
             }
