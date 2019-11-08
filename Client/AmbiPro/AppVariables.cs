@@ -14,6 +14,6 @@ namespace AmbiPro
         public static bool vCheckingForUpdate = false;
 
         //Socket Variables
-        public static ArnoldVinkSocketServer vSocketServer = new ArnoldVinkSocketServer();
+        public static ArnoldVinkSocketServer vSocketServer = null;
     }
 }

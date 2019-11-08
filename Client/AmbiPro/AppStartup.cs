@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArnoldVinkCode;
+using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -30,9 +31,7 @@ namespace AmbiPro
                 AppTimers.ApplicationTimersRegister();
 
                 //Enable the socket server
-                vSocketServer.vTcpListenerPort = Convert.ToInt32(ConfigurationManager.AppSettings["ServerPort"]);
-                vSocketServer.SocketServerEnable();
-                vSocketServer.EventBytesReceived += SocketHandlers.ReceivedSocketHandler;
+                EnableSocketServer();
 
                 //Settings screen if first run
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
@@ -66,6 +65,19 @@ namespace AmbiPro
                 {
                     await AppUpdate.CheckForAppUpdate(true);
                 }
+            }
+            catch { }
+        }
+
+        //Enable the socket server
+        private void EnableSocketServer()
+        {
+            try
+            {
+                int SocketServerPort = Convert.ToInt32(ConfigurationManager.AppSettings["ServerPort"]);
+
+                vSocketServer = new ArnoldVinkSocketServer("127.0.0.1", SocketServerPort);
+                vSocketServer.EventBytesReceived += SocketHandlers.ReceivedSocketHandler;
             }
             catch { }
         }
