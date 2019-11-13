@@ -76,8 +76,8 @@ namespace AmbiPro
             {
                 int SocketServerPort = Convert.ToInt32(ConfigurationManager.AppSettings["ServerPort"]);
 
-                vSocketServer = new ArnoldVinkSocketServer("127.0.0.1", SocketServerPort);
-                vSocketServer.EventBytesReceived += SocketHandlers.ReceivedSocketHandler;
+                vArnoldVinkSockets = new ArnoldVinkSockets("127.0.0.1", SocketServerPort);
+                vArnoldVinkSockets.EventBytesReceived += SocketHandlers.ReceivedSocketHandler;
             }
             catch { }
         }
@@ -93,7 +93,7 @@ namespace AmbiPro
                 await LedSwitch(LedSwitches.Disable);
 
                 //Disable the socket server
-                await vSocketServer.SocketServerDisable();
+                await vArnoldVinkSockets.SocketServerDisable();
 
                 //Disable application timers
                 AppTimers.ApplicationTimersDisable();

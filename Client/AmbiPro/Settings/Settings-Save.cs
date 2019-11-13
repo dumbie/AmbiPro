@@ -313,8 +313,8 @@ namespace AmbiPro.Settings
                 tb_ServerPort.BorderBrush = BrushValid;
 
                 //Restart the socket server
-                vSocketServer.vTcpListenerPort = Convert.ToInt32(tb_ServerPort.Text);
-                await vSocketServer.SocketServerRestart();
+                vArnoldVinkSockets.vTcpListenerPort = Convert.ToInt32(tb_ServerPort.Text);
+                await vArnoldVinkSockets.SocketServerRestart();
             }
             catch { }
         }

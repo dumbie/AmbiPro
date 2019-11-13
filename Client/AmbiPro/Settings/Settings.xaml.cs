@@ -139,7 +139,7 @@ namespace AmbiPro.Settings
                 }
 
                 //Check current socket status
-                if (!vSocketServer.vIsServerRunning())
+                if (!vArnoldVinkSockets.vIsServerRunning())
                 {
                     txt_RemoteErrorServerPort.Visibility = Visibility.Visible;
                 }
