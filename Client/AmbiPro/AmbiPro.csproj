@@ -61,6 +61,10 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationClient" />
+    <Reference Include="Windows">
+      <HintPath>C:\Program Files (x86)\Windows Kits\10\UnionMetadata\10.0.17763.0\Windows.winmd</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -70,44 +74,78 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkColorPicker\ColorPicker.xaml.cs">
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkColorPicker\ColorPicker.xaml.cs">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkColorPicker\ColorPicker.xaml.cs</Link>
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkColorPicker\ColorSelector.xaml.cs">
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkColorPicker\ColorSelector.xaml.cs">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkColorPicker\ColorSelector.xaml.cs</Link>
       <DependentUpon>ColorSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkProcesses\ProcessWin32Functions.cs">
-      <Link>Resources\ArnoldVinkCode\Functions\Processes\ProcessWin32Functions.cs</Link>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkInputOutput\InputOutputClass.cs">
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkInputOutput\InputOutputClass.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkSockets\SocketClass.cs">
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkInputOutput\InputOutputKeyboard.cs">
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkInputOutput\InputOutputKeyboard.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkInputOutput\InputOutputMouse.cs">
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkInputOutput\InputOutputMouse.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkProcesses\ClassAppxDetails.cs">
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkProcesses\ClassAppxDetails.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkProcesses\ClassAppxFactory.cs">
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkProcesses\ClassAppxFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkProcesses\ProcessClasses.cs">
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkProcesses\ProcessClasses.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkProcesses\ProcessFunctions.cs">
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkProcesses\ProcessFunctions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkProcesses\ProcessNtQueryInformation.cs">
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkProcesses\ProcessNtQueryInformation.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkProcesses\ProcessUwpFunctions.cs">
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkProcesses\ProcessUwpFunctions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkProcesses\ProcessWin32Functions.cs">
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkProcesses\ProcessWin32Functions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkSockets\SocketClass.cs">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkSockets\SocketClass.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkSockets\SocketClient.cs">
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkSockets\SocketClient.cs">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkSockets\SocketClient.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkSockets\SocketServer.cs">
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkSockets\SocketServer.cs">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkSockets\SocketServer.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkSockets\SocketVariables.cs">
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkSockets\SocketVariables.cs">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkSockets\SocketVariables.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkTimePicker\TimePicker.xaml.cs">
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkTimePicker\TimePicker.xaml.cs">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkTimePicker\TimePicker.xaml.cs</Link>
       <DependentUpon>TimePicker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\AVActions.cs">
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVActions.cs">
       <Link>ArnoldVinkCode\Functions\AVActions.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\AVDownloader.cs">
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVDownloader.cs">
       <Link>ArnoldVinkCode\Functions\AVDownloader.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\ArnoldVinkCode\Functions\Desktop\AVFunctions.cs">
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVFunctions.cs">
       <Link>ArnoldVinkCode\Functions\AVFunctions.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\ArnoldVinkCode\Xaml\Desktop\MainStyles.xaml.cs">
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Interop\AVInteropCom.cs">
+      <Link>ArnoldVinkCode\Interop\AVInteropCom.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Interop\AVInteropDll.cs">
+      <Link>ArnoldVinkCode\Interop\AVInteropDll.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Styles\MainStyles.xaml.cs">
       <Link>Styles\MainStyles.xaml.cs</Link>
+      <DependentUpon>MainStyles.xaml</DependentUpon>
     </Compile>
     <Compile Include="AdjustBlackBars.cs" />
     <Compile Include="AdjustLedColors.cs" />
@@ -143,37 +181,37 @@
     <Compile Include="Settings\Settings-Save.cs" />
     <Compile Include="Settings\Settings-Check.cs" />
     <Compile Include="AppTray.cs" />
-    <Page Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkColorPicker\ColorPicker.xaml">
+    <Page Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkColorPicker\ColorPicker.xaml">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkColorPicker\ColorPicker.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkColorPicker\ColorSelector.xaml">
+    <Page Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkColorPicker\ColorSelector.xaml">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkColorPicker\ColorSelector.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkTimePicker\TimePicker.xaml">
+    <Page Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkTimePicker\TimePicker.xaml">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkTimePicker\TimePicker.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\..\ArnoldVinkCode\Xaml\Desktop\ControlTemplates.xaml">
+    <Page Include="..\..\..\ArnoldVinkCode\Desktop\Styles\ControlTemplates.xaml">
       <Link>Styles\ControlTemplates.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\..\ArnoldVinkCode\Xaml\Desktop\MainColors.xaml">
+    <Page Include="..\..\..\ArnoldVinkCode\Desktop\Styles\MainColors.xaml">
       <Link>Styles\MainColors.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\..\ArnoldVinkCode\Xaml\Desktop\MainStyles.xaml">
+    <Page Include="..\..\..\ArnoldVinkCode\Desktop\Styles\MainStyles.xaml">
       <Link>Styles\MainStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\..\ArnoldVinkCode\Xaml\Desktop\Scrollbar.xaml">
+    <Page Include="..\..\..\ArnoldVinkCode\Desktop\Styles\Scrollbar.xaml">
       <Link>Styles\Scrollbar.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -244,7 +282,7 @@
     <Resource Include="Assets\Icons\Modes.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="..\..\..\ArnoldVinkCode\Functions\Desktop\ArnoldVinkColorPicker\ColorSelector.png">
+    <Resource Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkColorPicker\ColorSelector.png">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkColorPicker\ColorSelector.png</Link>
     </Resource>
     <Content Include="Script\Script.ino">
