@@ -42,10 +42,10 @@ namespace AmbiPro.Help
                         sp_Help.Children.Add(new TextBlock() { Text = "If you are an Arduino user you can install the drivers by installing the Arduino IDE software found on the official website: http://arduino.cc", Style = (Style)App.Current.Resources["TextBlockGrayLight"], TextWrapping = TextWrapping.Wrap });
 
                         sp_Help.Children.Add(new TextBlock() { Text = "\r\nSupport and bug reporting", Style = (Style)App.Current.Resources["TextBlockBlack"] });
-                        sp_Help.Children.Add(new TextBlock() { Text = "When you are walking into any problems or bugs you can goto the support page: http://support.arnoldvink.com so I can try to help you out and get everything working.", Style = (Style)App.Current.Resources["TextBlockGrayLight"], TextWrapping = TextWrapping.Wrap });
+                        sp_Help.Children.Add(new TextBlock() { Text = "When you are walking into any problems or a bug you can go to my help page at https://help.arnoldvink.com so I can try to help you out and get everything working.", Style = (Style)App.Current.Resources["TextBlockGrayLight"], TextWrapping = TextWrapping.Wrap });
 
-                        sp_Help.Children.Add(new TextBlock() { Text = "\r\nDevelopment donation support", Style = (Style)App.Current.Resources["TextBlockBlack"] });
-                        sp_Help.Children.Add(new TextBlock() { Text = "Feel free to make a donation to support me with my projects, you can click below on the donation button to open the donation page.", Style = (Style)App.Current.Resources["TextBlockGrayLight"], TextWrapping = TextWrapping.Wrap });
+                        sp_Help.Children.Add(new TextBlock() { Text = "\r\nDeveloper donation", Style = (Style)App.Current.Resources["TextBlockBlack"] });
+                        sp_Help.Children.Add(new TextBlock() { Text = "If you appreciate my project and want to support me with my projects you can make a donation through https://donation.arnoldvink.com", Style = (Style)App.Current.Resources["TextBlockGrayLight"], TextWrapping = TextWrapping.Wrap });
 
                         //Set the version text
                         sp_Help.Children.Add(new TextBlock() { Text = "\r\nApplication made by Arnold Vink", Style = (Style)App.Current.Resources["TextBlockBlack"] });

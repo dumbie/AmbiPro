@@ -26,11 +26,11 @@ this application will capture your screen and sync the colors to your led strip.
 - Windows operating system 8.1 64-bit or higher is required.
 - A DirectX 11 or higher capable graphics adapter.
 
-| Support and bug report
-When you are walking into any problems or bugs you can goto the support page: http://support.arnoldvink.com so I can try to help you out and get everything working.
+| Support and bug reporting
+When you are walking into any problems or a bug you can go to my help page at https://help.arnoldvink.com so I can try to help you out and get everything working.
 
-| Donation
-Feel free to make a donation to support me with my projects: http://donation.arnoldvink.com
+| Developer donation
+If you appreciate my project and want to support me with my projects you can make a donation through https://donation.arnoldvink.com
 
 | Changelog
 v0.9.4.5 (22-January-2018)

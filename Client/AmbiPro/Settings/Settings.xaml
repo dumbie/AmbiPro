@@ -313,12 +313,13 @@
                             <TextBox Name="tb_ServerPort" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
                             <TextBox Name="tb_RemoteIp" Visibility="Collapsed" Text="127.0.0.1" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
 
-                            <TextBlock Name="txt_Remote_Web" Margin="0,12,0,0" Text="You can access the remote by going to http://ambipro.arnoldvink.com" Style="{StaticResource TextBlockGrayLight}"/>
+                            <TextBlock Name="txt_Remote_Web" Margin="0,12,0,0" Text="You can access the remote by going to https://ambipro.arnoldvink.com in your browser or download the RemoteMe app from the projects page." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
 
                             <TextBlock Name="txt_Remote_IpText" Margin="0,10,0,0" Text="When you opened the remote use one of the following ip adresses:" Style="{StaticResource TextBlockBlack}"/>
                             <TextBlock Name="txt_Remote_IpAdres" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
 
-                            <Button Name="btn_Remote_Open" Margin="0,12,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Open the remote in browser" Click="btn_Remote_Open_Click"/>
+                            <Button Name="btn_Projects_Open" Margin="0,15,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Open the projects page in browser" Click="btn_Projects_Open_Click"/>
+                            <Button Name="btn_Remote_Open" Margin="0,15,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Open the remote in browser" Click="btn_Remote_Open_Click"/>
 
                             <TextBlock Name="txt_RemoteErrorServerPort" Visibility="Collapsed" Margin="0,10,0,0" Text="* The remote may not be working because the server did not start properly, please make sure that the set server port is not already in use by another application." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
                         </StackPanel>

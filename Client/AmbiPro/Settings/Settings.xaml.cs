@@ -18,6 +18,16 @@ namespace AmbiPro.Settings
         //Form initialization
         public FormSettings() { InitializeComponent(); }
 
+        //Open projects site
+        private void btn_Projects_Open_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process.Start("https://projects.arnoldvink.com");
+            }
+            catch { }
+        }
+
         //Open remote site
         private void btn_Remote_Open_Click(object sender, RoutedEventArgs e)
         {
@@ -119,6 +129,7 @@ namespace AmbiPro.Settings
                 }
 
                 //Load current device's ipv4 adres
+                txt_Remote_IpAdres.Text = string.Empty;
                 IPAddress[] ListIpAdresses = Dns.GetHostEntry(Dns.GetHostName()).AddressList;
                 if (ListIpAdresses.Any())
                 {
