@@ -39,6 +39,7 @@ namespace AmbiPro
                 string StringReceived = Encoding.UTF8.GetString(receivedBytes, 0, receivedBytes.Length);
                 StringReceived = WebUtility.UrlDecode(StringReceived);
                 StringReceived = WebUtility.HtmlDecode(StringReceived);
+                StringReceived = StringReceived.TrimEnd('\0');
                 Debug.WriteLine("Received string: " + StringReceived);
 
                 //Prepare response message
