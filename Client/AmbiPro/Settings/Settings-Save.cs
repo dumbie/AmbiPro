@@ -80,7 +80,7 @@ namespace AmbiPro.Settings
                 vTextBoxTimer_ServerPort.Tick += vTextBoxTimer_ServerPort_Tick;
                 tb_ServerPort.TextChanged += (sender, e) =>
                 {
-                    AVFunctions.ResetTimer(vTextBoxTimer_ServerPort);
+                    AVFunctions.TimerReset(vTextBoxTimer_ServerPort);
                 };
 
                 //Save - Adjust Black Bars
@@ -218,7 +218,10 @@ namespace AmbiPro.Settings
 
                 //Save - Led Count
                 vTextBoxTimer_LedCount.Tick += vTextBoxTimer_LedCount_Tick;
-                tb_LedCount.TextChanged += (sender, e) => { AVFunctions.ResetTimer(vTextBoxTimer_LedCount); };
+                tb_LedCount.TextChanged += (sender, e) =>
+                {
+                    AVFunctions.TimerReset(vTextBoxTimer_LedCount);
+                };
 
                 //Save - Led Output
                 cb_LedOutput.SelectionChanged += (sender, e) =>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArnoldVinkCode;
+using System;
 using System.Diagnostics;
 using System.Windows.Threading;
 
@@ -17,6 +18,7 @@ namespace AmbiPro
                 Debug.WriteLine("Registering application timers...");
 
                 //Create timer to update the led settings
+                AVFunctions.TimerRenew(ref vDispatcherTimer_UpdateSettings);
                 vDispatcherTimer_UpdateSettings.Interval = TimeSpan.FromSeconds(1);
                 vDispatcherTimer_UpdateSettings.Tick += delegate { SerialMonitor.UpdateSettings(); };
                 vDispatcherTimer_UpdateSettings.Start();
