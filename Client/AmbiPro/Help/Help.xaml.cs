@@ -39,7 +39,7 @@ namespace AmbiPro.Help
                         sp_Help.Children.Add(new TextBlock() { Text = "You can click on the tray icon with your middle mouse button to quickly switch the leds on or off.", Style = (Style)App.Current.Resources["TextBlockGrayLight"], TextWrapping = TextWrapping.Wrap });
 
                         sp_Help.Children.Add(new TextBlock() { Text = "\r\nWhere can I find the required drivers?", Style = (Style)App.Current.Resources["TextBlockBlack"] });
-                        sp_Help.Children.Add(new TextBlock() { Text = "If you are an Arduino user you can install the drivers by installing the Arduino IDE software found on the official website: http://arduino.cc", Style = (Style)App.Current.Resources["TextBlockGrayLight"], TextWrapping = TextWrapping.Wrap });
+                        sp_Help.Children.Add(new TextBlock() { Text = "If you are an Arduino user you can install the drivers by installing the Arduino IDE software found on the official website: https://arduino.cc", Style = (Style)App.Current.Resources["TextBlockGrayLight"], TextWrapping = TextWrapping.Wrap });
 
                         sp_Help.Children.Add(new TextBlock() { Text = "\r\nSupport and bug reporting", Style = (Style)App.Current.Resources["TextBlockBlack"] });
                         sp_Help.Children.Add(new TextBlock() { Text = "When you are walking into any problems or a bug you can go to my help page at https://help.arnoldvink.com so I can try to help you out and get everything working.", Style = (Style)App.Current.Resources["TextBlockGrayLight"], TextWrapping = TextWrapping.Wrap });
@@ -57,8 +57,8 @@ namespace AmbiPro.Help
         }
 
         //Open the web browser
-        void btn_Help_ProjectWebsite_Click(object sender, RoutedEventArgs e) { Process.Start("http://projects.arnoldvink.com"); }
-        void btn_Help_OpenDonation_Click(object sender, RoutedEventArgs e) { Process.Start("http://donation.arnoldvink.com"); }
+        void btn_Help_ProjectWebsite_Click(object sender, RoutedEventArgs e) { Process.Start("https://projects.arnoldvink.com"); }
+        void btn_Help_OpenDonation_Click(object sender, RoutedEventArgs e) { Process.Start("https://donation.arnoldvink.com"); }
 
         //Handle window closing event
         protected override void OnClosing(CancelEventArgs e)

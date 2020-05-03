@@ -93,7 +93,10 @@ namespace AmbiPro
                 await LedSwitch(LedSwitches.Disable);
 
                 //Disable the socket server
-                await vArnoldVinkSockets.SocketServerDisable();
+                if (vArnoldVinkSockets != null)
+                {
+                    await vArnoldVinkSockets.SocketServerDisable();
+                }
 
                 //Disable application timers
                 AppTimers.ApplicationTimersDisable();

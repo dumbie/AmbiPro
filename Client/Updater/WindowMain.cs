@@ -73,7 +73,7 @@ namespace Updater
                         ProgressBarUpdate(Args.ProgressPercentage, false);
                         TextBlockUpdate("Downloading update file: " + Args.ProgressPercentage + "%");
                     };
-                    await WebClient.DownloadFileTaskAsync(new Uri("http://download.arnoldvink.com/?dl=AmbiPro.zip"), "AppUpdate.zip");
+                    await WebClient.DownloadFileTaskAsync(new Uri("https://download.arnoldvink.com/?dl=AmbiPro.zip"), "AppUpdate.zip");
                     Debug.WriteLine("Update file has been downloaded");
                 }
                 catch
@@ -128,7 +128,7 @@ namespace Updater
                 if (AppRunning)
                 {
                     TextBlockUpdate("Running the updated version of the application.");
-                    ProcessLauncherWin32("AmbiPro.exe", "", "", false, false);
+                    await ProcessLauncherWin32Async("AmbiPro.exe", "", "", false, false);
                 }
 
                 //Close the application
