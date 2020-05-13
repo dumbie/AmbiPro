@@ -73,6 +73,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkActions\AVActions.cs">
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkActions\AVActions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkActions\Classes\AVTaskDetails.cs">
+      <Link>ArnoldVinkCode\Functions\ArnoldVinkActions\Classes\AVTaskDetails.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkColorPicker\ColorPicker.xaml.cs">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkColorPicker\ColorPicker.xaml.cs</Link>
       <DependentUpon>ColorPicker.xaml</DependentUpon>
@@ -129,9 +135,6 @@
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkTimePicker\TimePicker.xaml.cs">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkTimePicker\TimePicker.xaml.cs</Link>
       <DependentUpon>TimePicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVActions.cs">
-      <Link>ArnoldVinkCode\Functions\AVActions.cs</Link>
     </Compile>
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVDownloader.cs">
       <Link>ArnoldVinkCode\Functions\AVDownloader.cs</Link>

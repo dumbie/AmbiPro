@@ -1,9 +1,10 @@
-﻿using ArnoldVinkCode;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
 using System.Threading.Tasks;
+using static AmbiPro.AppTasks;
+using static ArnoldVinkCode.AVActions;
 
 namespace AmbiPro
 {
@@ -39,7 +40,7 @@ namespace AmbiPro
                 AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
 
                 //Start updating the leds
-                while (AVActions.TaskRunningCheck(AppTasks.LedToken))
+                while (vTask_LedUpdate.Status == AVTaskStatus.Running)
                 {
                     IntPtr IntPtrBitmap = IntPtr.Zero;
                     try
@@ -141,7 +142,8 @@ namespace AmbiPro
                     //Clear screen capture resources
                     AppImport.CaptureFreeMemory(IntPtrBitmap);
 
-                    await Task.Delay(setUpdateRate);
+                    //Delay the loop task
+                    await TaskDelayLoop(setUpdateRate, vTask_LedUpdate);
                 }
             }
             catch { }

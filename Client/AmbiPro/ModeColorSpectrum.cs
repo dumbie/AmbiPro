@@ -4,13 +4,15 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
 using System.Threading.Tasks;
+using static AmbiPro.AppTasks;
+using static ArnoldVinkCode.AVActions;
 
 namespace AmbiPro
 {
     partial class SerialMonitor
     {
         //Rotating color spectrum
-        private static async Task ModeColorSpectrum(Int32 InitByteSize, byte[] SerialBytes)
+        private static async Task ModeColorSpectrum(int InitByteSize, byte[] SerialBytes)
         {
             try
             {
@@ -22,7 +24,7 @@ namespace AmbiPro
                 AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
 
                 //Current byte information
-                while (AVActions.TaskRunningCheck(AppTasks.LedToken))
+                while (vTask_LedUpdate.Status == AVTaskStatus.Running)
                 {
                     //Reset the colors when brightness has changed.
                     if (PreviousBrightness != setLedBrightness || PreviousLedOutput != setLedOutput)
@@ -52,7 +54,7 @@ namespace AmbiPro
                         Color Color12 = ColorTranslator.FromHtml("#93b300"); Color12 = AdjustLedColors(Color12);
 
                         //Set the current color to the bytes
-                        Int32 CurrentSerialByte = InitByteSize;
+                        int CurrentSerialByte = InitByteSize;
                         while (CurrentSerialByte < SerialBytes.Length)
                         {
                             //Check if the next color has been reached
@@ -105,7 +107,8 @@ namespace AmbiPro
                     //Debug.WriteLine("Serial bytes sended: " + SerialBytes.Length);
                     vSerialComPort.Write(SerialBytes, 0, SerialBytes.Length);
 
-                    await Task.Delay(1000);
+                    //Delay the loop task
+                    await TaskDelayLoop(1000, vTask_LedUpdate);
                 }
             }
             catch { }

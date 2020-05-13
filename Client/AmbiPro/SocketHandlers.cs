@@ -6,7 +6,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
 
 namespace AmbiPro
@@ -26,7 +25,7 @@ namespace AmbiPro
                     }
                     catch { }
                 }
-                await AVActions.TaskStart(TaskAction, null);
+                await AVActions.TaskStart(TaskAction);
             }
             catch { }
         }
@@ -45,10 +44,10 @@ namespace AmbiPro
                 //Prepare response message
                 string[] SocketData = StringReceived.Split('‡');
                 string StringResponse = await SocketStringHandle(SocketData);
-                byte[] bytesResponse = Encoding.UTF8.GetBytes(StringResponse);
+                //byte[] bytesResponse = Encoding.UTF8.GetBytes(StringResponse);
 
                 //Return response message
-                await vArnoldVinkSockets.TcpClientSendBytes(tcpClient, bytesResponse, vArnoldVinkSockets.vTcpClientTimeout, false);
+                //await vArnoldVinkSockets.TcpClientSendBytes(tcpClient, bytesResponse, vArnoldVinkSockets.vTcpClientTimeout, false);
             }
             catch { }
         }

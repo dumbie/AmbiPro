@@ -10,6 +10,7 @@ using System.Net.Sockets;
 using System.Windows;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
+using static ArnoldVinkCode.AVActions;
 
 namespace AmbiPro.Settings
 {
@@ -19,7 +20,7 @@ namespace AmbiPro.Settings
         public FormSettings() { InitializeComponent(); }
 
         //Open projects site
-        private void btn_Projects_Open_Click(object sender, RoutedEventArgs e)
+        private void Btn_Projects_Open_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -29,7 +30,7 @@ namespace AmbiPro.Settings
         }
 
         //Open remote site
-        private void btn_Remote_Open_Click(object sender, RoutedEventArgs e)
+        private void Btn_Remote_Open_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -39,7 +40,7 @@ namespace AmbiPro.Settings
         }
 
         //Handle start button
-        private async void btn_WelcomeStart_Click(object sender, RoutedEventArgs e)
+        private async void Btn_WelcomeStart_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -56,7 +57,7 @@ namespace AmbiPro.Settings
         }
 
         //Handle switch button
-        private async void btn_SwitchLedsOnorOff_Click(object sender, RoutedEventArgs e)
+        private async void Btn_SwitchLedsOnOrOff_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -104,7 +105,7 @@ namespace AmbiPro.Settings
                     menuButtonRemote.Visibility = Visibility.Collapsed;
                     menuButtonUpdate.Visibility = Visibility.Collapsed;
                     menuButtonHelp.Visibility = Visibility.Collapsed;
-                    btn_SwitchLedsOnorOff.Visibility = Visibility.Collapsed;
+                    btn_SwitchLedsOnOrOff.Visibility = Visibility.Collapsed;
 
                     //Set the first connected device
                     foreach (string PortName in SerialPort.GetPortNames())
@@ -125,7 +126,7 @@ namespace AmbiPro.Settings
                     menuButtonRemote.Visibility = Visibility.Visible;
                     menuButtonUpdate.Visibility = Visibility.Visible;
                     menuButtonHelp.Visibility = Visibility.Visible;
-                    btn_SwitchLedsOnorOff.Visibility = Visibility.Visible;
+                    btn_SwitchLedsOnOrOff.Visibility = Visibility.Visible;
                 }
 
                 //Load current device's ipv4 adres
@@ -150,7 +151,7 @@ namespace AmbiPro.Settings
                 }
 
                 //Check current socket status
-                if (!vArnoldVinkSockets.vIsServerRunning())
+                if (vArnoldVinkSockets.vTask_SocketServer.Status != AVTaskStatus.Running)
                 {
                     txt_RemoteErrorServerPort.Visibility = Visibility.Visible;
                 }

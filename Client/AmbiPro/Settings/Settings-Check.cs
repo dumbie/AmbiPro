@@ -191,7 +191,7 @@ namespace AmbiPro.Settings
                 //Check - Update Rate
                 if (ConfigurationManager.AppSettings["UpdateRate"] == null)
                 {
-                    SettingsFunction.Save("UpdateRate", "25");
+                    SettingsFunction.Save("UpdateRate", "20");
                 }
 
                 //Check - Led Sides

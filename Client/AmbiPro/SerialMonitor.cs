@@ -10,8 +10,9 @@ using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
+using static AmbiPro.AppTasks;
+using static ArnoldVinkCode.AVActions;
 
 namespace AmbiPro
 {
@@ -128,7 +129,7 @@ namespace AmbiPro
                     }
 
                     //Disable the leds
-                    if (AVActions.TaskRunningCheck(AppTasks.LedToken) || ledSwitch == LedSwitches.Disable)
+                    if (ledSwitch == LedSwitches.Disable || vTask_LedUpdate.Status == AVTaskStatus.Running)
                     {
                         await LedsDisable(false);
                         vSwitching = false;
@@ -154,8 +155,7 @@ namespace AmbiPro
             try
             {
                 Debug.WriteLine("Enabling the led updates.");
-                AppTasks.LedToken = new CancellationTokenSource();
-                AppTasks.LedTask = AVActions.TaskStart(UpdateLeds, AppTasks.LedToken);
+                AVActions.TaskStartLoop(LoopUpdateLeds, vTask_LedUpdate);
             }
             catch (Exception ex)
             {
@@ -164,20 +164,20 @@ namespace AmbiPro
         }
 
         //Disable the led updates
-        private static async Task LedsDisable(bool Restart)
+        private static async Task LedsDisable(bool restartLeds)
         {
             try
             {
                 Debug.WriteLine("Disabling the led updates.");
 
                 //Update the tray icon
-                if (!Restart)
+                if (!restartLeds)
                 {
                     AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon-Disabled.ico"));
                 }
 
                 //Cancel the led task
-                await AVActions.TaskStop(AppTasks.LedTask, AppTasks.LedToken);
+                await AVActions.TaskStopLoop(vTask_LedUpdate);
 
                 //Reset the screen capturer
                 AppImport.CaptureReset();
@@ -186,7 +186,7 @@ namespace AmbiPro
                 if (vSerialComPort.IsOpen)
                 {
                     //Send black leds update
-                    if (!Restart)
+                    if (!restartLeds)
                     {
                         //Calculate bytes size
                         int InitialByteSize = 3;
@@ -314,8 +314,8 @@ namespace AmbiPro
             return InitFailed;
         }
 
-        //Update the leds based on screenshot
-        private static async void UpdateLeds()
+        //Update the leds in loop
+        private static async void LoopUpdateLeds()
         {
             try
             {
@@ -328,18 +328,9 @@ namespace AmbiPro
                 int TotalByteSize = InitByteSize + LedByteSize;
 
                 //Connect to the device
-                try
-                {
-                    vSerialComPort = new SerialPort(setSerialPortName, setSerialBaudRate);
-                    vSerialComPort.Open();
-                    Debug.WriteLine("Connected to the com port device: " + setSerialPortName);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("Connection denied or wrong com port: " + ex.Message);
-                    ShowConnectionMessage();
-                    return;
-                }
+                vSerialComPort = new SerialPort(setSerialPortName, setSerialBaudRate);
+                vSerialComPort.Open();
+                Debug.WriteLine("Connected to the com port device: " + setSerialPortName);
 
                 //Create led byte array
                 byte[] SerialBytes = new byte[TotalByteSize];
@@ -356,7 +347,11 @@ namespace AmbiPro
             catch (Exception ex)
             {
                 Debug.WriteLine("Failed to update the leds: " + ex.Message);
-                await LedSwitch(LedSwitches.Restart);
+                ShowConnectionMessage();
+            }
+            finally
+            {
+                vTask_LedUpdate.Status = AVTaskStatus.Stopped;
             }
         }
 

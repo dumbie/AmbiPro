@@ -42,10 +42,10 @@ namespace AmbiPro
                 NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
 
                 // Handle Double Click event
-                NotifyIcon.DoubleClick += new EventHandler(NotifyIcon_DoubleClick);
+                NotifyIcon.DoubleClick += NotifyIcon_DoubleClick;
 
                 // Handle Middle Click event
-                NotifyIcon.MouseClick += new MouseEventHandler(NotifyIcon_MiddleClick);
+                NotifyIcon.MouseClick += NotifyIcon_MiddleClick;
 
                 // Add menu to tray icon and show it.  
                 NotifyIcon.ContextMenu = ContextMenu;
@@ -54,7 +54,7 @@ namespace AmbiPro
             catch { }
         }
 
-        private static void NotifyIcon_DoubleClick(object Sender, EventArgs e)
+        private static void NotifyIcon_DoubleClick(object sender, EventArgs e)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace AmbiPro
             catch { }
         }
 
-        private static async void NotifyIcon_MiddleClick(object Sender, MouseEventArgs e)
+        private static async void NotifyIcon_MiddleClick(object sender, MouseEventArgs e)
         {
             try
             {
