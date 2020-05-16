@@ -12,7 +12,6 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using static AmbiPro.AppTasks;
-using static ArnoldVinkCode.AVActions;
 
 namespace AmbiPro
 {
@@ -129,7 +128,7 @@ namespace AmbiPro
                     }
 
                     //Disable the leds
-                    if (ledSwitch == LedSwitches.Disable || vTask_LedUpdate.Status == AVTaskStatus.Running)
+                    if (ledSwitch == LedSwitches.Disable || vTask_LedUpdate.TaskRunning)
                     {
                         await LedsDisable(false);
                         vSwitching = false;
@@ -315,7 +314,7 @@ namespace AmbiPro
         }
 
         //Update the leds in loop
-        private static async void LoopUpdateLeds()
+        private static async Task LoopUpdateLeds()
         {
             try
             {
@@ -340,18 +339,14 @@ namespace AmbiPro
 
                 //Check led display mode
                 if (setLedMode == 0) { await ModeScreenCapture(InitByteSize, SerialBytes); }
-                else if (setLedMode == 1) { await ModeSolidColor(InitByteSize, SerialBytes); }
-                else if (setLedMode == 2) { await ModeColorLoop(InitByteSize, SerialBytes); }
-                else if (setLedMode == 3) { await ModeColorSpectrum(InitByteSize, SerialBytes); }
+                else if (setLedMode == 1) { ModeSolidColor(InitByteSize, SerialBytes); }
+                else if (setLedMode == 2) { ModeColorLoop(InitByteSize, SerialBytes); }
+                else if (setLedMode == 3) { ModeColorSpectrum(InitByteSize, SerialBytes); }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine("Failed to update the leds: " + ex.Message);
                 ShowConnectionMessage();
-            }
-            finally
-            {
-                vTask_LedUpdate.Status = AVTaskStatus.Stopped;
             }
         }
 

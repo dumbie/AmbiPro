@@ -206,7 +206,7 @@
 
                             <TextBlock Margin="0,10,0,0" Name="tb_UpdateRate" Text="Led update rate:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                             <TextBlock Text="The quicker you choose the more resources get used, but will also cause less output delay." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
-                            <Slider Name="sldr_UpdateRate" Style="{StaticResource SliderWhite}" Minimum="5" Maximum="200"/>
+                            <Slider Name="sldr_UpdateRate" Style="{StaticResource SliderWhite}" Minimum="1" Maximum="250"/>
 
                             <Button Name="btn_Welcome_Start2" Visibility="Collapsed" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Let's start" Click="Btn_WelcomeStart_Click"/>
                         </StackPanel>

@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using System.Reflection;
-using System.Threading.Tasks;
 using static AmbiPro.AppTasks;
 using static ArnoldVinkCode.AVActions;
 
@@ -12,7 +11,7 @@ namespace AmbiPro
         private static Color CurrentColor = Color.FromArgb(20, 0, 0);
 
         //Loop through the set colors
-        private static async Task ModeColorLoop(int InitByteSize, byte[] SerialBytes)
+        private static void ModeColorLoop(int InitByteSize, byte[] SerialBytes)
         {
             try
             {
@@ -23,7 +22,7 @@ namespace AmbiPro
                 int ColorLoopState = 0;
 
                 //Current byte information
-                while (vTask_LedUpdate.Status == AVTaskStatus.Running)
+                while (!vTask_LedUpdate.TaskStopRequest)
                 {
                     //Set the used colors
                     if (ColorLoopState == 0) //Red
@@ -69,7 +68,7 @@ namespace AmbiPro
                     vSerialComPort.Write(SerialBytes, 0, SerialBytes.Length);
 
                     //Delay the loop task
-                    await TaskDelayLoop(setColorLoopSpeed, vTask_LedUpdate);
+                    TaskDelayLoop(setColorLoopSpeed, vTask_LedUpdate);
                 }
             }
             catch { }

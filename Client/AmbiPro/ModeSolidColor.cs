@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using System.Reflection;
-using System.Threading.Tasks;
 using static AmbiPro.AppTasks;
 using static ArnoldVinkCode.AVActions;
 
@@ -9,7 +8,7 @@ namespace AmbiPro
     partial class SerialMonitor
     {
         //Set the solid color to the leds
-        private static async Task ModeSolidColor(int InitByteSize, byte[] SerialBytes)
+        private static void ModeSolidColor(int InitByteSize, byte[] SerialBytes)
         {
             try
             {
@@ -17,7 +16,7 @@ namespace AmbiPro
                 AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
 
                 //Current byte information
-                while (vTask_LedUpdate.Status == AVTaskStatus.Running)
+                while (!vTask_LedUpdate.TaskStopRequest)
                 {
                     //Set the used colors and adjust it
                     Color CurrentColor = ColorTranslator.FromHtml(setSolidLedColor);
@@ -42,7 +41,7 @@ namespace AmbiPro
                     vSerialComPort.Write(SerialBytes, 0, SerialBytes.Length);
 
                     //Delay the loop task
-                    await TaskDelayLoop(1000, vTask_LedUpdate);
+                    TaskDelayLoop(1000, vTask_LedUpdate);
                 }
             }
             catch { }

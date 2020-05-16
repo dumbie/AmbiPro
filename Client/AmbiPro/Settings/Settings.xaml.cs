@@ -10,7 +10,6 @@ using System.Net.Sockets;
 using System.Windows;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
-using static ArnoldVinkCode.AVActions;
 
 namespace AmbiPro.Settings
 {
@@ -151,7 +150,7 @@ namespace AmbiPro.Settings
                 }
 
                 //Check current socket status
-                if (vArnoldVinkSockets.vTask_SocketServer.Status != AVTaskStatus.Running)
+                if (!vArnoldVinkSockets.vTask_SocketServer.TaskRunning)
                 {
                     txt_RemoteErrorServerPort.Visibility = Visibility.Visible;
                 }

@@ -12,7 +12,7 @@ namespace AmbiPro
     partial class SerialMonitor
     {
         //Rotating color spectrum
-        private static async Task ModeColorSpectrum(int InitByteSize, byte[] SerialBytes)
+        private static void ModeColorSpectrum(int InitByteSize, byte[] SerialBytes)
         {
             try
             {
@@ -24,7 +24,7 @@ namespace AmbiPro
                 AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
 
                 //Current byte information
-                while (vTask_LedUpdate.Status == AVTaskStatus.Running)
+                while (!vTask_LedUpdate.TaskStopRequest)
                 {
                     //Reset the colors when brightness has changed.
                     if (PreviousBrightness != setLedBrightness || PreviousLedOutput != setLedOutput)
@@ -108,7 +108,7 @@ namespace AmbiPro
                     vSerialComPort.Write(SerialBytes, 0, SerialBytes.Length);
 
                     //Delay the loop task
-                    await TaskDelayLoop(1000, vTask_LedUpdate);
+                    TaskDelayLoop(1000, vTask_LedUpdate);
                 }
             }
             catch { }

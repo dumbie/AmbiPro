@@ -40,7 +40,7 @@ namespace AmbiPro
                 AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
 
                 //Start updating the leds
-                while (vTask_LedUpdate.Status == AVTaskStatus.Running)
+                while (!vTask_LedUpdate.TaskStopRequest)
                 {
                     IntPtr IntPtrBitmap = IntPtr.Zero;
                     try
@@ -143,7 +143,7 @@ namespace AmbiPro
                     AppImport.CaptureFreeMemory(IntPtrBitmap);
 
                     //Delay the loop task
-                    await TaskDelayLoop(setUpdateRate, vTask_LedUpdate);
+                    TaskDelayLoop(setUpdateRate, vTask_LedUpdate);
                 }
             }
             catch { }
