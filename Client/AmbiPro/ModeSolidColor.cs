@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Threading.Tasks;
 using static AmbiPro.AppTasks;
+using static ArnoldVinkCode.AVActions;
 
 namespace AmbiPro
 {
@@ -41,7 +42,7 @@ namespace AmbiPro
                     vSerialComPort.Write(SerialBytes, 0, SerialBytes.Length);
 
                     //Delay the loop task
-                    await Task.Delay(1000, vTask_LedUpdate.TokenCancel);
+                    await TaskDelayLoop(1000, vTask_LedUpdate);
                 }
             }
             catch { }
