@@ -339,9 +339,9 @@ namespace AmbiPro
 
                 //Check led display mode
                 if (setLedMode == 0) { await ModeScreenCapture(InitByteSize, SerialBytes); }
-                else if (setLedMode == 1) { ModeSolidColor(InitByteSize, SerialBytes); }
-                else if (setLedMode == 2) { ModeColorLoop(InitByteSize, SerialBytes); }
-                else if (setLedMode == 3) { ModeColorSpectrum(InitByteSize, SerialBytes); }
+                else if (setLedMode == 1) { await ModeSolidColor(InitByteSize, SerialBytes); }
+                else if (setLedMode == 2) { await ModeColorLoop(InitByteSize, SerialBytes); }
+                else if (setLedMode == 3) { await ModeColorSpectrum(InitByteSize, SerialBytes); }
             }
             catch (Exception ex)
             {

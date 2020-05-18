@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Reflection;
 using System.Threading.Tasks;
 using static AmbiPro.AppTasks;
-using static ArnoldVinkCode.AVActions;
 
 namespace AmbiPro
 {
@@ -143,7 +142,7 @@ namespace AmbiPro
                     AppImport.CaptureFreeMemory(IntPtrBitmap);
 
                     //Delay the loop task
-                    TaskDelayLoop(setUpdateRate, vTask_LedUpdate);
+                    await Task.Delay(setUpdateRate, vTask_LedUpdate.TokenCancel);
                 }
             }
             catch { }
