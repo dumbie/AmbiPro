@@ -49,6 +49,7 @@ namespace AmbiPro
                 }
 
                 //Check - If updater has been updated
+                File_Move("UpdaterNew.exe", "Updater.exe", true);
                 File_Move("Resources/UpdaterReplace.exe", "Updater.exe", true);
 
                 //Check - If updater failed to cleanup

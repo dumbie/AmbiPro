@@ -41,6 +41,7 @@ namespace Updater
                 //Download application update from the website
                 try
                 {
+                    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
                     WebClient WebClient = new WebClient();
                     WebClient.Headers[HttpRequestHeader.UserAgent] = "Application Updater";
                     WebClient.DownloadProgressChanged += (object Object, DownloadProgressChangedEventArgs Args) =>
