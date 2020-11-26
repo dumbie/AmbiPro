@@ -3,6 +3,7 @@
 /Client/ScreenCapture/x64
 /Client/Updater/bin
 /Client/Updater/obj
+/Client/packages
 *.user
 *.aps
 *.pfx

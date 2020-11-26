@@ -26,7 +26,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <ListBox Name="lb_Menu" Grid.Row="0" SelectionMode="Single" ItemContainerStyle="{StaticResource ListBoxItemNoPaddingWhite}" Style="{StaticResource ListBoxVertical}" PreviewMouseUp="lb_Menu_MousePressUp" PreviewMouseDoubleClick="lb_Menu_MouseDoublePress">
+                <ListBox Name="lb_Menu" Grid.Row="0" SelectionMode="Single" ItemContainerStyle="{StaticResource ListBoxItemWhite}" Style="{StaticResource ListBoxVertical}" PreviewMouseUp="lb_Menu_MousePressUp" PreviewMouseDoubleClick="lb_Menu_MouseDoublePress">
                     <StackPanel Name="menuButtonBasics" Style="{StaticResource ListBoxMenuStackPanel}">
                         <Image Source="/Assets/Icons/Settings.png" Width="55" HorizontalAlignment="Center"/>
                         <TextBlock Text="Basics" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>

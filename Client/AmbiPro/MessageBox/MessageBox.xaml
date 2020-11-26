@@ -17,7 +17,7 @@
     <Grid Name="grid_MessageBox" MinWidth="500" MaxWidth="600">
         <StackPanel Margin="10,5,10,10">
             <TextBlock Name="grid_MessageBox_Text" Style="{StaticResource TextBlockBlack}" FontWeight="Light" FontSize="{StaticResource TextSizeHuge}" TextWrapping="Wrap" Text="Question"/>
-            <Rectangle HorizontalAlignment="Stretch" Style="{StaticResource RectangleHorizontalAccent}" Margin="0,5,0,5"/>
+            <Border HorizontalAlignment="Stretch" Style="{StaticResource BorderHorizontalAccentLight}" Margin="0,5,0,5"/>
             <TextBlock Name="grid_MessageBox_Description" Style="{StaticResource TextBlockGrayLight}" TextWrapping="Wrap" Text="Description"/>
             <Button Name="grid_MessageBox_Btn1" Style="{StaticResource ButtonAccentBlack}" Margin="0,10,0,0" Click="grid_MessageBox_Btn1_Click"/>
             <Button Name="grid_MessageBox_Btn2" Style="{StaticResource ButtonAccentBlack}" Margin="0,10,0,0" Click="grid_MessageBox_Btn2_Click"/>

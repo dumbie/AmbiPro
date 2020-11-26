@@ -61,10 +61,7 @@ namespace AmbiPro
                 }
 
                 //Check for available application update
-                if (DateTime.Now.Subtract(DateTime.Parse(ConfigurationManager.AppSettings["AppUpdateCheck2"], vAppCultureInfo)).Days >= 5)
-                {
-                    await AppUpdate.CheckForAppUpdate(true);
-                }
+                await AppUpdate.CheckForAppUpdate(true);
             }
             catch { }
         }

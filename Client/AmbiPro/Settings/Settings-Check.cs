@@ -1,7 +1,5 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Diagnostics;
-using static AmbiPro.AppVariables;
 
 namespace AmbiPro.Settings
 {
@@ -18,12 +16,6 @@ namespace AmbiPro.Settings
                 if (ConfigurationManager.AppSettings["FirstLaunch"] == null)
                 {
                     SettingsFunction.Save("FirstLaunch", "True");
-                }
-
-                //Check - Last update check
-                if (ConfigurationManager.AppSettings["AppUpdateCheck2"] == null)
-                {
-                    SettingsFunction.Save("AppUpdateCheck2", DateTime.Now.ToString(vAppCultureInfo));
                 }
 
                 //Check - Com Port

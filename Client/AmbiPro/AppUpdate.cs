@@ -1,10 +1,8 @@
-﻿using AmbiPro.Settings;
-using ArnoldVinkCode;
-using ArnoldVinkMessageBox;
-using System;
+﻿using ArnoldVinkMessageBox;
 using System.Reflection;
 using System.Threading.Tasks;
 using static AmbiPro.AppVariables;
+using static ArnoldVinkCode.ApiGitHub;
 using static ArnoldVinkCode.ProcessWin32Functions;
 
 namespace AmbiPro
@@ -20,10 +18,11 @@ namespace AmbiPro
                 {
                     vCheckingForUpdate = true;
 
-                    string ResCurrentVersion = await AVDownloader.DownloadStringAsync(5000, "AmbiPro", null, new Uri("https://download.arnoldvink.com/AmbiPro.zip-version.txt" + "?nc=" + Environment.TickCount));
-                    if (!string.IsNullOrWhiteSpace(ResCurrentVersion) && ResCurrentVersion != Assembly.GetEntryAssembly().FullName.Split('=')[1].Split(',')[0])
+                    string onlineVersion = await ApiGitHub_GetLatestVersion("dumbie", "AmbiPro");
+                    string currentVersion = "v" + Assembly.GetEntryAssembly().FullName.Split('=')[1].Split(',')[0];
+                    if (!string.IsNullOrWhiteSpace(onlineVersion) && onlineVersion != currentVersion)
                     {
-                        int MsgBoxResult = await AVMessageBox.Popup("A newer version has been found: v" + ResCurrentVersion, "Would you like to update the application to the newest version available?", "Update", "Cancel", "", "");
+                        int MsgBoxResult = await AVMessageBox.Popup("A newer version has been found: " + onlineVersion, "Would you like to update the application to the newest version available?", "Update", "Cancel", "", "");
                         if (MsgBoxResult == 1)
                         {
                             await ProcessLauncherWin32Async("Updater.exe", "", "", false, false);
@@ -38,8 +37,6 @@ namespace AmbiPro
                         }
                     }
 
-                    //Set the last application update check date
-                    SettingsFunction.Save("AppUpdateCheck2", DateTime.Now.ToString(vAppCultureInfo));
                     vCheckingForUpdate = false;
                 }
             }

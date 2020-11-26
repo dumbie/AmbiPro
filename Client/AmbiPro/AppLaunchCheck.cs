@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows;
+using static ArnoldVinkCode.AVFiles;
 
 namespace AmbiPro
 {
@@ -47,27 +48,11 @@ namespace AmbiPro
                     }
                 }
 
-                //Check - If the updater has been updated
-                if (File.Exists("UpdaterNew.exe"))
-                {
-                    try
-                    {
-                        Debug.WriteLine("Renaming: UpdaterNew.exe to Updater.exe");
-                        if (File.Exists("Updater.exe")) { File.Delete("Updater.exe"); }
-                        File.Move("UpdaterNew.exe", "Updater.exe");
-                    }
-                    catch { }
-                }
+                //Check - If updater has been updated
+                File_Move("Resources/UpdaterReplace.exe", "Updater.exe", true);
 
-                //Check - If the updater failed to cleanup
-                if (File.Exists("AppUpdate.zip"))
-                {
-                    try
-                    {
-                        File.Delete("AppUpdate.zip");
-                    }
-                    catch { }
-                }
+                //Check - If updater failed to cleanup
+                File_Delete("Resources/AppUpdate.zip");
             }
             catch { }
         }

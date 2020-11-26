@@ -1,6 +1,4 @@
-﻿using AmbiPro.Calibrate;
-using AmbiPro.Help;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
