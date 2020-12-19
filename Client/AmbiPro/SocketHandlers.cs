@@ -13,7 +13,7 @@ namespace AmbiPro
     partial class SocketHandlers
     {
         //Handle received socket data
-        public static async Task ReceivedSocketHandler(TcpClient tcpClient, byte[] receivedBytes)
+        public static async Task ReceivedSocketHandler(TcpClient tcpClient, IPEndPoint endPoint, byte[] receivedBytes)
         {
             try
             {

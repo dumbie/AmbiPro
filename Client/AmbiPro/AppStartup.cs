@@ -73,7 +73,7 @@ namespace AmbiPro
             {
                 int SocketServerPort = Convert.ToInt32(ConfigurationManager.AppSettings["ServerPort"]);
 
-                vArnoldVinkSockets = new ArnoldVinkSockets("127.0.0.1", SocketServerPort);
+                vArnoldVinkSockets = new ArnoldVinkSockets("127.0.0.1", SocketServerPort, true, false);
                 vArnoldVinkSockets.EventBytesReceived += SocketHandlers.ReceivedSocketHandler;
             }
             catch { }
