@@ -7,13 +7,14 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using static AmbiPro.SerialMonitor;
+using static ArnoldVinkCode.ArnoldVinkSockets;
 
 namespace AmbiPro
 {
     partial class SocketHandlers
     {
         //Handle received socket data
-        public static async Task ReceivedSocketHandler(TcpClient tcpClient, IPEndPoint endPoint, byte[] receivedBytes)
+        public static async Task ReceivedSocketHandler(TcpClient tcpClient, UdpEndPointDetails endPoint, byte[] receivedBytes)
         {
             try
             {
