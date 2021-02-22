@@ -23,8 +23,8 @@ this application will capture your screen and sync the colors to your led strip.
 | Requirements
 - Microsoft .Net Framework 4.5 installed.
 - Microsoft Visual C++ 2017 Redistributable installed.
-- Windows operating system 8.1 64-bit or higher is required.
-- A DirectX 11 or higher capable graphics adapter.
+- Windows operating system 10 64-bit or higher is required.
+- A DirectX 12 or higher capable graphics adapter.
 
 | Support and bug reporting
 When you are walking into any problems or a bug you can go to my help page at https://help.arnoldvink.com so I can try to help you out and get everything working.
@@ -33,9 +33,12 @@ When you are walking into any problems or a bug you can go to my help page at ht
 If you appreciate my project and want to support me with my projects you can make a donation through https://donation.arnoldvink.com
 
 | Changelog
+v0.9.10.0 (-February-2021)
+- Added AmbiPro administrator launcher.
+* Miscellaneous application improvements and fixes.
+
 v0.9.4.5 (22-January-2018)
 - The color spectrum mode now rotates it's colors.
-* Miscellaneous application improvements and fixes.
 
 v0.9.4.0 (13-December-2017)
 - Added solid color and color loop switch modes.

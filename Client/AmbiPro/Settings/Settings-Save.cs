@@ -328,9 +328,10 @@ namespace AmbiPro.Settings
             try
             {
                 //Set application shortcut paths
-                string TargetFilePath = Assembly.GetEntryAssembly().CodeBase;
+                string TargetIconPath = Assembly.GetEntryAssembly().CodeBase.Replace("file:///", string.Empty);
+                string TargetFilePath = Assembly.GetEntryAssembly().CodeBase.Replace(".exe", "-Admin.exe").Replace("file:///", string.Empty);
                 string TargetName = Assembly.GetEntryAssembly().GetName().Name;
-                string TargetFileShortcut = Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\" + TargetName + ".url";
+                string TargetFileShortcut = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), TargetName + ".url");
 
                 //Check if the shortcut already exists
                 if (!File.Exists(TargetFileShortcut))
@@ -340,7 +341,7 @@ namespace AmbiPro.Settings
                     {
                         StreamWriter.WriteLine("[InternetShortcut]");
                         StreamWriter.WriteLine("URL=" + TargetFilePath);
-                        StreamWriter.WriteLine("IconFile=" + TargetFilePath.Replace("file:///", ""));
+                        StreamWriter.WriteLine("IconFile=" + TargetIconPath);
                         StreamWriter.WriteLine("IconIndex=0");
                         StreamWriter.Flush();
                     }
