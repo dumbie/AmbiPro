@@ -197,6 +197,24 @@ namespace AmbiPro.Settings
                 {
                     SettingsFunction.Save("LedDirection", "1");
                 }
+
+                //Check - Debug Mode
+                if (ConfigurationManager.AppSettings["DebugMode"] == null)
+                {
+                    SettingsFunction.Save("DebugMode", "False");
+                }
+                if (ConfigurationManager.AppSettings["DebugBlackBar"] == null)
+                {
+                    SettingsFunction.Save("DebugBlackBar", "False");
+                }
+                if (ConfigurationManager.AppSettings["DebugColor"] == null)
+                {
+                    SettingsFunction.Save("DebugColor", "True");
+                }
+                if (ConfigurationManager.AppSettings["DebugSave"] == null)
+                {
+                    SettingsFunction.Save("DebugSave", "False");
+                }
             }
             catch { Debug.WriteLine("Failed to check the settings."); }
         }

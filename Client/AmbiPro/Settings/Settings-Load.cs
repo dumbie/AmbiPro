@@ -124,14 +124,22 @@ namespace AmbiPro.Settings
                 cb_LedOutput.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedOutput"]);
 
                 //Load - Update Rate
-                tb_UpdateRate.Text = "Led update rate: " + Convert.ToInt32(ConfigurationManager.AppSettings["UpdateRate"]) + " ms";
-                sldr_UpdateRate.Value = Convert.ToInt32(ConfigurationManager.AppSettings["UpdateRate"]);
+                int updateRateMs = Convert.ToInt32(ConfigurationManager.AppSettings["UpdateRate"]);
+                string updateRateFps = Convert.ToInt32(1000 / updateRateMs).ToString();
+                tb_UpdateRate.Text = "Led update rate: " + updateRateMs + " ms (" + updateRateFps + " fps)";
+                sldr_UpdateRate.Value = updateRateMs;
 
                 //Load - Led Sides
                 cb_LedSides.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedSides"]);
 
                 //Load - Led Direction
                 cb_LedDirection.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedDirection"]);
+
+                //Load - Debug Mode
+                checkbox_DebugMode.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugMode"]);
+                checkbox_DebugBlackBar.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugBlackBar"]);
+                checkbox_DebugColor.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugColor"]);
+                checkbox_DebugSave.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugSave"]);
 
                 //Check if application is set to launch on Windows startup
                 string targetName = Assembly.GetEntryAssembly().GetName().Name;

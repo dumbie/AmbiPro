@@ -41,6 +41,7 @@ namespace AmbiPro.Settings
                         sp_Leds.Visibility = Visibility.Collapsed;
                         sp_Color.Visibility = Visibility.Collapsed;
                         sp_Remote.Visibility = Visibility.Collapsed;
+                        sp_Debug.Visibility = Visibility.Collapsed;
                     }
                     if (SelStackPanel.Name == "menuButtonModes")
                     {
@@ -50,6 +51,7 @@ namespace AmbiPro.Settings
                         sp_Leds.Visibility = Visibility.Collapsed;
                         sp_Color.Visibility = Visibility.Collapsed;
                         sp_Remote.Visibility = Visibility.Collapsed;
+                        sp_Debug.Visibility = Visibility.Collapsed;
                     }
                     else if (SelStackPanel.Name == "menuButtonScreen")
                     {
@@ -59,6 +61,7 @@ namespace AmbiPro.Settings
                         sp_Leds.Visibility = Visibility.Collapsed;
                         sp_Color.Visibility = Visibility.Collapsed;
                         sp_Remote.Visibility = Visibility.Collapsed;
+                        sp_Debug.Visibility = Visibility.Collapsed;
                     }
                     else if (SelStackPanel.Name == "menuButtonLeds")
                     {
@@ -68,6 +71,7 @@ namespace AmbiPro.Settings
                         sp_Leds.Visibility = Visibility.Visible;
                         sp_Color.Visibility = Visibility.Collapsed;
                         sp_Remote.Visibility = Visibility.Collapsed;
+                        sp_Debug.Visibility = Visibility.Collapsed;
                     }
                     else if (SelStackPanel.Name == "menuButtonColor")
                     {
@@ -77,6 +81,7 @@ namespace AmbiPro.Settings
                         sp_Leds.Visibility = Visibility.Collapsed;
                         sp_Color.Visibility = Visibility.Visible;
                         sp_Remote.Visibility = Visibility.Collapsed;
+                        sp_Debug.Visibility = Visibility.Collapsed;
                     }
                     else if (SelStackPanel.Name == "menuButtonRemote")
                     {
@@ -86,18 +91,29 @@ namespace AmbiPro.Settings
                         sp_Leds.Visibility = Visibility.Collapsed;
                         sp_Color.Visibility = Visibility.Collapsed;
                         sp_Remote.Visibility = Visibility.Visible;
+                        sp_Debug.Visibility = Visibility.Collapsed;
                     }
                     else if (SelStackPanel.Name == "menuButtonCalibrate")
                     {
                         App.vFormCalibrate.Show();
                     }
+                    else if (SelStackPanel.Name == "menuButtonUpdate")
+                    {
+                        await AppUpdate.CheckForAppUpdate(false);
+                    }
                     else if (SelStackPanel.Name == "menuButtonHelp")
                     {
                         App.vFormHelp.Show();
                     }
-                    else if (SelStackPanel.Name == "menuButtonUpdate")
+                    else if (SelStackPanel.Name == "menuButtonDebug")
                     {
-                        await AppUpdate.CheckForAppUpdate(false);
+                        sp_Basics.Visibility = Visibility.Collapsed;
+                        sp_Modes.Visibility = Visibility.Collapsed;
+                        sp_Screen.Visibility = Visibility.Collapsed;
+                        sp_Leds.Visibility = Visibility.Collapsed;
+                        sp_Color.Visibility = Visibility.Collapsed;
+                        sp_Remote.Visibility = Visibility.Collapsed;
+                        sp_Debug.Visibility = Visibility.Visible;
                     }
                 }
             }

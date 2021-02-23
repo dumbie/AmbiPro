@@ -233,7 +233,9 @@ namespace AmbiPro.Settings
                 sldr_UpdateRate.ValueChanged += (sender, e) =>
                 {
                     SettingsFunction.Save("UpdateRate", sldr_UpdateRate.Value.ToString("0"));
-                    tb_UpdateRate.Text = "Led update rate: " + sldr_UpdateRate.Value.ToString("0") + " ms";
+                    int updateRateMs = Convert.ToInt32(sldr_UpdateRate.Value);
+                    string updateRateFps = Convert.ToInt32(1000 / updateRateMs).ToString();
+                    tb_UpdateRate.Text = "Led update rate: " + updateRateMs + " ms (" + updateRateFps + " fps)";
                 };
 
                 //Save - Led Sides
@@ -250,6 +252,58 @@ namespace AmbiPro.Settings
 
                 //Save - Windows Startup
                 cb_WindowsStartup.Click += (sender, e) => { ManageShortcutStartup(); };
+
+                //Save - Debug mode
+                checkbox_DebugMode.Click += (sender, e) =>
+                {
+                    if ((bool)checkbox_DebugMode.IsChecked)
+                    {
+                        SettingsFunction.Save("DebugMode", "True");
+                    }
+                    else
+                    {
+                        SettingsFunction.Save("DebugMode", "False");
+                    }
+                };
+
+                //Save - Debug BlackBar
+                checkbox_DebugBlackBar.Click += (sender, e) =>
+                {
+                    if ((bool)checkbox_DebugBlackBar.IsChecked)
+                    {
+                        SettingsFunction.Save("DebugBlackBar", "True");
+                    }
+                    else
+                    {
+                        SettingsFunction.Save("DebugBlackBar", "False");
+                    }
+                };
+
+                //Save - Debug color
+                checkbox_DebugColor.Click += (sender, e) =>
+                {
+                    if ((bool)checkbox_DebugColor.IsChecked)
+                    {
+                        SettingsFunction.Save("DebugColor", "True");
+                    }
+                    else
+                    {
+                        SettingsFunction.Save("DebugColor", "False");
+                    }
+                };
+
+                //Save - Debug Save
+                checkbox_DebugSave.Click += (sender, e) =>
+                {
+                    if ((bool)checkbox_DebugSave.IsChecked)
+                    {
+                        SettingsFunction.Save("DebugSave", "True");
+                    }
+                    else
+                    {
+                        SettingsFunction.Save("DebugSave", "False");
+                    }
+                };
             }
             catch
             {

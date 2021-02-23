@@ -45,8 +45,11 @@ namespace AmbiPro
         {
             try
             {
-                Color EntireScreen = BitmapProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY);
-                //BitmapProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY, Color.Pink);
+                Color EntireScreen = ColorProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY);
+                if (setDebugMode && setDebugBlackBar)
+                {
+                    ColorProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY, Color.Pink);
+                }
                 if (EntireScreen.R > setAdjustBlackBarLevel || EntireScreen.G > setAdjustBlackBarLevel || EntireScreen.B > setAdjustBlackBarLevel)
                 {
                     AdjustedMargin = NewColorMargin;
@@ -67,8 +70,11 @@ namespace AmbiPro
                 Int32 VerticalMargin = 0;
                 if (Horizontal) { HorizontalMargin = vScreenWidth / 3; } else { VerticalMargin = vScreenHeight / 3; }
 
-                Color ScreenLine1 = BitmapProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY);
-                //BitmapProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY, Color.Purple);
+                Color ScreenLine1 = ColorProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY);
+                if (setDebugMode && setDebugBlackBar)
+                {
+                    ColorProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY, Color.Purple);
+                }
                 if (ScreenLine1.R > setAdjustBlackBarLevel || ScreenLine1.G > setAdjustBlackBarLevel || ScreenLine1.B > setAdjustBlackBarLevel)
                 {
                     AdjustedMargin = NewColorMargin;
@@ -76,8 +82,11 @@ namespace AmbiPro
                     return true;
                 }
 
-                Color ScreenLine2 = BitmapProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX - HorizontalMargin, ZoneY - VerticalMargin);
-                //BitmapProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX - HorizontalMargin, ZoneY - VerticalMargin, Color.Purple);
+                Color ScreenLine2 = ColorProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX - HorizontalMargin, ZoneY - VerticalMargin);
+                if (setDebugMode && setDebugBlackBar)
+                {
+                    ColorProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX - HorizontalMargin, ZoneY - VerticalMargin, Color.Purple);
+                }
                 if (ScreenLine2.R > setAdjustBlackBarLevel || ScreenLine2.G > setAdjustBlackBarLevel || ScreenLine2.B > setAdjustBlackBarLevel)
                 {
                     AdjustedMargin = NewColorMargin;
@@ -85,8 +94,11 @@ namespace AmbiPro
                     return true;
                 }
 
-                Color ScreenLine3 = BitmapProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX + HorizontalMargin, ZoneY + VerticalMargin);
-                //BitmapProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX + HorizontalMargin, ZoneY + VerticalMargin, Color.Purple);
+                Color ScreenLine3 = ColorProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX + HorizontalMargin, ZoneY + VerticalMargin);
+                if (setDebugMode && setDebugBlackBar)
+                {
+                    ColorProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX + HorizontalMargin, ZoneY + VerticalMargin, Color.Purple);
+                }
                 if (ScreenLine3.R > setAdjustBlackBarLevel || ScreenLine3.G > setAdjustBlackBarLevel || ScreenLine3.B > setAdjustBlackBarLevel)
                 {
                     AdjustedMargin = NewColorMargin;
@@ -129,8 +141,11 @@ namespace AmbiPro
                     {
                         Int32 ZoneX = sz;
                         Int32 ZoneY = vScreenHeight - AdjustedMargin;
-                        BlackPixelColors[sz] = BitmapProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY);
-                        //BitmapProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY, Color.Orange);
+                        BlackPixelColors[sz] = ColorProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY);
+                        if (setDebugMode && setDebugBlackBar)
+                        {
+                            ColorProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY, Color.Orange);
+                        }
                     }
 
                     if (BlackPixelColors.All(ColorByte => ColorByte.R <= setAdjustBlackBarLevel && ColorByte.G <= setAdjustBlackBarLevel && ColorByte.B <= setAdjustBlackBarLevel))
@@ -175,8 +190,11 @@ namespace AmbiPro
                     {
                         Int32 ZoneX = sz;
                         Int32 ZoneY = AdjustedMargin;
-                        BlackPixelColors[sz] = BitmapProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY);
-                        //BitmapProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY, Color.Orange); 
+                        BlackPixelColors[sz] = ColorProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY);
+                        if (setDebugMode && setDebugBlackBar)
+                        {
+                            ColorProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY, Color.Orange);
+                        }
                     }
 
                     if (BlackPixelColors.All(ColorByte => ColorByte.R <= setAdjustBlackBarLevel && ColorByte.G <= setAdjustBlackBarLevel && ColorByte.B <= setAdjustBlackBarLevel))
@@ -221,8 +239,11 @@ namespace AmbiPro
                     {
                         Int32 ZoneX = vScreenWidth - AdjustedMargin;
                         Int32 ZoneY = sz;
-                        BlackPixelColors[sz] = BitmapProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY);
-                        //BitmapProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY, Color.Orange);
+                        BlackPixelColors[sz] = ColorProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY);
+                        if (setDebugMode && setDebugBlackBar)
+                        {
+                            ColorProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY, Color.Orange);
+                        }
                     }
 
                     if (BlackPixelColors.All(ColorByte => ColorByte.R <= setAdjustBlackBarLevel && ColorByte.G <= setAdjustBlackBarLevel && ColorByte.B <= setAdjustBlackBarLevel))
@@ -267,8 +288,11 @@ namespace AmbiPro
                     {
                         Int32 ZoneX = AdjustedMargin;
                         Int32 ZoneY = sz;
-                        BlackPixelColors[sz] = BitmapProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY);
-                        //BitmapProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY, Color.Orange);
+                        BlackPixelColors[sz] = ColorProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY);
+                        if (setDebugMode && setDebugBlackBar)
+                        {
+                            ColorProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY, Color.Orange);
+                        }
                     }
 
                     if (BlackPixelColors.All(ColorByte => ColorByte.R <= setAdjustBlackBarLevel && ColorByte.G <= setAdjustBlackBarLevel && ColorByte.B <= setAdjustBlackBarLevel))

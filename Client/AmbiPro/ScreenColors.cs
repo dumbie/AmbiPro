@@ -8,7 +8,7 @@ namespace AmbiPro
     public partial class SerialMonitor
     {
         //Get screen shot colors and set it to byte array
-        private static unsafe void ScreenColors(Int32 SideType, Int32 OffsetMargin, Int32 AdjustedMargin, byte[] SerialBytes, byte* BitmapData, Int32 DirectionLeds, Int32 DirectionStep, ref Int32 CurrentSerialByte)
+        private static unsafe void ScreenColors(Int32 SideType, Int32 OffsetMargin, Int32 AdjustedMargin, byte[] SerialBytes, byte* BitmapData, Int32 DirectionLedCount, Int32 DirectionStep, ref Int32 CurrentSerialByte)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace AmbiPro
                 }
 
                 //Get colors from the bitmap
-                for (Int32 dl = 0; dl < DirectionLeds; dl++)
+                for (Int32 dl = 0; dl < DirectionLedCount; dl++)
                 {
                     Int32 UsedColors = 0;
                     Int32 AverageRed = 0;
@@ -170,16 +170,25 @@ namespace AmbiPro
         {
             try
             {
-                Color CurrentColor = BitmapProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY);
-                //BitmapProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY, Color.Red);
+                Color CurrentColor = ColorProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY);
+                if (setDebugMode && setDebugColor)
+                {
+                    ColorProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, ZoneX, ZoneY, Color.Red);
+                }
                 AverageRed += CurrentColor.R; AverageGreen += CurrentColor.G; AverageBlue += CurrentColor.B;
 
-                CurrentColor = BitmapProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, (ZoneX - 1), (ZoneY - 1));
-                //BitmapProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, (ZoneX - 1), (ZoneY - 1), Color.Green);
+                CurrentColor = ColorProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, (ZoneX - 1), (ZoneY - 1));
+                if (setDebugMode && setDebugColor)
+                {
+                    ColorProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, (ZoneX - 1), (ZoneY - 1), Color.Green);
+                }
                 AverageRed += CurrentColor.R; AverageGreen += CurrentColor.G; AverageBlue += CurrentColor.B;
 
-                CurrentColor = BitmapProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, (ZoneX - 2), (ZoneY - 2));
-                //BitmapProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, (ZoneX - 2), (ZoneY - 2), Color.Blue);
+                CurrentColor = ColorProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, (ZoneX - 2), (ZoneY - 2));
+                if (setDebugMode && setDebugColor)
+                {
+                    ColorProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, (ZoneX - 2), (ZoneY - 2), Color.Blue);
+                }
                 AverageRed += CurrentColor.R; AverageGreen += CurrentColor.G; AverageBlue += CurrentColor.B;
 
                 UsedColors += 3;

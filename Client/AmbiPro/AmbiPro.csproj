@@ -215,8 +215,9 @@
     </Compile>
     <Compile Include="ModeColorSpectrum.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
-    <Compile Include="SocketHandlers.cs" />
     <Compile Include="Resources\BitmapProcessing.cs" />
+    <Compile Include="SocketHandlers.cs" />
+    <Compile Include="Resources\ColorProcessing.cs" />
     <Compile Include="Resources\HslColor.cs" />
     <Compile Include="ModeSolidColor.cs" />
     <Compile Include="ModeColorLoop.cs" />
@@ -359,6 +360,9 @@
     </Resource>
     <Resource Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkColorPicker\ColorSelector.png">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkColorPicker\ColorSelector.png</Link>
+    </Resource>
+    <Resource Include="Assets\Icons\Debug.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Content Include="Script\Script.ino">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

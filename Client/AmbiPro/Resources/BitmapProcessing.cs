@@ -1,46 +1,76 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Windows.Media.Imaging;
 
 namespace AmbiPro.Resources
 {
     public class BitmapProcessing
     {
-        //Get the color of a pixel
-        public static unsafe Color GetPixelColor(byte* BitmapData, Int32 Width, Int32 Height, Int32 HorX, Int32 VerY)
+        //Convert data to bitmap
+        public static unsafe void ConvertDataToBitmap(byte* bitmapData, int bitmapWidth, int bitmapHeight, int bitmapSize, out Bitmap imageBitmap, out byte* imageData)
         {
-            Color PixelColor = Color.Empty;
             try
             {
-                //Get start of the pixel
-                Int32 i = (((Height - VerY) * Width) + HorX) * 4;
+                imageBitmap = new Bitmap(bitmapWidth, bitmapHeight);
+                Rectangle ScreenRectangle = new Rectangle(0, 0, imageBitmap.Width, imageBitmap.Height);
+                BitmapData ScreenBitmapData = imageBitmap.LockBits(ScreenRectangle, ImageLockMode.ReadWrite, imageBitmap.PixelFormat);
 
-                //Get the color from pixel
-                Byte b = BitmapData[i];
-                Byte g = BitmapData[i + 1];
-                Byte r = BitmapData[i + 2];
-                Byte a = BitmapData[i + 3];
-                PixelColor = Color.FromArgb(a, r, g, b);
+                imageData = (byte*)ScreenBitmapData.Scan0;
+                for (int y = 0; y < bitmapSize; y++) { imageData[y] = bitmapData[y]; }
+                imageBitmap.UnlockBits(ScreenBitmapData);
+
+                imageBitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
             }
-            catch { Debug.WriteLine("Failed to get pixel color from bitmap data."); }
-            return PixelColor;
+            catch (Exception ex)
+            {
+                imageBitmap = null;
+                imageData = null;
+                Debug.WriteLine("Failed to convert data to bitmap: " + ex.Message);
+            }
         }
 
-        //Set the color of a pixel
-        public static unsafe void SetPixelColor(byte* BitmapData, Int32 Width, Int32 Height, Int32 HorX, Int32 VerY, Color NewColor)
+        //Save screen capture as image file
+        public static void SaveScreenCaptureBitmap(Bitmap bitmapSave)
         {
             try
             {
-                //Get start of the pixel
-                Int32 i = (((Height - VerY) * Width) + HorX) * 4;
+                //Create directory
+                if (!Directory.Exists("Debug"))
+                {
+                    Directory.CreateDirectory("Debug");
+                }
 
-                //Set the color to pixel
-                BitmapData[i] = NewColor.B;
-                BitmapData[i + 1] = NewColor.G;
-                BitmapData[i + 2] = NewColor.R;
-                BitmapData[i + 3] = NewColor.A;
+                //Save image file
+                long milliseconds = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+                bitmapSave.Save("Debug\\" + milliseconds + ".bmp", ImageFormat.Bmp);
             }
-            catch { Debug.WriteLine("Failed to set pixel color in bitmap data."); }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed to save debug bitmap image: " + ex.Message);
+            }
+        }
+
+        //Convert bitmap to bitmapimage
+        public static BitmapImage BitmapToBitmapImage(Bitmap bitmap)
+        {
+            try
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    bitmap.Save(memoryStream, ImageFormat.Bmp);
+                    BitmapImage bitmapImage = new BitmapImage();
+                    bitmapImage.BeginInit();
+                    bitmapImage.StreamSource = memoryStream;
+                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmapImage.EndInit();
+                    return bitmapImage;
+                }
+            }
+            catch { }
+            return null;
         }
     }
 }

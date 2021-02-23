@@ -1,8 +1,10 @@
 ﻿using ArnoldVinkCode;
+using ArnoldVinkMessageBox;
 using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Net;
@@ -53,6 +55,37 @@ namespace AmbiPro.Settings
                 this.Close();
             }
             catch { }
+        }
+
+        //Browse debug image files
+        private async void btn_BrowseDebugImages_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process.Start("Debug");
+            }
+            catch
+            {
+                await AVMessageBox.Popup("Debug image folder not found.", "", "Ok", "", "", "");
+            }
+        }
+
+        //Delete debug image files
+        private async void btn_DeleteDebugImages_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (Directory.Exists("Debug"))
+                {
+                    Directory.Delete("Debug", true);
+                }
+
+                await AVMessageBox.Popup("Debug image files have been deleted.", "", "Ok", "", "", "");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed to delete debug bitmap images: " + ex.Message);
+            }
         }
 
         //Handle switch button

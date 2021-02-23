@@ -5,7 +5,6 @@ using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
@@ -51,6 +50,10 @@ namespace AmbiPro
         private static int setLedSmoothing = 0;
         private static int setLedRotate = 0;
         private static int setLedMode = 0;
+        private static bool setDebugMode = false;
+        private static bool setDebugBlackBar = false;
+        private static bool setDebugColor = true;
+        private static bool setDebugSave = false;
 
         //Update the led settings
         public static void UpdateSettings()
@@ -84,6 +87,12 @@ namespace AmbiPro
                 setLedSides = Convert.ToInt32(ConfigurationManager.AppSettings["LedSides"]);
                 setLedDirection = Convert.ToInt32(ConfigurationManager.AppSettings["LedDirection"]);
                 setLedMode = Convert.ToInt32(ConfigurationManager.AppSettings["LedMode"]);
+
+                //Debug settings
+                setDebugMode = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugMode"]);
+                setDebugBlackBar = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugBlackBar"]);
+                setDebugColor = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugColor"]);
+                setDebugSave = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugSave"]);
 
                 //Update the rotation based on ratio
                 string ScreenRatio = AVFunctions.ScreenAspectRatio(vScreenWidth, vScreenHeight, false);
@@ -347,30 +356,6 @@ namespace AmbiPro
             {
                 Debug.WriteLine("Failed to update the leds: " + ex.Message);
                 ShowConnectionMessage();
-            }
-        }
-
-        //Debug save screen capture as image
-        private static unsafe void SaveBitmapFromData(byte* BitmapData)
-        {
-            try
-            {
-                Bitmap ScreenBitmap = new Bitmap(vScreenWidth, vScreenHeight);
-                Rectangle ScreenRectangle = new Rectangle(0, 0, ScreenBitmap.Width, ScreenBitmap.Height);
-
-                BitmapData ScreenBitmapData = ScreenBitmap.LockBits(ScreenRectangle, ImageLockMode.ReadWrite, ScreenBitmap.PixelFormat);
-
-                byte* BitmapScan0 = (byte*)ScreenBitmapData.Scan0;
-                for (int y = 0; y < vOutputSize; y++) { BitmapScan0[y] = BitmapData[y]; }
-
-                ScreenBitmap.UnlockBits(ScreenBitmapData);
-
-                long milliseconds = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-                ScreenBitmap.Save("E:\\Debug\\" + milliseconds + ".bmp", ImageFormat.Bmp);
-            }
-            catch
-            {
-                Debug.WriteLine("Failed to export debug bitmap.");
             }
         }
     }
