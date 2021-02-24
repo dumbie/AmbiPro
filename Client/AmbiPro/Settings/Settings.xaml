@@ -193,16 +193,12 @@
                             <TextBlock Text="Adjust the screen capture range on the sides resulting in a more wider capturing area." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
                             <Slider Name="sldr_LedCaptureRange" Style="{StaticResource SliderWhite}" Minimum="5" Maximum="40"/>
 
-                            <TextBlock Margin="0,10,0,0" Text="Led capture smoothing:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Select the screen capture smoothing resulting in a more smoother but less detailed result." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
-                            <ComboBox Name="cb_LedSmoothing" Style="{StaticResource ComboBoxBlack}">
-                                <ComboBoxItem>Smooth (Lowest performance impact)</ComboBoxItem>
-                                <ComboBoxItem>Smoother (Medium performance impact)</ComboBoxItem>
-                                <ComboBoxItem>Smoothest (Highest performance impact)</ComboBoxItem>
-                            </ComboBox>
+                            <TextBlock Margin="0,10,0,0" Name="tb_LedSmoothing" Text="Led capture smoothing:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                            <TextBlock Text="Change the screen capture smoothing, lowering this will cause less detailed capture.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                            <Slider Name="sldr_LedSmoothing" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="10"/>
 
                             <TextBlock Margin="0,10,0,0" Name="tb_UpdateRate" Text="Led update rate:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="The quicker you choose the more resources get used, but will also cause less output delay." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                            <TextBlock Text="Change the screen capture update rate, lowering this will cause less output delay.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
                             <Slider Name="sldr_UpdateRate" Style="{StaticResource SliderWhite}" Minimum="1" Maximum="250"/>
 
                             <CheckBox Margin="0,15,0,0" Name="cb_AdjustBlackBars" Content="Adjust to screen black bars" FontSize="20" FontWeight="Light" Foreground="#1D1D1D" Style="{StaticResource CheckBoxBlack}"/>
@@ -211,6 +207,8 @@
                             <TextBlock Margin="0,10,0,0" Name="tb_AdjustBlackBarLevel" Text="Minimum black bar level:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                             <TextBlock Text="Change the minimum black level before it is considered a black bar to adjust." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
                             <Slider Name="sldr_AdjustBlackBarLevel" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="20"/>
+
+                            <TextBlock Margin="0,10,0,0" Text="* This setting has impact on your system performance." Style="{StaticResource TextBlockGrayLight}"/>
 
                             <Button Name="btn_Welcome_Start2" Visibility="Collapsed" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Let's start" Click="Btn_WelcomeStart_Click"/>
                         </StackPanel>
@@ -333,13 +331,13 @@
                             <CheckBox Name="checkbox_DebugMode" Content="Enable or disable debug mode" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
                             <TextBlock Text="Enable or disable the debug mode that enables the preview." Style="{StaticResource TextBlockGrayLight}"/>
 
-                            <CheckBox Name="checkbox_DebugBlackBar" Content="Enable or disable black bar debug" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
-                            <TextBlock Text="Enable or disable the black bar detection in the preview." Style="{StaticResource TextBlockGrayLight}"/>
-
                             <CheckBox Name="checkbox_DebugColor" Content="Enable or disable color capture debug" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
                             <TextBlock Text="Enable or disable the color capture areas in the preview." Style="{StaticResource TextBlockGrayLight}"/>
 
-                            <CheckBox Name="checkbox_DebugSave" Content="Enable or disable preview saving" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
+                            <CheckBox Name="checkbox_DebugBlackBar" Content="Enable or disable black bar debug" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
+                            <TextBlock Text="Enable or disable the black bar detection in the preview." Style="{StaticResource TextBlockGrayLight}"/>
+
+                            <CheckBox Name="checkbox_DebugSave" Content="Enable or disable preview image saving" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
                             <TextBlock Text="Enable or disable preview image saving to root directory." Style="{StaticResource TextBlockGrayLight}"/>
 
                             <Button Name="btn_BrowseDebugImages" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Browse debug image files" Click="btn_BrowseDebugImages_Click"/>
@@ -347,6 +345,13 @@
 
                             <TextBlock Margin="0,10,0,0" Text="Screen capture preview:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                             <Image Name="image_DebugPreview"/>
+                        </StackPanel>
+
+                        <!-- Help -->
+                        <StackPanel Name="sp_Help" Visibility="Collapsed" Margin="5,5,5,5">
+                            <StackPanel Name="sp_Help_Text"/>
+                            <Button Name="btn_Help_ProjectWebsite" Margin="0,15,0,0" Content="Visit Project Website" Style="{StaticResource ButtonAccentBlack}" Click="btn_Help_ProjectWebsite_Click"/>
+                            <Button Name="btn_Help_OpenDonation" Margin="0,10,0,0" Content="Open Donation Page" Style="{StaticResource ButtonAccentBlack}" Click="btn_Help_OpenDonation_Click"/>
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>

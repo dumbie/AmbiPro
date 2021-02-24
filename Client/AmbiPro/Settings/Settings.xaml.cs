@@ -114,6 +114,9 @@ namespace AmbiPro.Settings
                 SettingsLoad();
                 SettingsSave();
 
+                //Load and set the help text
+                Load_Help_Text();
+
                 Debug.WriteLine("Settings window initialized.");
             }
             catch { }
@@ -137,6 +140,7 @@ namespace AmbiPro.Settings
                     menuButtonRemote.Visibility = Visibility.Collapsed;
                     menuButtonUpdate.Visibility = Visibility.Collapsed;
                     menuButtonHelp.Visibility = Visibility.Collapsed;
+                    menuButtonDebug.Visibility = Visibility.Collapsed;
                     btn_SwitchLedsOnOrOff.Visibility = Visibility.Collapsed;
 
                     //Set the first connected device
@@ -158,6 +162,7 @@ namespace AmbiPro.Settings
                     menuButtonRemote.Visibility = Visibility.Visible;
                     menuButtonUpdate.Visibility = Visibility.Visible;
                     menuButtonHelp.Visibility = Visibility.Visible;
+                    menuButtonDebug.Visibility = Visibility.Visible;
                     btn_SwitchLedsOnOrOff.Visibility = Visibility.Visible;
                 }
 

@@ -209,11 +209,10 @@ namespace AmbiPro.Settings
                 };
 
                 //Save - Led Smoothing
-                cb_LedSmoothing.SelectionChanged += (sender, e) =>
+                sldr_LedSmoothing.ValueChanged += (sender, e) =>
                 {
-                    if (cb_LedSmoothing.SelectedIndex == 0) { SettingsFunction.Save("LedSmoothing", "3"); }
-                    else if (cb_LedSmoothing.SelectedIndex == 1) { SettingsFunction.Save("LedSmoothing", "2"); }
-                    else if (cb_LedSmoothing.SelectedIndex == 2) { SettingsFunction.Save("LedSmoothing", "1"); }
+                    SettingsFunction.Save("LedSmoothing", sldr_LedSmoothing.Value.ToString("0"));
+                    tb_LedSmoothing.Text = "Led capture smoothing: " + (sldr_LedSmoothing.Maximum - Convert.ToInt32(sldr_LedSmoothing.Value.ToString("0")));
                 };
 
                 //Save - Led Count

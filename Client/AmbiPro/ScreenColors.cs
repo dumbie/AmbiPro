@@ -13,7 +13,7 @@ namespace AmbiPro
             try
             {
                 Color CurrentColor = new Color();
-                Int32 CaptureRange = Convert.ToInt32(((vScreenHeight / 100) * setLedCaptureRange) / 2 / setLedSmoothing);
+                Int32 CaptureRange = (vScreenHeight / 100) * setLedCaptureRange / 2 / setLedSmoothing;
                 Int32 DirectionSkipStep = 0;
 
                 //Check led color direction

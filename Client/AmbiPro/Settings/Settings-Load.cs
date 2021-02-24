@@ -113,9 +113,8 @@ namespace AmbiPro.Settings
                 sldr_AdjustBlackBarLevel.Value = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarLevel"]);
 
                 //Load - Led Smoothing
-                if (ConfigurationManager.AppSettings["LedSmoothing"].ToString() == "1") { cb_LedSmoothing.SelectedIndex = 2; }
-                else if (ConfigurationManager.AppSettings["LedSmoothing"].ToString() == "2") { cb_LedSmoothing.SelectedIndex = 1; }
-                else if (ConfigurationManager.AppSettings["LedSmoothing"].ToString() == "3") { cb_LedSmoothing.SelectedIndex = 0; }
+                tb_LedSmoothing.Text = "Led capture smoothing: " + (sldr_LedSmoothing.Maximum - Convert.ToInt32(ConfigurationManager.AppSettings["LedSmoothing"]));
+                sldr_LedSmoothing.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedSmoothing"]);
 
                 //Load - Led Count
                 tb_LedCount.Text = ConfigurationManager.AppSettings["LedCount"];

@@ -1,5 +1,4 @@
 ﻿using AmbiPro.Calibrate;
-using AmbiPro.Help;
 using AmbiPro.Settings;
 using System.Reflection;
 using System.Windows;
@@ -12,7 +11,6 @@ namespace AmbiPro
         //Application Windows
         public static FormSettings vFormSettings = new FormSettings();
         public static FormCalibrate vFormCalibrate = new FormCalibrate();
-        public static FormHelp vFormHelp = new FormHelp();
 
         protected override async void OnStartup(StartupEventArgs e)
         {

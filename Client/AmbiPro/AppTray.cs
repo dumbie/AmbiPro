@@ -30,11 +30,10 @@ namespace AmbiPro
 
                 //Create a context menu for systray.
                 ContextMenu.MenuItems.Add("On/Off", OnSwitchOnOff);
-                ContextMenu.MenuItems.Add("Settings", OnSettings);
                 ContextMenu.MenuItems.Add(MenuModes);
+                ContextMenu.MenuItems.Add("Settings", OnSettings);
                 ContextMenu.MenuItems.Add("Calibrate", OnCalibrate);
                 ContextMenu.MenuItems.Add("Website", OnWebsite);
-                ContextMenu.MenuItems.Add("Help", OnHelp);
                 ContextMenu.MenuItems.Add("Exit", OnExit);
 
                 //Initialize the tray notify icon. 
@@ -121,14 +120,6 @@ namespace AmbiPro
             try
             {
                 Process.Start("https://projects.arnoldvink.com");
-            }
-            catch { }
-        }
-        private static void OnHelp(object Sender, EventArgs e)
-        {
-            try
-            {
-                App.vFormHelp.Show();
             }
             catch { }
         }

@@ -207,15 +207,13 @@
     <Compile Include="Calibrate\Calibrate.xaml.cs">
       <DependentUpon>Calibrate.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Help\Help.xaml.cs">
-      <DependentUpon>Help.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MessageBox\MessageBox.xaml.cs">
       <DependentUpon>MessageBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="ModeColorSpectrum.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="Resources\BitmapProcessing.cs" />
+    <Compile Include="Settings\Settings-Help.cs" />
     <Compile Include="SocketHandlers.cs" />
     <Compile Include="Resources\ColorProcessing.cs" />
     <Compile Include="Resources\HslColor.cs" />
@@ -291,10 +289,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Calibrate\Calibrate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Help\Help.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
