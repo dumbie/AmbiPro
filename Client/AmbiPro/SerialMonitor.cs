@@ -47,7 +47,6 @@ namespace AmbiPro
         private static int setLedSides = 0;
         private static int setLedDirection = 0;
         private static int setLedCaptureRange = 0;
-        private static int setLedSmoothing = 0;
         private static int setLedRotate = 0;
         private static int setLedMode = 0;
         private static bool setDebugMode = false;
@@ -82,7 +81,6 @@ namespace AmbiPro
                 setLedColorGreen = Convert.ToDouble(ConfigurationManager.AppSettings["LedColorGreen"]) / 100;
                 setLedColorBlue = Convert.ToDouble(ConfigurationManager.AppSettings["LedColorBlue"]) / 100;
                 setLedCaptureRange = Convert.ToInt32(ConfigurationManager.AppSettings["LedCaptureRange"]);
-                setLedSmoothing = 2 + Convert.ToInt32(ConfigurationManager.AppSettings["LedSmoothing"]); //CapturePixels-1
                 setLedOutput = Convert.ToInt32(ConfigurationManager.AppSettings["LedOutput"]);
                 setLedSides = Convert.ToInt32(ConfigurationManager.AppSettings["LedSides"]);
                 setLedDirection = Convert.ToInt32(ConfigurationManager.AppSettings["LedDirection"]);

@@ -14,7 +14,6 @@ namespace AmbiPro.Calibrate
     public partial class FormCalibrate : Window
     {
         //Application Variables
-        private Configuration vConfiguration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
         private Int32 vPreviousLedCaptureRange = Convert.ToInt32(ConfigurationManager.AppSettings["LedCaptureRange"]);
         private Int32 vPreviousLedColorCut = Convert.ToInt32(ConfigurationManager.AppSettings["LedColorCut"]);
         private Int32 vCurrentRotation = 0;
@@ -49,19 +48,8 @@ namespace AmbiPro.Calibrate
                     if (SettingsFunction.Check("LedRotate" + ScreenRatio)) { vCurrentRotation = Convert.ToInt32(ConfigurationManager.AppSettings["LedRotate" + ScreenRatio]); }
                     tb_RotateValue.Text = "Led rotation: " + vCurrentRotation;
 
-                    //Calculate maximum led correction based on leds
-                    Int32 CurrentLedCount = Convert.ToInt32(ConfigurationManager.AppSettings["LedCount"]);
-                    if (CurrentLedCount >= 10)
-                    {
-                        Int32 MaxRotate = (CurrentLedCount * 12) / 100;
-                        if (vCurrentRotation <= -MaxRotate) { btn_RotateLeft.IsEnabled = false; } else { btn_RotateLeft.IsEnabled = true; }
-                        if (vCurrentRotation >= MaxRotate) { btn_RotateRight.IsEnabled = false; } else { btn_RotateRight.IsEnabled = true; }
-                    }
-                    else
-                    {
-                        btn_RotateLeft.IsEnabled = false;
-                        btn_RotateRight.IsEnabled = false;
-                    }
+                    //Check the maximum rotation count
+                    CheckMaximumRotationCount();
                 };
             }
             catch { }
@@ -100,19 +88,8 @@ namespace AmbiPro.Calibrate
                 SettingsFunction.Save("LedRotate" + ScreenRatio, vCurrentRotation.ToString());
                 tb_RotateValue.Text = "Led rotation: " + vCurrentRotation;
 
-                //Calculate maximum led correction based on leds
-                Int32 CurrentLedCount = Convert.ToInt32(ConfigurationManager.AppSettings["LedCount"]);
-                if (CurrentLedCount >= 10)
-                {
-                    Int32 MaxRotate = (CurrentLedCount * 12) / 100;
-                    if (vCurrentRotation <= -MaxRotate) { btn_RotateLeft.IsEnabled = false; } else { btn_RotateLeft.IsEnabled = true; }
-                    if (vCurrentRotation >= MaxRotate) { btn_RotateRight.IsEnabled = false; } else { btn_RotateRight.IsEnabled = true; }
-                }
-                else
-                {
-                    btn_RotateLeft.IsEnabled = false;
-                    btn_RotateRight.IsEnabled = false;
-                }
+                //Check the maximum rotation count
+                CheckMaximumRotationCount();
             }
             catch { }
         }
@@ -128,19 +105,8 @@ namespace AmbiPro.Calibrate
                 SettingsFunction.Save("LedRotate" + ScreenRatio, vCurrentRotation.ToString());
                 tb_RotateValue.Text = "Led rotation: " + vCurrentRotation;
 
-                //Calculate maximum led correction based on leds
-                Int32 CurrentLedCount = Convert.ToInt32(ConfigurationManager.AppSettings["LedCount"]);
-                if (CurrentLedCount >= 10)
-                {
-                    Int32 MaxRotate = (CurrentLedCount * 12) / 100;
-                    if (vCurrentRotation <= -MaxRotate) { btn_RotateLeft.IsEnabled = false; } else { btn_RotateLeft.IsEnabled = true; }
-                    if (vCurrentRotation >= MaxRotate) { btn_RotateRight.IsEnabled = false; } else { btn_RotateRight.IsEnabled = true; }
-                }
-                else
-                {
-                    btn_RotateLeft.IsEnabled = false;
-                    btn_RotateRight.IsEnabled = false;
-                }
+                //Check the maximum rotation count
+                CheckMaximumRotationCount();
             }
             catch { }
         }
@@ -156,13 +122,20 @@ namespace AmbiPro.Calibrate
                 SettingsFunction.Save("LedRotate" + ScreenRatio, "0");
                 tb_RotateValue.Text = "Led rotation: 0";
 
-                //Calculate maximum led correction based on leds
+                //Check the maximum rotation count
+                CheckMaximumRotationCount();
+            }
+            catch { }
+        }
+
+        //Check the maximum rotation count
+        void CheckMaximumRotationCount()
+        {
+            try
+            {
                 Int32 CurrentLedCount = Convert.ToInt32(ConfigurationManager.AppSettings["LedCount"]);
-                if (CurrentLedCount >= 10)
-                {
-                    btn_RotateLeft.IsEnabled = true;
-                    btn_RotateRight.IsEnabled = true;
-                }
+                if (vCurrentRotation > -CurrentLedCount) { btn_RotateLeft.IsEnabled = true; } else { btn_RotateLeft.IsEnabled = false; }
+                if (vCurrentRotation < CurrentLedCount) { btn_RotateRight.IsEnabled = true; } else { btn_RotateRight.IsEnabled = false; }
             }
             catch { }
         }
@@ -212,7 +185,7 @@ namespace AmbiPro.Calibrate
         {
             try
             {
-                Debug.WriteLine("Decreasing the block sizes...");
+                Debug.WriteLine("Decreasing the block sizes..." + sp_Block1.Width);
                 if (sp_Block1.Width >= 50)
                 {
                     sp_Block1.Width = sp_Block1.Width - 10;

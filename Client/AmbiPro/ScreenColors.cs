@@ -13,7 +13,9 @@ namespace AmbiPro
             try
             {
                 Color CurrentColor = new Color();
-                Int32 CaptureRange = (vScreenHeight / 100) * setLedCaptureRange / 2 / setLedSmoothing;
+                Int32 CaptureZoneMargin = 4;
+                Int32 CaptureZoneSize = 2;
+                Int32 CaptureRange = (setLedCaptureRange * vScreenHeight) / 100 / 2;
                 Int32 DirectionSkipStep = 0;
 
                 //Check led color direction
@@ -39,7 +41,7 @@ namespace AmbiPro
                     Int32 AverageRed = 0;
                     Int32 AverageGreen = 0;
                     Int32 AverageBlue = 0;
-                    Int32 ZoneSkipStep = 0;
+                    Int32 CaptureZoneStep = 0;
 
                     for (Int32 lm = 0; lm < CaptureRange; lm++)
                     {
@@ -47,8 +49,8 @@ namespace AmbiPro
                         {
                             if (setLedDirection == 0)
                             {
-                                Int32 ZoneY = vScreenHeight - AdjustedMargin - ZoneSkipStep;
-                                for (Int32 sk = setLedSmoothing; sk < DirectionStep; sk += setLedSmoothing)
+                                Int32 ZoneY = vScreenHeight - AdjustedMargin - CaptureZoneStep;
+                                for (Int32 sk = CaptureZoneMargin; sk < DirectionStep; sk += CaptureZoneSize)
                                 {
                                     Int32 ZoneX = DirectionSkipStep + sk;
                                     if (ZoneX < vScreenWidth - OffsetMargin) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
@@ -56,8 +58,8 @@ namespace AmbiPro
                             }
                             else
                             {
-                                Int32 ZoneY = vScreenHeight - AdjustedMargin - ZoneSkipStep;
-                                for (Int32 sk = setLedSmoothing; sk < DirectionStep; sk += setLedSmoothing)
+                                Int32 ZoneY = vScreenHeight - AdjustedMargin - CaptureZoneStep;
+                                for (Int32 sk = CaptureZoneMargin; sk < DirectionStep; sk += CaptureZoneSize)
                                 {
                                     Int32 ZoneX = DirectionSkipStep - sk;
                                     if (ZoneX > OffsetMargin) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
@@ -68,8 +70,8 @@ namespace AmbiPro
                         {
                             if (setLedDirection == 0)
                             {
-                                Int32 ZoneX = vScreenWidth - AdjustedMargin - ZoneSkipStep;
-                                for (Int32 sk = setLedSmoothing; sk < DirectionStep; sk += setLedSmoothing)
+                                Int32 ZoneX = vScreenWidth - AdjustedMargin - CaptureZoneStep;
+                                for (Int32 sk = CaptureZoneMargin; sk < DirectionStep; sk += CaptureZoneSize)
                                 {
                                     Int32 ZoneY = DirectionSkipStep - sk;
                                     if (ZoneY > OffsetMargin) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
@@ -77,8 +79,8 @@ namespace AmbiPro
                             }
                             else
                             {
-                                Int32 ZoneX = AdjustedMargin + ZoneSkipStep;
-                                for (Int32 sk = setLedSmoothing; sk < DirectionStep; sk += setLedSmoothing)
+                                Int32 ZoneX = AdjustedMargin + CaptureZoneStep;
+                                for (Int32 sk = CaptureZoneMargin; sk < DirectionStep; sk += CaptureZoneSize)
                                 {
                                     Int32 ZoneY = DirectionSkipStep - sk;
                                     if (ZoneY > OffsetMargin) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
@@ -89,8 +91,8 @@ namespace AmbiPro
                         {
                             if (setLedDirection == 0)
                             {
-                                Int32 ZoneY = AdjustedMargin + ZoneSkipStep;
-                                for (Int32 sk = setLedSmoothing; sk < DirectionStep; sk += setLedSmoothing)
+                                Int32 ZoneY = AdjustedMargin + CaptureZoneStep;
+                                for (Int32 sk = CaptureZoneMargin; sk < DirectionStep; sk += CaptureZoneSize)
                                 {
                                     Int32 ZoneX = DirectionSkipStep - sk;
                                     if (ZoneX > OffsetMargin) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
@@ -98,8 +100,8 @@ namespace AmbiPro
                             }
                             else
                             {
-                                Int32 ZoneY = AdjustedMargin + ZoneSkipStep;
-                                for (Int32 sk = setLedSmoothing; sk < DirectionStep; sk += setLedSmoothing)
+                                Int32 ZoneY = AdjustedMargin + CaptureZoneStep;
+                                for (Int32 sk = CaptureZoneMargin; sk < DirectionStep; sk += CaptureZoneSize)
                                 {
                                     Int32 ZoneX = DirectionSkipStep + sk;
                                     if (ZoneX < vScreenWidth - OffsetMargin) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
@@ -110,8 +112,8 @@ namespace AmbiPro
                         {
                             if (setLedDirection == 0)
                             {
-                                Int32 ZoneX = AdjustedMargin + ZoneSkipStep;
-                                for (Int32 sk = setLedSmoothing; sk < DirectionStep; sk += setLedSmoothing)
+                                Int32 ZoneX = AdjustedMargin + CaptureZoneStep;
+                                for (Int32 sk = CaptureZoneMargin; sk < DirectionStep; sk += CaptureZoneSize)
                                 {
                                     Int32 ZoneY = DirectionSkipStep + sk;
                                     if (ZoneY < vScreenHeight - OffsetMargin) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
@@ -119,15 +121,15 @@ namespace AmbiPro
                             }
                             else
                             {
-                                Int32 ZoneX = vScreenWidth - AdjustedMargin - ZoneSkipStep;
-                                for (Int32 sk = setLedSmoothing; sk < DirectionStep; sk += setLedSmoothing)
+                                Int32 ZoneX = vScreenWidth - AdjustedMargin - CaptureZoneStep;
+                                for (Int32 sk = CaptureZoneMargin; sk < DirectionStep; sk += CaptureZoneSize)
                                 {
                                     Int32 ZoneY = DirectionSkipStep + sk;
                                     if (ZoneY < vScreenHeight - OffsetMargin) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
                                 }
                             }
                         }
-                        ZoneSkipStep += setLedSmoothing;
+                        CaptureZoneStep += CaptureZoneSize;
                     }
 
                     //Skip to the next capture point
@@ -184,14 +186,7 @@ namespace AmbiPro
                 }
                 AverageRed += CurrentColor.R; AverageGreen += CurrentColor.G; AverageBlue += CurrentColor.B;
 
-                CurrentColor = ColorProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, (ZoneX - 2), (ZoneY - 2));
-                if (setDebugMode && setDebugColor)
-                {
-                    ColorProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, (ZoneX - 2), (ZoneY - 2), Color.Blue);
-                }
-                AverageRed += CurrentColor.R; AverageGreen += CurrentColor.G; AverageBlue += CurrentColor.B;
-
-                UsedColors += 3;
+                UsedColors += 2;
                 return CurrentColor;
             }
             catch { return new Color(); }

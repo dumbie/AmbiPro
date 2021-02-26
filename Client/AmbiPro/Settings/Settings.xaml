@@ -7,10 +7,12 @@
         xmlns:ArnoldVinkTimePicker="clr-namespace:ArnoldVinkTimePicker"
         xmlns:local="clr-namespace:AmbiPro"
         mc:Ignorable="d"
+        RenderOptions.BitmapScalingMode="HighQuality"
+        SnapsToDevicePixels="True"
         Title="AmbiPro - Settings" 
         ResizeMode="CanMinimize" 
         Width="720" 
-        Height="695">
+        Height="700">
 
     <Grid>
         <!-- Grid Main -->
@@ -190,12 +192,8 @@
                             </ComboBox>
 
                             <TextBlock Margin="0,10,0,0" Name="tb_LedCaptureRange" Text="Led capture range:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Adjust the screen capture range on the sides resulting in a more wider capturing area." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                            <TextBlock Text="Adjust the screen capture range on the sides resulting in a more wider capturing area.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
                             <Slider Name="sldr_LedCaptureRange" Style="{StaticResource SliderWhite}" Minimum="5" Maximum="40"/>
-
-                            <TextBlock Margin="0,10,0,0" Name="tb_LedSmoothing" Text="Led capture smoothing:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Change the screen capture smoothing, lowering this will cause less detailed capture.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
-                            <Slider Name="sldr_LedSmoothing" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="10"/>
 
                             <TextBlock Margin="0,10,0,0" Name="tb_UpdateRate" Text="Led update rate:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                             <TextBlock Text="Change the screen capture update rate, lowering this will cause less output delay.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>

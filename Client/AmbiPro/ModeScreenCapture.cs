@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArnoldVinkCode;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
@@ -22,11 +23,11 @@ namespace AmbiPro
             try
             {
                 //Update side margins (Atleast 1)
-                int OffsetMargin = 5;
-                int HorizontalMargin0 = 5;
-                int HorizontalMargin2 = 5;
-                int VerticalMargin1 = 5;
-                int VerticalMargin3 = 5;
+                int OffsetMargin = 4;
+                int HorizontalMargin0 = OffsetMargin;
+                int HorizontalMargin2 = OffsetMargin;
+                int VerticalMargin1 = OffsetMargin;
+                int VerticalMargin3 = OffsetMargin;
 
                 //Initialize Screen Capturer
                 bool CapturerInitialized = await InitializeScreenCapturer();
@@ -64,21 +65,11 @@ namespace AmbiPro
 
                     int HorizontalLedCount = Convert.ToInt32(((WidthPercentage / 100) * setLedCount) / 2);
                     int VerticalLedCount = Convert.ToInt32(((HeightPercentage / 100) * setLedCount) / 2);
+                    //Debug.WriteLine("Horizontal led count: " + HorizontalLedCount + "/" + "Vertical led count: " + VerticalLedCount);
 
-                    //Rotate the leds as calibrated for current ratio
-                    if (setLedRotate >= 0)
-                    {
-                        HorizontalLedCount += Math.Abs(setLedRotate);
-                        VerticalLedCount -= Math.Abs(setLedRotate);
-                    }
-                    else
-                    {
-                        HorizontalLedCount -= Math.Abs(setLedRotate);
-                        VerticalLedCount += Math.Abs(setLedRotate);
-                    }
-
-                    int HorizontalStep = (vScreenWidth / HorizontalLedCount);
-                    int VerticalStep = (vScreenHeight / VerticalLedCount);
+                    int HorizontalLedStep = (vScreenWidth / HorizontalLedCount);
+                    int VerticalLedStep = (vScreenHeight / VerticalLedCount);
+                    //Debug.WriteLine("Horizontal led step: " + HorizontalLedStep + "/" + "Vertical led step: " + VerticalLedStep);
 
                     //Current byte information
                     int CurrentSerialByte = InitByteSize;
@@ -116,21 +107,21 @@ namespace AmbiPro
                         //Check led capture sides color
                         if (setLedSides == 0)
                         {
-                            ScreenColors(1, OffsetMargin, VerticalMargin1, SerialBytes, BitmapData, VerticalLedCount, VerticalStep, ref CurrentSerialByte);
-                            ScreenColors(3, OffsetMargin, VerticalMargin3, SerialBytes, BitmapData, VerticalLedCount, VerticalStep, ref CurrentSerialByte);
+                            ScreenColors(1, OffsetMargin, VerticalMargin1, SerialBytes, BitmapData, VerticalLedCount, VerticalLedStep, ref CurrentSerialByte);
+                            ScreenColors(3, OffsetMargin, VerticalMargin3, SerialBytes, BitmapData, VerticalLedCount, VerticalLedStep, ref CurrentSerialByte);
                         }
                         else if (setLedSides == 1)
                         {
-                            ScreenColors(1, OffsetMargin, VerticalMargin1, SerialBytes, BitmapData, VerticalLedCount, VerticalStep, ref CurrentSerialByte);
-                            ScreenColors(2, OffsetMargin, HorizontalMargin2, SerialBytes, BitmapData, HorizontalLedCount, HorizontalStep, ref CurrentSerialByte);
-                            ScreenColors(3, OffsetMargin, VerticalMargin3, SerialBytes, BitmapData, VerticalLedCount, VerticalStep, ref CurrentSerialByte);
+                            ScreenColors(1, OffsetMargin, VerticalMargin1, SerialBytes, BitmapData, VerticalLedCount, VerticalLedStep, ref CurrentSerialByte);
+                            ScreenColors(2, OffsetMargin, HorizontalMargin2, SerialBytes, BitmapData, HorizontalLedCount, HorizontalLedStep, ref CurrentSerialByte);
+                            ScreenColors(3, OffsetMargin, VerticalMargin3, SerialBytes, BitmapData, VerticalLedCount, VerticalLedStep, ref CurrentSerialByte);
                         }
                         else if (setLedSides == 2)
                         {
-                            ScreenColors(0, OffsetMargin, HorizontalMargin0, SerialBytes, BitmapData, HorizontalLedCount, HorizontalStep, ref CurrentSerialByte);
-                            ScreenColors(1, OffsetMargin, VerticalMargin1, SerialBytes, BitmapData, VerticalLedCount, VerticalStep, ref CurrentSerialByte);
-                            ScreenColors(2, OffsetMargin, HorizontalMargin2, SerialBytes, BitmapData, HorizontalLedCount, HorizontalStep, ref CurrentSerialByte);
-                            ScreenColors(3, OffsetMargin, VerticalMargin3, SerialBytes, BitmapData, VerticalLedCount, VerticalStep, ref CurrentSerialByte);
+                            ScreenColors(0, OffsetMargin, HorizontalMargin0, SerialBytes, BitmapData, HorizontalLedCount, HorizontalLedStep, ref CurrentSerialByte);
+                            ScreenColors(1, OffsetMargin, VerticalMargin1, SerialBytes, BitmapData, VerticalLedCount, VerticalLedStep, ref CurrentSerialByte);
+                            ScreenColors(2, OffsetMargin, HorizontalMargin2, SerialBytes, BitmapData, HorizontalLedCount, HorizontalLedStep, ref CurrentSerialByte);
+                            ScreenColors(3, OffsetMargin, VerticalMargin3, SerialBytes, BitmapData, VerticalLedCount, VerticalLedStep, ref CurrentSerialByte);
                         }
 
                         //Check if debug mode is enabled
@@ -167,7 +158,10 @@ namespace AmbiPro
                     TaskDelayMs((uint)setUpdateRate);
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Screen capture task failed: " + ex.Message);
+            }
         }
     }
 }

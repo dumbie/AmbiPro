@@ -208,13 +208,6 @@ namespace AmbiPro.Settings
                     tb_AdjustBlackBarLevel.Text = "Minimum black bar level: " + sldr_AdjustBlackBarLevel.Value.ToString("0");
                 };
 
-                //Save - Led Smoothing
-                sldr_LedSmoothing.ValueChanged += (sender, e) =>
-                {
-                    SettingsFunction.Save("LedSmoothing", sldr_LedSmoothing.Value.ToString("0"));
-                    tb_LedSmoothing.Text = "Led capture smoothing: " + (sldr_LedSmoothing.Maximum - Convert.ToInt32(sldr_LedSmoothing.Value.ToString("0")));
-                };
-
                 //Save - Led Count
                 vTextBoxTimer_LedCount.Tick += vTextBoxTimer_LedCount_Tick;
                 tb_LedCount.TextChanged += (sender, e) =>
@@ -310,6 +303,23 @@ namespace AmbiPro.Settings
             }
         }
 
+        //Reset all led rotate settings
+        void SettingResetLedRotate()
+        {
+            try
+            {
+                Debug.WriteLine("Resetting all led rotate settings.");
+                foreach (string settingName in ConfigurationManager.AppSettings)
+                {
+                    if (settingName.StartsWith("LedRotate") && settingName.Contains(":"))
+                    {
+                        SettingsFunction.Save(settingName, "0");
+                    }
+                }
+            }
+            catch { }
+        }
+
         //Update led count after delay
         private async void vTextBoxTimer_LedCount_Tick(object sender, EventArgs e)
         {
@@ -327,8 +337,12 @@ namespace AmbiPro.Settings
                 if (Regex.IsMatch(tb_LedCount.Text, "(\\D+)")) { tb_LedCount.BorderBrush = BrushInvalid; return; }
                 if (Convert.ToInt32(tb_LedCount.Text) < 10) { tb_LedCount.BorderBrush = BrushInvalid; return; }
 
+                //Save the new led count setting
                 SettingsFunction.Save("LedCount", tb_LedCount.Text);
                 tb_LedCount.BorderBrush = BrushValid;
+
+                //Reset all led rotate settings
+                SettingResetLedRotate();
 
                 if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
                 {

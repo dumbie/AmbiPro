@@ -150,12 +150,6 @@ namespace AmbiPro.Settings
                     SettingsFunction.Save("AdjustBlackBarLevel", "3");
                 }
 
-                //Check - Led Smoothing
-                if (ConfigurationManager.AppSettings["LedSmoothing"] == null)
-                {
-                    SettingsFunction.Save("LedSmoothing", "2");
-                }
-
                 //Check - Led Count
                 if (ConfigurationManager.AppSettings["LedCount"] == null)
                 {
@@ -166,6 +160,12 @@ namespace AmbiPro.Settings
                 if (ConfigurationManager.AppSettings["LedOutput"] == null)
                 {
                     SettingsFunction.Save("LedOutput", "0");
+                }
+
+                //Check - Led Rotate 21:9
+                if (ConfigurationManager.AppSettings["LedRotate21:9"] == null)
+                {
+                    SettingsFunction.Save("LedRotate21:9", "0");
                 }
 
                 //Check - Led Rotate 16:9
