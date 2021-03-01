@@ -77,11 +77,11 @@ namespace AmbiPro.Calibrate
             catch { }
         }
 
-        private void btn_RotateLeft_Click(object sender, RoutedEventArgs e)
+        private void btn_RotateClockwise_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                Debug.WriteLine("Rotating the leds to the left.");
+                Debug.WriteLine("Rotating the leds clockwise.");
                 vCurrentRotation -= 1;
 
                 string ScreenRatio = AVFunctions.ScreenAspectRatio(0, 0, true);
@@ -94,11 +94,11 @@ namespace AmbiPro.Calibrate
             catch { }
         }
 
-        private void btn_RotateRight_Click(object sender, RoutedEventArgs e)
+        private void btn_RotateCounterwise_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                Debug.WriteLine("Rotating the leds to the right.");
+                Debug.WriteLine("Rotating the leds counterwise.");
                 vCurrentRotation += 1;
 
                 string ScreenRatio = AVFunctions.ScreenAspectRatio(0, 0, true);
@@ -134,8 +134,8 @@ namespace AmbiPro.Calibrate
             try
             {
                 Int32 CurrentLedCount = Convert.ToInt32(ConfigurationManager.AppSettings["LedCount"]);
-                if (vCurrentRotation > -CurrentLedCount) { btn_RotateLeft.IsEnabled = true; } else { btn_RotateLeft.IsEnabled = false; }
-                if (vCurrentRotation < CurrentLedCount) { btn_RotateRight.IsEnabled = true; } else { btn_RotateRight.IsEnabled = false; }
+                if (vCurrentRotation > -CurrentLedCount) { btn_RotateClockwise.IsEnabled = true; } else { btn_RotateClockwise.IsEnabled = false; }
+                if (vCurrentRotation < CurrentLedCount) { btn_RotateCounterwise.IsEnabled = true; } else { btn_RotateCounterwise.IsEnabled = false; }
             }
             catch { }
         }

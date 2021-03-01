@@ -71,8 +71,8 @@
                 <TextBlock Style="{StaticResource TextBlockGrayLight}" Margin="0,5,0,0" TextWrapping="Wrap" Text="* Note: every screen ratio has it's own separate rotate setting."/>
                 <TextBlock Style="{StaticResource TextBlockGrayLight}" TextWrapping="Wrap" Text="* Note: you may need to move your mouse before it changes."/>
 
-                <Button Name="btn_RotateRight" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Rotate leds clockwise" Click="btn_RotateRight_Click"/>
-                <Button Name="btn_RotateLeft" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Rotate leds counterwise" Click="btn_RotateLeft_Click"/>
+                <Button Name="btn_RotateClockwise" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Rotate leds clockwise" Click="btn_RotateClockwise_Click"/>
+                <Button Name="btn_RotateCounterwise" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Rotate leds counterwise" Click="btn_RotateCounterwise_Click"/>
                 <Button Name="btn_RotateReset" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Reset the leds rotate position" Click="btn_RotateReset_Click"/>
                 <Button Name="btn_RotateColors" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Change background colors" Click="btn_RotateColors_Click"/>
 

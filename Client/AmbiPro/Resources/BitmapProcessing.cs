@@ -10,25 +10,64 @@ namespace AmbiPro.Resources
     public class BitmapProcessing
     {
         //Convert data to bitmap
-        public static unsafe void ConvertDataToBitmap(byte* bitmapData, int bitmapWidth, int bitmapHeight, int bitmapSize, out Bitmap imageBitmap, out byte* imageData)
+        public static unsafe Bitmap ConvertDataToBitmap(byte* bitmapData, int bitmapWidth, int bitmapHeight, int bitmapSize, bool flipImage)
         {
             try
             {
-                imageBitmap = new Bitmap(bitmapWidth, bitmapHeight);
+                Bitmap imageBitmap = new Bitmap(bitmapWidth, bitmapHeight);
                 Rectangle ScreenRectangle = new Rectangle(0, 0, imageBitmap.Width, imageBitmap.Height);
-                BitmapData ScreenBitmapData = imageBitmap.LockBits(ScreenRectangle, ImageLockMode.ReadWrite, imageBitmap.PixelFormat);
 
-                imageData = (byte*)ScreenBitmapData.Scan0;
+                BitmapData ScreenBitmapData = imageBitmap.LockBits(ScreenRectangle, ImageLockMode.ReadWrite, imageBitmap.PixelFormat);
+                byte* imageData = (byte*)ScreenBitmapData.Scan0;
                 for (int y = 0; y < bitmapSize; y++) { imageData[y] = bitmapData[y]; }
                 imageBitmap.UnlockBits(ScreenBitmapData);
 
-                imageBitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                if (flipImage)
+                {
+                    imageBitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                }
+
+                return imageBitmap;
             }
             catch (Exception ex)
             {
-                imageBitmap = null;
-                imageData = null;
                 Debug.WriteLine("Failed to convert data to bitmap: " + ex.Message);
+                return null;
+            }
+        }
+
+        //Get data from bitmap
+        public static unsafe byte* GetDataFromBitmap(Bitmap imageBitmap)
+        {
+            try
+            {
+                Rectangle ScreenRectangle = new Rectangle(0, 0, imageBitmap.Width, imageBitmap.Height);
+
+                BitmapData ScreenBitmapData = imageBitmap.LockBits(ScreenRectangle, ImageLockMode.ReadWrite, imageBitmap.PixelFormat);
+                byte* imageData = (byte*)ScreenBitmapData.Scan0;
+                imageBitmap.UnlockBits(ScreenBitmapData);
+
+                return imageData;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed to convert data to bitmap: " + ex.Message);
+                return null;
+            }
+        }
+
+        //Resize bitmap
+        public static void ResizeBitmap(ref Bitmap imageBitmap, int bitmapWidth, int bitmapHeight)
+        {
+            try
+            {
+                Bitmap resizedBitmap = new Bitmap(imageBitmap, new Size(bitmapWidth, bitmapHeight));
+                imageBitmap.Dispose();
+                imageBitmap = resizedBitmap;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed to resize bitmap: " + ex.Message);
             }
         }
 

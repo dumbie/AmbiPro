@@ -96,9 +96,9 @@ namespace AmbiPro
                     {
                         //Debug.WriteLine("Rotating the spectrum color bytes.");
 
-                        AVFunctions.MoveByteInArrayLeft(SerialBytes, 3, SerialBytes.Length);
-                        AVFunctions.MoveByteInArrayLeft(SerialBytes, 3, SerialBytes.Length);
-                        AVFunctions.MoveByteInArrayLeft(SerialBytes, 3, SerialBytes.Length);
+                        AVFunctions.MoveByteInArrayLeft(SerialBytes, 3, SerialBytes.Length - 1);
+                        AVFunctions.MoveByteInArrayLeft(SerialBytes, 3, SerialBytes.Length - 1);
+                        AVFunctions.MoveByteInArrayLeft(SerialBytes, 3, SerialBytes.Length - 1);
 
                         PreviousRotation = DateTime.Now;
                     }

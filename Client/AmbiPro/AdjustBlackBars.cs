@@ -13,28 +13,28 @@ namespace AmbiPro
         {
             try
             {
-                Int32 BlackAccuracy = 30;
+                Int32 BlackAccuracyStep = 30;
                 Int32 BlackMarginStep = 15;
                 Int32 NewColorMargin = AdjustedMargin - BlackMarginStep;
                 Int32 NewBlackMargin = AdjustedMargin + BlackMarginStep;
 
                 if (SideType == 0)
                 {
-                    HorizontalBottom(OffsetMargin, ref AdjustedMargin, BitmapData, BlackAccuracy, NewColorMargin, NewBlackMargin);
+                    HorizontalBottom(OffsetMargin, ref AdjustedMargin, BitmapData, BlackAccuracyStep, NewColorMargin, NewBlackMargin);
                 }
                 else if (SideType == 1)
                 {
-                    if (setLedDirection == 0) { VerticalRight(OffsetMargin, ref AdjustedMargin, BitmapData, BlackAccuracy, NewColorMargin, NewBlackMargin); }
-                    else { VerticalLeft(OffsetMargin, ref AdjustedMargin, BitmapData, BlackAccuracy, NewColorMargin, NewBlackMargin); }
+                    if (setLedDirection == 0) { VerticalRight(OffsetMargin, ref AdjustedMargin, BitmapData, BlackAccuracyStep, NewColorMargin, NewBlackMargin); }
+                    else { VerticalLeft(OffsetMargin, ref AdjustedMargin, BitmapData, BlackAccuracyStep, NewColorMargin, NewBlackMargin); }
                 }
                 else if (SideType == 2)
                 {
-                    HorizontalTop(OffsetMargin, ref AdjustedMargin, BitmapData, BlackAccuracy, NewColorMargin, NewBlackMargin);
+                    HorizontalTop(OffsetMargin, ref AdjustedMargin, BitmapData, BlackAccuracyStep, NewColorMargin, NewBlackMargin);
                 }
                 else if (SideType == 3)
                 {
-                    if (setLedDirection == 0) { VerticalLeft(OffsetMargin, ref AdjustedMargin, BitmapData, BlackAccuracy, NewColorMargin, NewBlackMargin); }
-                    else { VerticalRight(OffsetMargin, ref AdjustedMargin, BitmapData, BlackAccuracy, NewColorMargin, NewBlackMargin); }
+                    if (setLedDirection == 0) { VerticalLeft(OffsetMargin, ref AdjustedMargin, BitmapData, BlackAccuracyStep, NewColorMargin, NewBlackMargin); }
+                    else { VerticalRight(OffsetMargin, ref AdjustedMargin, BitmapData, BlackAccuracyStep, NewColorMargin, NewBlackMargin); }
                 }
             }
             catch (Exception ex) { Debug.WriteLine("Failed to adjust the black bars: " + ex.Message); }
