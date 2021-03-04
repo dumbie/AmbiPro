@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using static AmbiPro.AppVariables;
 
 namespace AmbiPro
 {

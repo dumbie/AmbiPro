@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Threading.Tasks;
 using static AmbiPro.AppTasks;
+using static AmbiPro.AppVariables;
 using static AmbiPro.Resources.BitmapProcessing;
 using static ArnoldVinkCode.AVActions;
 
@@ -12,11 +13,6 @@ namespace AmbiPro
 {
     partial class SerialMonitor
     {
-        //Screen size
-        private static int vScreenWidth = 0;
-        private static int vScreenHeight = 0;
-        private static int vOutputSize = 0;
-
         //Loop cature the screen
         private static async Task ModeScreenCapture(int InitByteSize, byte[] SerialBytes)
         {
@@ -51,7 +47,7 @@ namespace AmbiPro
                     {
                         try
                         {
-                            IntPtrBitmap = AppImport.CaptureScreenshot(out vScreenWidth, out vScreenHeight, out vOutputSize);
+                            IntPtrBitmap = AppImport.CaptureScreenshot(out vScreenWidth, out vScreenHeight, out vScreenOutputSize);
                         }
                         catch { }
                         if (IntPtrBitmap == IntPtr.Zero)
@@ -67,14 +63,15 @@ namespace AmbiPro
                         unsafe
                         {
                             //Convert IntPtr to bitmap
-                            BitmapImage = ConvertDataToBitmap((byte*)IntPtrBitmap, vScreenWidth, vScreenHeight, vOutputSize, false);
+                            BitmapImage = ConvertDataToBitmap((byte*)IntPtrBitmap, vScreenWidth, vScreenHeight, vScreenOutputSize, false);
 
                             //Calculate image resize
-                            float ratioX = (float)400 / (float)vScreenWidth;
-                            float ratioY = (float)400 / (float)vScreenHeight;
-                            float ratio = Math.Min(ratioX, ratioY);
+                            double ratioX = (double)setLedCount * vCaptureZoneSize / (double)vScreenWidth;
+                            double ratioY = (double)setLedCount * vCaptureZoneSize / (double)vScreenHeight;
+                            double ratio = Math.Min(ratioX, ratioY);
                             vScreenWidth = (int)(vScreenWidth * ratio);
                             vScreenHeight = (int)(vScreenHeight * ratio);
+                            Debug.WriteLine("Screen width: " + vScreenWidth + "/Screen height: " + vScreenHeight);
 
                             ResizeBitmap(ref BitmapImage, vScreenWidth, vScreenHeight);
                             byte* BitmapData = GetDataFromBitmap(BitmapImage);
@@ -82,14 +79,15 @@ namespace AmbiPro
                             //Calculate led capture
                             double WidthPercentage = ((double)vScreenHeight / (double)vScreenWidth) * 100;
                             double HeightPercentage = 100 - WidthPercentage;
+                            Debug.WriteLine("Percentage width: " + WidthPercentage + "/Percentage height: " + HeightPercentage);
 
                             int HorizontalLedCount = Convert.ToInt32(((WidthPercentage / 100) * setLedCount) / 2);
                             int VerticalLedCount = Convert.ToInt32(((HeightPercentage / 100) * setLedCount) / 2);
-                            //Debug.WriteLine("Horizontal led count: " + HorizontalLedCount + "/" + "Vertical led count: " + VerticalLedCount);
+                            Debug.WriteLine("Horizontal led count: " + HorizontalLedCount + "/Vertical led count: " + VerticalLedCount);
 
-                            int HorizontalLedStep = (vScreenWidth / HorizontalLedCount);
-                            int VerticalLedStep = (vScreenHeight / VerticalLedCount);
-                            //Debug.WriteLine("Horizontal led step: " + HorizontalLedStep + "/" + "Vertical led step: " + VerticalLedStep);
+                            int HorizontalLedStep = vScreenWidth / HorizontalLedCount;
+                            int VerticalLedStep = vScreenHeight / VerticalLedCount;
+                            Debug.WriteLine("Horizontal led step: " + HorizontalLedStep + "/Vertical led step: " + VerticalLedStep);
 
                             //Side0=Left and Right
                             //Side1=Left, Right and Top
