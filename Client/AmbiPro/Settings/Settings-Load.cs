@@ -112,8 +112,19 @@ namespace AmbiPro.Settings
                 tb_AdjustBlackBarLevel.Text = "Minimum black bar level: " + Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarLevel"]);
                 sldr_AdjustBlackBarLevel.Value = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarLevel"]);
 
+                //Load - Led Side Types
+                combobox_LedSideFirst.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedSideFirst"]);
+                combobox_LedSideSecond.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedSideSecond"]);
+                combobox_LedSideThird.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedSideThird"]);
+                combobox_LedSideFourth.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedSideFourth"]);
+
                 //Load - Led Count
-                tb_LedCount.Text = ConfigurationManager.AppSettings["LedCount"];
+                textbox_LedCountFirst.Text = Convert.ToString(ConfigurationManager.AppSettings["LedCountFirst"]);
+                textbox_LedCountSecond.Text = Convert.ToString(ConfigurationManager.AppSettings["LedCountSecond"]);
+                textbox_LedCountThird.Text = Convert.ToString(ConfigurationManager.AppSettings["LedCountThird"]);
+                textbox_LedCountFourth.Text = Convert.ToString(ConfigurationManager.AppSettings["LedCountFourth"]);
+                int totalCount = Convert.ToInt32(textbox_LedCountFirst.Text) + Convert.ToInt32(textbox_LedCountSecond.Text) + Convert.ToInt32(textbox_LedCountThird.Text) + Convert.ToInt32(textbox_LedCountFourth.Text);
+                textblock_LedCount.Text = "Total led count: " + totalCount + " (must be equal with script)";
 
                 //Load - Led Output
                 cb_LedOutput.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedOutput"]);
@@ -123,12 +134,6 @@ namespace AmbiPro.Settings
                 string updateRateFps = Convert.ToInt32(1000 / updateRateMs).ToString();
                 tb_UpdateRate.Text = "Led update rate: " + updateRateMs + " ms (" + updateRateFps + " fps)";
                 sldr_UpdateRate.Value = updateRateMs;
-
-                //Load - Led Sides
-                cb_LedSides.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedSides"]);
-
-                //Load - Led Direction
-                cb_LedDirection.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedDirection"]);
 
                 //Load - Debug Mode
                 checkbox_DebugMode.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugMode"]);

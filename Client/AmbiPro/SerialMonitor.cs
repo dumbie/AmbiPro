@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static AmbiPro.AppEnums;
 using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
 
@@ -30,7 +31,6 @@ namespace AmbiPro
         //Led settings
         private static bool setAdjustBlackBars = true;
         private static int setAdjustBlackBarLevel = 0;
-        private static int setLedCount = 0;
         private static int setUpdateRate = 0;
         private static double setLedBrightness = 0;
         private static int setLedMinBrightness = 0;
@@ -45,11 +45,18 @@ namespace AmbiPro
         private static double setLedColorGreen = 0;
         private static double setLedColorBlue = 0;
         private static int setLedOutput = 0;
-        private static int setLedSides = 0;
-        private static int setLedDirection = 0;
         private static int setLedCaptureRange = 0;
         private static int setLedRotate = 0;
         private static int setLedMode = 0;
+        private static LedSideTypes setLedSideFirst = 0;
+        private static LedSideTypes setLedSideSecond = 0;
+        private static LedSideTypes setLedSideThird = 0;
+        private static LedSideTypes setLedSideFourth = 0;
+        private static int setLedCountFirst = 0;
+        private static int setLedCountSecond = 0;
+        private static int setLedCountThird = 0;
+        private static int setLedCountFourth = 0;
+        private static int setLedCountTotal = 0;
         private static bool setDebugMode = false;
         private static bool setDebugBlackBar = false;
         private static bool setDebugColor = true;
@@ -67,7 +74,6 @@ namespace AmbiPro
                 //Led settings
                 setAdjustBlackBars = Convert.ToBoolean(ConfigurationManager.AppSettings["AdjustBlackBars"]);
                 setAdjustBlackBarLevel = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarLevel"]);
-                setLedCount = Convert.ToInt32(ConfigurationManager.AppSettings["LedCount"]);
                 setUpdateRate = Convert.ToInt32(ConfigurationManager.AppSettings["UpdateRate"]);
                 setLedBrightness = Convert.ToDouble(ConfigurationManager.AppSettings["LedBrightness"]) / 100;
                 setLedMinBrightness = Convert.ToInt32(ConfigurationManager.AppSettings["LedMinBrightness"]);
@@ -83,9 +89,16 @@ namespace AmbiPro
                 setLedColorBlue = Convert.ToDouble(ConfigurationManager.AppSettings["LedColorBlue"]) / 100;
                 setLedCaptureRange = Convert.ToInt32(ConfigurationManager.AppSettings["LedCaptureRange"]);
                 setLedOutput = Convert.ToInt32(ConfigurationManager.AppSettings["LedOutput"]);
-                setLedSides = Convert.ToInt32(ConfigurationManager.AppSettings["LedSides"]);
-                setLedDirection = Convert.ToInt32(ConfigurationManager.AppSettings["LedDirection"]);
                 setLedMode = Convert.ToInt32(ConfigurationManager.AppSettings["LedMode"]);
+                setLedSideFirst = (LedSideTypes)Convert.ToInt32(ConfigurationManager.AppSettings["LedSideFirst"]);
+                setLedSideSecond = (LedSideTypes)Convert.ToInt32(ConfigurationManager.AppSettings["LedSideSecond"]);
+                setLedSideThird = (LedSideTypes)Convert.ToInt32(ConfigurationManager.AppSettings["LedSideThird"]);
+                setLedSideFourth = (LedSideTypes)Convert.ToInt32(ConfigurationManager.AppSettings["LedSideFourth"]);
+                setLedCountFirst = Convert.ToInt32(ConfigurationManager.AppSettings["LedCountFirst"]);
+                setLedCountSecond = Convert.ToInt32(ConfigurationManager.AppSettings["LedCountSecond"]);
+                setLedCountThird = Convert.ToInt32(ConfigurationManager.AppSettings["LedCountThird"]);
+                setLedCountFourth = Convert.ToInt32(ConfigurationManager.AppSettings["LedCountFourth"]);
+                setLedCountTotal = setLedCountFirst + setLedCountSecond + setLedCountThird + setLedCountFourth;
 
                 //Debug settings
                 setDebugMode = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugMode"]);
@@ -197,7 +210,7 @@ namespace AmbiPro
                     {
                         //Calculate bytes size
                         int InitialByteSize = 3;
-                        int ByteLedSize = (setLedCount * 3);
+                        int ByteLedSize = (setLedCountTotal * 3);
                         int TotalBytes = InitialByteSize + ByteLedSize;
 
                         //Create led byte array
@@ -318,6 +331,7 @@ namespace AmbiPro
                 await Task.Delay(100);
             }
             catch { }
+
             return InitFailed;
         }
 
@@ -331,7 +345,7 @@ namespace AmbiPro
 
                 //Calculate bytes size
                 int InitByteSize = 3;
-                int LedByteSize = setLedCount * 3;
+                int LedByteSize = setLedCountTotal * 3;
                 int TotalByteSize = InitByteSize + LedByteSize;
 
                 //Connect to the device

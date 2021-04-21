@@ -36,7 +36,7 @@ namespace AmbiPro
                         //Rotate color variables
                         int UsedColors = 0;
                         int CurrentLedRange = 0;
-                        int TotalLedRange = setLedCount / 13;
+                        int TotalLedRange = setLedCountTotal / 13;
 
                         //Set the used colors and adjust them
                         Color CurrentColor = ColorTranslator.FromHtml("#f8d000"); CurrentColor = AdjustLedColors(CurrentColor);

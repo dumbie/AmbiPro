@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
 
 namespace AmbiPro
@@ -9,143 +10,171 @@ namespace AmbiPro
     public partial class SerialMonitor
     {
         //Get screen shot colors and set it to byte array
-        private static unsafe void ScreenColors(Int32 SideType, Int32 OffsetMargin, Int32 AdjustedMargin, byte[] SerialBytes, byte* BitmapData, Int32 DirectionLedCount, Int32 DirectionStep, ref Int32 CurrentSerialByte)
+        private static unsafe void ScreenColors(LedSideTypes SideType, int DirectionLedCount, byte[] SerialBytes, byte* BitmapData, ref int CurrentSerialByte)
         {
             try
             {
                 Color CurrentColor = new Color();
-                Int32 CaptureRange = (setLedCaptureRange * vScreenHeight) / 100 / 2;
-                Int32 DirectionSkipStep = 0;
+                int DirectionSkipStep = 0;
+                int DirectionStep = 0;
+
+                //Check the led side
+                if (DirectionLedCount == 0 || SideType == LedSideTypes.None)
+                {
+                    return;
+                }
 
                 //Check led color direction
-                if (setLedDirection == 0)
+                if (SideType == LedSideTypes.BottomLeftToRight)
                 {
-                    if (SideType == 0) { DirectionSkipStep = OffsetMargin; }
-                    else if (SideType == 1) { DirectionSkipStep = vScreenHeight - OffsetMargin; }
-                    else if (SideType == 2) { DirectionSkipStep = vScreenWidth - OffsetMargin; }
-                    else if (SideType == 3) { DirectionSkipStep = OffsetMargin; }
+                    DirectionSkipStep = vMarginOffset;
+                    DirectionStep = vScreenWidth / DirectionLedCount;
                 }
-                else
+                else if (SideType == LedSideTypes.BottomRightToLeft)
                 {
-                    if (SideType == 0) { DirectionSkipStep = vScreenWidth - OffsetMargin; }
-                    else if (SideType == 1) { DirectionSkipStep = vScreenHeight - OffsetMargin; }
-                    else if (SideType == 2) { DirectionSkipStep = OffsetMargin; }
-                    else if (SideType == 3) { DirectionSkipStep = OffsetMargin; }
+                    DirectionSkipStep = vScreenWidth - vMarginOffset;
+                    DirectionStep = vScreenWidth / DirectionLedCount;
+                }
+                else if (SideType == LedSideTypes.TopLeftToRight)
+                {
+                    DirectionSkipStep = vMarginOffset;
+                    DirectionStep = vScreenWidth / DirectionLedCount;
+                }
+                else if (SideType == LedSideTypes.TopRightToLeft)
+                {
+                    DirectionSkipStep = vScreenWidth - vMarginOffset;
+                    DirectionStep = vScreenWidth / DirectionLedCount;
+                }
+                else if (SideType == LedSideTypes.LeftTopToBottom)
+                {
+                    DirectionSkipStep = vMarginOffset;
+                    DirectionStep = vScreenHeight / DirectionLedCount;
+                }
+                else if (SideType == LedSideTypes.LeftBottomToTop)
+                {
+                    DirectionSkipStep = vScreenHeight - vMarginOffset;
+                    DirectionStep = vScreenHeight / DirectionLedCount;
+                }
+                else if (SideType == LedSideTypes.RightTopToBottom)
+                {
+                    DirectionSkipStep = vMarginOffset;
+                    DirectionStep = vScreenHeight / DirectionLedCount;
+                }
+                else if (SideType == LedSideTypes.RightBottomToTop)
+                {
+                    DirectionSkipStep = vScreenHeight - vMarginOffset;
+                    DirectionStep = vScreenHeight / DirectionLedCount;
                 }
 
                 //Get colors from the bitmap
-                for (Int32 dl = 0; dl < DirectionLedCount; dl++)
+                for (int dl = 0; dl < DirectionLedCount; dl++)
                 {
-                    Int32 UsedColors = 0;
-                    Int32 AverageRed = 0;
-                    Int32 AverageGreen = 0;
-                    Int32 AverageBlue = 0;
-                    Int32 CaptureZoneStep = 0;
-
-                    for (Int32 lm = 0; lm < CaptureRange; lm++)
+                    //Set led off color byte array
+                    if (SideType == LedSideTypes.LedsOff)
                     {
-                        if (SideType == 0)
+                        SerialBytes[CurrentSerialByte] = 0;
+                        CurrentSerialByte++;
+
+                        SerialBytes[CurrentSerialByte] = 0;
+                        CurrentSerialByte++;
+
+                        SerialBytes[CurrentSerialByte] = 0;
+                        CurrentSerialByte++;
+                        continue;
+                    }
+
+                    int UsedColors = 0;
+                    int AverageRed = 0;
+                    int AverageGreen = 0;
+                    int AverageBlue = 0;
+                    int CaptureZoneStep = 0;
+
+                    for (int lm = 0; lm < vScreenCapturePixels; lm++)
+                    {
+                        if (SideType == LedSideTypes.BottomLeftToRight)
                         {
-                            if (setLedDirection == 0)
+                            int ZoneY = vScreenHeight - vMarginBottom - CaptureZoneStep;
+                            for (int sk = vMarginOffset; sk < DirectionStep; sk += vCaptureZoneSize)
                             {
-                                Int32 ZoneY = vScreenHeight - AdjustedMargin - CaptureZoneStep;
-                                for (Int32 sk = vCaptureZoneMargin; sk < DirectionStep; sk += vCaptureZoneSize)
-                                {
-                                    Int32 ZoneX = DirectionSkipStep + sk;
-                                    if (ZoneX < vScreenWidth - OffsetMargin) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
-                                }
-                            }
-                            else
-                            {
-                                Int32 ZoneY = vScreenHeight - AdjustedMargin - CaptureZoneStep;
-                                for (Int32 sk = vCaptureZoneMargin; sk < DirectionStep; sk += vCaptureZoneSize)
-                                {
-                                    Int32 ZoneX = DirectionSkipStep - sk;
-                                    if (ZoneX > OffsetMargin) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
-                                }
+                                int ZoneX = DirectionSkipStep + sk;
+                                if (ZoneX < vScreenWidth - vMarginOffset) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
                             }
                         }
-                        else if (SideType == 1)
+                        else if (SideType == LedSideTypes.BottomRightToLeft)
                         {
-                            if (setLedDirection == 0)
+                            int ZoneY = vScreenHeight - vMarginBottom - CaptureZoneStep;
+                            for (int sk = vMarginOffset; sk < DirectionStep; sk += vCaptureZoneSize)
                             {
-                                Int32 ZoneX = vScreenWidth - AdjustedMargin - CaptureZoneStep;
-                                for (Int32 sk = vCaptureZoneMargin; sk < DirectionStep; sk += vCaptureZoneSize)
-                                {
-                                    Int32 ZoneY = DirectionSkipStep - sk;
-                                    if (ZoneY > OffsetMargin) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
-                                }
-                            }
-                            else
-                            {
-                                Int32 ZoneX = AdjustedMargin + CaptureZoneStep;
-                                for (Int32 sk = vCaptureZoneMargin; sk < DirectionStep; sk += vCaptureZoneSize)
-                                {
-                                    Int32 ZoneY = DirectionSkipStep - sk;
-                                    if (ZoneY > OffsetMargin) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
-                                }
+                                int ZoneX = DirectionSkipStep - sk;
+                                if (ZoneX > vMarginOffset) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
                             }
                         }
-                        else if (SideType == 2)
+                        else if (SideType == LedSideTypes.TopLeftToRight)
                         {
-                            if (setLedDirection == 0)
+                            int ZoneY = vMarginTop + CaptureZoneStep;
+                            for (int sk = vMarginOffset; sk < DirectionStep; sk += vCaptureZoneSize)
                             {
-                                Int32 ZoneY = AdjustedMargin + CaptureZoneStep;
-                                for (Int32 sk = vCaptureZoneMargin; sk < DirectionStep; sk += vCaptureZoneSize)
-                                {
-                                    Int32 ZoneX = DirectionSkipStep - sk;
-                                    if (ZoneX > OffsetMargin) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
-                                }
-                            }
-                            else
-                            {
-                                Int32 ZoneY = AdjustedMargin + CaptureZoneStep;
-                                for (Int32 sk = vCaptureZoneMargin; sk < DirectionStep; sk += vCaptureZoneSize)
-                                {
-                                    Int32 ZoneX = DirectionSkipStep + sk;
-                                    if (ZoneX < vScreenWidth - OffsetMargin) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
-                                }
+                                int ZoneX = DirectionSkipStep + sk;
+                                if (ZoneX < vScreenWidth - vMarginOffset) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
                             }
                         }
-                        else if (SideType == 3)
+                        else if (SideType == LedSideTypes.TopRightToLeft)
                         {
-                            if (setLedDirection == 0)
+                            int ZoneY = vMarginTop + CaptureZoneStep;
+                            for (int sk = vMarginOffset; sk < DirectionStep; sk += vCaptureZoneSize)
                             {
-                                Int32 ZoneX = AdjustedMargin + CaptureZoneStep;
-                                for (Int32 sk = vCaptureZoneMargin; sk < DirectionStep; sk += vCaptureZoneSize)
-                                {
-                                    Int32 ZoneY = DirectionSkipStep + sk;
-                                    if (ZoneY < vScreenHeight - OffsetMargin) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
-                                }
+                                int ZoneX = DirectionSkipStep - sk;
+                                if (ZoneX > vMarginOffset) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
                             }
-                            else
+                        }
+                        else if (SideType == LedSideTypes.LeftTopToBottom)
+                        {
+                            int ZoneX = vMarginLeft + CaptureZoneStep;
+                            for (int sk = vMarginOffset; sk < DirectionStep; sk += vCaptureZoneSize)
                             {
-                                Int32 ZoneX = vScreenWidth - AdjustedMargin - CaptureZoneStep;
-                                for (Int32 sk = vCaptureZoneMargin; sk < DirectionStep; sk += vCaptureZoneSize)
-                                {
-                                    Int32 ZoneY = DirectionSkipStep + sk;
-                                    if (ZoneY < vScreenHeight - OffsetMargin) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
-                                }
+                                int ZoneY = DirectionSkipStep + sk;
+                                if (ZoneY < vScreenHeight - vMarginOffset) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
+                            }
+                        }
+                        else if (SideType == LedSideTypes.LeftBottomToTop)
+                        {
+                            int ZoneX = vMarginRight + CaptureZoneStep;
+                            for (int sk = vMarginOffset; sk < DirectionStep; sk += vCaptureZoneSize)
+                            {
+                                int ZoneY = DirectionSkipStep - sk;
+                                if (ZoneY > vMarginOffset) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
+                            }
+                        }
+                        else if (SideType == LedSideTypes.RightTopToBottom)
+                        {
+                            int ZoneX = vScreenWidth - vMarginLeft - CaptureZoneStep;
+                            for (int sk = vMarginOffset; sk < DirectionStep; sk += vCaptureZoneSize)
+                            {
+                                int ZoneY = DirectionSkipStep + sk;
+                                if (ZoneY < vScreenHeight - vMarginOffset) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
+                            }
+                        }
+                        else if (SideType == LedSideTypes.RightBottomToTop)
+                        {
+                            int ZoneX = vScreenWidth - vMarginRight - CaptureZoneStep;
+                            for (int sk = vMarginOffset; sk < DirectionStep; sk += vCaptureZoneSize)
+                            {
+                                int ZoneY = DirectionSkipStep - sk;
+                                if (ZoneY > vMarginOffset) { CurrentColor = CaptureColorAlgorithm(BitmapData, ref UsedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, ZoneY, ZoneX); }
                             }
                         }
                         CaptureZoneStep += vCaptureZoneSize;
                     }
 
                     //Skip to the next capture point
-                    if (setLedDirection == 0)
-                    {
-                        if (SideType == 0) { DirectionSkipStep += DirectionStep; }
-                        else if (SideType == 1) { DirectionSkipStep -= DirectionStep; }
-                        else if (SideType == 2) { DirectionSkipStep -= DirectionStep; }
-                        else if (SideType == 3) { DirectionSkipStep += DirectionStep; }
-                    }
-                    else
-                    {
-                        if (SideType == 0) { DirectionSkipStep -= DirectionStep; }
-                        else if (SideType == 1) { DirectionSkipStep -= DirectionStep; }
-                        else if (SideType == 2) { DirectionSkipStep += DirectionStep; }
-                        else if (SideType == 3) { DirectionSkipStep += DirectionStep; }
-                    }
+                    if (SideType == LedSideTypes.BottomLeftToRight) { DirectionSkipStep += DirectionStep; }
+                    else if (SideType == LedSideTypes.BottomRightToLeft) { DirectionSkipStep -= DirectionStep; }
+                    else if (SideType == LedSideTypes.TopLeftToRight) { DirectionSkipStep += DirectionStep; }
+                    else if (SideType == LedSideTypes.TopRightToLeft) { DirectionSkipStep -= DirectionStep; }
+                    else if (SideType == LedSideTypes.LeftTopToBottom) { DirectionSkipStep += DirectionStep; }
+                    else if (SideType == LedSideTypes.LeftBottomToTop) { DirectionSkipStep -= DirectionStep; }
+                    else if (SideType == LedSideTypes.RightTopToBottom) { DirectionSkipStep += DirectionStep; }
+                    else if (SideType == LedSideTypes.RightBottomToTop) { DirectionSkipStep -= DirectionStep; }
 
                     //Calculate average color from the bitmap screen capture
                     //Debug.WriteLine("Captured " + UsedColors + " pixel colors from the bitmap data.");
@@ -174,7 +203,7 @@ namespace AmbiPro
         {
             try
             {
-                for (Int32 currentCaptureZone = 0; currentCaptureZone < vCaptureZoneSize; currentCaptureZone++)
+                for (int currentCaptureZone = 0; currentCaptureZone < vCaptureZoneSize; currentCaptureZone++)
                 {
                     CurrentColor = ColorProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, (ZoneX - currentCaptureZone), (ZoneY - currentCaptureZone));
                     if (setDebugMode && setDebugColor)
@@ -182,12 +211,17 @@ namespace AmbiPro
                         ColorProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, (ZoneX - currentCaptureZone), (ZoneY - currentCaptureZone), Color.Red);
                     }
 
-                    AverageRed += CurrentColor.R; AverageGreen += CurrentColor.G; AverageBlue += CurrentColor.B;
+                    AverageRed += CurrentColor.R;
+                    AverageGreen += CurrentColor.G;
+                    AverageBlue += CurrentColor.B;
                     UsedColors += vCaptureZoneSize;
                 }
                 return CurrentColor;
             }
-            catch { return new Color(); }
+            catch
+            {
+                return new Color();
+            }
         }
     }
 }

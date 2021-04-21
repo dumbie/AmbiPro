@@ -150,10 +150,40 @@ namespace AmbiPro.Settings
                     SettingsFunction.Save("AdjustBlackBarLevel", "3");
                 }
 
-                //Check - Led Count
-                if (ConfigurationManager.AppSettings["LedCount"] == null)
+                //Check - Led Side Types
+                if (ConfigurationManager.AppSettings["LedSideFirst"] == null)
                 {
-                    SettingsFunction.Save("LedCount", "60");
+                    SettingsFunction.Save("LedSideFirst", "0");
+                }
+                if (ConfigurationManager.AppSettings["LedSideSecond"] == null)
+                {
+                    SettingsFunction.Save("LedSideSecond", "0");
+                }
+                if (ConfigurationManager.AppSettings["LedSideThird"] == null)
+                {
+                    SettingsFunction.Save("LedSideThird", "0");
+                }
+                if (ConfigurationManager.AppSettings["LedSideFourth"] == null)
+                {
+                    SettingsFunction.Save("LedSideFourth", "0");
+                }
+
+                //Check - Led Count
+                if (ConfigurationManager.AppSettings["LedCountFirst"] == null)
+                {
+                    SettingsFunction.Save("LedCountFirst", "0");
+                }
+                if (ConfigurationManager.AppSettings["LedCountSecond"] == null)
+                {
+                    SettingsFunction.Save("LedCountSecond", "0");
+                }
+                if (ConfigurationManager.AppSettings["LedCountThird"] == null)
+                {
+                    SettingsFunction.Save("LedCountThird", "0");
+                }
+                if (ConfigurationManager.AppSettings["LedCountFourth"] == null)
+                {
+                    SettingsFunction.Save("LedCountFourth", "0");
                 }
 
                 //Check - Led Output
@@ -184,18 +214,6 @@ namespace AmbiPro.Settings
                 if (ConfigurationManager.AppSettings["UpdateRate"] == null)
                 {
                     SettingsFunction.Save("UpdateRate", "20");
-                }
-
-                //Check - Led Sides
-                if (ConfigurationManager.AppSettings["LedSides"] == null)
-                {
-                    SettingsFunction.Save("LedSides", "2");
-                }
-
-                //Check - Led Direction
-                if (ConfigurationManager.AppSettings["LedDirection"] == null)
-                {
-                    SettingsFunction.Save("LedDirection", "1");
                 }
 
                 //Check - Debug Mode

@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Threading;
 using static AmbiPro.AppVariables;
@@ -208,9 +209,39 @@ namespace AmbiPro.Settings
                     tb_AdjustBlackBarLevel.Text = "Minimum black bar level: " + sldr_AdjustBlackBarLevel.Value.ToString("0");
                 };
 
+                //Save - Led Side Types
+                combobox_LedSideFirst.SelectionChanged += async (sender, e) =>
+                {
+                    await SettingSaveLedSide("LedSideFirst", combobox_LedSideFirst.SelectedIndex.ToString());
+                };
+                combobox_LedSideSecond.SelectionChanged += async (sender, e) =>
+                {
+                    await SettingSaveLedSide("LedSideSecond", combobox_LedSideSecond.SelectedIndex.ToString());
+                };
+                combobox_LedSideThird.SelectionChanged += async (sender, e) =>
+                {
+                    await SettingSaveLedSide("LedSideThird", combobox_LedSideThird.SelectedIndex.ToString());
+                };
+                combobox_LedSideFourth.SelectionChanged += async (sender, e) =>
+                {
+                    await SettingSaveLedSide("LedSideFourth", combobox_LedSideFourth.SelectedIndex.ToString());
+                };
+
                 //Save - Led Count
-                vTextBoxTimer_LedCount.Tick += vTextBoxTimer_LedCount_Tick;
-                tb_LedCount.TextChanged += (sender, e) =>
+                vTextBoxTimer_LedCount.Tick += SettingSaveLedCount;
+                textbox_LedCountFirst.TextChanged += (sender, e) =>
+                {
+                    AVFunctions.TimerReset(vTextBoxTimer_LedCount);
+                };
+                textbox_LedCountSecond.TextChanged += (sender, e) =>
+                {
+                    AVFunctions.TimerReset(vTextBoxTimer_LedCount);
+                };
+                textbox_LedCountThird.TextChanged += (sender, e) =>
+                {
+                    AVFunctions.TimerReset(vTextBoxTimer_LedCount);
+                };
+                textbox_LedCountFourth.TextChanged += (sender, e) =>
                 {
                     AVFunctions.TimerReset(vTextBoxTimer_LedCount);
                 };
@@ -228,18 +259,6 @@ namespace AmbiPro.Settings
                     int updateRateMs = Convert.ToInt32(sldr_UpdateRate.Value);
                     string updateRateFps = Convert.ToInt32(1000 / updateRateMs).ToString();
                     tb_UpdateRate.Text = "Led update rate: " + updateRateMs + " ms (" + updateRateFps + " fps)";
-                };
-
-                //Save - Led Sides
-                cb_LedSides.SelectionChanged += (sender, e) =>
-                {
-                    SettingsFunction.Save("LedSides", cb_LedSides.SelectedIndex.ToString());
-                };
-
-                //Save - Led Direction
-                cb_LedDirection.SelectionChanged += (sender, e) =>
-                {
-                    SettingsFunction.Save("LedDirection", cb_LedDirection.SelectedIndex.ToString());
                 };
 
                 //Save - Windows Startup
@@ -320,8 +339,28 @@ namespace AmbiPro.Settings
             catch { }
         }
 
-        //Update led count after delay
-        private async void vTextBoxTimer_LedCount_Tick(object sender, EventArgs e)
+        //Save led sides
+        private async Task SettingSaveLedSide(string sideName, string sideIndex)
+        {
+            try
+            {
+                //Save the new led side setting
+                SettingsFunction.Save(sideName, sideIndex);
+
+                //Reset led rotate setting
+                SettingResetLedRotate();
+
+                //Restart the leds
+                if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
+                {
+                    await LedSwitch(LedSwitches.Restart);
+                }
+            }
+            catch { }
+        }
+
+        //Save led count after delay
+        private async void SettingSaveLedCount(object sender, EventArgs e)
         {
             try
             {
@@ -333,17 +372,34 @@ namespace AmbiPro.Settings
                 Brush BrushInvalid = BrushConvert.ConvertFromString("#cd1a2b") as Brush;
                 Brush BrushValid = BrushConvert.ConvertFromString("#1db954") as Brush;
 
-                if (String.IsNullOrWhiteSpace(tb_LedCount.Text)) { tb_LedCount.BorderBrush = BrushInvalid; return; }
-                if (Regex.IsMatch(tb_LedCount.Text, "(\\D+)")) { tb_LedCount.BorderBrush = BrushInvalid; return; }
-                if (Convert.ToInt32(tb_LedCount.Text) < 10) { tb_LedCount.BorderBrush = BrushInvalid; return; }
+                //Check the led count value
+                if (string.IsNullOrWhiteSpace(textbox_LedCountFirst.Text)) { textbox_LedCountFirst.BorderBrush = BrushInvalid; return; }
+                if (Regex.IsMatch(textbox_LedCountFirst.Text, "(\\D+)")) { textbox_LedCountFirst.BorderBrush = BrushInvalid; return; }
+
+                if (string.IsNullOrWhiteSpace(textbox_LedCountSecond.Text)) { textbox_LedCountSecond.BorderBrush = BrushInvalid; return; }
+                if (Regex.IsMatch(textbox_LedCountSecond.Text, "(\\D+)")) { textbox_LedCountSecond.BorderBrush = BrushInvalid; return; }
+
+                if (string.IsNullOrWhiteSpace(textbox_LedCountThird.Text)) { textbox_LedCountThird.BorderBrush = BrushInvalid; return; }
+                if (Regex.IsMatch(textbox_LedCountThird.Text, "(\\D+)")) { textbox_LedCountThird.BorderBrush = BrushInvalid; return; }
+
+                if (string.IsNullOrWhiteSpace(textbox_LedCountFourth.Text)) { textbox_LedCountFourth.BorderBrush = BrushInvalid; return; }
+                if (Regex.IsMatch(textbox_LedCountFourth.Text, "(\\D+)")) { textbox_LedCountFourth.BorderBrush = BrushInvalid; return; }
 
                 //Save the new led count setting
-                SettingsFunction.Save("LedCount", tb_LedCount.Text);
-                tb_LedCount.BorderBrush = BrushValid;
+                SettingsFunction.Save("LedCountFirst", textbox_LedCountFirst.Text);
+                SettingsFunction.Save("LedCountSecond", textbox_LedCountSecond.Text);
+                SettingsFunction.Save("LedCountThird", textbox_LedCountThird.Text);
+                SettingsFunction.Save("LedCountFourth", textbox_LedCountFourth.Text);
+                textbox_LedCountFirst.BorderBrush = BrushValid;
 
-                //Reset all led rotate settings
+                //Update total led count
+                int totalCount = Convert.ToInt32(textbox_LedCountFirst.Text) + Convert.ToInt32(textbox_LedCountSecond.Text) + Convert.ToInt32(textbox_LedCountThird.Text) + Convert.ToInt32(textbox_LedCountFourth.Text);
+                textblock_LedCount.Text = "Total led count: " + totalCount + " (must be equal with script)";
+
+                //Reset led rotate setting
                 SettingResetLedRotate();
 
+                //Restart the leds
                 if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
                 {
                     await LedSwitch(LedSwitches.Restart);

@@ -213,9 +213,106 @@
 
                         <!-- Leds -->
                         <StackPanel Name="sp_Leds" Visibility="Collapsed" Margin="5,5,5,5">
-                            <TextBlock Text="Total led count:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Change the total amount of leds used." Style="{StaticResource TextBlockGrayLight}"/>
-                            <TextBox Name="tb_LedCount" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
+                            <TextBlock Text="Led strip sides" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                            <TextBlock Text="First led strip side:" Style="{StaticResource TextBlockGrayLight}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <ComboBox Grid.Column="0" Name="combobox_LedSideFirst" Style="{StaticResource ComboBoxBlack}">
+                                    <ComboBoxItem>None</ComboBoxItem>
+                                    <ComboBoxItem>Bottom (Left to Right)</ComboBoxItem>
+                                    <ComboBoxItem>Bottom (Right to Left)</ComboBoxItem>
+                                    <ComboBoxItem>Top (Left to Right)</ComboBoxItem>
+                                    <ComboBoxItem>Top (Right to Left)</ComboBoxItem>
+                                    <ComboBoxItem>Left (Top to Bottom)</ComboBoxItem>
+                                    <ComboBoxItem>Left (Bottom to Top)</ComboBoxItem>
+                                    <ComboBoxItem>Right (Top to Bottom)</ComboBoxItem>
+                                    <ComboBoxItem>Right (Bottom to Top)</ComboBoxItem>
+                                    <ComboBoxItem>Leds off</ComboBoxItem>
+                                </ComboBox>
+                                <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0" Text="Led count:" Style="{StaticResource TextBlockGrayLight}"/>
+                                <TextBox Grid.Column="2" Name="textbox_LedCountFirst" Width="100" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
+                            </Grid>
+
+                            <TextBlock Text="Second led strip side:" Style="{StaticResource TextBlockGrayLight}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <ComboBox Grid.Column="0" Name="combobox_LedSideSecond" Style="{StaticResource ComboBoxBlack}">
+                                    <ComboBoxItem>None</ComboBoxItem>
+                                    <ComboBoxItem>Bottom (Left to Right)</ComboBoxItem>
+                                    <ComboBoxItem>Bottom (Right to Left)</ComboBoxItem>
+                                    <ComboBoxItem>Top (Left to Right)</ComboBoxItem>
+                                    <ComboBoxItem>Top (Right to Left)</ComboBoxItem>
+                                    <ComboBoxItem>Left (Top to Bottom)</ComboBoxItem>
+                                    <ComboBoxItem>Left (Bottom to Top)</ComboBoxItem>
+                                    <ComboBoxItem>Right (Top to Bottom)</ComboBoxItem>
+                                    <ComboBoxItem>Right (Bottom to Top)</ComboBoxItem>
+                                    <ComboBoxItem>Leds off</ComboBoxItem>
+                                </ComboBox>
+                                <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0" Text="Led count:" Style="{StaticResource TextBlockGrayLight}"/>
+                                <TextBox Grid.Column="2" Name="textbox_LedCountSecond" Width="100" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
+                            </Grid>
+
+                            <TextBlock Text="Third led strip side:" Style="{StaticResource TextBlockGrayLight}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <ComboBox Grid.Column="0" Name="combobox_LedSideThird" Style="{StaticResource ComboBoxBlack}">
+                                    <ComboBoxItem>None</ComboBoxItem>
+                                    <ComboBoxItem>Bottom (Left to Right)</ComboBoxItem>
+                                    <ComboBoxItem>Bottom (Right to Left)</ComboBoxItem>
+                                    <ComboBoxItem>Top (Left to Right)</ComboBoxItem>
+                                    <ComboBoxItem>Top (Right to Left)</ComboBoxItem>
+                                    <ComboBoxItem>Left (Top to Bottom)</ComboBoxItem>
+                                    <ComboBoxItem>Left (Bottom to Top)</ComboBoxItem>
+                                    <ComboBoxItem>Right (Top to Bottom)</ComboBoxItem>
+                                    <ComboBoxItem>Right (Bottom to Top)</ComboBoxItem>
+                                    <ComboBoxItem>Leds off</ComboBoxItem>
+                                </ComboBox>
+                                <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0" Text="Led count:" Style="{StaticResource TextBlockGrayLight}"/>
+                                <TextBox Grid.Column="2" Name="textbox_LedCountThird" Width="100" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
+                            </Grid>
+
+                            <TextBlock Text="Fourth led strip side:" Style="{StaticResource TextBlockGrayLight}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <ComboBox Grid.Column="0" Name="combobox_LedSideFourth" Style="{StaticResource ComboBoxBlack}">
+                                    <ComboBoxItem>None</ComboBoxItem>
+                                    <ComboBoxItem>Bottom (Left to Right)</ComboBoxItem>
+                                    <ComboBoxItem>Bottom (Right to Left)</ComboBoxItem>
+                                    <ComboBoxItem>Top (Left to Right)</ComboBoxItem>
+                                    <ComboBoxItem>Top (Right to Left)</ComboBoxItem>
+                                    <ComboBoxItem>Left (Top to Bottom)</ComboBoxItem>
+                                    <ComboBoxItem>Left (Bottom to Top)</ComboBoxItem>
+                                    <ComboBoxItem>Right (Top to Bottom)</ComboBoxItem>
+                                    <ComboBoxItem>Right (Bottom to Top)</ComboBoxItem>
+                                    <ComboBoxItem>Leds off</ComboBoxItem>
+                                </ComboBox>
+                                <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0" Text="Led count:" Style="{StaticResource TextBlockGrayLight}"/>
+                                <TextBox Grid.Column="2" Name="textbox_LedCountFourth" Width="100" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
+                            </Grid>
+
+                            <TextBlock Name="textblock_LedCount" Text="Total led count:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+
+                            <!--<TextBlock Margin="0,10,0,0" Text="Led bottom stand gap:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>-->
 
                             <TextBlock Margin="0,10,0,0" Name="tb_LedBrightness" Text="Led maximum brightness:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                             <TextBlock Text="Change the maximum displayed led brightness." Style="{StaticResource TextBlockGrayLight}"/>
@@ -224,22 +321,6 @@
                             <TextBlock Margin="0,10,0,0" Name="tb_LedMinBrightness" Text="Led minimum brightness:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                             <TextBlock Text="Change the minimum displayed led brightness." Style="{StaticResource TextBlockGrayLight}"/>
                             <Slider Name="sldr_LedMinBrightness" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="25"/>
-
-                            <TextBlock Margin="0,10,0,0" Text="Led placement sides:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Select the placement sides of your led strip." Style="{StaticResource TextBlockGrayLight}"/>
-                            <ComboBox Name="cb_LedSides" Style="{StaticResource ComboBoxBlack}">
-                                <ComboBoxItem>(2) Left and Right</ComboBoxItem>
-                                <ComboBoxItem>(3) Left, Right and Top</ComboBoxItem>
-                                <!--<ComboBoxItem>(3) Left, Right and Bottom</ComboBoxItem>-->
-                                <ComboBoxItem>(4) Left, Right, Top and Bottom</ComboBoxItem>
-                            </ComboBox>
-
-                            <TextBlock Margin="0,10,0,0" Text="Led start direction:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Select the start direction of your led strip." Style="{StaticResource TextBlockGrayLight}"/>
-                            <ComboBox Name="cb_LedDirection" Style="{StaticResource ComboBoxBlack}">
-                                <ComboBoxItem>From bottom left to right</ComboBoxItem>
-                                <ComboBoxItem>From bottom right to left</ComboBoxItem>
-                            </ComboBox>
 
                             <Button Name="btn_Welcome_Start3" Visibility="Collapsed" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Let's start" Click="Btn_WelcomeStart_Click"/>
                         </StackPanel>
