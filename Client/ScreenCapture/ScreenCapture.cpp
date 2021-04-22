@@ -7,25 +7,41 @@
 #include <memory>
 #include <algorithm>
 
+bool CaptureResetVariables()
+{
+	try
+	{
+		//Disable debug reporting
+		_CrtSetReportMode(_CRT_ASSERT, 0);
+
+		//DXGI Variables
+		iDxgiDevice.Release();
+		iDxgiAdapter.Release();
+		iDxgiOutput.Release();
+		iDxgiOutput1.Release();
+		iDxgiOutputDuplication.Release();
+
+		//D3D Variables
+		iD3DDevice.Release();
+		iD3DDeviceContext.Release();
+		iD3DDestinationTexture.Release();
+
+		//Other Variables
+		hResult = E_FAIL;
+
+		return true;
+	}
+	catch (bool) { return false; }
+}
+
 extern "C"
 {
 	__declspec(dllexport) bool CaptureInitialize(UINT CaptureMonitor)
 	{
 		try
 		{
-			//Disable debug reporting
-			_CrtSetReportMode(_CRT_ASSERT, 0);
-
 			//Reset initialize variables
-			hResult = E_FAIL;
-			iDxgiDevice.Release();
-			iDxgiAdapter.Release();
-			iDxgiOutput.Release();
-			iDxgiOutput1.Release();
-			iDxgiOutputDuplication.Release();
-			iD3DDevice.Release();
-			iD3DDeviceContext.Release();
-			iD3DDestinationTexture.Release();
+			CaptureResetVariables();
 
 			//Create D3D Device
 			D3D_FEATURE_LEVEL iD3DFeatureLevel;
@@ -57,12 +73,10 @@ extern "C"
 
 			//Query DXGI Output1
 			hResult = iDxgiOutput->QueryInterface(IID_PPV_ARGS(&iDxgiOutput1));
-			//iDxgiOutput.Release();
 			if (!SUCCEEDED(hResult)) { return false; }
 
 			//Create desktop duplicate
 			hResult = iDxgiOutput1->DuplicateOutput(iD3DDevice, &iDxgiOutputDuplication);
-			//iDxgiOutput1.Release();
 			if (!SUCCEEDED(hResult)) { return false; }
 
 			//Get duplicate description
@@ -92,8 +106,10 @@ extern "C"
 
 			//Calculate and set bitmap information
 			BitmapByteSize = iDxgiOutputDuplicationDescription.ModeDesc.Width * iDxgiOutputDuplicationDescription.ModeDesc.Height * 4;
+			BitmapWidthPixels = iDxgiOutputDuplicationDescription.ModeDesc.Width;
+			BitmapHeightPixels = iDxgiOutputDuplicationDescription.ModeDesc.Height;
 			BitmapWidthRows = iDxgiOutputDuplicationDescription.ModeDesc.Width * 4;
-			BitmapPitchRows = std::min<UINT>(BitmapWidthRows, iD3DMappedSubResource.RowPitch);
+			BitmapPitchRows = iD3DMappedSubResource.RowPitch;
 			return true;
 		}
 		catch (bool) { return false; }
@@ -103,20 +119,8 @@ extern "C"
 	{
 		try
 		{
-			//Disable debug reporting
-			_CrtSetReportMode(_CRT_ASSERT, 0);
-
 			//Reset initialize variables
-			hResult = E_FAIL;
-			iDxgiDevice.Release();
-			iDxgiAdapter.Release();
-			iDxgiOutput.Release();
-			iDxgiOutput1.Release();
-			iDxgiOutputDuplication.Release();
-			iD3DDevice.Release();
-			iD3DDeviceContext.Release();
-			iD3DDestinationTexture.Release();
-			return true;
+			return CaptureResetVariables();
 		}
 		catch (bool) { return false; }
 	}
@@ -160,21 +164,51 @@ extern "C"
 			//Release output duplication frame
 			iDxgiOutputDuplication->ReleaseFrame();
 
-			//Collect information for image
-			BYTE* BitmapBuffer(new BYTE[BitmapByteSize]);
+			//Convert image to byte array
+			BYTE* BitmapBuffer = new BYTE[BitmapByteSize];
 			BYTE* SourcePointer = (BYTE*)iD3DMappedSubResource.pData;
 			BYTE* DestinationPointer = BitmapBuffer + BitmapByteSize - BitmapWidthRows;
-			for (UINT h = 0; h < iDxgiOutputDuplicationDescription.ModeDesc.Height; h++)
+			for (UINT xHeight = 0; xHeight < BitmapHeightPixels; xHeight++)
 			{
 				memcpy_s(DestinationPointer, BitmapWidthRows, SourcePointer, BitmapPitchRows);
-				SourcePointer += iD3DMappedSubResource.RowPitch;
+				SourcePointer += BitmapPitchRows;
 				DestinationPointer -= BitmapWidthRows;
 			}
 
-			*OutputWidth = iDxgiOutputDuplicationDescription.ModeDesc.Width;
-			*OutputHeight = iDxgiOutputDuplicationDescription.ModeDesc.Height;
+			*OutputWidth = BitmapWidthPixels;
+			*OutputHeight = BitmapHeightPixels;
 			*OutputSize = BitmapByteSize;
 			return BitmapBuffer;
+		}
+		catch (BYTE*) { return NULL; }
+	}
+
+	__declspec(dllexport) BYTE* CaptureResize(byte* BitmapBuffer, int ResizeWidth, int ResizeHeight, unsigned int* OutputSize)
+	{
+		try
+		{
+			UINT ResizeByteSize = ResizeWidth * ResizeHeight * 4;
+			BYTE* ResizeBuffer = new BYTE[ResizeByteSize];
+
+			double ScaleWidth = (double)ResizeWidth / (double)BitmapWidthPixels;
+			double ScaleHeight = (double)ResizeHeight / (double)BitmapHeightPixels;
+
+			for (UINT xHeight = 0; xHeight < ResizeHeight; xHeight++)
+			{
+				for (UINT xWidth = 0; xWidth < ResizeWidth; xWidth++)
+				{
+					int pixel = (xHeight * (ResizeWidth * 4)) + (xWidth * 4);
+					int nearest = (((int)(xHeight / ScaleHeight) * (BitmapWidthPixels * 4)) + ((int)(xWidth / ScaleWidth) * 4));
+					ResizeBuffer[pixel] = BitmapBuffer[nearest];
+					ResizeBuffer[pixel + 1] = BitmapBuffer[nearest + 1];
+					ResizeBuffer[pixel + 2] = BitmapBuffer[nearest + 2];
+					ResizeBuffer[pixel + 3] = BitmapBuffer[nearest + 3];
+				}
+			}
+
+			delete[] BitmapBuffer;
+			*OutputSize = ResizeByteSize;
+			return ResizeBuffer;
 		}
 		catch (BYTE*) { return NULL; }
 	}

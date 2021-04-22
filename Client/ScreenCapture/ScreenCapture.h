@@ -32,6 +32,8 @@ D3D11_MAPPED_SUBRESOURCE iD3DMappedSubResource;
 
 //Bitmap Variables
 UINT BitmapByteSize;
+UINT BitmapWidthPixels;
+UINT BitmapHeightPixels;
 UINT BitmapWidthRows;
 UINT BitmapPitchRows;
 
