@@ -92,6 +92,9 @@
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Api\GitHub\GitHub_Version.cs">
       <Link>ArnoldVinkCode\Api\GitHub\GitHub_Version.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Forms\AVMessageBox.xaml.cs">
+      <Link>ArnoldVinkCode\Forms\AVMessageBox.xaml.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkActions\AVActions.cs">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkActions\AVActions.cs</Link>
     </Compile>
@@ -208,9 +211,6 @@
     <Compile Include="Calibrate\Calibrate.xaml.cs">
       <DependentUpon>Calibrate.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MessageBox\MessageBox.xaml.cs">
-      <DependentUpon>MessageBox.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ModeColorSpectrum.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="Resources\BitmapProcessing.cs" />
@@ -229,6 +229,11 @@
     <Compile Include="Settings\Settings-Save.cs" />
     <Compile Include="Settings\Settings-Check.cs" />
     <Compile Include="AppTray.cs" />
+    <Page Include="..\..\..\ArnoldVinkCode\Desktop\Forms\AVMessageBox.xaml">
+      <Link>ArnoldVinkCode\Forms\AVMessageBox.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkColorPicker\ColorPicker.xaml">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkColorPicker\ColorPicker.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
@@ -290,10 +295,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Calibrate\Calibrate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MessageBox\MessageBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

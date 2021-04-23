@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
+using static AmbiPro.AppEnums;
 using static AmbiPro.SerialMonitor;
 
 namespace AmbiPro

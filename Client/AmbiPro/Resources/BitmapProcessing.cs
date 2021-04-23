@@ -56,21 +56,6 @@ namespace AmbiPro.Resources
             }
         }
 
-        //Resize bitmap
-        public static void ResizeBitmap(ref Bitmap imageBitmap, int bitmapWidth, int bitmapHeight)
-        {
-            try
-            {
-                Bitmap resizedBitmap = new Bitmap(imageBitmap, new Size(bitmapWidth, bitmapHeight));
-                imageBitmap.Dispose();
-                imageBitmap = resizedBitmap;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Failed to resize bitmap: " + ex.Message);
-            }
-        }
-
         //Save screen capture as image file
         public static void SaveScreenCaptureBitmap(Bitmap bitmapSave)
         {

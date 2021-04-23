@@ -57,6 +57,10 @@
                         <Image Source="/Assets/Icons/Calibrate.png" Width="55" HorizontalAlignment="Center"/>
                         <TextBlock Text="Calibrate" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
                     </StackPanel>
+                    <StackPanel Name="menuButtonDebug" Style="{StaticResource ListBoxMenuStackPanel}">
+                        <Image Source="/Assets/Icons/Debug.png" Width="55" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Debug" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                    </StackPanel>
                     <StackPanel Name="menuButtonUpdate" Style="{StaticResource ListBoxMenuStackPanel}">
                         <Image Source="/Assets/Icons/Update.png" Width="55" HorizontalAlignment="Center"/>
                         <TextBlock Text="Update" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
@@ -64,10 +68,6 @@
                     <StackPanel Name="menuButtonHelp" Style="{StaticResource ListBoxMenuStackPanel}">
                         <Image Source="/Assets/Icons/Help.png" Width="55" HorizontalAlignment="Center"/>
                         <TextBlock Text="Help" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Name="menuButtonDebug" Style="{StaticResource ListBoxMenuStackPanel}">
-                        <Image Source="/Assets/Icons/Debug.png" Width="55" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Debug" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </ListBox>
             </Grid>

@@ -8,55 +8,66 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
+using static AmbiPro.AppVariables;
 
 namespace AmbiPro.Calibrate
 {
     public partial class FormCalibrate : Window
     {
-        //Application Variables
-        private Int32 vPreviousLedCaptureRange = Convert.ToInt32(ConfigurationManager.AppSettings["LedCaptureRange"]);
-        private Int32 vPreviousLedColorCut = Convert.ToInt32(ConfigurationManager.AppSettings["LedColorCut"]);
-        private Int32 vCurrentRotation = 0;
-        private Int32 vCurrentColor = 0;
+        //Window Initialize
+        public FormCalibrate() { InitializeComponent(); }
 
-        public FormCalibrate()
+        //Window Variables
+        private int vPreviousLedCaptureRange = Convert.ToInt32(ConfigurationManager.AppSettings["LedCaptureRange"]);
+        private int vPreviousLedColorCut = Convert.ToInt32(ConfigurationManager.AppSettings["LedColorCut"]);
+        private string vCurrentRatio = string.Empty;
+        private int vCurrentRotation = 0;
+        private int vCurrentColor = 0;
+
+        //Handle window activated event
+        protected override void OnActivated(EventArgs e)
         {
             try
             {
-                InitializeComponent();
-                Loaded += (sender, args) =>
+                Debug.WriteLine("Time to calibrate.");
+
+                //Fullscreen the calibration window
+                WindowStyle = WindowStyle.None;
+                WindowState = WindowState.Maximized;
+
+                //Temporarily set led capture range to 2
+                SettingsFunction.Save("LedCaptureRange", "2");
+
+                //Temporarily set led color cut off to 0
+                SettingsFunction.Save("LedColorCut", "0");
+
+                //Set the current screen resolution and ratio
+                vCurrentRatio = AVFunctions.ScreenAspectRatio(vScreenWidth, vScreenHeight, false);
+                if (string.IsNullOrWhiteSpace(vCurrentRatio))
                 {
-                    Debug.WriteLine("Time to calibrate.");
+                    btn_RotateCounterwise.IsEnabled = false;
+                    btn_RotateClockwise.IsEnabled = false;
+                    btn_RotateReset.IsEnabled = false;
+                    tb_RotateResolution.Text = "Switch to screen capture mode to start calibration.";
+                    return;
+                }
+                else
+                {
+                    tb_RotateResolution.Text = "Capture resolution: " + vScreenWidth + "x" + vScreenHeight + " (" + vCurrentRatio + ")";
+                }
 
-                    //Fullscreen the calibration window
-                    WindowStyle = WindowStyle.None;
-                    WindowState = WindowState.Maximized;
+                //Update the rotation based on ratio
+                if (SettingsFunction.Check("LedRotate" + vCurrentRatio))
+                {
+                    vCurrentRotation = Convert.ToInt32(ConfigurationManager.AppSettings["LedRotate" + vCurrentRatio]);
+                }
+                tb_RotateValue.Text = "Led rotation: " + vCurrentRotation;
 
-                    //Temporarily set led capture range to 2
-                    SettingsFunction.Save("LedCaptureRange", "2");
-
-                    //Temporarily set led color cut off to 0
-                    SettingsFunction.Save("LedColorCut", "0");
-
-                    //Set the current screen resolution and ratio
-                    int ScreenWidth = Screen.PrimaryScreen.Bounds.Width;
-                    int ScreenHeight = Screen.PrimaryScreen.Bounds.Height;
-                    string ScreenRatio = AVFunctions.ScreenAspectRatio(ScreenWidth, ScreenHeight, false);
-                    tb_RotateResolution.Text = "Resolution: " + ScreenWidth + "x" + ScreenHeight + " (" + ScreenRatio + ")";
-
-                    //Update the rotation based on ratio
-                    if (SettingsFunction.Check("LedRotate" + ScreenRatio)) { vCurrentRotation = Convert.ToInt32(ConfigurationManager.AppSettings["LedRotate" + ScreenRatio]); }
-                    tb_RotateValue.Text = "Led rotation: " + vCurrentRotation;
-
-                    //Check the maximum rotation count
-                    CheckMaximumRotationCount();
-                };
+                //Check the maximum rotation count
+                CheckMaximumRotationCount();
             }
             catch { }
         }
-
-        //Handle window close button
-        private void btn_Close_Click(object sender, RoutedEventArgs e) { try { this.Close(); } catch { } }
 
         //Handle window closing event
         protected override void OnClosing(CancelEventArgs e)
@@ -72,7 +83,17 @@ namespace AmbiPro.Calibrate
                 //Restore the led color cut off to previous
                 SettingsFunction.Save("LedColorCut", vPreviousLedColorCut.ToString());
 
+                //Hide the window
                 this.Hide();
+            }
+            catch { }
+        }
+
+        private void btn_Close_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.Close();
             }
             catch { }
         }
@@ -84,8 +105,7 @@ namespace AmbiPro.Calibrate
                 Debug.WriteLine("Rotating the leds clockwise.");
                 vCurrentRotation -= 1;
 
-                string ScreenRatio = AVFunctions.ScreenAspectRatio(0, 0, true);
-                SettingsFunction.Save("LedRotate" + ScreenRatio, vCurrentRotation.ToString());
+                SettingsFunction.Save("LedRotate" + vCurrentRatio, vCurrentRotation.ToString());
                 tb_RotateValue.Text = "Led rotation: " + vCurrentRotation;
 
                 //Check the maximum rotation count
@@ -101,8 +121,7 @@ namespace AmbiPro.Calibrate
                 Debug.WriteLine("Rotating the leds counterwise.");
                 vCurrentRotation += 1;
 
-                string ScreenRatio = AVFunctions.ScreenAspectRatio(0, 0, true);
-                SettingsFunction.Save("LedRotate" + ScreenRatio, vCurrentRotation.ToString());
+                SettingsFunction.Save("LedRotate" + vCurrentRatio, vCurrentRotation.ToString());
                 tb_RotateValue.Text = "Led rotation: " + vCurrentRotation;
 
                 //Check the maximum rotation count
@@ -118,8 +137,7 @@ namespace AmbiPro.Calibrate
                 Debug.WriteLine("Resetting the led rotation.");
                 vCurrentRotation = 0;
 
-                string ScreenRatio = AVFunctions.ScreenAspectRatio(0, 0, true);
-                SettingsFunction.Save("LedRotate" + ScreenRatio, "0");
+                SettingsFunction.Save("LedRotate" + vCurrentRatio, "0");
                 tb_RotateValue.Text = "Led rotation: 0";
 
                 //Check the maximum rotation count
@@ -133,9 +151,9 @@ namespace AmbiPro.Calibrate
         {
             try
             {
-                Int32 CurrentLedCount = Convert.ToInt32(ConfigurationManager.AppSettings["LedCount"]);
-                if (vCurrentRotation > -CurrentLedCount) { btn_RotateClockwise.IsEnabled = true; } else { btn_RotateClockwise.IsEnabled = false; }
-                if (vCurrentRotation < CurrentLedCount) { btn_RotateCounterwise.IsEnabled = true; } else { btn_RotateCounterwise.IsEnabled = false; }
+                int maximumLedCount = Convert.ToInt32(ConfigurationManager.AppSettings["LedCountFirst"]) + Convert.ToInt32(ConfigurationManager.AppSettings["LedCountSecond"]) + Convert.ToInt32(ConfigurationManager.AppSettings["LedCountThird"]) + Convert.ToInt32(ConfigurationManager.AppSettings["LedCountFourth"]);
+                if (vCurrentRotation > -maximumLedCount) { btn_RotateClockwise.IsEnabled = true; } else { btn_RotateClockwise.IsEnabled = false; }
+                if (vCurrentRotation < maximumLedCount) { btn_RotateCounterwise.IsEnabled = true; } else { btn_RotateCounterwise.IsEnabled = false; }
             }
             catch { }
         }

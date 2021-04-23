@@ -3,6 +3,7 @@ using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using static AmbiPro.AppEnums;
 using static AmbiPro.AppLaunchCheck;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;

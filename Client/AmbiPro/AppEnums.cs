@@ -1,6 +1,6 @@
 ﻿namespace AmbiPro
 {
-    partial class AppEnums
+    public partial class AppEnums
     {
         public enum LedSideTypes
         {
@@ -14,6 +14,13 @@
             RightTopToBottom = 7,
             RightBottomToTop = 8,
             LedsOff = 9
+        }
+
+        public enum LedSwitches
+        {
+            Disable,
+            Restart,
+            Automatic
         }
     }
 }

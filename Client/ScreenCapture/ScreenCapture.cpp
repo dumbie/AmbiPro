@@ -1,11 +1,5 @@
 #define WIN32_LEAN_AND_MEAN
-#pragma comment(lib, "D3D11.lib")
 #include "ScreenCapture.h"
-#include <atlbase.h>
-#include <dxgi1_2.h>
-#include <d3d11.h>
-#include <memory>
-#include <algorithm>
 
 bool CaptureResetVariables()
 {
@@ -36,7 +30,7 @@ bool CaptureResetVariables()
 
 extern "C"
 {
-	__declspec(dllexport) bool CaptureInitialize(UINT CaptureMonitor)
+	__declspec(dllexport) bool CaptureInitialize(int CaptureMonitor)
 	{
 		try
 		{
@@ -139,6 +133,8 @@ extern "C"
 	{
 		try
 		{
+			if (iDxgiOutputDuplication == NULL) { return NULL; }
+
 			//Wait for vertical blank
 			iDxgiOutput->WaitForVBlank();
 			iDxgiOutput1->WaitForVBlank();
@@ -187,6 +183,8 @@ extern "C"
 	{
 		try
 		{
+			if (BitmapBuffer == NULL) { return NULL; }
+
 			UINT ResizeByteSize = ResizeWidth * ResizeHeight * 4;
 			BYTE* ResizeBuffer = new BYTE[ResizeByteSize];
 

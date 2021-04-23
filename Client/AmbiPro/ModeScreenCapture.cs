@@ -18,18 +18,18 @@ namespace AmbiPro
         {
             try
             {
-                //Reset side margins
+                //Loop mode variables
+                bool ConnectionFailed = false;
                 vMarginBottom = vMarginOffset;
                 vMarginTop = vMarginOffset;
                 vMarginLeft = vMarginOffset;
                 vMarginRight = vMarginOffset;
 
                 //Initialize Screen Capturer
-                bool CapturerInitialized = await InitializeScreenCapturer();
-                if (!CapturerInitialized)
+                if (!await InitializeScreenCapturer())
                 {
-                    Debug.WriteLine("Failed to initialize the capturer.");
-                    ShowCaptureMessage();
+                    Debug.WriteLine("Failed to initialize the screen capturer.");
+                    ShowFailedCaptureMessage();
                     return;
                 }
 
@@ -39,44 +39,48 @@ namespace AmbiPro
                 //Start updating the leds
                 while (!vTask_LedUpdate.TaskStopRequest)
                 {
-                    //Capture screenshot
                     IntPtr IntPtrBitmap = IntPtr.Zero;
                     Bitmap BitmapImage = null;
                     try
                     {
+                        //Capture screenshot
                         try
                         {
                             IntPtrBitmap = AppImport.CaptureScreenshot(out vScreenWidth, out vScreenHeight, out vScreenOutputSize);
                         }
-                        catch { }
-                        if (IntPtrBitmap == IntPtr.Zero)
+                        catch
                         {
-                            Debug.WriteLine("Failed capturing screenshot.");
+                            Debug.WriteLine("Failed capturing screenshot, restarting capture.");
                             await InitializeScreenCapturer();
                             continue;
                         }
+
+                        //Check screenshot
+                        if (IntPtrBitmap == IntPtr.Zero)
+                        {
+                            Debug.WriteLine("Screenshot is corrupted, restarting capture.");
+                            await InitializeScreenCapturer();
+                            continue;
+                        }
+
+                        //Calculate resize ratio
+                        double ratioX = (double)200 / (double)vScreenWidth;
+                        double ratioY = (double)200 / (double)vScreenHeight;
+                        double ratio = Math.Max(ratioX, ratioY);
+
+                        //Resize the bitmap image
+                        vScreenWidth = (int)(vScreenWidth * ratio);
+                        vScreenHeight = (int)(vScreenHeight * ratio);
+                        vScreenCapturePixels = (setLedCaptureRange * vScreenHeight) / 100 / 2;
+                        IntPtrBitmap = AppImport.CaptureResize(IntPtrBitmap, vScreenWidth, vScreenHeight, out vScreenOutputSize);
+                        Debug.WriteLine("Screen width: " + vScreenWidth + " / Screen height: " + vScreenHeight + " / Capture range: " + vScreenCapturePixels);
 
                         //Current byte information
                         int CurrentSerialByte = InitByteSize;
 
                         unsafe
                         {
-                            //Convert IntPtr to bitmap
-                            BitmapImage = ConvertDataToBitmap((byte*)IntPtrBitmap, vScreenWidth, vScreenHeight, vScreenOutputSize, false);
-
-                            //Calculate resize ratio
-                            double ratioX = (double)200 / (double)vScreenWidth;
-                            double ratioY = (double)200 / (double)vScreenHeight;
-                            double ratio = Math.Max(ratioX, ratioY);
-
-                            //Resize the bitmap image
-                            vScreenWidth = (int)(vScreenWidth * ratio);
-                            vScreenHeight = (int)(vScreenHeight * ratio);
-                            vScreenCapturePixels = (setLedCaptureRange * vScreenHeight) / 100 / 2;
-                            ResizeBitmap(ref BitmapImage, vScreenWidth, vScreenHeight);
-
-                            Debug.WriteLine("Screen width: " + vScreenWidth + " / Screen height: " + vScreenHeight + " / Capture range: " + vScreenCapturePixels);
-                            byte* BitmapData = GetDataFromBitmap(BitmapImage);
+                            byte* BitmapData = (byte*)IntPtrBitmap;
 
                             ////Adjust the black bars margin
                             //if (setAdjustBlackBars)
@@ -96,6 +100,9 @@ namespace AmbiPro
                             //Check if debug mode is enabled
                             if (setDebugMode)
                             {
+                                //Convert IntPtr to bitmap image
+                                BitmapImage = ConvertDataToBitmap((byte*)IntPtrBitmap, vScreenWidth, vScreenHeight, vScreenOutputSize, false);
+
                                 //Debug update screen capture preview
                                 ActionDispatcherInvoke(delegate
                                 {
@@ -117,7 +124,7 @@ namespace AmbiPro
                         //Rotate the leds as calibrated
                         if (setLedRotate > 0)
                         {
-                            for (Int32 RotateCount = 0; RotateCount < setLedRotate; RotateCount++)
+                            for (int RotateCount = 0; RotateCount < setLedRotate; RotateCount++)
                             {
                                 AVFunctions.MoveByteInArrayLeft(SerialBytes, 3, SerialBytes.Length - 1);
                                 AVFunctions.MoveByteInArrayLeft(SerialBytes, 3, SerialBytes.Length - 1);
@@ -126,8 +133,8 @@ namespace AmbiPro
                         }
                         else if (setLedRotate < 0)
                         {
-                            Int32 LedRotateAbs = Math.Abs(setLedRotate);
-                            for (Int32 RotateCount = 0; RotateCount < LedRotateAbs; RotateCount++)
+                            int LedRotateAbs = Math.Abs(setLedRotate);
+                            for (int RotateCount = 0; RotateCount < LedRotateAbs; RotateCount++)
                             {
                                 AVFunctions.MoveByteInArrayRight(SerialBytes, SerialBytes.Length - 1, 3);
                                 AVFunctions.MoveByteInArrayRight(SerialBytes, SerialBytes.Length - 1, 3);
@@ -136,8 +143,14 @@ namespace AmbiPro
                         }
 
                         //Send the serial bytes to device
-                        //Debug.WriteLine("Serial bytes sended: " + SerialBytes.Length);
-                        vSerialComPort.Write(SerialBytes, 0, SerialBytes.Length);
+                        if (!SerialComPortWrite(SerialBytes))
+                        {
+                            ConnectionFailed = true;
+                            break;
+                        }
+
+                        //Delay the loop task
+                        TaskDelayMs((uint)setUpdateRate);
                     }
                     catch (Exception ex)
                     {
@@ -154,10 +167,13 @@ namespace AmbiPro
                         {
                             BitmapImage.Dispose();
                         }
-
-                        //Delay the loop task
-                        TaskDelayMs((uint)setUpdateRate);
                     }
+                }
+
+                //Show failed connection message
+                if (ConnectionFailed)
+                {
+                    ShowFailedConnectionMessage();
                 }
             }
             catch (Exception ex)

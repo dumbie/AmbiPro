@@ -1,6 +1,5 @@
 ﻿using AmbiPro.Settings;
 using ArnoldVinkCode;
-using ArnoldVinkMessageBox;
 using System;
 using System.Configuration;
 using System.Diagnostics;
@@ -123,14 +122,6 @@ namespace AmbiPro
             }
         }
 
-        //Led Switch Types
-        public enum LedSwitches
-        {
-            Disable,
-            Restart,
-            Automatic
-        }
-
         //Turn the leds on or off
         public static async Task LedSwitch(LedSwitches ledSwitch)
         {
@@ -219,7 +210,8 @@ namespace AmbiPro
                         SerialBytes[1] = Encoding.Unicode.GetBytes("d").First();
                         SerialBytes[2] = Encoding.Unicode.GetBytes("a").First();
 
-                        vSerialComPort.Write(SerialBytes, 0, SerialBytes.Length);
+                        //Send the serial bytes to device
+                        SerialComPortWrite(SerialBytes);
                     }
 
                     vSerialComPort.Close();
@@ -229,6 +221,22 @@ namespace AmbiPro
             catch (Exception ex)
             {
                 Debug.WriteLine("Failed to disable the led updates: " + ex.Message);
+            }
+        }
+
+        //Write to serial com port
+        public static bool SerialComPortWrite(byte[] SerialBytes)
+        {
+            try
+            {
+                vSerialComPort.Write(SerialBytes, 0, SerialBytes.Length);
+                //Debug.WriteLine("Bytes written to com port: " + SerialBytes.Length);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed to write to com port: " + ex.Message);
+                return false;
             }
         }
 
@@ -252,7 +260,6 @@ namespace AmbiPro
         {
             try
             {
-                System.Windows.Application CurrentApp = System.Windows.Application.Current;
                 AVActions.ActionDispatcherInvoke(delegate
                 {
                     App.vFormSettings.Show();
@@ -262,14 +269,13 @@ namespace AmbiPro
         }
 
         //Show device connection message
-        private static void ShowConnectionMessage()
+        private static void ShowFailedConnectionMessage()
         {
             try
             {
-                System.Windows.Application CurrentApp = System.Windows.Application.Current;
                 AVActions.ActionDispatcherInvoke(async delegate
                 {
-                    int MsgBoxResult = await AVMessageBox.Popup("Failed to connect to your com port device", "Please make sure the device is not in use by another application, the correct com port is set and that the required drivers are installed on your system.", "Change com port", "Retry to connect", "Close application", "");
+                    int MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to connect to your com port device", "Please make sure the device is not in use by another application, the correct com port is set and that the required drivers are installed on your system.", "Change com port", "Retry to connect", "Close application", "");
                     if (MsgBoxResult == 1)
                     {
                         await LedSwitch(LedSwitches.Disable);
@@ -289,14 +295,13 @@ namespace AmbiPro
         }
 
         //Show monitor screen message
-        private static void ShowCaptureMessage()
+        private static void ShowFailedCaptureMessage()
         {
             try
             {
-                System.Windows.Application CurrentApp = System.Windows.Application.Current;
                 AVActions.ActionDispatcherInvoke(async delegate
                 {
-                    int MsgBoxResult = await AVMessageBox.Popup("Failed to start capturing your monitor screen", "Please make sure the correct monitor screen is selected, Microsoft Visual C++ 2017 Redistributable is installed on your PC, that you have a 64bit Windows installation and that you have a DirectX 11 or higher capable graphics adapter installed.", "Change monitor setting", "Change the led mode", "Retry to capture", "Close application");
+                    int MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to start capturing your monitor screen", "Please make sure the correct monitor screen is selected, Microsoft Visual C++ 2017 Redistributable is installed on your PC, that you have a 64bit Windows installation and that you have a DirectX 11 or higher capable graphics adapter installed.", "Change monitor setting", "Change the led mode", "Retry to capture", "Close application");
                     if (MsgBoxResult == 1)
                     {
                         await LedSwitch(LedSwitches.Disable);
@@ -331,7 +336,6 @@ namespace AmbiPro
                 await Task.Delay(100);
             }
             catch { }
-
             return InitFailed;
         }
 
@@ -368,7 +372,7 @@ namespace AmbiPro
             catch (Exception ex)
             {
                 Debug.WriteLine("Failed to update the leds: " + ex.Message);
-                ShowConnectionMessage();
+                ShowFailedConnectionMessage();
             }
         }
     }

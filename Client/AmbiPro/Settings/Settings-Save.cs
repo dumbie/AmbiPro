@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Threading;
+using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
 
@@ -373,17 +374,19 @@ namespace AmbiPro.Settings
                 Brush BrushValid = BrushConvert.ConvertFromString("#1db954") as Brush;
 
                 //Check the led count value
-                if (string.IsNullOrWhiteSpace(textbox_LedCountFirst.Text)) { textbox_LedCountFirst.BorderBrush = BrushInvalid; return; }
-                if (Regex.IsMatch(textbox_LedCountFirst.Text, "(\\D+)")) { textbox_LedCountFirst.BorderBrush = BrushInvalid; return; }
+                bool invalidCount = false;
+                if (string.IsNullOrWhiteSpace(textbox_LedCountFirst.Text)) { textbox_LedCountFirst.BorderBrush = BrushInvalid; invalidCount = true; }
+                if (Regex.IsMatch(textbox_LedCountFirst.Text, "(\\D+)")) { textbox_LedCountFirst.BorderBrush = BrushInvalid; invalidCount = true; }
 
-                if (string.IsNullOrWhiteSpace(textbox_LedCountSecond.Text)) { textbox_LedCountSecond.BorderBrush = BrushInvalid; return; }
-                if (Regex.IsMatch(textbox_LedCountSecond.Text, "(\\D+)")) { textbox_LedCountSecond.BorderBrush = BrushInvalid; return; }
+                if (string.IsNullOrWhiteSpace(textbox_LedCountSecond.Text)) { textbox_LedCountSecond.BorderBrush = BrushInvalid; invalidCount = true; }
+                if (Regex.IsMatch(textbox_LedCountSecond.Text, "(\\D+)")) { textbox_LedCountSecond.BorderBrush = BrushInvalid; invalidCount = true; }
 
-                if (string.IsNullOrWhiteSpace(textbox_LedCountThird.Text)) { textbox_LedCountThird.BorderBrush = BrushInvalid; return; }
-                if (Regex.IsMatch(textbox_LedCountThird.Text, "(\\D+)")) { textbox_LedCountThird.BorderBrush = BrushInvalid; return; }
+                if (string.IsNullOrWhiteSpace(textbox_LedCountThird.Text)) { textbox_LedCountThird.BorderBrush = BrushInvalid; invalidCount = true; }
+                if (Regex.IsMatch(textbox_LedCountThird.Text, "(\\D+)")) { textbox_LedCountThird.BorderBrush = BrushInvalid; invalidCount = true; }
 
-                if (string.IsNullOrWhiteSpace(textbox_LedCountFourth.Text)) { textbox_LedCountFourth.BorderBrush = BrushInvalid; return; }
-                if (Regex.IsMatch(textbox_LedCountFourth.Text, "(\\D+)")) { textbox_LedCountFourth.BorderBrush = BrushInvalid; return; }
+                if (string.IsNullOrWhiteSpace(textbox_LedCountFourth.Text)) { textbox_LedCountFourth.BorderBrush = BrushInvalid; invalidCount = true; }
+                if (Regex.IsMatch(textbox_LedCountFourth.Text, "(\\D+)")) { textbox_LedCountFourth.BorderBrush = BrushInvalid; invalidCount = true; }
+                if (invalidCount) { return; }
 
                 //Save the new led count setting
                 SettingsFunction.Save("LedCountFirst", textbox_LedCountFirst.Text);
@@ -391,6 +394,9 @@ namespace AmbiPro.Settings
                 SettingsFunction.Save("LedCountThird", textbox_LedCountThird.Text);
                 SettingsFunction.Save("LedCountFourth", textbox_LedCountFourth.Text);
                 textbox_LedCountFirst.BorderBrush = BrushValid;
+                textbox_LedCountSecond.BorderBrush = BrushValid;
+                textbox_LedCountThird.BorderBrush = BrushValid;
+                textbox_LedCountFourth.BorderBrush = BrushValid;
 
                 //Update total led count
                 int totalCount = Convert.ToInt32(textbox_LedCountFirst.Text) + Convert.ToInt32(textbox_LedCountSecond.Text) + Convert.ToInt32(textbox_LedCountThird.Text) + Convert.ToInt32(textbox_LedCountFourth.Text);

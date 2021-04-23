@@ -16,6 +16,8 @@ namespace AmbiPro
         {
             try
             {
+                //Loop mode variables
+                bool ConnectionFailed = false;
                 int? PreviousLedOutput = null;
                 double? PreviousBrightness = null;
                 DateTime PreviousRotation = DateTime.Now;
@@ -104,11 +106,20 @@ namespace AmbiPro
                     }
 
                     //Send the serial bytes to device
-                    //Debug.WriteLine("Serial bytes sended: " + SerialBytes.Length);
-                    vSerialComPort.Write(SerialBytes, 0, SerialBytes.Length);
+                    if (!SerialComPortWrite(SerialBytes))
+                    {
+                        ConnectionFailed = true;
+                        break;
+                    }
 
                     //Delay the loop task
                     await TaskDelayLoop(1000, vTask_LedUpdate);
+                }
+
+                //Show failed connection message
+                if (ConnectionFailed)
+                {
+                    ShowFailedConnectionMessage();
                 }
             }
             catch { }

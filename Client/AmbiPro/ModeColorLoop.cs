@@ -16,11 +16,12 @@ namespace AmbiPro
         {
             try
             {
+                //Loop mode variables
+                bool ConnectionFailed = false;
+                int ColorLoopState = 0;
+
                 //Update the tray icon
                 AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
-
-                //Loop color variables
-                int ColorLoopState = 0;
 
                 //Current byte information
                 while (!vTask_LedUpdate.TaskStopRequest)
@@ -65,11 +66,20 @@ namespace AmbiPro
                     }
 
                     //Send the serial bytes to device
-                    //Debug.WriteLine("Serial bytes sended: " + SerialBytes.Length);
-                    vSerialComPort.Write(SerialBytes, 0, SerialBytes.Length);
+                    if (!SerialComPortWrite(SerialBytes))
+                    {
+                        ConnectionFailed = true;
+                        break;
+                    }
 
                     //Delay the loop task
                     await TaskDelayLoop(setColorLoopSpeed, vTask_LedUpdate);
+                }
+
+                //Show failed connection message
+                if (ConnectionFailed)
+                {
+                    ShowFailedConnectionMessage();
                 }
             }
             catch { }

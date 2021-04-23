@@ -3,8 +3,6 @@
 #include <atlbase.h>
 #include <dxgi1_2.h>
 #include <d3d11.h>
-#include <memory>
-#include <algorithm>
 
 //D3D feature levels
 D3D_FEATURE_LEVEL ArrayD3DFeatureLevels[] =
