@@ -185,22 +185,23 @@ extern "C"
 		{
 			if (BitmapBuffer == NULL) { return NULL; }
 
-			UINT ResizeByteSize = ResizeWidth * ResizeHeight * 4;
-			BYTE* ResizeBuffer = new BYTE[ResizeByteSize];
-
+			int PixelSize = 4;
 			double ScaleWidth = (double)ResizeWidth / (double)BitmapWidthPixels;
 			double ScaleHeight = (double)ResizeHeight / (double)BitmapHeightPixels;
+
+			UINT ResizeByteSize = ResizeWidth * ResizeHeight * PixelSize;
+			BYTE* ResizeBuffer = new BYTE[ResizeByteSize];
 
 			for (UINT xHeight = 0; xHeight < ResizeHeight; xHeight++)
 			{
 				for (UINT xWidth = 0; xWidth < ResizeWidth; xWidth++)
 				{
-					int pixel = (xHeight * (ResizeWidth * 4)) + (xWidth * 4);
-					int nearest = (((int)(xHeight / ScaleHeight) * (BitmapWidthPixels * 4)) + ((int)(xWidth / ScaleWidth) * 4));
+					int pixel = PixelSize * (xHeight * ResizeWidth + xWidth);
+					int nearest = PixelSize * ((int)(xHeight / ScaleHeight) * BitmapWidthPixels + (int)(xWidth / ScaleWidth));
+					ResizeBuffer[pixel++] = BitmapBuffer[nearest++];
+					ResizeBuffer[pixel++] = BitmapBuffer[nearest++];
+					ResizeBuffer[pixel++] = BitmapBuffer[nearest++];
 					ResizeBuffer[pixel] = BitmapBuffer[nearest];
-					ResizeBuffer[pixel + 1] = BitmapBuffer[nearest + 1];
-					ResizeBuffer[pixel + 2] = BitmapBuffer[nearest + 2];
-					ResizeBuffer[pixel + 3] = BitmapBuffer[nearest + 3];
 				}
 			}
 

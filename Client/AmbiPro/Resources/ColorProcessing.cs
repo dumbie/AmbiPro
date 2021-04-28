@@ -7,40 +7,65 @@ namespace AmbiPro.Resources
     public class ColorProcessing
     {
         //Get the color of a pixel
-        public static unsafe Color GetPixelColor(byte* BitmapData, Int32 Width, Int32 Height, Int32 HorX, Int32 VerY)
+        public static unsafe Color GetPixelColor(byte* bitmapData, int screenWidth, int screenHeight, int pixelHor, int pixelVer)
         {
-            Color PixelColor = Color.Empty;
             try
             {
+                //Check width and height
+                if (pixelHor > screenWidth || pixelHor < 0) { return Color.Empty; }
+                if (pixelVer > screenHeight || pixelVer < 0) { return Color.Empty; }
+
+                //Capture error correction
+                if (pixelHor == screenWidth) { pixelHor = screenWidth - 1; }
+                if (pixelVer == 0) { pixelVer = 1; }
+
                 //Get start of the pixel
-                Int32 i = (((Height - VerY) * Width) + HorX) * 4;
+                int PixelSize = 4;
+                int Pixel = PixelSize * ((screenHeight - pixelVer) * screenWidth + pixelHor);
 
                 //Get the color from pixel
-                Byte b = BitmapData[i];
-                Byte g = BitmapData[i + 1];
-                Byte r = BitmapData[i + 2];
-                Byte a = BitmapData[i + 3];
-                PixelColor = Color.FromArgb(a, r, g, b);
+                byte b = bitmapData[Pixel++];
+                byte g = bitmapData[Pixel++];
+                byte r = bitmapData[Pixel++];
+                byte a = bitmapData[Pixel];
+                return Color.FromArgb(a, r, g, b);
             }
-            catch { Debug.WriteLine("Failed to get pixel color from bitmap data."); }
-            return PixelColor;
+            catch
+            {
+                Debug.WriteLine("Failed to get pixel color from bitmap data.");
+                return Color.Empty;
+            }
         }
 
         //Set the color of a pixel
-        public static unsafe void SetPixelColor(byte* BitmapData, Int32 Width, Int32 Height, Int32 HorX, Int32 VerY, Color NewColor)
+        public static unsafe bool SetPixelColor(byte* bitmapData, int screenWidth, int screenHeight, int pixelHor, int pixelVer, Color newColor)
         {
             try
             {
+                //Check width and height
+                if (pixelHor > screenWidth || pixelHor < 0) { return false; }
+                if (pixelVer > screenHeight || pixelVer < 0) { return false; }
+
+                //Capture error correction
+                if (pixelHor == screenWidth) { pixelHor = screenWidth - 1; }
+                if (pixelVer == 0) { pixelVer = 1; }
+
                 //Get start of the pixel
-                Int32 i = (((Height - VerY) * Width) + HorX) * 4;
+                int PixelSize = 4;
+                int Pixel = PixelSize * ((screenHeight - pixelVer) * screenWidth + pixelHor);
 
                 //Set the color to pixel
-                BitmapData[i] = NewColor.B;
-                BitmapData[i + 1] = NewColor.G;
-                BitmapData[i + 2] = NewColor.R;
-                BitmapData[i + 3] = NewColor.A;
+                bitmapData[Pixel++] = newColor.B;
+                bitmapData[Pixel++] = newColor.G;
+                bitmapData[Pixel++] = newColor.R;
+                bitmapData[Pixel] = newColor.A;
+                return true;
             }
-            catch { Debug.WriteLine("Failed to set pixel color in bitmap data."); }
+            catch
+            {
+                Debug.WriteLine("Failed to set pixel color in bitmap data.");
+                return false;
+            }
         }
     }
 }
