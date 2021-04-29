@@ -26,7 +26,7 @@ namespace AmbiPro
                 MenuItem MenuModes = new MenuItem("Led mode");
                 MenuModes.MenuItems.Add(new MenuItem("Screen capture", OnChangeMode));
                 MenuModes.MenuItems.Add(new MenuItem("Solid color", OnChangeMode));
-                MenuModes.MenuItems.Add(new MenuItem("Colors loop", OnChangeMode));
+                MenuModes.MenuItems.Add(new MenuItem("Color loop", OnChangeMode));
                 MenuModes.MenuItems.Add(new MenuItem("Color spectrum", OnChangeMode));
 
                 //Create a context menu for systray.
@@ -100,7 +100,7 @@ namespace AmbiPro
                 MenuItem ClickMenuItem = (sender as MenuItem);
                 if (ClickMenuItem.Text == "Screen capture") { SettingsFunction.Save("LedMode", "0"); }
                 else if (ClickMenuItem.Text == "Solid color") { SettingsFunction.Save("LedMode", "1"); }
-                else if (ClickMenuItem.Text == "Colors loop") { SettingsFunction.Save("LedMode", "2"); }
+                else if (ClickMenuItem.Text == "Color loop") { SettingsFunction.Save("LedMode", "2"); }
                 else if (ClickMenuItem.Text == "Color spectrum") { SettingsFunction.Save("LedMode", "3"); }
                 await LedSwitch(LedSwitches.Restart);
             }

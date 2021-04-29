@@ -33,7 +33,9 @@ When you are walking into any problems or a bug you can go to my help page at ht
 If you appreciate my project and want to support me with my projects you can make a donation through https://donation.arnoldvink.com
 
 ## Changelog
-v0.9.10.0 (-February-2021)
+v0.10.0.0 (-April-2021)
+- Rewrote screen color capture code to reduce cpu usage and fill in gaps.
+- Changed the way led count and sides are setup for more flexibility.
 - Added AmbiPro administrator launcher.
 * Miscellaneous application improvements and fixes.
 

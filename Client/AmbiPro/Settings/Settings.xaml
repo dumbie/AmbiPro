@@ -161,11 +161,11 @@
                             <ComboBox Name="cb_LedMode" Style="{StaticResource ComboBoxBlack}">
                                 <ComboBoxItem>Screen capture</ComboBoxItem>
                                 <ComboBoxItem>Solid color</ComboBoxItem>
-                                <ComboBoxItem>Colors loop</ComboBoxItem>
+                                <ComboBoxItem>Color loop</ComboBoxItem>
                                 <ComboBoxItem>Color spectrum</ComboBoxItem>
                             </ComboBox>
 
-                            <TextBlock Margin="0,10,0,0" Name="tb_ColorLoopSpeed" Text="Colors loop speed:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                            <TextBlock Margin="0,10,0,0" Name="tb_ColorLoopSpeed" Text="Color loop speed:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                             <TextBlock Text="Change the color loop speed frequency." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
                             <Slider Name="sldr_ColorLoopSpeed" Style="{StaticResource SliderWhite}" Minimum="1" Maximum="200"/>
 
@@ -173,7 +173,7 @@
                             <TextBlock Text="Change the spectrum color rotation speed frequency." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
                             <Slider Name="sldr_SpectrumRotationSpeed" Style="{StaticResource SliderWhite}" Minimum="1" Maximum="120"/>
 
-                            <TextBlock Margin="0,10,0,0" Text="Solid led output color:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                            <TextBlock Margin="0,10,0,0" Text="Solid color led output:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                             <TextBlock Text="Select or enter the solid led color you want to display." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
                             <ArnoldVinkColorPicker:ColorPicker x:Name="colorpicker_SolidLedColor" BorderBrush="Black" BorderThickness="2" Background="Black" Height="35" Width="80" Margin="0,0,5,0" HorizontalAlignment="Left" ToolTipService.ToolTip="Set the led output color"/>
                         </StackPanel>
