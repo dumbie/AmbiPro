@@ -41,6 +41,10 @@
                         <Image Source="/Assets/Icons/Screen.png" Width="55" HorizontalAlignment="Center"/>
                         <TextBlock Text="Screen" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
                     </StackPanel>
+                    <StackPanel Name="menuButtonCalibrate" Style="{StaticResource ListBoxMenuStackPanel}">
+                        <Image Source="/Assets/Icons/Calibrate.png" Width="55" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Calibrate" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                    </StackPanel>
                     <StackPanel Name="menuButtonLeds" Style="{StaticResource ListBoxMenuStackPanel}">
                         <Image Source="/Assets/Icons/Leds.png" Width="55" HorizontalAlignment="Center"/>
                         <TextBlock Text="Leds" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
@@ -52,10 +56,6 @@
                     <StackPanel Name="menuButtonRemote" Style="{StaticResource ListBoxMenuStackPanel}">
                         <Image Source="/Assets/Icons/Remote.png" Width="55" HorizontalAlignment="Center"/>
                         <TextBlock Text="Remote" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Name="menuButtonCalibrate" Style="{StaticResource ListBoxMenuStackPanel}">
-                        <Image Source="/Assets/Icons/Calibrate.png" Width="55" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Calibrate" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
                     </StackPanel>
                     <StackPanel Name="menuButtonDebug" Style="{StaticResource ListBoxMenuStackPanel}">
                         <Image Source="/Assets/Icons/Debug.png" Width="55" HorizontalAlignment="Center"/>
@@ -200,13 +200,13 @@
                             <Slider Name="sldr_UpdateRate" Style="{StaticResource SliderWhite}" Minimum="1" Maximum="250"/>
 
                             <CheckBox Margin="0,15,0,0" Name="cb_AdjustBlackBars" Content="Adjust to screen black bars" FontSize="20" FontWeight="Light" Foreground="#1D1D1D" Style="{StaticResource CheckBoxBlack}"/>
-                            <TextBlock Text="Automatically adjust leds to black bars displayed on the screen." Style="{StaticResource TextBlockGrayLight}"/>
+                            <TextBlock Text="Automatically adjust leds to black bars displayed on the screen.*" Style="{StaticResource TextBlockGrayLight}"/>
 
                             <TextBlock Margin="0,10,0,0" Name="tb_AdjustBlackBarLevel" Text="Minimum black bar level:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                             <TextBlock Text="Change the minimum black level before it is considered a black bar to adjust." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
                             <Slider Name="sldr_AdjustBlackBarLevel" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="20"/>
 
-                            <TextBlock Margin="0,10,0,0" Text="* This setting has impact on your system performance." Style="{StaticResource TextBlockGrayLight}"/>
+                            <TextBlock Margin="0,10,0,0" Text="* This setting has impact on capture and your system performance." Style="{StaticResource TextBlockGrayLight}"/>
 
                             <Button Name="btn_Welcome_Start2" Visibility="Collapsed" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Let's start" Click="Btn_WelcomeStart_Click"/>
                         </StackPanel>

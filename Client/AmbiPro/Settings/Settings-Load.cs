@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Media;
 using static AmbiPro.AppVariables;
@@ -10,6 +11,32 @@ namespace AmbiPro.Settings
 {
     public partial class FormSettings
     {
+        //Load - Led count from script
+        public int LoadLedCountScript()
+        {
+            try 
+            {
+                string[] scriptLines = File.ReadAllLines(@"Script\Script.ino");
+                string ledCountString = scriptLines.Where(x => x.StartsWith("#define LedAmount")).FirstOrDefault();
+                if (!string.IsNullOrWhiteSpace(ledCountString))
+                {
+                    int ledCountInt = Convert.ToInt32(ledCountString.Replace("#define LedAmount", string.Empty));
+                    Debug.WriteLine("Script led count: " + ledCountInt);
+                    return ledCountInt;
+                }
+                else
+                {
+                    Debug.WriteLine("Script led count not found.");
+                    return -1;
+                }
+            }
+            catch
+            {
+                Debug.WriteLine("Failed to load script led count.");
+                return -1;
+            }
+        }
+
         //Load - Application Settings
         public void SettingsLoad()
         {

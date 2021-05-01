@@ -67,7 +67,7 @@ namespace AmbiPro
                         //Calculate resize ratio
                         int[] ledCounts = { setLedCountFirst, setLedCountSecond, setLedCountThird, setLedCountFourth };
                         int targetSize = ledCounts.Max();
-                        if (targetSize < 200) { targetSize = 200; }
+                        if (targetSize < 160) { targetSize = 160; }
                         double ratioHor = (double)targetSize / (double)vScreenWidth;
                         double ratioVer = (double)targetSize / (double)vScreenHeight;
                         double ratio = Math.Max(ratioHor, ratioVer);
@@ -77,7 +77,7 @@ namespace AmbiPro
                         vScreenHeight = (int)(vScreenHeight * ratio);
                         vCaptureZoneRange = (setLedCaptureRange * vScreenHeight) / 100 / 2;
                         IntPtrBitmap = AppImport.CaptureResize(IntPtrBitmap, vScreenWidth, vScreenHeight, out vScreenOutputSize);
-                        Debug.WriteLine("Screen width: " + vScreenWidth + " / Screen height: " + vScreenHeight);
+                        //Debug.WriteLine("Screen width: " + vScreenWidth + " / Screen height: " + vScreenHeight);
 
                         //Current byte information
                         int CurrentSerialByte = InitByteSize;
@@ -86,14 +86,14 @@ namespace AmbiPro
                         {
                             byte* BitmapData = (byte*)IntPtrBitmap;
 
-                            ////Adjust the black bars margin
-                            //if (setAdjustBlackBars)
-                            //{
-                            //    AdjustBlackBars(0, OffsetMargin, ref HorizontalMargin0, BitmapData);
-                            //    AdjustBlackBars(1, OffsetMargin, ref VerticalMargin1, BitmapData);
-                            //    AdjustBlackBars(2, OffsetMargin, ref HorizontalMargin2, BitmapData);
-                            //    AdjustBlackBars(3, OffsetMargin, ref VerticalMargin3, BitmapData);
-                            //}
+                            //Adjust the black bars margin
+                            if (setAdjustBlackBars)
+                            {
+                                AdjustBlackBars(setLedSideFirst, BitmapData);
+                                AdjustBlackBars(setLedSideSecond, BitmapData);
+                                AdjustBlackBars(setLedSideThird, BitmapData);
+                                AdjustBlackBars(setLedSideFourth, BitmapData);
+                            }
 
                             //Check led capture sides color
                             ScreenColors(setLedSideFirst, setLedCountFirst, SerialBytes, BitmapData, ref CurrentSerialByte);

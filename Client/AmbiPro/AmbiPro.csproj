@@ -208,9 +208,12 @@
     <Compile Include="AppTasks.cs" />
     <Compile Include="AppTimers.cs" />
     <Compile Include="AppUpdate.cs" />
+    <Compile Include="Calibrate\Calibrate-Blackbars.cs" />
+    <Compile Include="Calibrate\Calibrate-Rotation.cs" />
     <Compile Include="Calibrate\Calibrate.xaml.cs">
       <DependentUpon>Calibrate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Calibrate\Calibrate-Menu.cs" />
     <Compile Include="ModeColorSpectrum.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="Resources\BitmapProcessing.cs" />
@@ -358,6 +361,12 @@
       <Link>ArnoldVinkCode\Functions\ArnoldVinkColorPicker\ColorSelector.png</Link>
     </Resource>
     <Resource Include="Assets\Icons\Debug.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\Close.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\Blackbar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Content Include="Script\Script.ino">

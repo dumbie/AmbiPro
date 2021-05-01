@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
 using static AmbiPro.AppVariables;
 
 namespace AmbiPro.Calibrate
@@ -20,9 +19,11 @@ namespace AmbiPro.Calibrate
         //Window Variables
         private int vPreviousLedCaptureRange = Convert.ToInt32(ConfigurationManager.AppSettings["LedCaptureRange"]);
         private int vPreviousLedColorCut = Convert.ToInt32(ConfigurationManager.AppSettings["LedColorCut"]);
+        private string vPreviousAdjustBlackBars = Convert.ToString(ConfigurationManager.AppSettings["AdjustBlackBars"]);
         private string vCurrentRatio = string.Empty;
         private int vCurrentRotation = 0;
         private int vCurrentColor = 0;
+        private int vCurrentBlackbar = 0;
 
         //Handle window activated event
         protected override void OnActivated(EventArgs e)
@@ -40,6 +41,9 @@ namespace AmbiPro.Calibrate
 
                 //Temporarily set led color cut off to 0
                 SettingsFunction.Save("LedColorCut", "0");
+
+                //Temporarily enable blackbar detection
+                SettingsFunction.Save("AdjustBlackBars", "True");
 
                 //Set the current screen resolution and ratio
                 vCurrentRatio = AVFunctions.ScreenAspectRatio(vScreenWidth, vScreenHeight, false);
@@ -77,124 +81,13 @@ namespace AmbiPro.Calibrate
                 e.Cancel = true;
                 Debug.WriteLine("Closing the calibrate window.");
 
-                //Restore the led capture range to previous
+                //Restore the temporarily changed settings
                 SettingsFunction.Save("LedCaptureRange", vPreviousLedCaptureRange.ToString());
-
-                //Restore the led color cut off to previous
                 SettingsFunction.Save("LedColorCut", vPreviousLedColorCut.ToString());
+                SettingsFunction.Save("AdjustBlackBars", vPreviousAdjustBlackBars);
 
                 //Hide the window
                 this.Hide();
-            }
-            catch { }
-        }
-
-        private void btn_Close_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                this.Close();
-            }
-            catch { }
-        }
-
-        private void btn_RotateClockwise_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Debug.WriteLine("Rotating the leds clockwise.");
-                vCurrentRotation -= 1;
-
-                SettingsFunction.Save("LedRotate" + vCurrentRatio, vCurrentRotation.ToString());
-                tb_RotateValue.Text = "Led rotation: " + vCurrentRotation;
-
-                //Check the maximum rotation count
-                CheckMaximumRotationCount();
-            }
-            catch { }
-        }
-
-        private void btn_RotateCounterwise_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Debug.WriteLine("Rotating the leds counterwise.");
-                vCurrentRotation += 1;
-
-                SettingsFunction.Save("LedRotate" + vCurrentRatio, vCurrentRotation.ToString());
-                tb_RotateValue.Text = "Led rotation: " + vCurrentRotation;
-
-                //Check the maximum rotation count
-                CheckMaximumRotationCount();
-            }
-            catch { }
-        }
-
-        private void btn_RotateReset_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Debug.WriteLine("Resetting the led rotation.");
-                vCurrentRotation = 0;
-
-                SettingsFunction.Save("LedRotate" + vCurrentRatio, "0");
-                tb_RotateValue.Text = "Led rotation: 0";
-
-                //Check the maximum rotation count
-                CheckMaximumRotationCount();
-            }
-            catch { }
-        }
-
-        //Check the maximum rotation count
-        void CheckMaximumRotationCount()
-        {
-            try
-            {
-                int maximumLedCount = Convert.ToInt32(ConfigurationManager.AppSettings["LedCountFirst"]) + Convert.ToInt32(ConfigurationManager.AppSettings["LedCountSecond"]) + Convert.ToInt32(ConfigurationManager.AppSettings["LedCountThird"]) + Convert.ToInt32(ConfigurationManager.AppSettings["LedCountFourth"]);
-                if (vCurrentRotation > -maximumLedCount) { btn_RotateClockwise.IsEnabled = true; } else { btn_RotateClockwise.IsEnabled = false; }
-                if (vCurrentRotation < maximumLedCount) { btn_RotateCounterwise.IsEnabled = true; } else { btn_RotateCounterwise.IsEnabled = false; }
-            }
-            catch { }
-        }
-
-        //Rotate the background colors
-        private void btn_RotateColors_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (vCurrentColor == 0)
-                {
-                    vCurrentColor = 1;
-                    grid_CaliBackground1.Background = new SolidColorBrush(Colors.Yellow);
-                    grid_CaliBackground2.Background = new SolidColorBrush(Colors.Red);
-                    grid_CaliBackground3.Background = new SolidColorBrush(Colors.Green);
-                    grid_CaliBackground4.Background = new SolidColorBrush(Colors.Blue);
-                }
-                else if (vCurrentColor == 1)
-                {
-                    vCurrentColor = 2;
-                    grid_CaliBackground1.Background = new SolidColorBrush(Colors.Blue);
-                    grid_CaliBackground2.Background = new SolidColorBrush(Colors.Yellow);
-                    grid_CaliBackground3.Background = new SolidColorBrush(Colors.Red);
-                    grid_CaliBackground4.Background = new SolidColorBrush(Colors.Green);
-                }
-                else if (vCurrentColor == 2)
-                {
-                    vCurrentColor = 3;
-                    grid_CaliBackground1.Background = new SolidColorBrush(Colors.Green);
-                    grid_CaliBackground2.Background = new SolidColorBrush(Colors.Blue);
-                    grid_CaliBackground3.Background = new SolidColorBrush(Colors.Yellow);
-                    grid_CaliBackground4.Background = new SolidColorBrush(Colors.Red);
-                }
-                else if (vCurrentColor == 3)
-                {
-                    vCurrentColor = 0;
-                    grid_CaliBackground1.Background = new SolidColorBrush(Colors.Red);
-                    grid_CaliBackground2.Background = new SolidColorBrush(Colors.Green);
-                    grid_CaliBackground3.Background = new SolidColorBrush(Colors.Blue);
-                    grid_CaliBackground4.Background = new SolidColorBrush(Colors.Yellow);
-                }
             }
             catch { }
         }

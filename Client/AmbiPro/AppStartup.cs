@@ -62,7 +62,10 @@ namespace AmbiPro
                 }
 
                 //Check for available application update
-                await AppUpdate.CheckForAppUpdate(true);
+                //await AppUpdate.CheckForAppUpdate(true);
+
+                //App.vFormSettings.Show();
+                App.vFormCalibrate.Show();
             }
             catch { }
         }

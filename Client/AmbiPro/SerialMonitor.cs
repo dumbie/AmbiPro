@@ -347,6 +347,15 @@ namespace AmbiPro
                 //Update the led settings
                 UpdateSettings();
 
+                //Check the led count
+                if (setLedCountTotal <= 0)
+                {
+                    Debug.WriteLine("There are currently no leds configured.");
+                    await LedSwitch(LedSwitches.Disable);
+                    ShowSettings();
+                    return;
+                }
+
                 //Calculate bytes size
                 int InitByteSize = 3;
                 int LedByteSize = setLedCountTotal * 3;

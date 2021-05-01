@@ -19,14 +19,14 @@ namespace AmbiPro.Settings
                 {
                     vSingleTappedEvent = true;
                     await Task.Delay(250);
-                    if (vSingleTappedEvent) { lb_Menu_SingleTap(); }
+                    if (vSingleTappedEvent) { await lb_Menu_SingleTap(); }
                 }
             }
             catch { }
         }
 
         //Handle main menu single tap
-        async void lb_Menu_SingleTap()
+        async Task lb_Menu_SingleTap()
         {
             try
             {

@@ -82,7 +82,7 @@ namespace AmbiPro
                     CaptureZoneSizeOrg = vScreenHeight / DirectionLedCount;
                     CaptureZoneDiff = vScreenHeight - (CaptureZoneSizeOrg * DirectionLedCount);
                 }
-                Debug.WriteLine("Zone range: " + vCaptureZoneRange + " / Zone size: " + CaptureZoneSizeOrg + " / Zone difference: " + CaptureZoneDiff);
+                //Debug.WriteLine("Zone range: " + vCaptureZoneRange + " / Zone size: " + CaptureZoneSizeOrg + " / Zone difference: " + CaptureZoneDiff);
 
                 //Get colors from the bitmap
                 for (int dl = 0; dl < DirectionLedCount; dl++)
