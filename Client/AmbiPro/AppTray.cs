@@ -33,7 +33,6 @@ namespace AmbiPro
                 ContextMenu.MenuItems.Add("On/Off", OnSwitchOnOff);
                 ContextMenu.MenuItems.Add(MenuModes);
                 ContextMenu.MenuItems.Add("Settings", OnSettings);
-                ContextMenu.MenuItems.Add("Calibrate", OnCalibrate);
                 ContextMenu.MenuItems.Add("Website", OnWebsite);
                 ContextMenu.MenuItems.Add("Exit", OnExit);
 
@@ -103,15 +102,6 @@ namespace AmbiPro
                 else if (ClickMenuItem.Text == "Color loop") { SettingsFunction.Save("LedMode", "2"); }
                 else if (ClickMenuItem.Text == "Color spectrum") { SettingsFunction.Save("LedMode", "3"); }
                 await LedSwitch(LedSwitches.Restart);
-            }
-            catch { }
-        }
-
-        private static void OnCalibrate(object sender, EventArgs e)
-        {
-            try
-            {
-                App.vFormCalibrate.Show();
             }
             catch { }
         }

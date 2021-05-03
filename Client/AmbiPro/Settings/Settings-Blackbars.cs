@@ -1,8 +1,9 @@
 ﻿using System.Windows;
+using static AmbiPro.AppVariables;
 
-namespace AmbiPro.Calibrate
+namespace AmbiPro.Settings
 {
-    partial class FormCalibrate
+    partial class FormSettings
     {
         private void btn_BlackbarScenario_Click(object sender, RoutedEventArgs e)
         {

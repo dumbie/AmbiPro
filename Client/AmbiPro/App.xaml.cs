@@ -1,5 +1,4 @@
-﻿using AmbiPro.Calibrate;
-using AmbiPro.Settings;
+﻿using AmbiPro.Settings;
 using System.Reflection;
 using System.Windows;
 using static ArnoldVinkCode.AVFirewall;
@@ -10,7 +9,6 @@ namespace AmbiPro
     {
         //Application Windows
         public static FormSettings vFormSettings = new FormSettings();
-        public static FormCalibrate vFormCalibrate = new FormCalibrate();
 
         protected override async void OnStartup(StartupEventArgs e)
         {

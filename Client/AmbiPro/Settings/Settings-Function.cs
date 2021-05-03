@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Configuration;
+using static AmbiPro.AppVariables;
 
 namespace AmbiPro.Settings
 {
-    class SettingsFunction
+    public partial class SettingsFunction
     {
-        //Application Variables
-        private static Configuration vConfiguration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-
         //Check - Application Setting
         public static bool Check(string Name)
         {

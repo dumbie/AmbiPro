@@ -3,19 +3,19 @@ using System.Diagnostics;
 
 namespace AmbiPro.Settings
 {
-    public partial class FormSettings
+    public partial class SettingsFunction
     {
         //Check - Application Settings
-        public void SettingsCheck()
+        public static void SettingsCheck()
         {
             try
             {
                 Debug.WriteLine("Checking application settings...");
 
                 //Check - First launch
-                if (ConfigurationManager.AppSettings["FirstLaunch"] == null)
+                if (ConfigurationManager.AppSettings["FirstLaunch2"] == null)
                 {
-                    SettingsFunction.Save("FirstLaunch", "True");
+                    SettingsFunction.Save("FirstLaunch2", "True");
                 }
 
                 //Check - Com Port
@@ -192,24 +192,6 @@ namespace AmbiPro.Settings
                     SettingsFunction.Save("LedOutput", "0");
                 }
 
-                //Check - Led Rotate 21:9
-                if (ConfigurationManager.AppSettings["LedRotate21:9"] == null)
-                {
-                    SettingsFunction.Save("LedRotate21:9", "0");
-                }
-
-                //Check - Led Rotate 16:9
-                if (ConfigurationManager.AppSettings["LedRotate16:9"] == null)
-                {
-                    SettingsFunction.Save("LedRotate16:9", "0");
-                }
-
-                //Check - Led Rotate 4:3
-                if (ConfigurationManager.AppSettings["LedRotate4:3"] == null)
-                {
-                    SettingsFunction.Save("LedRotate4:3", "0");
-                }
-
                 //Check - Update Rate
                 if (ConfigurationManager.AppSettings["UpdateRate"] == null)
                 {
@@ -234,7 +216,10 @@ namespace AmbiPro.Settings
                     SettingsFunction.Save("DebugSave", "False");
                 }
             }
-            catch { Debug.WriteLine("Failed to check the settings."); }
+            catch
+            {
+                Debug.WriteLine("Failed to check the settings.");
+            }
         }
     }
 }

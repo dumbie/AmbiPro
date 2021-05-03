@@ -7,8 +7,8 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Media;
-using System.Windows.Threading;
 using static AmbiPro.AppEnums;
+using static AmbiPro.AppTimers;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
 
@@ -16,10 +16,6 @@ namespace AmbiPro.Settings
 {
     public partial class FormSettings
     {
-        //Application variables
-        private static DispatcherTimer vTextBoxTimer_LedCount = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
-        private static DispatcherTimer vTextBoxTimer_ServerPort = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
-
         //Save - Application Settings
         public void SettingsSave()
         {
@@ -31,7 +27,7 @@ namespace AmbiPro.Settings
                 cb_ComPort.SelectionChanged += async (sender, e) =>
                 {
                     SettingsFunction.Save("ComPort", (cb_ComPort.SelectedIndex + 1).ToString());
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
+                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                     {
                         await LedSwitch(LedSwitches.Restart);
                     }
@@ -47,7 +43,7 @@ namespace AmbiPro.Settings
                     else if (cb_BaudRate.SelectedIndex == 4) { SettingsFunction.Save("BaudRate", "38400"); }
                     else if (cb_BaudRate.SelectedIndex == 5) { SettingsFunction.Save("BaudRate", "57600"); }
                     else if (cb_BaudRate.SelectedIndex == 6) { SettingsFunction.Save("BaudRate", "115200"); }
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
+                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                     {
                         await LedSwitch(LedSwitches.Restart);
                     }
@@ -79,10 +75,10 @@ namespace AmbiPro.Settings
                 };
 
                 //Save - Remote Port
-                vTextBoxTimer_ServerPort.Tick += vTextBoxTimer_ServerPort_Tick;
+                vDispatcherTimer_ServerPort.Tick += vDispatcherTimer_ServerPort_Tick;
                 tb_ServerPort.TextChanged += (sender, e) =>
                 {
-                    AVFunctions.TimerReset(vTextBoxTimer_ServerPort);
+                    AVFunctions.TimerReset(vDispatcherTimer_ServerPort);
                 };
 
                 //Save - Adjust Black Bars
@@ -90,7 +86,7 @@ namespace AmbiPro.Settings
                 {
                     if ((bool)cb_AdjustBlackBars.IsChecked) { SettingsFunction.Save("AdjustBlackBars", "True"); }
                     else { SettingsFunction.Save("AdjustBlackBars", "False"); }
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
+                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                     {
                         await LedSwitch(LedSwitches.Restart);
                     }
@@ -100,7 +96,7 @@ namespace AmbiPro.Settings
                 cb_MonitorCapture.SelectionChanged += async (sender, e) =>
                 {
                     SettingsFunction.Save("MonitorCapture", cb_MonitorCapture.SelectedIndex.ToString());
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
+                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                     {
                         await LedSwitch(LedSwitches.Restart);
                     }
@@ -110,7 +106,10 @@ namespace AmbiPro.Settings
                 cb_LedMode.SelectionChanged += async (sender, e) =>
                 {
                     SettingsFunction.Save("LedMode", cb_LedMode.SelectedIndex.ToString());
-                    await LedSwitch(LedSwitches.Restart);
+                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
+                    {
+                        await LedSwitch(LedSwitches.Restart);
+                    }
                 };
 
                 //Save - Led Brightness
@@ -229,22 +228,22 @@ namespace AmbiPro.Settings
                 };
 
                 //Save - Led Count
-                vTextBoxTimer_LedCount.Tick += SettingSaveLedCount;
+                vDispatcherTimer_LedCount.Tick += SettingSaveLedCount;
                 textbox_LedCountFirst.TextChanged += (sender, e) =>
                 {
-                    AVFunctions.TimerReset(vTextBoxTimer_LedCount);
+                    AVFunctions.TimerReset(vDispatcherTimer_LedCount);
                 };
                 textbox_LedCountSecond.TextChanged += (sender, e) =>
                 {
-                    AVFunctions.TimerReset(vTextBoxTimer_LedCount);
+                    AVFunctions.TimerReset(vDispatcherTimer_LedCount);
                 };
                 textbox_LedCountThird.TextChanged += (sender, e) =>
                 {
-                    AVFunctions.TimerReset(vTextBoxTimer_LedCount);
+                    AVFunctions.TimerReset(vDispatcherTimer_LedCount);
                 };
                 textbox_LedCountFourth.TextChanged += (sender, e) =>
                 {
-                    AVFunctions.TimerReset(vTextBoxTimer_LedCount);
+                    AVFunctions.TimerReset(vDispatcherTimer_LedCount);
                 };
 
                 //Save - Led Output
@@ -341,7 +340,7 @@ namespace AmbiPro.Settings
         }
 
         //Save led sides
-        private async Task SettingSaveLedSide(string sideName, string sideIndex)
+        public async Task SettingSaveLedSide(string sideName, string sideIndex)
         {
             try
             {
@@ -352,7 +351,7 @@ namespace AmbiPro.Settings
                 SettingResetLedRotate();
 
                 //Restart the leds
-                if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
+                if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                 {
                     await LedSwitch(LedSwitches.Restart);
                 }
@@ -361,12 +360,12 @@ namespace AmbiPro.Settings
         }
 
         //Save led count after delay
-        private async void SettingSaveLedCount(object sender, EventArgs e)
+        public async void SettingSaveLedCount(object sender, EventArgs e)
         {
             try
             {
                 //Stop the timer
-                vTextBoxTimer_LedCount.Stop();
+                vDispatcherTimer_LedCount.Stop();
 
                 //Color brushes
                 BrushConverter BrushConvert = new BrushConverter();
@@ -400,13 +399,13 @@ namespace AmbiPro.Settings
 
                 //Update total led count
                 int totalCount = Convert.ToInt32(textbox_LedCountFirst.Text) + Convert.ToInt32(textbox_LedCountSecond.Text) + Convert.ToInt32(textbox_LedCountThird.Text) + Convert.ToInt32(textbox_LedCountFourth.Text);
-                textblock_LedCount.Text = "Total led count: " + totalCount + " (must be equal with script)";
+                textblock_LedCount.Text = "Total led count: " + totalCount + " (must be equal with arduino script)";
 
                 //Reset led rotate setting
                 SettingResetLedRotate();
 
                 //Restart the leds
-                if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
+                if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                 {
                     await LedSwitch(LedSwitches.Restart);
                 }
@@ -415,12 +414,12 @@ namespace AmbiPro.Settings
         }
 
         //Update remote port after delay
-        private async void vTextBoxTimer_ServerPort_Tick(object sender, EventArgs e)
+        private async void vDispatcherTimer_ServerPort_Tick(object sender, EventArgs e)
         {
             try
             {
                 //Stop the timer
-                vTextBoxTimer_ServerPort.Stop();
+                vDispatcherTimer_ServerPort.Stop();
 
                 //Color brushes
                 BrushConverter BrushConvert = new BrushConverter();

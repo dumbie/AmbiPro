@@ -1,4 +1,5 @@
-﻿using ArnoldVinkCode;
+﻿using AmbiPro.Settings;
+using ArnoldVinkCode;
 using System;
 using System.Configuration;
 using System.Diagnostics;
@@ -23,7 +24,7 @@ namespace AmbiPro
                 Application_LaunchCheck("AmbiPro", "AmbiPro", ProcessPriorityClass.High, false);
 
                 //Check application settings
-                App.vFormSettings.SettingsCheck();
+                SettingsFunction.SettingsCheck();
 
                 //Create application tray menu
                 AppTray.CreateTrayMenu();
@@ -35,10 +36,9 @@ namespace AmbiPro
                 EnableSocketServer();
 
                 //Settings screen if first run
-                if (Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
+                if (Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                 {
                     Debug.WriteLine("First launch, showing the settings screen.");
-
                     App.vFormSettings.Show();
                     return;
                 }
@@ -62,10 +62,7 @@ namespace AmbiPro
                 }
 
                 //Check for available application update
-                //await AppUpdate.CheckForAppUpdate(true);
-
-                //App.vFormSettings.Show();
-                App.vFormCalibrate.Show();
+                await AppUpdate.CheckForAppUpdate(true);
             }
             catch { }
         }

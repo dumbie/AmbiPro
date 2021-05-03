@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Media;
@@ -14,7 +15,7 @@ namespace AmbiPro.Settings
         //Load - Led count from script
         public int LoadLedCountScript()
         {
-            try 
+            try
             {
                 string[] scriptLines = File.ReadAllLines(@"Script\Script.ino");
                 string ledCountString = scriptLines.Where(x => x.StartsWith("#define LedAmount")).FirstOrDefault();
@@ -43,6 +44,23 @@ namespace AmbiPro.Settings
             try
             {
                 Debug.WriteLine("Loading application settings...");
+
+                //Check connected com ports
+                foreach (string PortName in SerialPort.GetPortNames())
+                {
+                    int PortNumberRaw = Convert.ToInt32(PortName.Replace("COM", "")) - 1;
+                    cb_ComPort.Items[PortNumberRaw] = PortName + " (Connected)";
+                }
+
+                //Set the first launch com port
+                if (Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
+                {
+                    foreach (string PortName in SerialPort.GetPortNames())
+                    {
+                        int PortNumberRaw = Convert.ToInt32(PortName.Replace("COM", "")) - 1;
+                        cb_ComPort.SelectedIndex = PortNumberRaw;
+                    }
+                }
 
                 //Load - Com Port
                 cb_ComPort.SelectedIndex = (Convert.ToInt32(ConfigurationManager.AppSettings["ComPort"]) - 1);
@@ -151,7 +169,7 @@ namespace AmbiPro.Settings
                 textbox_LedCountThird.Text = Convert.ToString(ConfigurationManager.AppSettings["LedCountThird"]);
                 textbox_LedCountFourth.Text = Convert.ToString(ConfigurationManager.AppSettings["LedCountFourth"]);
                 int totalCount = Convert.ToInt32(textbox_LedCountFirst.Text) + Convert.ToInt32(textbox_LedCountSecond.Text) + Convert.ToInt32(textbox_LedCountThird.Text) + Convert.ToInt32(textbox_LedCountFourth.Text);
-                textblock_LedCount.Text = "Total led count: " + totalCount + " (must be equal with script)";
+                textblock_LedCount.Text = "Total led count: " + totalCount + " (must be equal with arduino script)";
 
                 //Load - Led Output
                 cb_LedOutput.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedOutput"]);

@@ -1,10 +1,8 @@
 ﻿using ArnoldVinkCode;
 using System;
 using System.ComponentModel;
-using System.Configuration;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Ports;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -36,23 +34,6 @@ namespace AmbiPro.Settings
             try
             {
                 Process.Start("https://ambipro.arnoldvink.com?ip=" + tb_RemoteIp.Text + "&port=" + tb_ServerPort.Text);
-            }
-            catch { }
-        }
-
-        //Handle start button
-        private async void Btn_WelcomeStart_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                //Set first launch setting to false
-                SettingsFunction.Save("FirstLaunch", "False");
-
-                //Start updating the leds
-                await LedSwitch(LedSwitches.Automatic);
-
-                //Close the settings window
-                this.Close();
             }
             catch { }
         }
@@ -103,19 +84,15 @@ namespace AmbiPro.Settings
         {
             try
             {
-                //Check connected com ports
-                foreach (string PortName in SerialPort.GetPortNames())
-                {
-                    int PortNumberRaw = Convert.ToInt32(PortName.Replace("COM", "")) - 1;
-                    cb_ComPort.Items[PortNumberRaw] = PortName + " (Connected)";
-                }
-
                 //Load and save the settings
                 SettingsLoad();
                 SettingsSave();
 
                 //Load and set the help text
                 Load_Help_Text();
+
+                //Set first launch setting to false
+                SettingsFunction.Save("FirstLaunch2", "False");
 
                 Debug.WriteLine("Settings window initialized.");
             }
@@ -127,44 +104,11 @@ namespace AmbiPro.Settings
         {
             try
             {
-                //Check for first launch
-                if (Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch"]))
-                {
-                    txt_Welcome.Visibility = Visibility.Visible;
-                    btn_Welcome_Start1.Visibility = Visibility.Visible;
-                    btn_Welcome_Start2.Visibility = Visibility.Visible;
-                    btn_Welcome_Start3.Visibility = Visibility.Visible;
-                    btn_Welcome_Start4.Visibility = Visibility.Visible;
-                    menuButtonModes.Visibility = Visibility.Collapsed;
-                    menuButtonCalibrate.Visibility = Visibility.Collapsed;
-                    menuButtonRemote.Visibility = Visibility.Collapsed;
-                    menuButtonUpdate.Visibility = Visibility.Collapsed;
-                    menuButtonHelp.Visibility = Visibility.Collapsed;
-                    menuButtonDebug.Visibility = Visibility.Collapsed;
-                    btn_SwitchLedsOnOrOff.Visibility = Visibility.Collapsed;
+                //Update the rotation ratio
+                UpdateRotationRatio();
 
-                    //Set the first connected device
-                    foreach (string PortName in SerialPort.GetPortNames())
-                    {
-                        int PortNumberRaw = Convert.ToInt32(PortName.Replace("COM", "")) - 1;
-                        cb_ComPort.SelectedIndex = PortNumberRaw;
-                    }
-                }
-                else
-                {
-                    txt_Welcome.Visibility = Visibility.Collapsed;
-                    btn_Welcome_Start1.Visibility = Visibility.Collapsed;
-                    btn_Welcome_Start2.Visibility = Visibility.Collapsed;
-                    btn_Welcome_Start3.Visibility = Visibility.Collapsed;
-                    btn_Welcome_Start4.Visibility = Visibility.Collapsed;
-                    menuButtonModes.Visibility = Visibility.Visible;
-                    menuButtonCalibrate.Visibility = Visibility.Visible;
-                    menuButtonRemote.Visibility = Visibility.Visible;
-                    menuButtonUpdate.Visibility = Visibility.Visible;
-                    menuButtonHelp.Visibility = Visibility.Visible;
-                    menuButtonDebug.Visibility = Visibility.Visible;
-                    btn_SwitchLedsOnOrOff.Visibility = Visibility.Visible;
-                }
+                //Check the maximum rotation count
+                CheckMaximumRotationCount();
 
                 //Load current device's ipv4 adres
                 txt_Remote_IpAdres.Text = string.Empty;

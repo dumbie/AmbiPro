@@ -208,16 +208,13 @@
     <Compile Include="AppTasks.cs" />
     <Compile Include="AppTimers.cs" />
     <Compile Include="AppUpdate.cs" />
-    <Compile Include="Calibrate\Calibrate-Blackbars.cs" />
-    <Compile Include="Calibrate\Calibrate-Rotation.cs" />
-    <Compile Include="Calibrate\Calibrate.xaml.cs">
-      <DependentUpon>Calibrate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Calibrate\Calibrate-Menu.cs" />
+    <Compile Include="Settings\Settings-Rotate.cs" />
     <Compile Include="ModeColorSpectrum.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="Resources\BitmapProcessing.cs" />
+    <Compile Include="Settings\Settings-Blackbars.cs" />
     <Compile Include="Settings\Settings-Help.cs" />
+    <Compile Include="Settings\Settings-Background.cs" />
     <Compile Include="SocketHandlers.cs" />
     <Compile Include="Resources\ColorProcessing.cs" />
     <Compile Include="Resources\HslColor.cs" />
@@ -297,10 +294,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Calibrate\Calibrate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Settings\Settings.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -335,7 +328,7 @@
     <Resource Include="Assets\Icons\Color.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Assets\Icons\Calibrate.png">
+    <Resource Include="Assets\Icons\Rotate.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\Icons\Leds.png">
@@ -366,7 +359,7 @@
     <Resource Include="Assets\Icons\Close.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Assets\Icons\Blackbar.png">
+    <Resource Include="Assets\Icons\Blackbars.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Content Include="Script\Script.ino">

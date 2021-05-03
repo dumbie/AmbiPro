@@ -41,7 +41,7 @@ namespace AmbiPro
                         Color ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer);
                         if (setDebugMode && setDebugBlackBar)
                         {
-                            ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, Color.Yellow);
+                            ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, Color.Orange);
                         }
                         if (ColorPixel.R > setAdjustBlackBarLevel || ColorPixel.G > setAdjustBlackBarLevel || ColorPixel.B > setAdjustBlackBarLevel)
                         {

@@ -225,7 +225,7 @@ namespace AmbiPro
                         {
                             if (setDebugMode && setDebugColor)
                             {
-                                ColorProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor + CaptureZoneHorRange, CaptureZoneVer + CaptureZoneVerRange, Color.Red);
+                                ColorProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor + CaptureZoneHorRange, CaptureZoneVer + CaptureZoneVerRange, Color.Purple);
                             }
 
                             AverageRed += currentColor.R;
