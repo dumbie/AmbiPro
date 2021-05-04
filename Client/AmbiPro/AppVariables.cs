@@ -11,6 +11,11 @@ namespace AmbiPro
         public static Configuration vConfiguration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
         public static CultureInfo vAppCultureInfo = CultureInfo.InvariantCulture;
 
+        //Setting Variables
+        public static string vCurrentRatio = string.Empty;
+        public static int vCurrentRotation = 0;
+        public static int vCurrentBlackbar = 0;
+
         //Color loop Variables
         public static Color vCurrentLoopColor = Color.FromArgb(20, 0, 0);
 
@@ -18,12 +23,13 @@ namespace AmbiPro
         public static int vCaptureZoneRange = 0;
 
         //Blackbar Variables
-        public const int vMarginBlackAccuracy = 4;
+        public const int vMarginBlackAccuracy = 2;
         public const int vMarginMinimumOffset = 2;
-        public static int vMarginTop = 2;
-        public static int vMarginBottom = 2;
-        public static int vMarginLeft = 2;
-        public static int vMarginRight = 2;
+        public static int vMarginBlackLastUpdate = 0;
+        public static int vMarginTop = vMarginMinimumOffset;
+        public static int vMarginBottom = vMarginMinimumOffset;
+        public static int vMarginLeft = vMarginMinimumOffset;
+        public static int vMarginRight = vMarginMinimumOffset;
 
         //Screen Variables
         public static int vScreenWidth = 0;

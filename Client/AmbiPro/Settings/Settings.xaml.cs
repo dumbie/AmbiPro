@@ -149,6 +149,11 @@ namespace AmbiPro.Settings
             {
                 e.Cancel = true;
                 Debug.WriteLine("Settings window closing.");
+
+                //Disable debug to save performance
+                SettingsFunction.Save("DebugMode", "False");
+
+                //Hide the settings window
                 this.Hide();
             }
             catch { }

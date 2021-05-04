@@ -13,12 +13,14 @@ bool CaptureResetVariables()
 		iDxgiAdapter.Release();
 		iDxgiOutput.Release();
 		iDxgiOutput1.Release();
+		iDxgiResource.Release();
 		iDxgiOutputDuplication.Release();
 
 		//D3D Variables
 		iD3DDevice.Release();
 		iD3DDeviceContext.Release();
 		iD3DDestinationTexture.Release();
+		iD3DScreenCaptureTexture.Release();
 
 		//Other Variables
 		hResult = E_FAIL;
@@ -26,6 +28,38 @@ bool CaptureResetVariables()
 		return true;
 	}
 	catch (bool) { return false; }
+}
+
+BYTE* CaptureScreenshotByte()
+{
+	try
+	{
+		if (iDxgiOutputDuplication == NULL) { return NULL; }
+
+		//Wait for vertical blank
+		iDxgiOutput->WaitForVBlank();
+		iDxgiOutput1->WaitForVBlank();
+
+		//Get output duplication frame
+		hResult = iDxgiOutputDuplication->AcquireNextFrame(600000, &DxgiOutputDuplicationFrameInfo, &iDxgiResource);
+		if (!SUCCEEDED(hResult)) { return NULL; }
+
+		//Query for D3D screen texture
+		hResult = iDxgiResource->QueryInterface(&iD3DScreenCaptureTexture);
+		iDxgiResource.Release();
+		if (!SUCCEEDED(hResult)) { return NULL; }
+
+		//Copy image into CPU texture
+		iD3DDeviceContext->CopyResource(iD3DDestinationTexture, iD3DScreenCaptureTexture);
+		iD3DDeviceContext->Unmap(iD3DDestinationTexture, 0);
+		iD3DDeviceContext->Unmap(iD3DScreenCaptureTexture, 0);
+		iD3DScreenCaptureTexture.Release();
+
+		//Release output duplication frame
+		iDxgiOutputDuplication->ReleaseFrame();
+		return (BYTE*)iD3DMappedSubResource.pData;
+	}
+	catch (BYTE*) { return NULL; }
 }
 
 extern "C"
@@ -38,7 +72,6 @@ extern "C"
 			CaptureResetVariables();
 
 			//Create D3D Device
-			D3D_FEATURE_LEVEL iD3DFeatureLevel;
 			for (UINT FeatureIndex = 0; FeatureIndex < NumD3DFeatureLevels; FeatureIndex++)
 			{
 				hResult = D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, &ArrayD3DFeatureLevels[FeatureIndex], 1, D3D11_SDK_VERSION, &iD3DDevice, &iD3DFeatureLevel, &iD3DDeviceContext);
@@ -52,7 +85,7 @@ extern "C"
 			if (!SUCCEEDED(hResult)) { return false; }
 
 			//Get DXGI Device
-			hResult = iD3DDevice->QueryInterface(IID_PPV_ARGS(&iDxgiDevice));
+			hResult = iD3DDevice->QueryInterface(&iDxgiDevice);
 			if (!SUCCEEDED(hResult)) { return false; }
 
 			//Get DXGI Adapter
@@ -66,7 +99,7 @@ extern "C"
 			if (!SUCCEEDED(hResult)) { return false; }
 
 			//Query DXGI Output1
-			hResult = iDxgiOutput->QueryInterface(IID_PPV_ARGS(&iDxgiOutput1));
+			hResult = iDxgiOutput->QueryInterface(&iDxgiOutput1);
 			if (!SUCCEEDED(hResult)) { return false; }
 
 			//Create desktop duplicate
@@ -133,56 +166,20 @@ extern "C"
 	{
 		try
 		{
-			if (iDxgiOutputDuplication == NULL) { return NULL; }
-
-			//Wait for vertical blank
-			iDxgiOutput->WaitForVBlank();
-			iDxgiOutput1->WaitForVBlank();
-
-			//Get output duplication frame
-			CComPtr<IDXGIResource> iDxgiResource;
-			DXGI_OUTDUPL_FRAME_INFO DxgiOutputDuplicationFrameInfo;
-			hResult = iDxgiOutputDuplication->AcquireNextFrame(60000, &DxgiOutputDuplicationFrameInfo, &iDxgiResource);
-			if (!SUCCEEDED(hResult)) { return NULL; }
-
-			//Query for d3d screen texture
-			CComPtr<ID3D11Texture2D> iD3DScreenTexture;
-			hResult = iDxgiResource->QueryInterface(IID_PPV_ARGS(&iD3DScreenTexture));
-			iDxgiResource.Release();
-			if (!SUCCEEDED(hResult)) { return NULL; }
-
-			//Copy image into CPU texture
-			iD3DDeviceContext->CopyResource(iD3DDestinationTexture, iD3DScreenTexture);
-			iD3DDeviceContext->Unmap(iD3DDestinationTexture, 0);
-			iD3DDeviceContext->Unmap(iD3DScreenTexture, 0);
-			iD3DScreenTexture.Release();
-
-			//Release output duplication frame
-			iDxgiOutputDuplication->ReleaseFrame();
-
-			//Convert image to byte array
-			BYTE* BitmapBuffer = new BYTE[BitmapByteSize];
-			BYTE* SourcePointer = (BYTE*)iD3DMappedSubResource.pData;
-			BYTE* DestinationPointer = BitmapBuffer + BitmapByteSize - BitmapWidthRows;
-			for (UINT xHeight = 0; xHeight < BitmapHeightPixels; xHeight++)
-			{
-				memcpy_s(DestinationPointer, BitmapWidthRows, SourcePointer, BitmapPitchRows);
-				SourcePointer += BitmapPitchRows;
-				DestinationPointer -= BitmapWidthRows;
-			}
-
+			//Return image byte array
 			*OutputWidth = BitmapWidthPixels;
 			*OutputHeight = BitmapHeightPixels;
 			*OutputSize = BitmapByteSize;
-			return BitmapBuffer;
+			return CaptureScreenshotByte();
 		}
 		catch (BYTE*) { return NULL; }
 	}
 
-	__declspec(dllexport) BYTE* CaptureResize(byte* BitmapBuffer, int ResizeWidth, int ResizeHeight, unsigned int* OutputSize)
+	__declspec(dllexport) BYTE* CaptureScreenshotResize(int ResizeWidth, int ResizeHeight, unsigned int* OutputSize)
 	{
 		try
 		{
+			BYTE* BitmapBuffer = CaptureScreenshotByte();
 			if (BitmapBuffer == NULL) { return NULL; }
 
 			int PixelSize = 4;
@@ -205,7 +202,7 @@ extern "C"
 				}
 			}
 
-			delete[] BitmapBuffer;
+			//Return image byte array
 			*OutputSize = ResizeByteSize;
 			return ResizeBuffer;
 		}

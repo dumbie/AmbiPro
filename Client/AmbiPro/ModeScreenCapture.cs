@@ -2,7 +2,6 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using static AmbiPro.AppTasks;
@@ -47,12 +46,15 @@ namespace AmbiPro
                         //Capture screenshot
                         try
                         {
-                            IntPtrBitmap = AppImport.CaptureScreenshot(out vScreenWidth, out vScreenHeight, out vScreenOutputSize);
+                            IntPtrBitmap = AppImport.CaptureScreenshotResize(vScreenWidth, vScreenHeight, out vScreenOutputSize);
+                            //IntPtrBitmap = AppImport.CaptureScreenshot(out vScreenWidth, out vScreenHeight, out vScreenOutputSize);
+                            //vCaptureZoneRange = (setLedCaptureRange * vScreenHeight) / 100 / 2;
                         }
                         catch
                         {
                             Debug.WriteLine("Failed capturing screenshot, restarting capture.");
                             await InitializeScreenCapturer();
+                            await TaskDelayLoop(1000, vTask_LedUpdate);
                             continue;
                         }
 
@@ -61,23 +63,9 @@ namespace AmbiPro
                         {
                             Debug.WriteLine("Screenshot is corrupted, restarting capture.");
                             await InitializeScreenCapturer();
+                            await TaskDelayLoop(1000, vTask_LedUpdate);
                             continue;
                         }
-
-                        //Calculate resize ratio
-                        int[] ledCounts = { setLedCountFirst, setLedCountSecond, setLedCountThird, setLedCountFourth };
-                        int targetSize = ledCounts.Max();
-                        if (targetSize < 160) { targetSize = 160; }
-                        double ratioHor = (double)targetSize / (double)vScreenWidth;
-                        double ratioVer = (double)targetSize / (double)vScreenHeight;
-                        double ratio = Math.Max(ratioHor, ratioVer);
-
-                        //Resize the bitmap image
-                        vScreenWidth = (int)(vScreenWidth * ratio);
-                        vScreenHeight = (int)(vScreenHeight * ratio);
-                        vCaptureZoneRange = (setLedCaptureRange * vScreenHeight) / 100 / 2;
-                        IntPtrBitmap = AppImport.CaptureResize(IntPtrBitmap, vScreenWidth, vScreenHeight, out vScreenOutputSize);
-                        //Debug.WriteLine("Screen width: " + vScreenWidth + " / Screen height: " + vScreenHeight);
 
                         //Current byte information
                         int CurrentSerialByte = InitByteSize;
@@ -89,10 +77,14 @@ namespace AmbiPro
                             //Adjust the black bars margin
                             if (setAdjustBlackBars)
                             {
-                                AdjustBlackBars(setLedSideFirst, BitmapData);
-                                AdjustBlackBars(setLedSideSecond, BitmapData);
-                                AdjustBlackBars(setLedSideThird, BitmapData);
-                                AdjustBlackBars(setLedSideFourth, BitmapData);
+                                if (setAdjustBlackbarRate == 0 || Environment.TickCount - vMarginBlackLastUpdate > setAdjustBlackbarRate)
+                                {
+                                    AdjustBlackBars(setLedSideFirst, BitmapData);
+                                    AdjustBlackBars(setLedSideSecond, BitmapData);
+                                    AdjustBlackBars(setLedSideThird, BitmapData);
+                                    AdjustBlackBars(setLedSideFourth, BitmapData);
+                                    vMarginBlackLastUpdate = Environment.TickCount;
+                                }
                             }
 
                             //Check led capture sides color
@@ -105,7 +97,7 @@ namespace AmbiPro
                             if (setDebugMode)
                             {
                                 //Convert IntPtr to bitmap image
-                                BitmapImage = ConvertDataToBitmap((byte*)IntPtrBitmap, vScreenWidth, vScreenHeight, vScreenOutputSize, true);
+                                BitmapImage = ConvertDataToBitmap((byte*)IntPtrBitmap, vScreenWidth, vScreenHeight, vScreenOutputSize, false);
 
                                 //Debug update screen capture preview
                                 ActionDispatcherInvoke(delegate
@@ -154,7 +146,7 @@ namespace AmbiPro
                         }
 
                         //Delay the loop task
-                        TaskDelayMs((uint)setUpdateRate);
+                        await TaskDelayLoop(setUpdateRate, vTask_LedUpdate);
                     }
                     catch (Exception ex)
                     {

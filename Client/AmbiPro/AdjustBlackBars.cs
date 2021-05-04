@@ -25,8 +25,8 @@ namespace AmbiPro
             }
         }
 
-        //Adjust black bars to horizontal bottom
-        static unsafe void AdjustBlackbarBottom(byte* bitmapData, ref int targetMargin)
+        //Adjust black bars to horizontal top
+        static unsafe void AdjustBlackbarTop(byte* bitmapData, ref int targetMargin)
         {
             try
             {
@@ -56,8 +56,8 @@ namespace AmbiPro
             catch { }
         }
 
-        //Adjust black bars to horizontal top
-        static unsafe void AdjustBlackbarTop(byte* bitmapData, ref int targetMargin)
+        //Adjust black bars to horizontal bottom
+        static unsafe void AdjustBlackbarBottom(byte* bitmapData, ref int targetMargin)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace AmbiPro
                         Color ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer);
                         if (setDebugMode && setDebugBlackBar)
                         {
-                            ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, Color.Yellow);
+                            ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, Color.Orange);
                         }
                         if (ColorPixel.R > setAdjustBlackBarLevel || ColorPixel.G > setAdjustBlackBarLevel || ColorPixel.B > setAdjustBlackBarLevel)
                         {
@@ -103,7 +103,7 @@ namespace AmbiPro
                         Color ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer);
                         if (setDebugMode && setDebugBlackBar)
                         {
-                            ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, Color.Yellow);
+                            ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, Color.Orange);
                         }
                         if (ColorPixel.R > setAdjustBlackBarLevel || ColorPixel.G > setAdjustBlackBarLevel || ColorPixel.B > setAdjustBlackBarLevel)
                         {
@@ -134,7 +134,7 @@ namespace AmbiPro
                         Color ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer);
                         if (setDebugMode && setDebugBlackBar)
                         {
-                            ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, Color.Yellow);
+                            ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, Color.Orange);
                         }
                         if (ColorPixel.R > setAdjustBlackBarLevel || ColorPixel.G > setAdjustBlackBarLevel || ColorPixel.B > setAdjustBlackBarLevel)
                         {

@@ -11,7 +11,9 @@
         SnapsToDevicePixels="True"
         Title="AmbiPro - Settings"
         WindowStyle="None"
-        WindowState="Maximized">
+        WindowState="Maximized"
+        AllowsTransparency="True"
+        Background="Transparent">
 
     <Grid>
         <!-- Background Rotate -->
@@ -271,32 +273,36 @@
                         <!-- Blackbars -->
                         <StackPanel Name="sp_Blackbars" Margin="10" Visibility="Collapsed">
                             <TextBlock Style="{StaticResource TextBlockBlack}" TextWrapping="Wrap" Text="Welcome to the blackbars test screen, here we will make sure the blackbar detection is working properly by switching through a few different blackbar scenarios."/>
-                            <TextBlock Style="{StaticResource TextBlockGrayLight}" TextWrapping="Wrap" Text="* Note: you may need to move your mouse before it changes."/>
 
                             <Button Name="btn_BlackbarScenario" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Switch blackbar scenario" Click="btn_BlackbarScenario_Click"/>
 
                             <CheckBox Margin="0,15,0,0" Name="cb_AdjustBlackBars" Content="Adjust to screen black bars" FontSize="20" FontWeight="Light" Foreground="#1D1D1D" Style="{StaticResource CheckBoxBlack}"/>
                             <TextBlock Text="Automatically adjust leds to black bars displayed on the screen.*" Style="{StaticResource TextBlockGrayLight}"/>
 
+                            <TextBlock Margin="0,10,0,0" Name="tb_AdjustBlackbarRate" Text="Blackbar detection rate:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                            <TextBlock Text="Change the black bars on screen detection rate.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                            <Slider Name="sldr_AdjustBlackbarRate" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="5000" TickFrequency="500"/>
+
                             <TextBlock Margin="0,10,0,0" Name="tb_AdjustBlackBarLevel" Text="Minimum black bar level:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                             <TextBlock Text="Change the minimum black level before it is considered a black bar to adjust." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
                             <Slider Name="sldr_AdjustBlackBarLevel" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="20"/>
 
                             <TextBlock Margin="0,10,0,0" Text="* This setting has impact on capture and your system performance." Style="{StaticResource TextBlockGrayLight}"/>
+                            <ProgressBar Width="10" Height="1" Foreground="#F1F1F1" BorderBrush="Transparent" Background="Transparent" IsIndeterminate="True" Opacity="0.10"/>
                         </StackPanel>
 
                         <!-- Rotate -->
                         <StackPanel Name="sp_LedRotate" Margin="10" Visibility="Collapsed">
                             <TextBlock Style="{StaticResource TextBlockBlack}" TextWrapping="Wrap" Text="Welcome to the rotate screen, please make sure the colors and dark sides on this screen are matched with the leds placed around the screen for the best possible backlight result."/>
-                            <TextBlock Style="{StaticResource TextBlockGrayLight}" Margin="0,5,0,0" TextWrapping="Wrap" Text="* Note: every screen ratio has it's own separate rotate setting."/>
-                            <TextBlock Style="{StaticResource TextBlockGrayLight}" TextWrapping="Wrap" Text="* Note: you may need to move your mouse before it changes."/>
 
                             <Button Name="btn_RotateClockwise" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Rotate leds clockwise" Click="btn_RotateClockwise_Click"/>
                             <Button Name="btn_RotateCounterwise" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Rotate leds counterwise" Click="btn_RotateCounterwise_Click"/>
                             <Button Name="btn_RotateReset" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Reset the leds rotate position" Click="btn_RotateReset_Click"/>
 
+                            <TextBlock Margin="0,5,0,0" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}" Text="* Every screen ratio has it's own separate rotate setting."/>
                             <TextBlock Margin="0,5,0,0" Name="tb_RotateResolution" Style="{StaticResource TextBlockGrayLight}" Text="Resolution: 0x0 (0)"/>
                             <TextBlock Margin="0,5,0,0" Name="tb_RotateValue" Style="{StaticResource TextBlockGrayLight}" Text="Led rotation: 0"/>
+                            <ProgressBar Width="10" Height="1" Foreground="#F1F1F1" BorderBrush="Transparent" Background="Transparent" IsIndeterminate="True" Opacity="0.10"/>
                         </StackPanel>
 
                         <!-- Leds -->

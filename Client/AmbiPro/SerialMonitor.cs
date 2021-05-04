@@ -29,6 +29,7 @@ namespace AmbiPro
 
         //Led settings
         private static bool setAdjustBlackBars = true;
+        private static int setAdjustBlackbarRate = 0;
         private static int setAdjustBlackBarLevel = 0;
         private static int setUpdateRate = 0;
         private static double setLedBrightness = 0;
@@ -72,6 +73,7 @@ namespace AmbiPro
 
                 //Led settings
                 setAdjustBlackBars = Convert.ToBoolean(ConfigurationManager.AppSettings["AdjustBlackBars"]);
+                setAdjustBlackbarRate = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRate"]);
                 setAdjustBlackBarLevel = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarLevel"]);
                 setUpdateRate = Convert.ToInt32(ConfigurationManager.AppSettings["UpdateRate"]);
                 setLedBrightness = Convert.ToDouble(ConfigurationManager.AppSettings["LedBrightness"]) / 100;
@@ -104,6 +106,15 @@ namespace AmbiPro
                 setDebugBlackBar = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugBlackBar"]);
                 setDebugColor = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugColor"]);
                 setDebugSave = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugSave"]);
+
+                //Calculate resize ratio
+                int[] ledCounts = { setLedCountFirst, setLedCountSecond, setLedCountThird, setLedCountFourth };
+                int targetSize = ledCounts.Max() * 2;
+                if (targetSize < 100) { targetSize = 100; }
+                vScreenWidth = targetSize;
+                vScreenHeight = targetSize;
+                vCaptureZoneRange = (setLedCaptureRange * vScreenHeight) / 100 / 2;
+                //Debug.WriteLine("Screen width: " + vScreenWidth + " / Screen height: " + vScreenHeight + " / Capture range: " + vCaptureZoneRange);
 
                 //Update the rotation based on ratio
                 string ScreenRatio = AVFunctions.ScreenAspectRatio(vScreenWidth, vScreenHeight, false);
@@ -301,7 +312,7 @@ namespace AmbiPro
             {
                 AVActions.ActionDispatcherInvoke(async delegate
                 {
-                    int MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to start capturing your monitor screen", "Please make sure the correct monitor screen is selected, Microsoft Visual C++ 2017 Redistributable is installed on your PC, that you have a 64bit Windows installation and that you have a DirectX 11 or higher capable graphics adapter installed.", "Change monitor setting", "Change the led mode", "Retry to capture", "Close application");
+                    int MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to start capturing your monitor screen", "Please make sure the correct monitor screen is selected, Microsoft Visual C++ 2019 Redistributable is installed on your PC, that you have a 64bit Windows installation and that you have a DirectX 12 or higher capable graphics adapter installed.", "Change monitor setting", "Change the led mode", "Retry to capture", "Close application");
                     if (MsgBoxResult == 1)
                     {
                         await LedSwitch(LedSwitches.Disable);

@@ -34,11 +34,10 @@ namespace AmbiPro.Settings
                 {
                     StackPanel SelStackPanel = (StackPanel)lb_Menu.SelectedItem;
 
-                    grid_BackgroundRotate.Visibility = Visibility.Visible;
-                    grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
-
                     if (SelStackPanel.Name == "menuButtonBasics")
                     {
+                        grid_BackgroundRotate.Visibility = Visibility.Visible;
+                        grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
                         sp_Basics.Visibility = Visibility.Visible;
                         sp_Modes.Visibility = Visibility.Collapsed;
                         sp_Screen.Visibility = Visibility.Collapsed;
@@ -52,6 +51,8 @@ namespace AmbiPro.Settings
                     }
                     if (SelStackPanel.Name == "menuButtonModes")
                     {
+                        grid_BackgroundRotate.Visibility = Visibility.Visible;
+                        grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Visible;
                         sp_Screen.Visibility = Visibility.Collapsed;
@@ -65,6 +66,8 @@ namespace AmbiPro.Settings
                     }
                     else if (SelStackPanel.Name == "menuButtonScreen")
                     {
+                        grid_BackgroundRotate.Visibility = Visibility.Visible;
+                        grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Collapsed;
                         sp_Screen.Visibility = Visibility.Visible;
@@ -78,6 +81,8 @@ namespace AmbiPro.Settings
                     }
                     else if (SelStackPanel.Name == "menuButtonLeds")
                     {
+                        grid_BackgroundRotate.Visibility = Visibility.Visible;
+                        grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Collapsed;
                         sp_Screen.Visibility = Visibility.Collapsed;
@@ -91,6 +96,8 @@ namespace AmbiPro.Settings
                     }
                     else if (SelStackPanel.Name == "menuButtonColor")
                     {
+                        grid_BackgroundRotate.Visibility = Visibility.Visible;
+                        grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Collapsed;
                         sp_Screen.Visibility = Visibility.Collapsed;
@@ -104,6 +111,8 @@ namespace AmbiPro.Settings
                     }
                     else if (SelStackPanel.Name == "menuButtonRemote")
                     {
+                        grid_BackgroundRotate.Visibility = Visibility.Visible;
+                        grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Collapsed;
                         sp_Screen.Visibility = Visibility.Collapsed;
@@ -121,6 +130,8 @@ namespace AmbiPro.Settings
                     }
                     else if (SelStackPanel.Name == "menuButtonHelp")
                     {
+                        grid_BackgroundRotate.Visibility = Visibility.Visible;
+                        grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Collapsed;
                         sp_Screen.Visibility = Visibility.Collapsed;
@@ -134,6 +145,8 @@ namespace AmbiPro.Settings
                     }
                     else if (SelStackPanel.Name == "menuButtonDebug")
                     {
+                        grid_BackgroundRotate.Visibility = Visibility.Collapsed;
+                        grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Collapsed;
                         sp_Screen.Visibility = Visibility.Collapsed;
@@ -147,6 +160,8 @@ namespace AmbiPro.Settings
                     }
                     else if (SelStackPanel.Name == "menuButtonBlackbars")
                     {
+                        grid_BackgroundRotate.Visibility = Visibility.Collapsed;
+                        grid_BackgroundBlackbars.Visibility = Visibility.Visible;
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Collapsed;
                         sp_Screen.Visibility = Visibility.Collapsed;
@@ -162,6 +177,8 @@ namespace AmbiPro.Settings
                     }
                     else if (SelStackPanel.Name == "menuButtonRotate")
                     {
+                        grid_BackgroundRotate.Visibility = Visibility.Visible;
+                        grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Collapsed;
                         sp_Screen.Visibility = Visibility.Collapsed;

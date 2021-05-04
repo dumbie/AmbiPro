@@ -153,6 +153,11 @@ namespace AmbiPro.Settings
                 tb_LedCaptureRange.Text = "Led capture range: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedCaptureRange"]) + "%";
                 sldr_LedCaptureRange.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedCaptureRange"]);
 
+                //Load - Blackbar detect rate
+                int AdjustBlackbarRateMs = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRate"]);
+                tb_AdjustBlackbarRate.Text = "Blackbar detection rate: " + AdjustBlackbarRateMs + " ms";
+                sldr_AdjustBlackbarRate.Value = AdjustBlackbarRateMs;
+
                 //Load - Adjust Black Bar Level
                 tb_AdjustBlackBarLevel.Text = "Minimum black bar level: " + Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarLevel"]);
                 sldr_AdjustBlackBarLevel.Value = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarLevel"]);
