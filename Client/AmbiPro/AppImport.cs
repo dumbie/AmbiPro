@@ -18,6 +18,6 @@ namespace AmbiPro
         public static extern IntPtr CaptureScreenshot(out int OutputWidth, out int OutputHeight, out int OutputSize);
 
         [DllImport("Resources\\ScreenCapture.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr CaptureScreenshotResize(int ResizeWidth, int ResizeHeight, out int OutputSize);
+        public static extern IntPtr CaptureResizeNearest(IntPtr BitmapData, int ResizeWidth, int ResizeHeight, out int OutputSize);
     }
 }

@@ -104,6 +104,8 @@ namespace AmbiPro.Settings
         {
             try
             {
+                //Fix trigger when resolution changed and led mode changed
+
                 //Update the rotation ratio
                 UpdateRotationRatio();
 
@@ -152,6 +154,7 @@ namespace AmbiPro.Settings
 
                 //Disable debug to save performance
                 SettingsFunction.Save("DebugMode", "False");
+                checkbox_DebugMode.IsChecked = false;
 
                 //Hide the settings window
                 this.Hide();

@@ -23,7 +23,7 @@ namespace AmbiPro
         public static int vCaptureZoneRange = 0;
 
         //Blackbar Variables
-        public const int vMarginBlackAccuracy = 2;
+        public const int vMarginBlackAccuracy = 4;
         public const int vMarginMinimumOffset = 2;
         public static int vMarginBlackLastUpdate = 0;
         public static int vMarginTop = vMarginMinimumOffset;

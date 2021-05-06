@@ -25,8 +25,8 @@ namespace AmbiPro
             }
         }
 
-        //Adjust black bars to horizontal top
-        static unsafe void AdjustBlackbarTop(byte* bitmapData, ref int targetMargin)
+        //Adjust black bars to horizontal bottom
+        static unsafe void AdjustBlackbarBottom(byte* bitmapData, ref int targetMargin)
         {
             try
             {
@@ -56,8 +56,8 @@ namespace AmbiPro
             catch { }
         }
 
-        //Adjust black bars to horizontal bottom
-        static unsafe void AdjustBlackbarBottom(byte* bitmapData, ref int targetMargin)
+        //Adjust black bars to horizontal top
+        static unsafe void AdjustBlackbarTop(byte* bitmapData, ref int targetMargin)
         {
             try
             {

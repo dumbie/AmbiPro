@@ -107,15 +107,6 @@ namespace AmbiPro
                 setDebugColor = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugColor"]);
                 setDebugSave = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugSave"]);
 
-                //Calculate resize ratio
-                int[] ledCounts = { setLedCountFirst, setLedCountSecond, setLedCountThird, setLedCountFourth };
-                int targetSize = ledCounts.Max() * 2;
-                if (targetSize < 100) { targetSize = 100; }
-                vScreenWidth = targetSize;
-                vScreenHeight = targetSize;
-                vCaptureZoneRange = (setLedCaptureRange * vScreenHeight) / 100 / 2;
-                //Debug.WriteLine("Screen width: " + vScreenWidth + " / Screen height: " + vScreenHeight + " / Capture range: " + vCaptureZoneRange);
-
                 //Update the rotation based on ratio
                 string ScreenRatio = AVFunctions.ScreenAspectRatio(vScreenWidth, vScreenHeight, false);
                 if (SettingsFunction.Check("LedRotate" + ScreenRatio))
@@ -382,6 +373,17 @@ namespace AmbiPro
                 SerialBytes[0] = Encoding.Unicode.GetBytes("A").First();
                 SerialBytes[1] = Encoding.Unicode.GetBytes("d").First();
                 SerialBytes[2] = Encoding.Unicode.GetBytes("a").First();
+
+                //Reset default variables
+                vCaptureZoneRange = 0;
+                vMarginBlackLastUpdate = 0;
+                vMarginTop = vMarginMinimumOffset;
+                vMarginBottom = vMarginMinimumOffset;
+                vMarginLeft = vMarginMinimumOffset;
+                vMarginRight = vMarginMinimumOffset;
+                vScreenWidth = 0;
+                vScreenHeight = 0;
+                vScreenOutputSize = 0;
 
                 //Check led display mode
                 if (setLedMode == 0) { await ModeScreenCapture(InitByteSize, SerialBytes); }

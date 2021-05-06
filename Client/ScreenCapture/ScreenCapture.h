@@ -22,7 +22,7 @@ CComPtr<IDXGIOutput1> iDxgiOutput1;
 CComPtr<IDXGIResource> iDxgiResource;
 CComPtr<IDXGIOutputDuplication> iDxgiOutputDuplication;
 DXGI_OUTDUPL_DESC iDxgiOutputDuplicationDescription;
-DXGI_OUTDUPL_FRAME_INFO DxgiOutputDuplicationFrameInfo;
+DXGI_OUTDUPL_FRAME_INFO iDxgiOutputDuplicationFrameInfo;
 
 //D3D Variables
 CComPtr<ID3D11Device> iD3DDevice;
@@ -30,6 +30,7 @@ CComPtr<ID3D11DeviceContext> iD3DDeviceContext;
 CComPtr<ID3D11Texture2D> iD3DDestinationTexture;
 CComPtr<ID3D11Texture2D> iD3DScreenCaptureTexture;
 D3D11_MAPPED_SUBRESOURCE iD3DMappedSubResource;
+D3D11_TEXTURE2D_DESC iD3DTextureDescription;
 D3D_FEATURE_LEVEL iD3DFeatureLevel;
 
 //Bitmap Variables

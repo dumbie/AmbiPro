@@ -69,11 +69,13 @@ namespace AmbiPro.Settings
                     btn_RotateCounterwise.IsEnabled = false;
                     btn_RotateClockwise.IsEnabled = false;
                     btn_RotateReset.IsEnabled = false;
+                    textblock_DebugPreview.Text = "Select screen capture mode and turn leds on to debug.";
                     tb_RotateResolution.Text = "Select screen capture mode and turn leds on to start calibration.";
                     return;
                 }
                 else
                 {
+                    textblock_DebugPreview.Text = "Screen capture preview " + vScreenWidth + "x" + vScreenHeight + " (" + vCurrentRatio + "):";
                     tb_RotateResolution.Text = "Capture resolution: " + vScreenWidth + "x" + vScreenHeight + " (" + vCurrentRatio + ")";
                 }
 
@@ -92,6 +94,13 @@ namespace AmbiPro.Settings
         {
             try
             {
+                if (vScreenWidth == 0 || vScreenHeight == 0)
+                {
+                    btn_RotateClockwise.IsEnabled = false;
+                    btn_RotateCounterwise.IsEnabled = false;
+                    return;
+                }
+
                 int maximumLedCount = Convert.ToInt32(ConfigurationManager.AppSettings["LedCountFirst"]) + Convert.ToInt32(ConfigurationManager.AppSettings["LedCountSecond"]) + Convert.ToInt32(ConfigurationManager.AppSettings["LedCountThird"]) + Convert.ToInt32(ConfigurationManager.AppSettings["LedCountFourth"]);
                 if (vCurrentRotation > -maximumLedCount) { btn_RotateClockwise.IsEnabled = true; } else { btn_RotateClockwise.IsEnabled = false; }
                 if (vCurrentRotation < maximumLedCount) { btn_RotateCounterwise.IsEnabled = true; } else { btn_RotateCounterwise.IsEnabled = false; }
