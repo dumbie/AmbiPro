@@ -14,10 +14,11 @@ function sendSocket(SendData) {
     var ServerIp = $("#ServerIp").val();
     var ServerPort = $("#ServerPort").val();
     if (ServerIp == "" || ServerPort == "") { return; }
-    var ServerUrl = "http://" + ServerIp + ":" + ServerPort + "/?" + SendData;
+    var ServerUrl = "//" + ServerIp + ":" + ServerPort + "/?" + SendData;
 
     var xHttpRequest = new XMLHttpRequest();
     xHttpRequest.open("GET", ServerUrl, true);
+    xHttpRequest.timeout = 1000;
 
     if (!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/))
     {
@@ -53,6 +54,11 @@ function urlParameter(name) {
 
 //Run on document ready
 $(document).ready(function () {
+    if (~window.location.href.indexOf("https://"))
+    {
+        window.location.replace(window.location.href.replace("https://", "http://"));
+    }
+
     if (urlParameter("port") != null) {
         $("#ServerPort").val(urlParameter("port"));
         updateServerPort();

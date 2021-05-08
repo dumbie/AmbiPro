@@ -6,13 +6,13 @@
     <meta content="AmbiPro Remote" name="description">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" name="viewport">
     <!-- jQuery -->
-    <script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
+    <script src="//code.jquery.com/jquery.min.js" type="text/javascript"></script>
     <script src="scripts/scripts.js" type="text/javascript"></script>
     <!-- Styles -->
     <link href="styles/styles.css" media="all" rel="stylesheet" type="text/css">
 	<!-- Icons -->
     <link href="images/AmbiPro.ico" rel="shortcut icon">
-	<meta name="application-name" content=" " />
+	<meta name="application-name" content=" "/>
 </head>
 <body>
     <div class="buttonAccent marginCenterTop"><a href="javascript:sendLedSwitch()"><span class="txtButton">Switch the leds on or off</span></a></div>
@@ -28,7 +28,7 @@
 			<option hidden>Please select a mode...</option>
 			<option value="0">Screen capture</option>
 			<option value="1">Solid color</option>
-			<option value="2">Colors loop</option>
+			<option value="2">Color loop</option>
 			<option value="3">Color spectrum</option>
         </select>
     </div>
