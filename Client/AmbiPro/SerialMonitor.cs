@@ -30,8 +30,9 @@ namespace AmbiPro
         //Led settings
         private static bool setAdjustBlackBars = true;
         private static int setAdjustBlackbarRate = 0;
-        private static int setAdjustBlackBarLevel = 0;
+        private static int setAdjustBlackBarBrightness = 0;
         private static int setUpdateRate = 0;
+        private static int setLedBottomGap = 0;
         private static double setLedBrightness = 0;
         private static int setLedMinBrightness = 0;
         private static double setLedGamma = 0;
@@ -74,8 +75,9 @@ namespace AmbiPro
                 //Led settings
                 setAdjustBlackBars = Convert.ToBoolean(ConfigurationManager.AppSettings["AdjustBlackBars"]);
                 setAdjustBlackbarRate = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRate"]);
-                setAdjustBlackBarLevel = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarLevel"]);
+                setAdjustBlackBarBrightness = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarBrightness"]);
                 setUpdateRate = Convert.ToInt32(ConfigurationManager.AppSettings["UpdateRate"]);
+                setLedBottomGap = Convert.ToInt32(ConfigurationManager.AppSettings["LedBottomGap"]);
                 setLedBrightness = Convert.ToDouble(ConfigurationManager.AppSettings["LedBrightness"]) / 100;
                 setLedMinBrightness = Convert.ToInt32(ConfigurationManager.AppSettings["LedMinBrightness"]);
                 setLedGamma = Convert.ToDouble(ConfigurationManager.AppSettings["LedGamma"]) / 100;
@@ -277,7 +279,7 @@ namespace AmbiPro
             {
                 AVActions.ActionDispatcherInvoke(async delegate
                 {
-                    int MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to connect to your com port device", "Please make sure the device is not in use by another application, the correct com port is set and that the required drivers are installed on your system.", "Change com port", "Retry to connect", "Close application", "");
+                    int MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to connect to your com port device", "Please make sure the device is not in use by another application, the correct com port is selected and that the required drivers are installed on your system.", "Change com port", "Retry to connect", "Close application", "");
                     if (MsgBoxResult == 1)
                     {
                         await LedSwitch(LedSwitches.Disable);

@@ -35,7 +35,7 @@ bool CaptureResetVariables()
 
 extern "C"
 {
-	__declspec(dllexport) bool CaptureInitialize(int CaptureMonitor)
+	__declspec(dllexport) bool CaptureInitialize(UINT CaptureMonitor)
 	{
 		try
 		{
@@ -43,7 +43,7 @@ extern "C"
 			CaptureResetVariables();
 
 			//Create D3D Device
-			for (int FeatureIndex = 0; FeatureIndex < NumD3DFeatureLevels; FeatureIndex++)
+			for (UINT FeatureIndex = 0; FeatureIndex < NumD3DFeatureLevels; FeatureIndex++)
 			{
 				hResult = D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, &ArrayD3DFeatureLevels[FeatureIndex], 1, D3D11_SDK_VERSION, &iD3DDevice, &iD3DFeatureLevel, &iD3DDeviceContext);
 				if (SUCCEEDED(hResult)) { break; }
@@ -133,11 +133,9 @@ extern "C"
 			}
 
 			//Calculate and set bitmap information
-			BitmapByteSize = iDxgiOutputDuplicationDescription.ModeDesc.Width * iDxgiOutputDuplicationDescription.ModeDesc.Height * 4;
-			BitmapWidthPixels = iDxgiOutputDuplicationDescription.ModeDesc.Width;
+			BitmapWidthPixels = iD3DMappedSubResource.RowPitch / 4;
 			BitmapHeightPixels = iDxgiOutputDuplicationDescription.ModeDesc.Height;
-			BitmapWidthRows = iDxgiOutputDuplicationDescription.ModeDesc.Width * 4;
-			BitmapPitchRows = iD3DMappedSubResource.RowPitch;
+			BitmapByteSize = BitmapWidthPixels * iDxgiOutputDuplicationDescription.ModeDesc.Height * 4;
 			return true;
 		}
 		catch (bool)
@@ -172,7 +170,7 @@ extern "C"
 		}
 	}
 
-	__declspec(dllexport) BYTE* CaptureScreenshot(unsigned int* OutputWidth, unsigned int* OutputHeight, unsigned int* OutputSize)
+	__declspec(dllexport) BYTE* CaptureScreenshot(UINT* OutputWidth, UINT* OutputHeight, UINT* OutputSize)
 	{
 		try
 		{
@@ -201,43 +199,36 @@ extern "C"
 			iDxgiOutputDuplication->ReleaseFrame();
 
 			//Return image byte array
-			BYTE* BitmapBuffer = new BYTE[BitmapByteSize];
-			BYTE* SourcePointer = (BYTE*)iD3DMappedSubResource.pData;
-			BYTE* DestinationPointer = BitmapBuffer + BitmapByteSize - BitmapWidthRows;
-			for (int xHeight = 0; xHeight < BitmapHeightPixels; xHeight++)
-			{
-				memcpy(DestinationPointer, SourcePointer, BitmapWidthRows);
-				DestinationPointer -= BitmapWidthRows;
-				SourcePointer += BitmapPitchRows;
-			}
-
 			*OutputWidth = BitmapWidthPixels;
 			*OutputHeight = BitmapHeightPixels;
 			*OutputSize = BitmapByteSize;
-			return BitmapBuffer;
+			return (BYTE*)iD3DMappedSubResource.pData;
 		}
-		catch (BYTE*) { return NULL; }
+		catch (BYTE*)
+		{
+			return NULL;
+		}
 	}
 
-	__declspec(dllexport) BYTE* CaptureResizeNearest(BYTE* BitmapData, int ResizeWidth, int ResizeHeight, unsigned int* OutputSize)
+	__declspec(dllexport) BYTE* CaptureResizeNearest(BYTE* BitmapData, UINT ResizeWidth, UINT ResizeHeight, UINT* OutputSize)
 	{
 		try
 		{
 			if (BitmapData == NULL) { return NULL; }
 
-			int PixelSize = 4;
+			UINT PixelSize = 4;
 			double ScaleWidth = (double)ResizeWidth / (double)BitmapWidthPixels;
 			double ScaleHeight = (double)ResizeHeight / (double)BitmapHeightPixels;
 
-			int ResizeByteSize = ResizeWidth * ResizeHeight * PixelSize;
+			UINT ResizeByteSize = ResizeWidth * ResizeHeight * PixelSize;
 			BYTE* ResizeBuffer = new BYTE[ResizeByteSize];
 
-			for (int xHeight = 0; xHeight < ResizeHeight; xHeight++)
+			for (UINT xHeight = 0; xHeight < ResizeHeight; xHeight++)
 			{
-				for (int xWidth = 0; xWidth < ResizeWidth; xWidth++)
+				for (UINT xWidth = 0; xWidth < ResizeWidth; xWidth++)
 				{
-					int pixel = PixelSize * (xHeight * ResizeWidth + xWidth);
-					int nearest = PixelSize * ((int)(xHeight / ScaleHeight) * BitmapWidthPixels + (int)(xWidth / ScaleWidth));
+					UINT pixel = PixelSize * (xHeight * ResizeWidth + xWidth);
+					UINT nearest = PixelSize * ((UINT)(xHeight / ScaleHeight) * BitmapWidthPixels + (UINT)(xWidth / ScaleWidth));
 					ResizeBuffer[pixel++] = BitmapData[nearest++];
 					ResizeBuffer[pixel++] = BitmapData[nearest++];
 					ResizeBuffer[pixel++] = BitmapData[nearest++];
@@ -246,7 +237,6 @@ extern "C"
 			}
 
 			//Return image byte array
-			delete[] BitmapData;
 			*OutputSize = ResizeByteSize;
 			return ResizeBuffer;
 		}

@@ -37,8 +37,6 @@ D3D_FEATURE_LEVEL iD3DFeatureLevel;
 UINT BitmapByteSize;
 UINT BitmapWidthPixels;
 UINT BitmapHeightPixels;
-UINT BitmapWidthRows;
-UINT BitmapPitchRows;
 
 //Result Variables
 HRESULT hResult = E_FAIL;

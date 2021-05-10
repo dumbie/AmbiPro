@@ -72,10 +72,16 @@ namespace AmbiPro.Settings
                     SettingsFunction.Save("AdjustBlackbarRate", "1000");
                 }
 
-                //Check - Adjust Blackbar Level
-                if (ConfigurationManager.AppSettings["AdjustBlackBarLevel"] == null)
+                //Check - Adjust Blackbar Brightness
+                if (ConfigurationManager.AppSettings["AdjustBlackBarBrightness"] == null)
                 {
-                    SettingsFunction.Save("AdjustBlackBarLevel", "3");
+                    SettingsFunction.Save("AdjustBlackBarBrightness", "3");
+                }
+
+                //Check - Led Bottom Gap
+                if (ConfigurationManager.AppSettings["LedBottomGap"] == null)
+                {
+                    SettingsFunction.Save("LedBottomGap", "0");
                 }
 
                 //Check - Led Brightness
@@ -201,7 +207,7 @@ namespace AmbiPro.Settings
                 //Check - Update Rate
                 if (ConfigurationManager.AppSettings["UpdateRate"] == null)
                 {
-                    SettingsFunction.Save("UpdateRate", "33");
+                    SettingsFunction.Save("UpdateRate", "30");
                 }
 
                 //Check - Debug Mode

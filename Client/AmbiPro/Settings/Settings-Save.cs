@@ -99,6 +99,7 @@ namespace AmbiPro.Settings
                     if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                     {
                         await LedSwitch(LedSwitches.Restart);
+                        await UpdateSettingsInformation(true);
                     }
                 };
 
@@ -109,21 +110,29 @@ namespace AmbiPro.Settings
                     if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                     {
                         await LedSwitch(LedSwitches.Restart);
+                        await UpdateSettingsInformation(true);
                     }
                 };
 
-                //Save - Led Brightness
+                //Save - Led Bottom Gap
+                sldr_LedBottomGap.ValueChanged += (sender, e) =>
+                {
+                    SettingsFunction.Save("LedBottomGap", sldr_LedBottomGap.Value.ToString("0"));
+                    tb_LedBottomGap.Text = "Led gap bottom stand: " + sldr_LedBottomGap.Value.ToString("0") + " leds";
+                };
+
+                //Save - Led Maximum Brightness
                 sldr_LedBrightness.ValueChanged += (sender, e) =>
                 {
                     SettingsFunction.Save("LedBrightness", sldr_LedBrightness.Value.ToString("0"));
-                    tb_LedBrightness.Text = "Led maximum brightness: " + sldr_LedBrightness.Value.ToString("0");
+                    tb_LedBrightness.Text = "Led maximum brightness: " + sldr_LedBrightness.Value.ToString("0") + "%";
                 };
 
                 //Save - Led Minimum Brightness
                 sldr_LedMinBrightness.ValueChanged += (sender, e) =>
                 {
                     SettingsFunction.Save("LedMinBrightness", sldr_LedMinBrightness.Value.ToString("0"));
-                    tb_LedMinBrightness.Text = "Led minimum brightness: " + sldr_LedMinBrightness.Value.ToString("0");
+                    tb_LedMinBrightness.Text = "Led minimum brightness: " + sldr_LedMinBrightness.Value.ToString("0") + "%";
                 };
 
                 //Save - Led Gamma
@@ -211,10 +220,10 @@ namespace AmbiPro.Settings
                 };
 
                 //Save - Adjust Black Bar Level
-                sldr_AdjustBlackBarLevel.ValueChanged += (sender, e) =>
+                sldr_AdjustBlackBarBrightness.ValueChanged += (sender, e) =>
                 {
-                    SettingsFunction.Save("AdjustBlackBarLevel", sldr_AdjustBlackBarLevel.Value.ToString("0"));
-                    tb_AdjustBlackBarLevel.Text = "Minimum black bar level: " + sldr_AdjustBlackBarLevel.Value.ToString("0");
+                    SettingsFunction.Save("AdjustBlackBarBrightness", sldr_AdjustBlackBarBrightness.Value.ToString("0"));
+                    tb_AdjustBlackBarBrightness.Text = "Blackbar minimum brightness: " + sldr_AdjustBlackBarBrightness.Value.ToString("0") + "%";
                 };
 
                 //Save - Led Side Types

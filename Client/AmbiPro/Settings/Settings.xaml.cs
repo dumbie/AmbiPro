@@ -1,4 +1,5 @@
 ﻿using ArnoldVinkCode;
+using Microsoft.Win32;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -6,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using System.Windows;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
@@ -18,22 +20,12 @@ namespace AmbiPro.Settings
         //Form initialization
         public FormSettings() { InitializeComponent(); }
 
-        //Open projects site
-        private void Btn_Projects_Open_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Process.Start("https://projects.arnoldvink.com");
-            }
-            catch { }
-        }
-
         //Open remote site
         private void Btn_Remote_Open_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                Process.Start("https://ambipro.arnoldvink.com?ip=" + tb_RemoteIp.Text + "&port=" + tb_ServerPort.Text);
+                Process.Start("http://ambipro.arnoldvink.com?ip=" + tb_RemoteIp.Text + "&port=" + tb_ServerPort.Text);
             }
             catch { }
         }
@@ -91,6 +83,9 @@ namespace AmbiPro.Settings
                 //Load and set the help text
                 Load_Help_Text();
 
+                //Check if resolution has changed
+                SystemEvents.DisplaySettingsChanged += SystemEvents_DisplaySettingsChanged;
+
                 //Set first launch setting to false
                 SettingsFunction.Save("FirstLaunch2", "False");
 
@@ -99,12 +94,29 @@ namespace AmbiPro.Settings
             catch { }
         }
 
-        //Handle window activated event
-        protected override void OnActivated(EventArgs e)
+        //Update settings information
+        public async void SystemEvents_DisplaySettingsChanged(object sender, EventArgs e)
         {
             try
             {
-                //Fix trigger when resolution changed and led mode changed
+                Debug.WriteLine("Resolution has been changed.");
+
+                //Update settings information
+                await UpdateSettingsInformation(true);
+            }
+            catch { }
+        }
+
+        //Update settings information
+        public async Task UpdateSettingsInformation(bool delayed)
+        {
+            try
+            {
+                //Wait for resolution change
+                if (delayed)
+                {
+                    await Task.Delay(2000);
+                }
 
                 //Update the rotation ratio
                 UpdateRotationRatio();
@@ -113,6 +125,7 @@ namespace AmbiPro.Settings
                 CheckMaximumRotationCount();
 
                 //Load current device's ipv4 adres
+                tb_RemoteIp.Text = string.Empty;
                 txt_Remote_IpAdres.Text = string.Empty;
                 IPAddress[] ListIpAdresses = Dns.GetHostEntry(Dns.GetHostName()).AddressList;
                 if (ListIpAdresses.Any())
@@ -121,9 +134,16 @@ namespace AmbiPro.Settings
                     {
                         if (ip.AddressFamily == AddressFamily.InterNetwork)
                         {
-                            tb_RemoteIp.Text = ip.ToString();
-                            if (ListIpAdresses.Count() == 1) { txt_Remote_IpAdres.Text = ip.ToString(); }
-                            else if (ListIpAdresses.Count() > 1) { txt_Remote_IpAdres.Text = txt_Remote_IpAdres.Text + ", " + ip.ToString(); }
+                            string ipAddress = ip.ToString();
+                            if (string.IsNullOrWhiteSpace(tb_RemoteIp.Text)) { tb_RemoteIp.Text = ipAddress; }
+                            if (ListIpAdresses.Count() == 1)
+                            {
+                                txt_Remote_IpAdres.Text = ipAddress;
+                            }
+                            else
+                            {
+                                txt_Remote_IpAdres.Text = txt_Remote_IpAdres.Text + ", " + ipAddress;
+                            }
                         }
                     }
                     txt_Remote_IpAdres.Text = AVFunctions.StringReplaceFirst(txt_Remote_IpAdres.Text, ", ", "", false);
@@ -138,6 +158,17 @@ namespace AmbiPro.Settings
                 {
                     txt_RemoteErrorServerPort.Visibility = Visibility.Visible;
                 }
+            }
+            catch { }
+        }
+
+        //Handle window activated event
+        protected override async void OnActivated(EventArgs e)
+        {
+            try
+            {
+                //Update settings information
+                await UpdateSettingsInformation(false);
 
                 Debug.WriteLine("Settings window activated.");
             }

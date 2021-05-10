@@ -39,6 +39,7 @@ namespace AmbiPro
                     int CurrentSerialByte = InitByteSize;
                     IntPtr BitmapIntPtr = IntPtr.Zero;
                     Bitmap BitmapImage = null;
+                    bool BitmapResize = false;
                     try
                     {
                         //Capture screenshot
@@ -63,40 +64,40 @@ namespace AmbiPro
                             int[] ledCounts = { setLedCountFirst, setLedCountSecond, setLedCountThird, setLedCountFourth };
                             int minimumSize = ledCounts.Max() * 2;
                             int ignoreSize = 300; //Under 900p
-                            bool resizeScreenshot = false;
 
-                            int screenWidthNew = vScreenWidth / 3;
-                            int screenHeightNew = vScreenHeight / 3;
-                            if (screenWidthNew >= ignoreSize && screenHeightNew >= ignoreSize)
+                            int screenWidthResize = vScreenWidth / 3;
+                            int screenHeightResize = vScreenHeight / 3;
+                            if (screenWidthResize >= ignoreSize && screenHeightResize >= ignoreSize)
                             {
-                                resizeScreenshot = true;
+                                BitmapResize = true;
                             }
                             else
                             {
-                                screenWidthNew = vScreenWidth;
-                                screenHeightNew = vScreenHeight;
+                                screenWidthResize = vScreenWidth;
+                                screenHeightResize = vScreenHeight;
+                                BitmapResize = false;
                             }
 
-                            if (screenWidthNew < minimumSize || screenHeightNew < minimumSize)
+                            if (screenWidthResize < minimumSize || screenHeightResize < minimumSize)
                             {
                                 if (ignoreSize < minimumSize) { ignoreSize = minimumSize; }
-                                double ratioX = (double)ignoreSize / (double)vScreenWidth;
-                                double ratioY = (double)ignoreSize / (double)vScreenHeight;
-                                double ratio = Math.Max(ratioX, ratioY);
-                                screenWidthNew = (int)(vScreenWidth * ratio);
-                                screenHeightNew = (int)(vScreenHeight * ratio);
-                                resizeScreenshot = true;
+                                double ratioWidth = (double)ignoreSize / (double)vScreenWidth;
+                                double ratioHeight = (double)ignoreSize / (double)vScreenHeight;
+                                double ratioMax = Math.Max(ratioWidth, ratioHeight);
+                                screenWidthResize = (int)(vScreenWidth * ratioMax);
+                                screenHeightResize = (int)(vScreenHeight * ratioMax);
+                                BitmapResize = true;
                             }
 
-                            if (resizeScreenshot)
+                            if (BitmapResize)
                             {
-                                vScreenWidth = screenWidthNew;
-                                vScreenHeight = screenHeightNew;
+                                vScreenWidth = screenWidthResize;
+                                vScreenHeight = screenHeightResize;
                                 BitmapIntPtr = AppImport.CaptureResizeNearest(BitmapIntPtr, vScreenWidth, vScreenHeight, out vScreenOutputSize);
                             }
 
                             vCaptureZoneRange = (setLedCaptureRange * vScreenHeight) / 100 / 2;
-                            Debug.WriteLine("Screen width: " + vScreenWidth + " / Screen height: " + vScreenHeight + " / Capture range: " + vCaptureZoneRange + " / Resize: " + resizeScreenshot);
+                            //Debug.WriteLine("Screen width: " + vScreenWidth + " / Screen height: " + vScreenHeight + " / Capture range: " + vCaptureZoneRange + " / Resize: " + resizeScreenshot);
                         }
                         catch { }
 
@@ -127,7 +128,7 @@ namespace AmbiPro
                             if (setDebugMode)
                             {
                                 //Convert IntPtr to bitmap image
-                                BitmapImage = ConvertDataToBitmap(BitmapData, vScreenWidth, vScreenHeight, vScreenOutputSize, true);
+                                BitmapImage = ConvertDataToBitmap(BitmapData, vScreenWidth, vScreenHeight, vScreenOutputSize, false);
 
                                 //Debug update screen capture preview
                                 ActionDispatcherInvoke(delegate
@@ -185,7 +186,7 @@ namespace AmbiPro
                     finally
                     {
                         //Clear screen capture resources
-                        if (BitmapIntPtr != IntPtr.Zero)
+                        if (BitmapResize && BitmapIntPtr != IntPtr.Zero)
                         {
                             AppImport.CaptureFreeMemory(BitmapIntPtr);
                         }

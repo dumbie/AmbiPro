@@ -25,8 +25,8 @@ namespace AmbiPro
             }
         }
 
-        //Adjust black bars to horizontal bottom
-        static unsafe void AdjustBlackbarBottom(byte* bitmapData, ref int targetMargin)
+        //Adjust black bars to horizontal top
+        static unsafe void AdjustBlackbarTop(byte* bitmapData, ref int targetMargin)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace AmbiPro
                         {
                             ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, Color.Orange);
                         }
-                        if (ColorPixel.R > setAdjustBlackBarLevel || ColorPixel.G > setAdjustBlackBarLevel || ColorPixel.B > setAdjustBlackBarLevel)
+                        if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
                         {
                             targetMargin = captureStep;
                             //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
@@ -56,8 +56,8 @@ namespace AmbiPro
             catch { }
         }
 
-        //Adjust black bars to horizontal top
-        static unsafe void AdjustBlackbarTop(byte* bitmapData, ref int targetMargin)
+        //Adjust black bars to horizontal bottom
+        static unsafe void AdjustBlackbarBottom(byte* bitmapData, ref int targetMargin)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace AmbiPro
                         {
                             ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, Color.Orange);
                         }
-                        if (ColorPixel.R > setAdjustBlackBarLevel || ColorPixel.G > setAdjustBlackBarLevel || ColorPixel.B > setAdjustBlackBarLevel)
+                        if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
                         {
                             targetMargin = captureStep;
                             //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
@@ -105,7 +105,7 @@ namespace AmbiPro
                         {
                             ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, Color.Orange);
                         }
-                        if (ColorPixel.R > setAdjustBlackBarLevel || ColorPixel.G > setAdjustBlackBarLevel || ColorPixel.B > setAdjustBlackBarLevel)
+                        if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
                         {
                             targetMargin = captureStep;
                             //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
@@ -136,7 +136,7 @@ namespace AmbiPro
                         {
                             ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, Color.Orange);
                         }
-                        if (ColorPixel.R > setAdjustBlackBarLevel || ColorPixel.G > setAdjustBlackBarLevel || ColorPixel.B > setAdjustBlackBarLevel)
+                        if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
                         {
                             targetMargin = captureStep;
                             //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
