@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Reflection;
 using System.Threading.Tasks;
+using static AmbiPro.AppClasses;
 using static AmbiPro.AppTasks;
 using static ArnoldVinkCode.AVActions;
 
@@ -23,8 +24,8 @@ namespace AmbiPro
                 while (!vTask_LedUpdate.TaskStopRequest)
                 {
                     //Set the used colors and adjust it
-                    Color CurrentColor = ColorTranslator.FromHtml(setSolidLedColor);
-                    CurrentColor = AdjustLedColors(CurrentColor);
+                    ColorRGBA CurrentColor = ColorRGBA.HexToRGBA(setSolidLedColor);
+                    AdjustLedColors(ref CurrentColor, true);
 
                     //Set the current color to the bytes
                     int CurrentSerialByte = InitByteSize;

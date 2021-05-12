@@ -114,12 +114,12 @@ namespace AmbiPro.Settings
                 sldr_LedMinBrightness.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedMinBrightness"]);
 
                 //Load - Led Gamma
-                tb_LedGamma.Text = "Led display gamma: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedGamma"]);
+                tb_LedGamma.Text = "Led display gamma: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedGamma"]) + "%";
                 sldr_LedGamma.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedGamma"]);
 
-                //Load - Led Vibrance
-                tb_LedVibrance.Text = "Led color vibrance: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedVibrance"]);
-                sldr_LedVibrance.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedVibrance"]);
+                //Load - Led Saturation
+                tb_LedSaturation.Text = "Led color saturation: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedSaturation"]) + "%";
+                sldr_LedSaturation.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedSaturation"]);
 
                 //Load - Color Loop Speed
                 tb_ColorLoopSpeed.Text = "Color loop speed: " + Convert.ToInt32(ConfigurationManager.AppSettings["ColorLoopSpeed"]) + " ms";
@@ -134,11 +134,11 @@ namespace AmbiPro.Settings
                 colorpicker_SolidLedColor.Background = new BrushConverter().ConvertFrom(SolidLedColor) as SolidColorBrush;
 
                 //Load - Led Hue
-                tb_LedHue.Text = "Led color hue: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedHue"]);
-                sldr_LedHue.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedHue"]);
+                tb_LedHue.Text = "Led color hue: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedHue2"]) + "°";
+                sldr_LedHue.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedHue2"]);
 
                 //Load - Led Color Cut
-                tb_LedColorCut.Text = "Minimum color brightness: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedColorCut"]);
+                tb_LedColorCut.Text = "Minimum color brightness: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedColorCut"]) + "%";
                 sldr_LedColorCut.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedColorCut"]);
 
                 //Load - Led Color Red

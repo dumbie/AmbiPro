@@ -139,14 +139,14 @@ namespace AmbiPro.Settings
                 sldr_LedGamma.ValueChanged += (sender, e) =>
                 {
                     SettingsFunction.Save("LedGamma", sldr_LedGamma.Value.ToString("0"));
-                    tb_LedGamma.Text = "Led display gamma: " + sldr_LedGamma.Value.ToString("0");
+                    tb_LedGamma.Text = "Led display gamma: " + sldr_LedGamma.Value.ToString("0") + "%";
                 };
 
-                //Save - Led Vibrance
-                sldr_LedVibrance.ValueChanged += (sender, e) =>
+                //Save - Led Saturation
+                sldr_LedSaturation.ValueChanged += (sender, e) =>
                 {
-                    SettingsFunction.Save("LedVibrance", sldr_LedVibrance.Value.ToString("0"));
-                    tb_LedVibrance.Text = "Led color vibrance: " + sldr_LedVibrance.Value.ToString("0");
+                    SettingsFunction.Save("LedSaturation", sldr_LedSaturation.Value.ToString("0"));
+                    tb_LedSaturation.Text = "Led color saturation: " + sldr_LedSaturation.Value.ToString("0") + "%";
                 };
 
                 //Save - Color Loop Speed
@@ -172,15 +172,15 @@ namespace AmbiPro.Settings
                 //Save - Led Hue
                 sldr_LedHue.ValueChanged += (sender, e) =>
                 {
-                    SettingsFunction.Save("LedHue", sldr_LedHue.Value.ToString("0"));
-                    tb_LedHue.Text = "Led color hue: " + sldr_LedHue.Value.ToString("0");
+                    SettingsFunction.Save("LedHue2", sldr_LedHue.Value.ToString("0"));
+                    tb_LedHue.Text = "Led color hue: " + sldr_LedHue.Value.ToString("0") + "°";
                 };
 
                 //Save - Led Color Cut
                 sldr_LedColorCut.ValueChanged += (sender, e) =>
                 {
                     SettingsFunction.Save("LedColorCut", sldr_LedColorCut.Value.ToString("0"));
-                    tb_LedColorCut.Text = "Minimum color brightness: " + sldr_LedColorCut.Value.ToString("0");
+                    tb_LedColorCut.Text = "Minimum color brightness: " + sldr_LedColorCut.Value.ToString("0") + "%";
                 };
 
                 //Save - Led Color Red

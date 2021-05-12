@@ -1,9 +1,8 @@
 ﻿using ArnoldVinkCode;
-using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
 using System.Threading.Tasks;
+using static AmbiPro.AppClasses;
 using static AmbiPro.AppTasks;
 using static ArnoldVinkCode.AVActions;
 
@@ -18,9 +17,7 @@ namespace AmbiPro
             {
                 //Loop mode variables
                 bool ConnectionFailed = false;
-                int? PreviousLedOutput = null;
-                double? PreviousBrightness = null;
-                DateTime PreviousRotation = DateTime.Now;
+                int CurrentLedRotate = 0;
 
                 //Update the tray icon
                 AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
@@ -28,82 +25,85 @@ namespace AmbiPro
                 //Current byte information
                 while (!vTask_LedUpdate.TaskStopRequest)
                 {
-                    //Reset the colors when brightness has changed.
-                    if (PreviousBrightness != setLedBrightness || PreviousLedOutput != setLedOutput)
+                    //Set the used colors and adjust them
+                    ColorRGBA Color0 = ColorRGBA.HexToRGBA("#f8d000");
+                    AdjustLedColors(ref Color0, true);
+                    ColorRGBA Color1 = ColorRGBA.HexToRGBA("#ffb000");
+                    AdjustLedColors(ref Color1, true);
+                    ColorRGBA Color2 = ColorRGBA.HexToRGBA("#ff7000");
+                    AdjustLedColors(ref Color2, true);
+                    ColorRGBA Color3 = ColorRGBA.HexToRGBA("#fa0000");
+                    AdjustLedColors(ref Color3, true);
+                    ColorRGBA Color4 = ColorRGBA.HexToRGBA("#e80096");
+                    AdjustLedColors(ref Color4, true);
+                    ColorRGBA Color5 = ColorRGBA.HexToRGBA("#70009c");
+                    AdjustLedColors(ref Color5, true);
+                    ColorRGBA Color6 = ColorRGBA.HexToRGBA("#0000be");
+                    AdjustLedColors(ref Color6, true);
+                    ColorRGBA Color7 = ColorRGBA.HexToRGBA("#003ace");
+                    AdjustLedColors(ref Color7, true);
+                    ColorRGBA Color8 = ColorRGBA.HexToRGBA("#00bae7");
+                    AdjustLedColors(ref Color8, true);
+                    ColorRGBA Color9 = ColorRGBA.HexToRGBA("#004500");
+                    AdjustLedColors(ref Color9, true);
+                    ColorRGBA Color10 = ColorRGBA.HexToRGBA("#276800");
+                    AdjustLedColors(ref Color10, true);
+                    ColorRGBA Color11 = ColorRGBA.HexToRGBA("#6c9f00");
+                    AdjustLedColors(ref Color11, true);
+                    ColorRGBA Color12 = ColorRGBA.HexToRGBA("#93b300");
+                    AdjustLedColors(ref Color12, true);
+
+                    //Rotate color variables
+                    int CurrentColor = 0;
+                    int CurrentLedRange = 0;
+                    int TotalLedRange = setLedCountTotal / 13;
+
+                    //Set the current color to the bytes
+                    int CurrentSerialByte = InitByteSize;
+                    while (CurrentSerialByte < SerialBytes.Length)
                     {
-                        //Update previous variables
-                        PreviousBrightness = setLedBrightness;
-                        PreviousLedOutput = setLedOutput;
-
-                        //Rotate color variables
-                        int UsedColors = 0;
-                        int CurrentLedRange = 0;
-                        int TotalLedRange = setLedCountTotal / 13;
-
-                        //Set the used colors and adjust them
-                        Color CurrentColor = ColorTranslator.FromHtml("#f8d000"); CurrentColor = AdjustLedColors(CurrentColor);
-                        Color Color1 = ColorTranslator.FromHtml("#ffb000"); Color1 = AdjustLedColors(Color1);
-                        Color Color2 = ColorTranslator.FromHtml("#ff7000"); Color2 = AdjustLedColors(Color2);
-                        Color Color3 = ColorTranslator.FromHtml("#fa0000"); Color3 = AdjustLedColors(Color3);
-                        Color Color4 = ColorTranslator.FromHtml("#e80096"); Color4 = AdjustLedColors(Color4);
-                        Color Color5 = ColorTranslator.FromHtml("#70009c"); Color5 = AdjustLedColors(Color5);
-                        Color Color6 = ColorTranslator.FromHtml("#0000be"); Color6 = AdjustLedColors(Color6);
-                        Color Color7 = ColorTranslator.FromHtml("#003ace"); Color7 = AdjustLedColors(Color7);
-                        Color Color8 = ColorTranslator.FromHtml("#00bae7"); Color8 = AdjustLedColors(Color8);
-                        Color Color9 = ColorTranslator.FromHtml("#004500"); Color9 = AdjustLedColors(Color9);
-                        Color Color10 = ColorTranslator.FromHtml("#276800"); Color10 = AdjustLedColors(Color10);
-                        Color Color11 = ColorTranslator.FromHtml("#6c9f00"); Color11 = AdjustLedColors(Color11);
-                        Color Color12 = ColorTranslator.FromHtml("#93b300"); Color12 = AdjustLedColors(Color12);
-
-                        //Set the current color to the bytes
-                        int CurrentSerialByte = InitByteSize;
-                        while (CurrentSerialByte < SerialBytes.Length)
+                        //Check if the next color has been reached
+                        if (CurrentLedRange == TotalLedRange)
                         {
-                            //Check if the next color has been reached
-                            if (CurrentLedRange == TotalLedRange)
-                            {
-                                if (UsedColors == 0) { CurrentColor = Color1; }
-                                else if (UsedColors == 1) { CurrentColor = Color2; }
-                                else if (UsedColors == 2) { CurrentColor = Color3; }
-                                else if (UsedColors == 3) { CurrentColor = Color4; }
-                                else if (UsedColors == 4) { CurrentColor = Color5; }
-                                else if (UsedColors == 5) { CurrentColor = Color6; }
-                                else if (UsedColors == 6) { CurrentColor = Color7; }
-                                else if (UsedColors == 7) { CurrentColor = Color8; }
-                                else if (UsedColors == 8) { CurrentColor = Color9; }
-                                else if (UsedColors == 9) { CurrentColor = Color10; }
-                                else if (UsedColors == 10) { CurrentColor = Color11; }
-                                else if (UsedColors == 11) { CurrentColor = Color12; }
-                                CurrentLedRange = 0;
-                                UsedColors++;
-                            }
-
-                            SerialBytes[CurrentSerialByte] = CurrentColor.R;
-                            CurrentSerialByte++;
-
-                            SerialBytes[CurrentSerialByte] = CurrentColor.G;
-                            CurrentSerialByte++;
-
-                            SerialBytes[CurrentSerialByte] = CurrentColor.B;
-                            CurrentSerialByte++;
-
-                            CurrentLedRange += 1;
+                            if (CurrentColor == 0) { Color0 = Color1; }
+                            else if (CurrentColor == 1) { Color0 = Color2; }
+                            else if (CurrentColor == 2) { Color0 = Color3; }
+                            else if (CurrentColor == 3) { Color0 = Color4; }
+                            else if (CurrentColor == 4) { Color0 = Color5; }
+                            else if (CurrentColor == 5) { Color0 = Color6; }
+                            else if (CurrentColor == 6) { Color0 = Color7; }
+                            else if (CurrentColor == 7) { Color0 = Color8; }
+                            else if (CurrentColor == 8) { Color0 = Color9; }
+                            else if (CurrentColor == 9) { Color0 = Color10; }
+                            else if (CurrentColor == 10) { Color0 = Color11; }
+                            else if (CurrentColor == 11) { Color0 = Color12; }
+                            CurrentLedRange = 0;
+                            CurrentColor++;
                         }
 
-                        Debug.WriteLine("Resetting the spectrum color bytes.");
+                        SerialBytes[CurrentSerialByte] = Color0.R;
+                        CurrentSerialByte++;
+
+                        SerialBytes[CurrentSerialByte] = Color0.G;
+                        CurrentSerialByte++;
+
+                        SerialBytes[CurrentSerialByte] = Color0.B;
+                        CurrentSerialByte++;
+
+                        CurrentLedRange++;
                     }
 
-                    //Rotate the previous color bytes
-                    if (DateTime.Now.Subtract(PreviousRotation).TotalSeconds >= setSpectrumRotationSpeed)
+                    //Rotate the color bytes
+                    //Debug.WriteLine("Rotating the spectrum color bytes: " + CurrentLedRotate);
+                    for (int rotateCount = 0; rotateCount < CurrentLedRotate; rotateCount++)
                     {
-                        //Debug.WriteLine("Rotating the spectrum color bytes.");
-
                         AVFunctions.MoveByteInArrayLeft(SerialBytes, 3, SerialBytes.Length - 1);
                         AVFunctions.MoveByteInArrayLeft(SerialBytes, 3, SerialBytes.Length - 1);
                         AVFunctions.MoveByteInArrayLeft(SerialBytes, 3, SerialBytes.Length - 1);
-
-                        PreviousRotation = DateTime.Now;
                     }
+
+                    //Update the rotate count
+                    if (CurrentLedRotate == setLedCountTotal) { CurrentLedRotate = 0; } else { CurrentLedRotate++; }
 
                     //Send the serial bytes to device
                     if (!SerialComPortWrite(SerialBytes))
@@ -113,7 +113,7 @@ namespace AmbiPro
                     }
 
                     //Delay the loop task
-                    await TaskDelayLoop(1000, vTask_LedUpdate);
+                    await TaskDelayLoop(setSpectrumRotationSpeed * 1000, vTask_LedUpdate);
                 }
 
                 //Show failed connection message

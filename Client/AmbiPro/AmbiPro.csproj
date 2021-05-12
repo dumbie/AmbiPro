@@ -203,7 +203,10 @@
     <Compile Include="AppLaunchCheck.cs" />
     <Compile Include="AppImport.cs" />
     <Compile Include="AppStartup.cs" />
-    <Compile Include="AppEnums.cs" />
+    <Compile Include="Resources\Classes\ColorRGBA.cs" />
+    <Compile Include="Resources\Enums\LedOutputTypes.cs" />
+    <Compile Include="Resources\Enums\LedSwitches.cs" />
+    <Compile Include="Resources\Enums\LedSideTypes.cs" />
     <Compile Include="AppVariables.cs" />
     <Compile Include="AppTasks.cs" />
     <Compile Include="AppTimers.cs" />
@@ -217,7 +220,6 @@
     <Compile Include="Settings\Settings-Background.cs" />
     <Compile Include="SocketHandlers.cs" />
     <Compile Include="Resources\ColorProcessing.cs" />
-    <Compile Include="Resources\HslColor.cs" />
     <Compile Include="ModeSolidColor.cs" />
     <Compile Include="ModeColorLoop.cs" />
     <Compile Include="ModeScreenCapture.cs" />
@@ -345,7 +347,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <EmbeddedResource Include="Assets\ApplicationIcon-Disabled.ico" />
-    <Resource Include="Assets\VibranceSpectrum.png" />
+    <Resource Include="Assets\SaturationSpectrum.png" />
     <Resource Include="Assets\GammaSpectrum.png" />
     <Resource Include="Assets\Icons\Modes.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -380,6 +382,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Assets\ApplicationIcon.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release ($(SolutionDir)SignToolExe.exe)</PostBuildEvent>

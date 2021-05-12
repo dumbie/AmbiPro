@@ -1,22 +1,22 @@
 using System.Diagnostics;
-using System.Drawing;
+using static AmbiPro.AppClasses;
 
 namespace AmbiPro.Resources
 {
     public class ColorProcessing
     {
         //Get the color of a pixel
-        public static unsafe Color GetPixelColor(byte* bitmapData, int screenWidth, int screenHeight, int pixelHor, int pixelVer)
+        public static unsafe ColorRGBA GetPixelColor(byte* bitmapData, int screenWidth, int screenHeight, int pixelHor, int pixelVer)
         {
             try
             {
                 //Check width and height
-                if (pixelHor > screenWidth || pixelHor < 0) { return Color.Empty; }
-                if (pixelVer > screenHeight || pixelVer < 0) { return Color.Empty; }
+                if (pixelHor > screenWidth || pixelHor < 0) { return null; }
+                if (pixelVer > screenHeight || pixelVer < 0) { return null; }
 
                 //Capture error correction
-                if (pixelHor == screenWidth) { pixelHor = screenWidth - 1; }
-                if (pixelVer == 0) { pixelVer = 1; }
+                if (pixelHor == screenWidth) { pixelHor--; }
+                if (pixelVer == 0) { pixelVer++; }
 
                 //Get start of the pixel
                 int PixelSize = 4;
@@ -27,17 +27,17 @@ namespace AmbiPro.Resources
                 byte g = bitmapData[Pixel++];
                 byte r = bitmapData[Pixel++];
                 byte a = bitmapData[Pixel];
-                return Color.FromArgb(a, r, g, b);
+                return new ColorRGBA { R = r, G = g, B = b, A = a };
             }
             catch
             {
                 Debug.WriteLine("Failed to get pixel color from bitmap data.");
-                return Color.Empty;
+                return null;
             }
         }
 
         //Set the color of a pixel
-        public static unsafe bool SetPixelColor(byte* bitmapData, int screenWidth, int screenHeight, int pixelHor, int pixelVer, Color newColor)
+        public static unsafe bool SetPixelColor(byte* bitmapData, int screenWidth, int screenHeight, int pixelHor, int pixelVer, ColorRGBA newColor)
         {
             try
             {
@@ -46,8 +46,8 @@ namespace AmbiPro.Resources
                 if (pixelVer > screenHeight || pixelVer < 0) { return false; }
 
                 //Capture error correction
-                if (pixelHor == screenWidth) { pixelHor = screenWidth - 1; }
-                if (pixelVer == 0) { pixelVer = 1; }
+                if (pixelHor == screenWidth) { pixelHor--; }
+                if (pixelVer == 0) { pixelVer++; }
 
                 //Get start of the pixel
                 int PixelSize = 4;

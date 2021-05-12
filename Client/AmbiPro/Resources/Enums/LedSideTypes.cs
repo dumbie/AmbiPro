@@ -15,12 +15,5 @@
             RightBottomToTop = 8,
             LedsOff = 9
         }
-
-        public enum LedSwitches
-        {
-            Disable,
-            Restart,
-            Automatic
-        }
     }
 }

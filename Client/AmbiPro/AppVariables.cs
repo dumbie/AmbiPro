@@ -1,7 +1,7 @@
 ﻿using ArnoldVinkCode;
 using System.Configuration;
-using System.Drawing;
 using System.Globalization;
+using static AmbiPro.AppClasses;
 
 namespace AmbiPro
 {
@@ -17,7 +17,7 @@ namespace AmbiPro
         public static int vCurrentBlackbar = 0;
 
         //Color loop Variables
-        public static Color vCurrentLoopColor = Color.FromArgb(20, 0, 0);
+        public static ColorRGBA vCurrentLoopColor = new ColorRGBA() { R = 20 };
 
         //Capture Variables
         public static int vCaptureZoneRange = 0;

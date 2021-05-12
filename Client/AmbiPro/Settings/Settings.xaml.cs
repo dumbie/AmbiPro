@@ -48,9 +48,10 @@ namespace AmbiPro.Settings
         {
             try
             {
-                if (Directory.Exists("Debug"))
+                DirectoryInfo dirInfo = new DirectoryInfo("Debug");
+                foreach (FileInfo fileInfo in dirInfo.GetFiles())
                 {
-                    Directory.Delete("Debug", true);
+                    fileInfo.Delete();
                 }
 
                 await new AVMessageBox().Popup(null, "Debug image files have been deleted.", "", "Ok", "", "", "");
@@ -186,6 +187,7 @@ namespace AmbiPro.Settings
                 //Disable debug to save performance
                 SettingsFunction.Save("DebugMode", "False");
                 checkbox_DebugMode.IsChecked = false;
+                image_DebugPreview.Source = null;
 
                 //Hide the settings window
                 this.Hide();

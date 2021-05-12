@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Reflection;
 using System.Threading.Tasks;
+using static AmbiPro.AppClasses;
 using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
 using static ArnoldVinkCode.AVActions;
@@ -27,27 +28,35 @@ namespace AmbiPro
                     //Set the used colors
                     if (ColorLoopState == 0) //Red
                     {
-                        vCurrentLoopColor = Color.FromArgb(vCurrentLoopColor.R + 1, vCurrentLoopColor.G, vCurrentLoopColor.B);
-                        if (vCurrentLoopColor.G > 0) { vCurrentLoopColor = Color.FromArgb(vCurrentLoopColor.R, vCurrentLoopColor.G - 1, vCurrentLoopColor.B); }
-                        if (vCurrentLoopColor.B > 0) { vCurrentLoopColor = Color.FromArgb(vCurrentLoopColor.R, vCurrentLoopColor.G, vCurrentLoopColor.B - 1); }
+                        vCurrentLoopColor.R++;
+                        if (vCurrentLoopColor.G > 0) { vCurrentLoopColor.G--; }
+                        if (vCurrentLoopColor.B > 0) { vCurrentLoopColor.B--; }
                         if (vCurrentLoopColor.R == 220 && vCurrentLoopColor.G == 0 && vCurrentLoopColor.B == 0) { ColorLoopState++; }
                     }
-                    else if (ColorLoopState == 1)  //Green
+                    else if (ColorLoopState == 1) //Green
                     {
-                        vCurrentLoopColor = Color.FromArgb(vCurrentLoopColor.R, vCurrentLoopColor.G + 1, vCurrentLoopColor.B);
-                        if (vCurrentLoopColor.R > 0) { vCurrentLoopColor = Color.FromArgb(vCurrentLoopColor.R - 1, vCurrentLoopColor.G, vCurrentLoopColor.B); }
-                        if (vCurrentLoopColor.B > 0) { vCurrentLoopColor = Color.FromArgb(vCurrentLoopColor.R, vCurrentLoopColor.G, vCurrentLoopColor.B - 1); }
+                        if (vCurrentLoopColor.R > 0) { vCurrentLoopColor.R--; }
+                        vCurrentLoopColor.G++;
+                        if (vCurrentLoopColor.B > 0) { vCurrentLoopColor.B--; }
                         if (vCurrentLoopColor.R == 0 && vCurrentLoopColor.G == 220 && vCurrentLoopColor.B == 0) { ColorLoopState++; }
                     }
                     else if (ColorLoopState == 2) //Blue
                     {
-                        vCurrentLoopColor = Color.FromArgb(vCurrentLoopColor.R, vCurrentLoopColor.G, vCurrentLoopColor.B + 1);
-                        if (vCurrentLoopColor.G > 0) { vCurrentLoopColor = Color.FromArgb(vCurrentLoopColor.R, vCurrentLoopColor.G - 1, vCurrentLoopColor.B); }
-                        if (vCurrentLoopColor.R > 0) { vCurrentLoopColor = Color.FromArgb(vCurrentLoopColor.R - 1, vCurrentLoopColor.G, vCurrentLoopColor.B); }
+                        if (vCurrentLoopColor.R > 0) { vCurrentLoopColor.R--; }
+                        if (vCurrentLoopColor.G > 0) { vCurrentLoopColor.G--; }
+                        vCurrentLoopColor.B++;
                         if (vCurrentLoopColor.R == 0 && vCurrentLoopColor.G == 0 && vCurrentLoopColor.B == 220) { ColorLoopState++; }
                     }
-                    if (ColorLoopState == 3) { ColorLoopState = 0; }
-                    Color AdjustedColor = AdjustLedColors(vCurrentLoopColor);
+
+                    //Reset color loop to red
+                    if (ColorLoopState == 3)
+                    {
+                        ColorLoopState = 0;
+                    }
+
+                    //Adjust the color
+                    ColorRGBA AdjustedColor = ColorRGBA.Clone(vCurrentLoopColor);
+                    AdjustLedColors(ref AdjustedColor, true);
 
                     //Set the current color to the bytes
                     int CurrentSerialByte = InitByteSize;

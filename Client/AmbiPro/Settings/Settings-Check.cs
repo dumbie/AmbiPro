@@ -99,13 +99,13 @@ namespace AmbiPro.Settings
                 //Check - Led Gamma
                 if (ConfigurationManager.AppSettings["LedGamma"] == null)
                 {
-                    SettingsFunction.Save("LedGamma", "75");
+                    SettingsFunction.Save("LedGamma", "80");
                 }
 
-                //Check - Led Vibrance
-                if (ConfigurationManager.AppSettings["LedVibrance"] == null)
+                //Check - Led Saturation
+                if (ConfigurationManager.AppSettings["LedSaturation"] == null)
                 {
-                    SettingsFunction.Save("LedVibrance", "30");
+                    SettingsFunction.Save("LedSaturation", "120");
                 }
 
                 //Check - Color Loop Speed
@@ -127,9 +127,9 @@ namespace AmbiPro.Settings
                 }
 
                 //Check - Led Hue
-                if (ConfigurationManager.AppSettings["LedHue"] == null)
+                if (ConfigurationManager.AppSettings["LedHue2"] == null)
                 {
-                    SettingsFunction.Save("LedHue", "100");
+                    SettingsFunction.Save("LedHue2", "0");
                 }
 
                 //Check - Led Color Cut

@@ -424,24 +424,24 @@
 
                         <!-- Color -->
                         <StackPanel Name="sp_Color" Visibility="Collapsed" Margin="5,5,5,5">
-                            <TextBlock Name="tb_LedVibrance" Text="Led color vibrance:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Change the led color intensity to your liking." Style="{StaticResource TextBlockGrayLight}"/>
-                            <Image Margin="0,2,0,0" Source="/Assets/VibranceSpectrum.png"/>
-                            <Slider Name="sldr_LedVibrance" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="200"/>
-
-                            <TextBlock Margin="0,10,0,0" Name="tb_LedHue" Text="Led color hue:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Change the led color hue tone to your liking." Style="{StaticResource TextBlockGrayLight}"/>
-                            <Image Margin="0,2,0,0" Source="/Assets/HueSpectrum.png"/>
-                            <Slider Name="sldr_LedHue" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="200"/>
+                            <TextBlock Name="tb_LedSaturation" Text="Led color saturation:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                            <TextBlock Text="Change the led color vibrance to your liking." Style="{StaticResource TextBlockGrayLight}"/>
+                            <Image Margin="0,2,0,0" Source="/Assets/SaturationSpectrum.png"/>
+                            <Slider Name="sldr_LedSaturation" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="200"/>
 
                             <TextBlock Margin="0,10,0,0" Name="tb_LedGamma" Text="Led display gamma:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                             <TextBlock Text="Adjust the gamma to display more black levels." Style="{StaticResource TextBlockGrayLight}"/>
                             <Image Margin="0,2,0,0" Source="/Assets/GammaSpectrum.png"/>
-                            <Slider Name="sldr_LedGamma" Style="{StaticResource SliderWhite}" Minimum="30" Maximum="100"/>
+                            <Slider Name="sldr_LedGamma" Style="{StaticResource SliderWhite}" Minimum="5" Maximum="100"/>
 
                             <TextBlock Margin="0,10,0,0" Name="tb_LedColorCut" Text="Minimum color brightness:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                             <TextBlock Text="Only show colors when they reach a certain brightness level." Style="{StaticResource TextBlockGrayLight}"/>
                             <Slider Name="sldr_LedColorCut" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="25"/>
+
+                            <TextBlock Margin="0,10,0,0" Name="tb_LedHue" Text="Led color hue:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                            <TextBlock Text="Change the led color hue tone to your liking." Style="{StaticResource TextBlockGrayLight}"/>
+                            <Image Margin="0,2,0,0" Source="/Assets/HueSpectrum.png"/>
+                            <Slider Name="sldr_LedHue" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="360"/>
 
                             <TextBlock Margin="0,10,0,0" Text="Led color tuning:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                             <TextBlock Text="Change a specific led color depth to your liking." Style="{StaticResource TextBlockGrayLight}"/>
