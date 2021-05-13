@@ -163,10 +163,17 @@ namespace AmbiPro.Settings
                     tb_SpectrumRotationSpeed.Text = "Spectrum rotation speed: " + sldr_SpectrumRotationSpeed.Value.ToString("0") + " sec";
                 };
 
-                //Save - Solid Led Color
-                colorpicker_SolidLedColor.SelectedColorChanged += (Color color) =>
+                //Select - Solid Led Color
+                button_ColorPickerSolid.Click += async (sender, e) =>
                 {
-                    SettingsFunction.Save("SolidLedColor", color.ToString());
+                    Color? newColor = await new AVColorPicker().Popup(null);
+                    if (newColor != null)
+                    {
+                        SolidColorBrush newBrush = new SolidColorBrush((Color)newColor);
+                        button_ColorPickerSolid.Background = newBrush;
+                        button_ColorPickerSolid.BorderBrush = newBrush;
+                        SettingsFunction.Save("SolidLedColor", newColor.ToString());
+                    }
                 };
 
                 //Save - Led Hue

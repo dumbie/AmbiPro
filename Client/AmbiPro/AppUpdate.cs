@@ -1,4 +1,5 @@
 ﻿using ArnoldVinkCode;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using static AmbiPro.AppVariables;
@@ -22,8 +23,12 @@ namespace AmbiPro
                     string currentVersion = "v" + Assembly.GetEntryAssembly().FullName.Split('=')[1].Split(',')[0];
                     if (!string.IsNullOrWhiteSpace(onlineVersion) && onlineVersion != currentVersion)
                     {
-                        int MsgBoxResult = await new AVMessageBox().Popup(null, "A newer version has been found: " + onlineVersion, "Would you like to update the application to the newest version available?", "Update", "Cancel", "", "");
-                        if (MsgBoxResult == 1)
+                        List<string> MsgBoxAnswers = new List<string>();
+                        MsgBoxAnswers.Add("Update");
+                        MsgBoxAnswers.Add("Cancel");
+
+                        string MsgBoxResult = await new AVMessageBox().Popup(null, "A newer version has been found: " + onlineVersion, "Would you like to update the application to the newest version available?", MsgBoxAnswers);
+                        if (MsgBoxResult == "Update")
                         {
                             await ProcessLauncherWin32Async("Updater.exe", "", "", false, false);
                             await AppStartup.Application_Exit();
@@ -33,7 +38,10 @@ namespace AmbiPro
                     {
                         if (!Silent)
                         {
-                            await new AVMessageBox().Popup(null, "No new application update has been found.", "", "Ok", "", "", "");
+                            List<string> MsgBoxAnswers = new List<string>();
+                            MsgBoxAnswers.Add("Ok");
+
+                            await new AVMessageBox().Popup(null, "No new application update has been found.", "", MsgBoxAnswers);
                         }
                     }
 
@@ -45,7 +53,10 @@ namespace AmbiPro
                 vCheckingForUpdate = false;
                 if (!Silent)
                 {
-                    await new AVMessageBox().Popup(null, "Failed to check for the latest application version", "Please check your internet connection and try again.", "Ok", "", "", "");
+                    List<string> MsgBoxAnswers = new List<string>();
+                    MsgBoxAnswers.Add("Ok");
+
+                    await new AVMessageBox().Popup(null, "Failed to check for the latest application version", "Please check your internet connection and try again.", MsgBoxAnswers);
                 }
             }
         }

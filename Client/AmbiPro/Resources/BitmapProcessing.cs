@@ -68,8 +68,7 @@ namespace AmbiPro.Resources
                 }
 
                 //Save image file
-                long milliseconds = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-                bitmapSave.Save("Debug\\" + milliseconds + ".bmp", ImageFormat.Bmp);
+                bitmapSave.Save("Debug\\" + Environment.TickCount + ".bmp", ImageFormat.Bmp);
             }
             catch (Exception ex)
             {

@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ArnoldVinkColorPicker="clr-namespace:ArnoldVinkColorPicker"
         xmlns:ArnoldVinkTimePicker="clr-namespace:ArnoldVinkTimePicker"
         xmlns:local="clr-namespace:AmbiPro"
         mc:Ignorable="d"
@@ -243,8 +242,8 @@
                             <Slider Name="sldr_SpectrumRotationSpeed" Style="{StaticResource SliderWhite}" Minimum="1" Maximum="120"/>
 
                             <TextBlock Margin="0,10,0,0" Text="Solid color led output:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Select or enter the solid led color you want to display." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
-                            <ArnoldVinkColorPicker:ColorPicker x:Name="colorpicker_SolidLedColor" BorderBrush="Black" BorderThickness="2" Background="Black" Height="35" Width="80" Margin="0,0,5,0" HorizontalAlignment="Left" ToolTipService.ToolTip="Set the led output color"/>
+                            <TextBlock Text="Select the solid led color you want to be displayed." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                            <Button Name="button_ColorPickerSolid" Height="35" Margin="0,5,0,0" Style="{StaticResource ButtonImageTransparentBlackBorder}" ToolTipService.ToolTip="Set solid led output color"/>
                         </StackPanel>
 
                         <!-- Screen -->

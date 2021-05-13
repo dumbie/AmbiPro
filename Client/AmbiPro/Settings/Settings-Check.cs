@@ -123,7 +123,7 @@ namespace AmbiPro.Settings
                 //Check - Solid Led Color
                 if (ConfigurationManager.AppSettings["SolidLedColor"] == null)
                 {
-                    SettingsFunction.Save("SolidLedColor", "#ff9900");
+                    SettingsFunction.Save("SolidLedColor", "#FFA500");
                 }
 
                 //Check - Led Hue

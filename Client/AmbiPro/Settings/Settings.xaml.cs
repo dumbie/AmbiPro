@@ -1,6 +1,7 @@
 ﻿using ArnoldVinkCode;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -39,7 +40,10 @@ namespace AmbiPro.Settings
             }
             catch
             {
-                await new AVMessageBox().Popup(null, "Debug image folder not found.", "", "Ok", "", "", "");
+                List<string> MsgBoxAnswers = new List<string>();
+                MsgBoxAnswers.Add("Ok");
+
+                await new AVMessageBox().Popup(null, "Debug image folder not found.", "", MsgBoxAnswers);
             }
         }
 
@@ -54,7 +58,10 @@ namespace AmbiPro.Settings
                     fileInfo.Delete();
                 }
 
-                await new AVMessageBox().Popup(null, "Debug image files have been deleted.", "", "Ok", "", "", "");
+                List<string> MsgBoxAnswers = new List<string>();
+                MsgBoxAnswers.Add("Ok");
+
+                await new AVMessageBox().Popup(null, "Debug image files have been deleted.", "", MsgBoxAnswers);
             }
             catch (Exception ex)
             {

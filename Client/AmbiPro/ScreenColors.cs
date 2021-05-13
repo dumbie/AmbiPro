@@ -254,17 +254,17 @@ namespace AmbiPro
                             CaptureZoneVerRange = -captureStep;
                         }
 
-                        ColorRGBA currentColor = ColorProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor + CaptureZoneHorRange, CaptureZoneVer + CaptureZoneVerRange);
-                        if (currentColor != null)
+                        ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(BitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor + CaptureZoneHorRange, CaptureZoneVer + CaptureZoneVerRange);
+                        if (ColorPixel != null)
                         {
                             if (setDebugMode && setDebugColor)
                             {
                                 ColorProcessing.SetPixelColor(BitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor + CaptureZoneHorRange, CaptureZoneVer + CaptureZoneVerRange, ColorRGBA.Purple);
                             }
 
-                            AverageRed += currentColor.R;
-                            AverageGreen += currentColor.G;
-                            AverageBlue += currentColor.B;
+                            AverageRed += ColorPixel.R;
+                            AverageGreen += ColorPixel.G;
+                            AverageBlue += ColorPixel.B;
                             CapturedColors++;
                         }
                     }

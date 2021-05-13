@@ -39,15 +39,18 @@ namespace AmbiPro
                     {
                         int CaptureZoneHor = captureRange;
                         ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer);
-                        if (setDebugMode && setDebugBlackBar)
+                        if (ColorPixel != null)
                         {
-                            ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
-                        }
-                        if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
-                        {
-                            targetMargin = captureStep;
-                            //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
-                            return;
+                            if (setDebugMode && setDebugBlackBar)
+                            {
+                                ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
+                            }
+                            if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
+                            {
+                                targetMargin = captureStep;
+                                //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
+                                return;
+                            }
                         }
                     }
                 }
@@ -70,15 +73,18 @@ namespace AmbiPro
                     {
                         int CaptureZoneHor = captureRange;
                         ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer);
-                        if (setDebugMode && setDebugBlackBar)
+                        if (ColorPixel != null)
                         {
-                            ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
-                        }
-                        if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
-                        {
-                            targetMargin = captureStep;
-                            //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
-                            return;
+                            if (setDebugMode && setDebugBlackBar)
+                            {
+                                ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
+                            }
+                            if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
+                            {
+                                targetMargin = captureStep;
+                                //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
+                                return;
+                            }
                         }
                     }
                 }
@@ -101,15 +107,18 @@ namespace AmbiPro
                     {
                         int CaptureZoneVer = captureRange;
                         ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer);
-                        if (setDebugMode && setDebugBlackBar)
+                        if (ColorPixel != null)
                         {
-                            ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
-                        }
-                        if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
-                        {
-                            targetMargin = captureStep;
-                            //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
-                            return;
+                            if (setDebugMode && setDebugBlackBar)
+                            {
+                                ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
+                            }
+                            if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
+                            {
+                                targetMargin = captureStep;
+                                //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
+                                return;
+                            }
                         }
                     }
                 }
@@ -132,15 +141,18 @@ namespace AmbiPro
                     {
                         int CaptureZoneVer = captureRange;
                         ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer);
-                        if (setDebugMode && setDebugBlackBar)
+                        if (ColorPixel != null)
                         {
-                            ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
-                        }
-                        if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
-                        {
-                            targetMargin = captureStep;
-                            //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
-                            return;
+                            if (setDebugMode && setDebugBlackBar)
+                            {
+                                ColorProcessing.SetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
+                            }
+                            if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
+                            {
+                                targetMargin = captureStep;
+                                //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
+                                return;
+                            }
                         }
                     }
                 }

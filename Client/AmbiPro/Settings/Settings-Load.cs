@@ -131,7 +131,8 @@ namespace AmbiPro.Settings
 
                 //Load - Solid Led Color
                 string SolidLedColor = ConfigurationManager.AppSettings["SolidLedColor"].ToString();
-                colorpicker_SolidLedColor.Background = new BrushConverter().ConvertFrom(SolidLedColor) as SolidColorBrush;
+                button_ColorPickerSolid.Background = new BrushConverter().ConvertFrom(SolidLedColor) as SolidColorBrush;
+                button_ColorPickerSolid.BorderBrush = new BrushConverter().ConvertFrom(SolidLedColor) as SolidColorBrush;
 
                 //Load - Led Hue
                 tb_LedHue.Text = "Led color hue: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedHue2"]) + "°";

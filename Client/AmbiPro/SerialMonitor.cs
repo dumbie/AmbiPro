@@ -1,6 +1,7 @@
 ﻿using AmbiPro.Settings;
 using ArnoldVinkCode;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
@@ -135,6 +136,17 @@ namespace AmbiPro
                 {
                     vSwitching = true;
 
+                    //Update settings
+                    UpdateSettings();
+
+                    //Check led count
+                    if (setLedCountTotal == 0)
+                    {
+                        ShowNoLedsSideCountSetup();
+                        vSwitching = false;
+                        return;
+                    }
+
                     //Restart the leds
                     if (ledSwitch == LedSwitches.Restart)
                     {
@@ -228,6 +240,21 @@ namespace AmbiPro
             }
         }
 
+        //Restart the led updates
+        private static async Task LedsRestart()
+        {
+            try
+            {
+                Debug.WriteLine("Restarting the led updates.");
+                await LedsDisable(true);
+                LedsEnable();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed to restart the led updates: " + ex.Message);
+            }
+        }
+
         //Write to serial com port
         public static bool SerialComPortWrite(byte[] SerialBytes)
         {
@@ -244,21 +271,6 @@ namespace AmbiPro
             }
         }
 
-        //Restart the led updates
-        private static async Task LedsRestart()
-        {
-            try
-            {
-                Debug.WriteLine("Restarting the led updates.");
-                await LedsDisable(true);
-                LedsEnable();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Failed to restart the led updates: " + ex.Message);
-            }
-        }
-
         //Show the settings window
         private static void ShowSettings()
         {
@@ -272,6 +284,22 @@ namespace AmbiPro
             catch { }
         }
 
+        //Show led set message
+        private static void ShowNoLedsSideCountSetup()
+        {
+            try
+            {
+                AVActions.ActionDispatcherInvoke(async delegate
+                {
+                    List<string> MsgBoxAnswers = new List<string>();
+                    MsgBoxAnswers.Add("Ok");
+
+                    await new AVMessageBox().Popup(null, "Failed to turn leds on or off", "Please make sure that you have set your led sides and count.", MsgBoxAnswers);
+                });
+            }
+            catch { }
+        }
+
         //Show device connection message
         private static void ShowFailedConnectionMessage()
         {
@@ -279,17 +307,22 @@ namespace AmbiPro
             {
                 AVActions.ActionDispatcherInvoke(async delegate
                 {
-                    int MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to connect to your com port device", "Please make sure the device is not in use by another application, the correct com port is selected and that the required drivers are installed on your system.", "Change com port", "Retry to connect", "Close application", "");
-                    if (MsgBoxResult == 1)
+                    List<string> MsgBoxAnswers = new List<string>();
+                    MsgBoxAnswers.Add("Change com port");
+                    MsgBoxAnswers.Add("Retry to connect");
+                    MsgBoxAnswers.Add("Close application");
+
+                    string MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to connect to your com port device", "Please make sure the device is not in use by another application, the correct com port is selected and that the required drivers are installed on your system.", MsgBoxAnswers);
+                    if (MsgBoxResult == "Change com port")
                     {
                         await LedSwitch(LedSwitches.Disable);
                         ShowSettings();
                     }
-                    else if (MsgBoxResult == 2)
+                    else if (MsgBoxResult == "Retry to connect")
                     {
                         await LedSwitch(LedSwitches.Restart);
                     }
-                    else if (MsgBoxResult == 3)
+                    else if (MsgBoxResult == "Close application")
                     {
                         await AppStartup.Application_Exit();
                     }
@@ -305,22 +338,28 @@ namespace AmbiPro
             {
                 AVActions.ActionDispatcherInvoke(async delegate
                 {
-                    int MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to start capturing your monitor screen", "Please make sure the correct monitor screen is selected, Microsoft Visual C++ 2019 Redistributable is installed on your PC, that you have a 64bit Windows installation and that you have a DirectX 12 or higher capable graphics adapter installed.", "Change monitor setting", "Change the led mode", "Retry to capture", "Close application");
-                    if (MsgBoxResult == 1)
+                    List<string> MsgBoxAnswers = new List<string>();
+                    MsgBoxAnswers.Add("Change monitor setting");
+                    MsgBoxAnswers.Add("Change the led mode");
+                    MsgBoxAnswers.Add("Retry to capture");
+                    MsgBoxAnswers.Add("Close application");
+
+                    string MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to start capturing your monitor screen", "Please make sure the correct monitor screen is selected, Microsoft Visual C++ 2019 Redistributable is installed on your PC, that you have a 64bit Windows installation and that you have a DirectX 12 or higher capable graphics adapter installed.", MsgBoxAnswers);
+                    if (MsgBoxResult == "Change monitor setting")
                     {
                         await LedSwitch(LedSwitches.Disable);
                         ShowSettings();
                     }
-                    else if (MsgBoxResult == 2)
+                    else if (MsgBoxResult == "Change the led mode")
                     {
                         await LedSwitch(LedSwitches.Disable);
                         ShowSettings();
                     }
-                    else if (MsgBoxResult == 3)
+                    else if (MsgBoxResult == "Retry to capture")
                     {
                         await LedSwitch(LedSwitches.Restart);
                     }
-                    else if (MsgBoxResult == 4)
+                    else if (MsgBoxResult == "Close application")
                     {
                         await AppStartup.Application_Exit();
                     }
