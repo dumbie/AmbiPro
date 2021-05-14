@@ -38,7 +38,7 @@ namespace AmbiPro
 
                 //Initialize the tray notify icon. 
                 NotifyIcon.Text = "AmbiPro";
-                NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
+                NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon-Disabled.ico"));
 
                 // Handle Double Click event
                 NotifyIcon.DoubleClick += NotifyIcon_DoubleClick;

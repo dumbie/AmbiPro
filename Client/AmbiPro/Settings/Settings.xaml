@@ -214,11 +214,16 @@
                             <CheckBox Margin="0,15,0,0" Name="cb_WindowsStartup" Content="Launch on Windows startup" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
                             <TextBlock Text="Launch AmbiPro automatically on Windows startup." Style="{StaticResource TextBlockGrayLight}"/>
 
-                            <TextBlock Margin="0,10,0,0" Text="Don't automatically turn leds on before:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="The leds will only automatically turn on startup after:" Style="{StaticResource TextBlockGrayLight}"/>
+                            <TextBlock Margin="0,10,0,0" Text="Automatically turn leds on:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                            <TextBlock Text="Automatically turn leds on startup before:" Style="{StaticResource TextBlockGrayLight}"/>
                             <StackPanel Orientation="Horizontal">
-                                <CheckBox Name="cb_LedAutoOnOff" Style="{StaticResource CheckBoxBlack}"/>
-                                <ArnoldVinkTimePicker:TimePicker x:Name="timepicker_LedAutoTime" IsEnabled="False" Width="120"/>
+                                <CheckBox Name="cb_LedAutoOnOffBefore" Style="{StaticResource CheckBoxBlack}"/>
+                                <ArnoldVinkTimePicker:TimePicker x:Name="timepicker_LedAutoTimeBefore" IsEnabled="False" Margin="5,0,0,0" Width="120"/>
+                            </StackPanel>
+                            <TextBlock Margin="0,10,0,0" Text="Automatically turn leds on startup after:" Style="{StaticResource TextBlockGrayLight}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox Name="cb_LedAutoOnOffAfter" Style="{StaticResource CheckBoxBlack}"/>
+                                <ArnoldVinkTimePicker:TimePicker x:Name="timepicker_LedAutoTimeAfter" IsEnabled="False" Margin="5,0,0,0" Width="120"/>
                             </StackPanel>
                         </StackPanel>
 

@@ -94,9 +94,6 @@ namespace AmbiPro.Settings
                 //Check if resolution has changed
                 SystemEvents.DisplaySettingsChanged += SystemEvents_DisplaySettingsChanged;
 
-                //Set first launch setting to false
-                SettingsFunction.Save("FirstLaunch2", "False");
-
                 Debug.WriteLine("Settings window initialized.");
             }
             catch { }

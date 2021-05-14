@@ -49,27 +49,34 @@ namespace AmbiPro.Settings
                     }
                 };
 
-                //Save - Enable or Disable Led Automatic
-                cb_LedAutoOnOff.Click += (sender, e) =>
+                //Save - Led Automatic Enable or Disable 
+                cb_LedAutoOnOffBefore.Click += (sender, e) =>
                 {
-                    if ((bool)cb_LedAutoOnOff.IsChecked)
-                    {
-                        SettingsFunction.Save("LedAutoOnOff", "True");
-                        timepicker_LedAutoTime.IsEnabled = true;
-                    }
-                    else
-                    {
-                        SettingsFunction.Save("LedAutoOnOff", "False");
-                        timepicker_LedAutoTime.IsEnabled = false;
-                    }
+                    bool enabledDisabled = (bool)cb_LedAutoOnOffBefore.IsChecked;
+                    SettingsFunction.Save("LedAutoOnOffBefore", enabledDisabled.ToString());
+                    timepicker_LedAutoTimeBefore.IsEnabled = enabledDisabled;
+                };
+                cb_LedAutoOnOffAfter.Click += (sender, e) =>
+                {
+                    bool enabledDisabled = (bool)cb_LedAutoOnOffAfter.IsChecked;
+                    SettingsFunction.Save("LedAutoOnOffAfter", enabledDisabled.ToString());
+                    timepicker_LedAutoTimeAfter.IsEnabled = enabledDisabled;
                 };
 
                 //Save - Led Automatic Time
-                timepicker_LedAutoTime.DateTimeChanged += dateTime =>
+                timepicker_LedAutoTimeBefore.DateTimeChanged += dateTime =>
                 {
                     try
                     {
-                        SettingsFunction.Save("LedAutoTime", dateTime.Value.ToString(vAppCultureInfo));
+                        SettingsFunction.Save("LedAutoTimeBefore", dateTime.Value.ToString(vAppCultureInfo));
+                    }
+                    catch { }
+                };
+                timepicker_LedAutoTimeAfter.DateTimeChanged += dateTime =>
+                {
+                    try
+                    {
+                        SettingsFunction.Save("LedAutoTimeAfter", dateTime.Value.ToString(vAppCultureInfo));
                     }
                     catch { }
                 };

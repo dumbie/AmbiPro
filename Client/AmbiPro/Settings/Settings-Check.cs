@@ -21,7 +21,7 @@ namespace AmbiPro.Settings
                 //Check - Com Port
                 if (ConfigurationManager.AppSettings["ComPort"] == null)
                 {
-                    SettingsFunction.Save("ComPort", "9");
+                    SettingsFunction.Save("ComPort", "1");
                 }
 
                 //Check - Baud Rate
@@ -31,15 +31,21 @@ namespace AmbiPro.Settings
                 }
 
                 //Check - Enable or Disable Led Automatic
-                if (ConfigurationManager.AppSettings["LedAutoOnOff"] == null)
+                if (ConfigurationManager.AppSettings["LedAutoOnOffBefore"] == null)
                 {
-                    SettingsFunction.Save("LedAutoOnOff", "False");
+                    SettingsFunction.Save("LedAutoOnOffBefore", "False");
                 }
-
-                //Check - Time Led Automatic
-                if (ConfigurationManager.AppSettings["LedAutoTime"] == null)
+                if (ConfigurationManager.AppSettings["LedAutoTimeBefore"] == null)
                 {
-                    SettingsFunction.Save("LedAutoTime", "01/01/1970 17:00:00");
+                    SettingsFunction.Save("LedAutoTimeBefore", "01/01/1970 9:00:00");
+                }
+                if (ConfigurationManager.AppSettings["LedAutoOnOffAfter"] == null)
+                {
+                    SettingsFunction.Save("LedAutoOnOffAfter", "False");
+                }
+                if (ConfigurationManager.AppSettings["LedAutoTimeAfter"] == null)
+                {
+                    SettingsFunction.Save("LedAutoTimeAfter", "01/01/1970 17:00:00");
                 }
 
                 //Check - Remote Port

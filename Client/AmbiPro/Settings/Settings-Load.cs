@@ -48,17 +48,12 @@ namespace AmbiPro.Settings
                 //Check connected com ports
                 foreach (string PortName in SerialPort.GetPortNames())
                 {
-                    int PortNumberRaw = Convert.ToInt32(PortName.Replace("COM", "")) - 1;
-                    cb_ComPort.Items[PortNumberRaw] = PortName + " (Connected)";
-                }
+                    int PortNumberRaw = Convert.ToInt32(PortName.Replace("COM", string.Empty));
+                    cb_ComPort.Items[PortNumberRaw - 1] = PortName + " (Connected)";
 
-                //Set the first launch com port
-                if (Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
-                {
-                    foreach (string PortName in SerialPort.GetPortNames())
+                    if (Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                     {
-                        int PortNumberRaw = Convert.ToInt32(PortName.Replace("COM", "")) - 1;
-                        cb_ComPort.SelectedIndex = PortNumberRaw;
+                        SettingsFunction.Save("ComPort", PortNumberRaw.ToString());
                     }
                 }
 
@@ -74,20 +69,17 @@ namespace AmbiPro.Settings
                 else if (ConfigurationManager.AppSettings["BaudRate"].ToString() == "57600") { cb_BaudRate.SelectedIndex = 5; }
                 else if (ConfigurationManager.AppSettings["BaudRate"].ToString() == "115200") { cb_BaudRate.SelectedIndex = 6; }
 
-                //Load - Led Automatic Enable or Disable
-                bool LedAutoOnOff = Convert.ToBoolean(ConfigurationManager.AppSettings["LedAutoOnOff"]);
-                cb_LedAutoOnOff.IsChecked = LedAutoOnOff;
-                if (LedAutoOnOff)
-                {
-                    timepicker_LedAutoTime.IsEnabled = true;
-                }
-                else
-                {
-                    timepicker_LedAutoTime.IsEnabled = false;
-                }
+                //Load - Led Automatic Before
+                bool LedAutoOnOffBefore = Convert.ToBoolean(ConfigurationManager.AppSettings["LedAutoOnOffBefore"]);
+                cb_LedAutoOnOffBefore.IsChecked = LedAutoOnOffBefore;
+                timepicker_LedAutoTimeBefore.IsEnabled = LedAutoOnOffBefore;
+                timepicker_LedAutoTimeBefore.DateTimeValue = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTimeBefore"], vAppCultureInfo);
 
-                //Load - Led Automatic Time
-                timepicker_LedAutoTime.DateTimeValue = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTime"], vAppCultureInfo);
+                //Load - Led Automatic After
+                bool LedAutoOnOffAfter = Convert.ToBoolean(ConfigurationManager.AppSettings["LedAutoOnOffAfter"]);
+                cb_LedAutoOnOffAfter.IsChecked = LedAutoOnOffAfter;
+                timepicker_LedAutoTimeAfter.IsEnabled = LedAutoOnOffAfter;
+                timepicker_LedAutoTimeAfter.DateTimeValue = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTimeAfter"], vAppCultureInfo);
 
                 //Load - Remote Port
                 tb_ServerPort.Text = ConfigurationManager.AppSettings["ServerPort"].ToString();
@@ -201,9 +193,9 @@ namespace AmbiPro.Settings
                 string targetFileShortcut = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), targetName + ".url");
                 if (File.Exists(targetFileShortcut)) { cb_WindowsStartup.IsChecked = true; }
             }
-            catch
+            catch (Exception ex)
             {
-                Debug.WriteLine("Failed to load the settings.");
+                Debug.WriteLine("Failed to load the settings: " + ex.Message);
             }
         }
     }

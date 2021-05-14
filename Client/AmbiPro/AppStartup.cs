@@ -44,19 +44,26 @@ namespace AmbiPro
                 }
 
                 //Start updating the leds
-                if (Convert.ToBoolean(ConfigurationManager.AppSettings["LedAutoOnOff"]))
+                bool turnLedsOn = false;
+                if (Convert.ToBoolean(ConfigurationManager.AppSettings["LedAutoOnOffBefore"]) || Convert.ToBoolean(ConfigurationManager.AppSettings["LedAutoOnOffAfter"]))
                 {
-                    DateTime LedTime = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTime"], vAppCultureInfo);
-                    if (DateTime.Now.TimeOfDay >= LedTime.TimeOfDay)
+                    DateTime LedTimeBefore = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTimeBefore"], vAppCultureInfo);
+                    if (DateTime.Now.TimeOfDay < LedTimeBefore.TimeOfDay)
                     {
-                        await LedSwitch(LedSwitches.Automatic);
+                        turnLedsOn = true;
                     }
-                    else
+                    DateTime LedTimeAfter = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTimeAfter"], vAppCultureInfo);
+                    if (DateTime.Now.TimeOfDay >= LedTimeAfter.TimeOfDay)
                     {
-                        await LedSwitch(LedSwitches.Disable);
+                        turnLedsOn = true;
                     }
                 }
                 else
+                {
+                    turnLedsOn = true;
+                }
+
+                if (turnLedsOn)
                 {
                     await LedSwitch(LedSwitches.Automatic);
                 }

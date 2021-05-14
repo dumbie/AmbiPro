@@ -139,13 +139,8 @@ namespace AmbiPro
                     //Update settings
                     UpdateSettings();
 
-                    //Check led count
-                    if (setLedCountTotal == 0)
-                    {
-                        ShowNoLedsSideCountSetup();
-                        vSwitching = false;
-                        return;
-                    }
+                    //Set first launch setting to false
+                    SettingsFunction.Save("FirstLaunch2", "False");
 
                     //Restart the leds
                     if (ledSwitch == LedSwitches.Restart)
@@ -182,6 +177,15 @@ namespace AmbiPro
             try
             {
                 Debug.WriteLine("Enabling the led updates.");
+
+                //Check led count
+                if (setLedCountTotal == 0)
+                {
+                    ShowNoLedsSideCountSetup();
+                    return;
+                }
+
+                //Start led update loop
                 AVActions.TaskStartLoop(LoopUpdateLeds, vTask_LedUpdate);
             }
             catch (Exception ex)
