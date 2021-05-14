@@ -1,13 +1,16 @@
+![AmbiPro](Screenshots/AmbiPro-screenshot1.jpg)
+![AmbiPro](Screenshots/AmbiPro-screenshot2.jpg)
+
 ## Application Description
 Arduino adalight, fastled backlight easy and low resource screen capturer,
 this application will capture your screen and sync the colors to your led strip.
-- This is an early beta test release so things may not always work properly.
+- This is a beta test release so things may not always work properly.
 
 ## Application Features
 - Optimized for fullscreen performance gaming.
-- Automatic movie and game screen ratio adaption.
+- Automatically adapt to displayed content blackbars.
 - Easily calibrate your led strip in the application.
-- Switch between screen capture, a color or color loop.
+- Switch between screen capture and several color modes.
 - Control the leds on another device with the remote.
 
 ## Installation Instructions
@@ -26,6 +29,9 @@ this application will capture your screen and sync the colors to your led strip.
 - Windows operating system 10 64-bit or higher is required.
 - A DirectX 12 or higher capable graphics adapter.
 
+## Known Issues
+- Some content with HDR or DRM might not be captured and show as turned off leds.
+
 ## Support and bug reporting
 When you are walking into any problems or a bug you can go to my help page at https://help.arnoldvink.com so I can try to help you out and get everything working.
 
@@ -33,7 +39,7 @@ When you are walking into any problems or a bug you can go to my help page at ht
 If you appreciate my project and want to support me with my projects you can make a donation through https://donation.arnoldvink.com
 
 ## Changelog
-v0.10.0.0 (-April-2021)
+v0.10.0.0 (13-May-2021)
 - Rewrote screen color capture code to reduce cpu usage and fill in gaps.
 - Changed the way led count and sides are setup for more flexibility.
 - Added AmbiPro administrator launcher.
