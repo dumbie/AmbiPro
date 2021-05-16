@@ -30,12 +30,10 @@ namespace AmbiPro
         {
             try
             {
-                int captureStepMaximum = vScreenHeight / 3;
-                int captureRangeMaximum = vScreenWidth - vMarginMinimumOffset;
-                for (int captureStep = vMarginMinimumOffset; captureStep < captureStepMaximum; captureStep += vMarginBlackAccuracy)
+                for (int captureStep = vMarginMinimumOffset; captureStep < vBlackBarStepVertical; captureStep += vMarginBlackAccuracy)
                 {
                     int CaptureZoneVer = vScreenHeight - captureStep;
-                    for (int captureRange = vMarginMinimumOffset; captureRange < captureRangeMaximum; captureRange += vMarginBlackAccuracy)
+                    for (int captureRange = vMarginMinimumOffset; captureRange < vBlackBarRangeVertical; captureRange += vMarginBlackAccuracy)
                     {
                         int CaptureZoneHor = captureRange;
                         ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer);
@@ -54,7 +52,7 @@ namespace AmbiPro
                         }
                     }
                 }
-                targetMargin = captureStepMaximum;
+                targetMargin = vBlackBarStepVertical;
             }
             catch { }
         }
@@ -64,12 +62,10 @@ namespace AmbiPro
         {
             try
             {
-                int captureStepMaximum = vScreenHeight / 3;
-                int captureRangeMaximum = vScreenWidth - vMarginMinimumOffset;
-                for (int captureStep = vMarginMinimumOffset; captureStep < captureStepMaximum; captureStep += vMarginBlackAccuracy)
+                for (int captureStep = vMarginMinimumOffset; captureStep < vBlackBarStepVertical; captureStep += vMarginBlackAccuracy)
                 {
                     int CaptureZoneVer = captureStep;
-                    for (int captureRange = vMarginMinimumOffset; captureRange < captureRangeMaximum; captureRange += vMarginBlackAccuracy)
+                    for (int captureRange = vMarginMinimumOffset; captureRange < vBlackBarRangeVertical; captureRange += vMarginBlackAccuracy)
                     {
                         int CaptureZoneHor = captureRange;
                         ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer);
@@ -88,7 +84,7 @@ namespace AmbiPro
                         }
                     }
                 }
-                targetMargin = captureStepMaximum;
+                targetMargin = vBlackBarStepVertical;
             }
             catch { }
         }
@@ -98,12 +94,10 @@ namespace AmbiPro
         {
             try
             {
-                int captureStepMaximum = vScreenWidth / 3;
-                int captureRangeMaximum = vScreenHeight - vMarginMinimumOffset;
-                for (int captureStep = vMarginMinimumOffset; captureStep < captureStepMaximum; captureStep += vMarginBlackAccuracy)
+                for (int captureStep = vMarginMinimumOffset; captureStep < vBlackBarStepHorizontal; captureStep += vMarginBlackAccuracy)
                 {
                     int CaptureZoneHor = vScreenWidth - captureStep;
-                    for (int captureRange = vMarginMinimumOffset; captureRange < captureRangeMaximum; captureRange += vMarginBlackAccuracy)
+                    for (int captureRange = vMarginMinimumOffset; captureRange < vBlackBarRangeHorizontal; captureRange += vMarginBlackAccuracy)
                     {
                         int CaptureZoneVer = captureRange;
                         ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer);
@@ -122,7 +116,7 @@ namespace AmbiPro
                         }
                     }
                 }
-                targetMargin = captureStepMaximum;
+                targetMargin = vBlackBarStepHorizontal;
             }
             catch { }
         }
@@ -132,12 +126,10 @@ namespace AmbiPro
         {
             try
             {
-                int captureStepMaximum = vScreenWidth / 3;
-                int captureRangeMaximum = vScreenHeight - vMarginMinimumOffset;
-                for (int captureStep = vMarginMinimumOffset; captureStep < captureStepMaximum; captureStep += vMarginBlackAccuracy)
+                for (int captureStep = vMarginMinimumOffset; captureStep < vBlackBarStepHorizontal; captureStep += vMarginBlackAccuracy)
                 {
                     int CaptureZoneHor = captureStep;
-                    for (int captureRange = vMarginMinimumOffset; captureRange < captureRangeMaximum; captureRange += vMarginBlackAccuracy)
+                    for (int captureRange = vMarginMinimumOffset; captureRange < vBlackBarRangeHorizontal; captureRange += vMarginBlackAccuracy)
                     {
                         int CaptureZoneVer = captureRange;
                         ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vScreenWidth, vScreenHeight, CaptureZoneHor, CaptureZoneVer);
@@ -156,7 +148,7 @@ namespace AmbiPro
                         }
                     }
                 }
-                targetMargin = captureStepMaximum;
+                targetMargin = vBlackBarStepHorizontal;
             }
             catch { }
         }

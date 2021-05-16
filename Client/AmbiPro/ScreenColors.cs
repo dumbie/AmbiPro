@@ -211,7 +211,7 @@ namespace AmbiPro
                 for (int captureStep = 0; captureStep < CaptureZoneSize; captureStep++)
                 {
                     if (CaptureEvenStep == 1) { CaptureEvenStep = 0; } else { CaptureEvenStep = 1; }
-                    for (int captureRange = 0; captureRange < vCaptureZoneRange; captureRange += 2)
+                    for (int captureRange = 0; captureRange < vCaptureRange; captureRange += 2)
                     {
                         if (SideType == LedSideTypes.TopLeftToRight)
                         {

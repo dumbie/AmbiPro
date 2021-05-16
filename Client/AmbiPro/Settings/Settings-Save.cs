@@ -34,19 +34,10 @@ namespace AmbiPro.Settings
                 };
 
                 //Save - Baud Rate
-                cb_BaudRate.SelectionChanged += async (sender, e) =>
+                vDispatcherTimer_SettingBaudRate.Tick += SettingSaveBaudRate;
+                textbox_BaudRate.TextChanged += (sender, e) =>
                 {
-                    if (cb_BaudRate.SelectedIndex == 0) { SettingsFunction.Save("BaudRate", "9600"); }
-                    else if (cb_BaudRate.SelectedIndex == 1) { SettingsFunction.Save("BaudRate", "14400"); }
-                    else if (cb_BaudRate.SelectedIndex == 2) { SettingsFunction.Save("BaudRate", "19200"); }
-                    else if (cb_BaudRate.SelectedIndex == 3) { SettingsFunction.Save("BaudRate", "28800"); }
-                    else if (cb_BaudRate.SelectedIndex == 4) { SettingsFunction.Save("BaudRate", "38400"); }
-                    else if (cb_BaudRate.SelectedIndex == 5) { SettingsFunction.Save("BaudRate", "57600"); }
-                    else if (cb_BaudRate.SelectedIndex == 6) { SettingsFunction.Save("BaudRate", "115200"); }
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
-                    {
-                        await LedSwitch(LedSwitches.Restart);
-                    }
+                    AVFunctions.TimerReset(vDispatcherTimer_SettingBaudRate);
                 };
 
                 //Save - Led Automatic Enable or Disable 
@@ -81,11 +72,11 @@ namespace AmbiPro.Settings
                     catch { }
                 };
 
-                //Save - Remote Port
-                vDispatcherTimer_ServerPort.Tick += vDispatcherTimer_ServerPort_Tick;
+                //Save - Server Port
+                vDispatcherTimer_SettingServerPort.Tick += SettingSaveServerPort;
                 tb_ServerPort.TextChanged += (sender, e) =>
                 {
-                    AVFunctions.TimerReset(vDispatcherTimer_ServerPort);
+                    AVFunctions.TimerReset(vDispatcherTimer_SettingServerPort);
                 };
 
                 //Save - Adjust Black Bars
@@ -178,7 +169,6 @@ namespace AmbiPro.Settings
                     {
                         SolidColorBrush newBrush = new SolidColorBrush((Color)newColor);
                         button_ColorPickerSolid.Background = newBrush;
-                        button_ColorPickerSolid.BorderBrush = newBrush;
                         SettingsFunction.Save("SolidLedColor", newColor.ToString());
                     }
                 };
@@ -201,21 +191,21 @@ namespace AmbiPro.Settings
                 sldr_LedColorRed.ValueChanged += (sender, e) =>
                 {
                     SettingsFunction.Save("LedColorRed", sldr_LedColorRed.Value.ToString("0"));
-                    tb_LedColorRed.Text = "Red: " + sldr_LedColorRed.Value.ToString("0");
+                    tb_LedColorRed.Text = "Red: " + sldr_LedColorRed.Value.ToString("0") + "%";
                 };
 
                 //Save - Led Color Green
                 sldr_LedColorGreen.ValueChanged += (sender, e) =>
                 {
                     SettingsFunction.Save("LedColorGreen", sldr_LedColorGreen.Value.ToString("0"));
-                    tb_LedColorGreen.Text = "Green: " + sldr_LedColorGreen.Value.ToString("0");
+                    tb_LedColorGreen.Text = "Green: " + sldr_LedColorGreen.Value.ToString("0") + "%";
                 };
 
                 //Save - Led Color Blue
                 sldr_LedColorBlue.ValueChanged += (sender, e) =>
                 {
                     SettingsFunction.Save("LedColorBlue", sldr_LedColorBlue.Value.ToString("0"));
-                    tb_LedColorBlue.Text = "Blue: " + sldr_LedColorBlue.Value.ToString("0");
+                    tb_LedColorBlue.Text = "Blue: " + sldr_LedColorBlue.Value.ToString("0") + "%";
                 };
 
                 //Save - Led Capture Range
@@ -229,8 +219,14 @@ namespace AmbiPro.Settings
                 sldr_AdjustBlackbarRate.ValueChanged += (sender, e) =>
                 {
                     SettingsFunction.Save("AdjustBlackbarRate", sldr_AdjustBlackbarRate.Value.ToString("0"));
-                    int updateRateMs = Convert.ToInt32(sldr_AdjustBlackbarRate.Value);
-                    tb_AdjustBlackbarRate.Text = "Blackbar detection rate: " + updateRateMs + " ms";
+                    tb_AdjustBlackbarRate.Text = "Blackbar detection rate: " + Convert.ToInt32(sldr_AdjustBlackbarRate.Value) + " ms";
+                };
+
+                //Save - Blackbar detect range
+                sldr_AdjustBlackbarRange.ValueChanged += (sender, e) =>
+                {
+                    SettingsFunction.Save("AdjustBlackbarRange", sldr_AdjustBlackbarRange.Value.ToString("0"));
+                    tb_AdjustBlackbarRange.Text = "Blackbar detection range: " + Convert.ToInt32(sldr_AdjustBlackbarRange.Value) + "%";
                 };
 
                 //Save - Adjust Black Bar Level
@@ -259,22 +255,22 @@ namespace AmbiPro.Settings
                 };
 
                 //Save - Led Count
-                vDispatcherTimer_LedCount.Tick += SettingSaveLedCount;
+                vDispatcherTimer_SettingLedCount.Tick += SettingSaveLedCount;
                 textbox_LedCountFirst.TextChanged += (sender, e) =>
                 {
-                    AVFunctions.TimerReset(vDispatcherTimer_LedCount);
+                    AVFunctions.TimerReset(vDispatcherTimer_SettingLedCount);
                 };
                 textbox_LedCountSecond.TextChanged += (sender, e) =>
                 {
-                    AVFunctions.TimerReset(vDispatcherTimer_LedCount);
+                    AVFunctions.TimerReset(vDispatcherTimer_SettingLedCount);
                 };
                 textbox_LedCountThird.TextChanged += (sender, e) =>
                 {
-                    AVFunctions.TimerReset(vDispatcherTimer_LedCount);
+                    AVFunctions.TimerReset(vDispatcherTimer_SettingLedCount);
                 };
                 textbox_LedCountFourth.TextChanged += (sender, e) =>
                 {
-                    AVFunctions.TimerReset(vDispatcherTimer_LedCount);
+                    AVFunctions.TimerReset(vDispatcherTimer_SettingLedCount);
                 };
 
                 //Save - Led Output
@@ -390,13 +386,52 @@ namespace AmbiPro.Settings
             catch { }
         }
 
+        //Save baud rate after delay
+        public async void SettingSaveBaudRate(object sender, EventArgs e)
+        {
+            try
+            {
+                //Stop the timer
+                vDispatcherTimer_SettingBaudRate.Stop();
+
+                //Color brushes
+                BrushConverter BrushConvert = new BrushConverter();
+                Brush BrushInvalid = BrushConvert.ConvertFromString("#cd1a2b") as Brush;
+                Brush BrushValid = BrushConvert.ConvertFromString("#1db954") as Brush;
+
+                //Check text input and length
+                if (string.IsNullOrWhiteSpace(textbox_BaudRate.Text)) { textbox_BaudRate.BorderBrush = BrushInvalid; return; }
+
+                //Check text input has invalid characters
+                if (Regex.IsMatch(textbox_BaudRate.Text, "(\\D+)")) { textbox_BaudRate.BorderBrush = BrushInvalid; return; }
+
+                //Check text input number
+                int intBaudRate = Convert.ToInt32(textbox_BaudRate.Text);
+                if (intBaudRate < 1 || intBaudRate > 268435456) { textbox_BaudRate.BorderBrush = BrushInvalid; return; }
+
+                //Save the new baud rate setting
+                SettingsFunction.Save("BaudRate", textbox_BaudRate.Text);
+                textbox_BaudRate.BorderBrush = BrushValid;
+
+                //Restart the leds
+                if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
+                {
+                    await LedSwitch(LedSwitches.Restart);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed saving baudrate: " + ex.Message);
+            }
+        }
+
         //Save led count after delay
         public async void SettingSaveLedCount(object sender, EventArgs e)
         {
             try
             {
                 //Stop the timer
-                vDispatcherTimer_LedCount.Stop();
+                vDispatcherTimer_SettingLedCount.Stop();
 
                 //Color brushes
                 BrushConverter BrushConvert = new BrushConverter();
@@ -441,34 +476,33 @@ namespace AmbiPro.Settings
                     await LedSwitch(LedSwitches.Restart);
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed saving ledcount: " + ex.Message);
+            }
         }
 
-        //Update remote port after delay
-        private async void vDispatcherTimer_ServerPort_Tick(object sender, EventArgs e)
+        //Update server port after delay
+        private async void SettingSaveServerPort(object sender, EventArgs e)
         {
             try
             {
                 //Stop the timer
-                vDispatcherTimer_ServerPort.Stop();
+                vDispatcherTimer_SettingServerPort.Stop();
 
                 //Color brushes
                 BrushConverter BrushConvert = new BrushConverter();
                 Brush BrushInvalid = BrushConvert.ConvertFromString("#cd1a2b") as Brush;
                 Brush BrushValid = BrushConvert.ConvertFromString("#1db954") as Brush;
 
-                //Check for text input and length
-                if (tb_ServerPort.Text.Length > 5) { tb_ServerPort.BorderBrush = BrushInvalid; return; }
-                if (String.IsNullOrWhiteSpace(tb_ServerPort.Text)) { tb_ServerPort.BorderBrush = BrushInvalid; return; }
+                //Check text input and length
+                if (string.IsNullOrWhiteSpace(tb_ServerPort.Text)) { tb_ServerPort.BorderBrush = BrushInvalid; return; }
 
-                //Check if text input has invalid characters
-                if (tb_ServerPort.Text.Contains("-")) { tb_ServerPort.Text = tb_ServerPort.Text.Replace("-", ""); tb_ServerPort.SelectionStart = tb_ServerPort.Text.Length; }
-                if (tb_ServerPort.Text.Contains(",")) { tb_ServerPort.Text = tb_ServerPort.Text.Replace(",", ""); tb_ServerPort.SelectionStart = tb_ServerPort.Text.Length; }
-                if (tb_ServerPort.Text.Contains(".")) { tb_ServerPort.Text = tb_ServerPort.Text.Replace(".", ""); tb_ServerPort.SelectionStart = tb_ServerPort.Text.Length; }
+                //Check text input has invalid characters
                 if (Regex.IsMatch(tb_ServerPort.Text, "(\\D+)")) { tb_ServerPort.BorderBrush = BrushInvalid; return; }
 
-                //Convert text input to number
-                Int32 ServerPort = Convert.ToInt32(tb_ServerPort.Text);
+                //Check text input number
+                int ServerPort = Convert.ToInt32(tb_ServerPort.Text);
                 if (ServerPort < 1 || ServerPort > 65535) { tb_ServerPort.BorderBrush = BrushInvalid; return; }
 
                 SettingsFunction.Save("ServerPort", tb_ServerPort.Text);
@@ -478,7 +512,10 @@ namespace AmbiPro.Settings
                 vArnoldVinkSockets.vSocketServerPort = Convert.ToInt32(tb_ServerPort.Text);
                 await vArnoldVinkSockets.SocketServerRestart();
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed saving serverport: " + ex.Message);
+            }
         }
 
         //Create startup shortcut

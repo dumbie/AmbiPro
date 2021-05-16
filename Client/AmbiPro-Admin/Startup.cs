@@ -1,5 +1,7 @@
-﻿using Microsoft.Win32.TaskScheduler;
+﻿using ArnoldVinkCode;
+using Microsoft.Win32.TaskScheduler;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -12,7 +14,7 @@ namespace AdminLauncher
     public partial class App : Application
     {
         //Application Variables
-        bool vAdministratorPermission = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
+        readonly bool vAdministratorPermission = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
         string SchTask_Author = string.Empty;
         string SchTask_Name = string.Empty;
         string SchTask_Description = string.Empty;
@@ -30,9 +32,6 @@ namespace AdminLauncher
                 SchTask_Description = "AmbiPro Administrator Helper";
                 SchTask_FilePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\AmbiPro.exe";
                 SchTask_WorkingPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-
-                //Check application status
-                //Application_LaunchCheck(SchTask_Description, "CtrlUI-Admin", false);
 
                 //Check if the task already exists
                 int ResultCheckTask = CheckTask();
@@ -67,8 +66,12 @@ namespace AdminLauncher
             {
                 if (!vAdministratorPermission)
                 {
-                    MessageBoxResult Result = MessageBox.Show("It seems like this is the first time you are using the helper or the application path has changed so you will have to accept the upcoming administrator prompt, after that you will be able to run this helper without the administrator prompt.", SchTask_Description, MessageBoxButton.YesNo, MessageBoxImage.Question);
-                    if (Result == MessageBoxResult.Yes)
+                    List<string> messageAnswers = new List<string>();
+                    messageAnswers.Add("Continue");
+                    messageAnswers.Add("Cancel");
+
+                    string messageResult = await new AVMessageBox().Popup(null, SchTask_Description, "It seems like this is the first time you are using the helper or the application path has changed so you will have to accept the upcoming administrator prompt, after that you will be able to run this helper without the administrator prompt.", messageAnswers);
+                    if (messageResult == "Continue")
                     {
                         await ProcessLauncherWin32Async(Assembly.GetEntryAssembly().Location, Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "", true, false);
                         Environment.Exit(0);

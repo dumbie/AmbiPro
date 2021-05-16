@@ -95,11 +95,19 @@ namespace AmbiPro
                                 vScreenHeight = screenHeightResize;
                                 BitmapIntPtr = AppImport.CaptureResizeNearest(BitmapIntPtr, vScreenWidth, vScreenHeight, out vScreenOutputSize);
                             }
-
-                            vCaptureZoneRange = (setLedCaptureRange * vScreenHeight) / 100 / 2;
-                            //Debug.WriteLine("Screen width: " + vScreenWidth + " / Screen height: " + vScreenHeight + " / Capture range: " + vCaptureZoneRange + " / Resize: " + resizeScreenshot);
                         }
                         catch { }
+
+                        //Set capture range
+                        if (vScreenHeight < vScreenWidth)
+                        {
+                            vCaptureRange = (setLedCaptureRange * vScreenHeight) / 100 / 2;
+                        }
+                        else
+                        {
+                            vCaptureRange = (setLedCaptureRange * vScreenWidth) / 100 / 2;
+                        }
+                        //Debug.WriteLine("Screen width: " + vScreenWidth + " / Screen height: " + vScreenHeight + " / Capture range: " + vCaptureZoneRange + " / Resize: " + resizeScreenshot);
 
                         unsafe
                         {
@@ -110,6 +118,11 @@ namespace AmbiPro
                             {
                                 if (setAdjustBlackbarRate == 0 || (Environment.TickCount - vMarginBlackLastUpdate) > setAdjustBlackbarRate)
                                 {
+                                    //Set blackbar range
+                                    vBlackBarStepVertical = (setAdjustBlackbarRange * vScreenHeight) / 100;
+                                    vBlackBarRangeVertical = vScreenWidth - vMarginMinimumOffset;
+                                    vBlackBarStepHorizontal = (setAdjustBlackbarRange * vScreenWidth) / 100;
+                                    vBlackBarRangeHorizontal = vScreenHeight - vMarginMinimumOffset;
                                     AdjustBlackBars(setLedSideFirst, BitmapData);
                                     AdjustBlackBars(setLedSideSecond, BitmapData);
                                     AdjustBlackBars(setLedSideThird, BitmapData);

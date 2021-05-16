@@ -35,15 +35,14 @@ namespace AmbiPro
                     adjustColor.R = 0;
                     adjustColor.G = 0;
                     adjustColor.B = 0;
-                    return;
                 }
 
                 //Adjust the minimum brightness to setting
                 if (adjustColor.R < setLedMinBrightness && adjustColor.G < setLedMinBrightness && adjustColor.B < setLedMinBrightness)
                 {
-                    adjustColor.R = (byte)setLedMinBrightness;
-                    adjustColor.G = (byte)setLedMinBrightness;
-                    adjustColor.B = (byte)setLedMinBrightness;
+                    adjustColor.R = setLedMinBrightness;
+                    adjustColor.G = setLedMinBrightness;
+                    adjustColor.B = setLedMinBrightness;
                     return;
                 }
 

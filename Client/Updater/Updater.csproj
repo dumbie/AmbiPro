@@ -149,9 +149,6 @@
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkProcesses\ProcessWin32Functions.cs">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkProcesses\ProcessWin32Functions.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVClassConverters.cs">
-      <Link>ArnoldVinkCode\Functions\AVClassConverters.cs</Link>
-    </Compile>
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVFiles.cs">
       <Link>ArnoldVinkCode\Functions\AVFiles.cs</Link>
     </Compile>

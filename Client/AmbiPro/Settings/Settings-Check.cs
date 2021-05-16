@@ -48,7 +48,7 @@ namespace AmbiPro.Settings
                     SettingsFunction.Save("LedAutoTimeAfter", "01/01/1970 17:00:00");
                 }
 
-                //Check - Remote Port
+                //Check - Server Port
                 if (ConfigurationManager.AppSettings["ServerPort"] == null)
                 {
                     SettingsFunction.Save("ServerPort", "1020");
@@ -78,10 +78,16 @@ namespace AmbiPro.Settings
                     SettingsFunction.Save("AdjustBlackbarRate", "1000");
                 }
 
+                //Check - Blackbar Update Range
+                if (ConfigurationManager.AppSettings["AdjustBlackbarRange"] == null)
+                {
+                    SettingsFunction.Save("AdjustBlackbarRange", "40");
+                }
+
                 //Check - Adjust Blackbar Brightness
                 if (ConfigurationManager.AppSettings["AdjustBlackBarBrightness"] == null)
                 {
-                    SettingsFunction.Save("AdjustBlackBarBrightness", "3");
+                    SettingsFunction.Save("AdjustBlackBarBrightness", "8");
                 }
 
                 //Check - Led Bottom Gap
@@ -111,7 +117,7 @@ namespace AmbiPro.Settings
                 //Check - Led Saturation
                 if (ConfigurationManager.AppSettings["LedSaturation"] == null)
                 {
-                    SettingsFunction.Save("LedSaturation", "120");
+                    SettingsFunction.Save("LedSaturation", "130");
                 }
 
                 //Check - Color Loop Speed

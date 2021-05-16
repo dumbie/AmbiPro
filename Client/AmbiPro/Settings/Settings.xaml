@@ -16,8 +16,15 @@
         Topmost="True">
 
     <Grid>
-        <!-- Background Rotate -->
-        <Grid Name="grid_BackgroundRotate" Background="Black" Visibility="Collapsed">
+        <!-- Background Solid -->
+        <Grid Name="grid_BackgroundSolidWhite" Background="White" Visibility="Collapsed"/>
+        <Grid Name="grid_BackgroundSolidRed" Background="Red" Visibility="Collapsed"/>
+        <Grid Name="grid_BackgroundSolidGreen" Background="Green" Visibility="Collapsed"/>
+        <Grid Name="grid_BackgroundSolidBlue" Background="Blue" Visibility="Collapsed"/>
+        <Grid Name="grid_BackgroundSolidYellow" Background="Yellow" Visibility="Collapsed"/>
+
+        <!-- Background Blocks -->
+        <Grid Name="grid_BackgroundBlocks" Background="Black" Visibility="Collapsed">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -77,462 +84,476 @@
             </Grid>
         </Grid>
 
-        <!-- Grid Main -->
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="540">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Grid Menu -->
-            <Border Grid.Row="0" CornerRadius="5,0,0,5" Width="100">
+            <!-- Background Switch -->
+            <Border Grid.Column="1" VerticalAlignment="Top" CornerRadius="0,5,5,0" Margin="0,0,5,0" Width="40" Height="40">
                 <Border.Background>
                     <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
                 </Border.Background>
-
-                <ListBox Name="lb_Menu" Grid.Row="0" SelectionMode="Single" ItemContainerStyle="{StaticResource ListBoxItemWhite}" Style="{StaticResource ListBoxVertical}" PreviewMouseUp="lb_Menu_MousePressUp" PreviewMouseDoubleClick="lb_Menu_MouseDoublePress">
-                    <StackPanel Name="menuButtonBasics" Style="{StaticResource ListBoxMenuStackPanel}">
-                        <Image Source="/Assets/Icons/Settings.png" Width="55" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Basics" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Name="menuButtonLeds" Style="{StaticResource ListBoxMenuStackPanel}">
-                        <Image Source="/Assets/Icons/Leds.png" Width="55" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Leds" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Name="menuButtonModes" Style="{StaticResource ListBoxMenuStackPanel}">
-                        <Image Source="/Assets/Icons/Modes.png" Width="55" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Modes" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Name="menuButtonScreen" Style="{StaticResource ListBoxMenuStackPanel}">
-                        <Image Source="/Assets/Icons/Screen.png" Width="55" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Screen" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Name="menuButtonBlackbars" Style="{StaticResource ListBoxMenuStackPanel}">
-                        <Image Source="/Assets/Icons/Blackbars.png" Width="55" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Blackbars" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Name="menuButtonRotate" Style="{StaticResource ListBoxMenuStackPanel}">
-                        <Image Source="/Assets/Icons/Rotate.png" Width="55" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Rotate" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Name="menuButtonColor" Style="{StaticResource ListBoxMenuStackPanel}">
-                        <Image Source="/Assets/Icons/Color.png" Width="55" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Color" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Name="menuButtonRemote" Style="{StaticResource ListBoxMenuStackPanel}">
-                        <Image Source="/Assets/Icons/Remote.png" Width="55" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Remote" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Name="menuButtonDebug" Style="{StaticResource ListBoxMenuStackPanel}">
-                        <Image Source="/Assets/Icons/Debug.png" Width="55" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Debug" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Name="menuButtonUpdate" Style="{StaticResource ListBoxMenuStackPanel}">
-                        <Image Source="/Assets/Icons/Update.png" Width="55" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Update" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Name="menuButtonHelp" Style="{StaticResource ListBoxMenuStackPanel}">
-                        <Image Source="/Assets/Icons/Help.png" Width="55" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Help" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Name="menuButtonClose" Style="{StaticResource ListBoxMenuStackPanel}">
-                        <Image Source="/Assets/Icons/Close.png" Width="55" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Close" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </ListBox>
+                <Grid>
+                    <ProgressBar Width="10" Height="1" Foreground="#F1F1F1" BorderBrush="Transparent" Background="Transparent" IsIndeterminate="True" Opacity="0.10"/>
+                    <Button Name="button_BackgroundSwitch" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Change test background" Click="button_BackgroundSwitch_Click">
+                        <Image Source="/Assets/Icons/Background.png"/>
+                    </Button>
+                </Grid>
             </Border>
 
-            <!-- Grid Settings -->
-            <Border Grid.Column="1" CornerRadius="0,5,5,0" Padding="5,0,5,0" Width="500">
-                <Border.Background>
-                    <SolidColorBrush Color="#F1F1F1" Opacity="0.95"/>
-                </Border.Background>
+            <!-- Grid Main -->
+            <Grid Grid.Column="0"  Height="540">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                <ScrollViewer Style="{StaticResource ScrollViewerVertical}">
-                    <StackPanel>
-                        <!-- Basics -->
-                        <StackPanel Name="sp_Basics" Margin="5,5,5,5">
-                            <TextBlock Style="{StaticResource TextBlockBlack}" TextWrapping="Wrap" Text="Welcome to AmbiPro, now it's time to setup some basic settings to get started, you can turn the leds on or off from the leds tab."/>
+                <!-- Grid Menu -->
+                <Border Grid.Row="0" CornerRadius="5,0,0,5" Width="100">
+                    <Border.Background>
+                        <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
+                    </Border.Background>
 
-                            <TextBlock Margin="0,10,0,0" Text="Device com port:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Select the com port used for the connection." Style="{StaticResource TextBlockGrayLight}"/>
-                            <ComboBox Name="cb_ComPort" Style="{StaticResource ComboBoxBlack}">
-                                <ComboBoxItem>COM1</ComboBoxItem>
-                                <ComboBoxItem>COM2</ComboBoxItem>
-                                <ComboBoxItem>COM3</ComboBoxItem>
-                                <ComboBoxItem>COM4</ComboBoxItem>
-                                <ComboBoxItem>COM5</ComboBoxItem>
-                                <ComboBoxItem>COM6</ComboBoxItem>
-                                <ComboBoxItem>COM7</ComboBoxItem>
-                                <ComboBoxItem>COM8</ComboBoxItem>
-                                <ComboBoxItem>COM9</ComboBoxItem>
-                                <ComboBoxItem>COM10</ComboBoxItem>
-                                <ComboBoxItem>COM11</ComboBoxItem>
-                                <ComboBoxItem>COM12</ComboBoxItem>
-                                <ComboBoxItem>COM13</ComboBoxItem>
-                                <ComboBoxItem>COM14</ComboBoxItem>
-                                <ComboBoxItem>COM15</ComboBoxItem>
-                                <ComboBoxItem>COM16</ComboBoxItem>
-                                <ComboBoxItem>COM17</ComboBoxItem>
-                                <ComboBoxItem>COM18</ComboBoxItem>
-                                <ComboBoxItem>COM19</ComboBoxItem>
-                                <ComboBoxItem>COM20</ComboBoxItem>
-                                <ComboBoxItem>COM21</ComboBoxItem>
-                                <ComboBoxItem>COM22</ComboBoxItem>
-                                <ComboBoxItem>COM23</ComboBoxItem>
-                                <ComboBoxItem>COM24</ComboBoxItem>
-                                <ComboBoxItem>COM25</ComboBoxItem>
-                                <ComboBoxItem>COM26</ComboBoxItem>
-                                <ComboBoxItem>COM27</ComboBoxItem>
-                                <ComboBoxItem>COM28</ComboBoxItem>
-                                <ComboBoxItem>COM29</ComboBoxItem>
-                                <ComboBoxItem>COM30</ComboBoxItem>
-                                <ComboBoxItem>COM31</ComboBoxItem>
-                                <ComboBoxItem>COM32</ComboBoxItem>
-                                <ComboBoxItem>COM33</ComboBoxItem>
-                                <ComboBoxItem>COM34</ComboBoxItem>
-                                <ComboBoxItem>COM35</ComboBoxItem>
-                                <ComboBoxItem>COM36</ComboBoxItem>
-                                <ComboBoxItem>COM37</ComboBoxItem>
-                                <ComboBoxItem>COM38</ComboBoxItem>
-                                <ComboBoxItem>COM39</ComboBoxItem>
-                                <ComboBoxItem>COM40</ComboBoxItem>
-                            </ComboBox>
+                    <ListBox Name="lb_Menu" Grid.Row="0" SelectionMode="Single" ItemContainerStyle="{StaticResource ListBoxItemWhite}" Style="{StaticResource ListBoxVertical}" PreviewMouseUp="lb_Menu_MousePressUp" PreviewMouseDoubleClick="lb_Menu_MouseDoublePress">
+                        <StackPanel Name="menuButtonBasics" Style="{StaticResource ListBoxMenuStackPanel}">
+                            <Image Source="/Assets/Icons/Settings.png" Width="55" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Basics" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Name="menuButtonLeds" Style="{StaticResource ListBoxMenuStackPanel}">
+                            <Image Source="/Assets/Icons/Leds.png" Width="55" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Leds" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Name="menuButtonModes" Style="{StaticResource ListBoxMenuStackPanel}">
+                            <Image Source="/Assets/Icons/Modes.png" Width="55" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Modes" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Name="menuButtonScreen" Style="{StaticResource ListBoxMenuStackPanel}">
+                            <Image Source="/Assets/Icons/Screen.png" Width="55" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Screen" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Name="menuButtonBlackbars" Style="{StaticResource ListBoxMenuStackPanel}">
+                            <Image Source="/Assets/Icons/Blackbars.png" Width="55" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Blackbars" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Name="menuButtonRotate" Style="{StaticResource ListBoxMenuStackPanel}">
+                            <Image Source="/Assets/Icons/Rotate.png" Width="55" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Rotate" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Name="menuButtonColor" Style="{StaticResource ListBoxMenuStackPanel}">
+                            <Image Source="/Assets/Icons/Color.png" Width="55" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Color" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Name="menuButtonRemote" Style="{StaticResource ListBoxMenuStackPanel}">
+                            <Image Source="/Assets/Icons/Remote.png" Width="55" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Remote" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Name="menuButtonDebug" Style="{StaticResource ListBoxMenuStackPanel}">
+                            <Image Source="/Assets/Icons/Debug.png" Width="55" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Debug" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Name="menuButtonUpdate" Style="{StaticResource ListBoxMenuStackPanel}">
+                            <Image Source="/Assets/Icons/Update.png" Width="55" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Update" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Name="menuButtonHelp" Style="{StaticResource ListBoxMenuStackPanel}">
+                            <Image Source="/Assets/Icons/Help.png" Width="55" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Help" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Name="menuButtonClose" Style="{StaticResource ListBoxMenuStackPanel}">
+                            <Image Source="/Assets/Icons/Close.png" Width="55" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Close" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </ListBox>
+                </Border>
 
-                            <TextBlock Margin="0,10,0,0" Text="Device baud rate:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Select the baud rate used for the connection." Style="{StaticResource TextBlockGrayLight}"/>
-                            <ComboBox Name="cb_BaudRate" Style="{StaticResource ComboBoxBlack}">
-                                <ComboBoxItem>9600</ComboBoxItem>
-                                <ComboBoxItem>14400</ComboBoxItem>
-                                <ComboBoxItem>19200</ComboBoxItem>
-                                <ComboBoxItem>28800</ComboBoxItem>
-                                <ComboBoxItem>38400</ComboBoxItem>
-                                <ComboBoxItem>57600</ComboBoxItem>
-                                <ComboBoxItem>115200 (Default)</ComboBoxItem>
-                            </ComboBox>
+                <!-- Grid Settings -->
+                <Border Grid.Column="1" CornerRadius="0,0,5,0" Padding="5,0,5,0" Width="500">
+                    <Border.Background>
+                        <SolidColorBrush Color="#F1F1F1" Opacity="0.95"/>
+                    </Border.Background>
 
-                            <CheckBox Margin="0,15,0,0" Name="cb_WindowsStartup" Content="Launch on Windows startup" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
-                            <TextBlock Text="Launch AmbiPro automatically on Windows startup." Style="{StaticResource TextBlockGrayLight}"/>
+                    <ScrollViewer Style="{StaticResource ScrollViewerVertical}">
+                        <StackPanel>
+                            <!-- Basics -->
+                            <StackPanel Name="sp_Basics" Margin="5,5,5,5">
+                                <TextBlock Style="{StaticResource TextBlockBlack}" TextWrapping="Wrap" Text="Welcome to AmbiPro, now it's time to setup some basic settings to get started, you can turn the leds on or off from the leds tab."/>
 
-                            <TextBlock Margin="0,10,0,0" Text="Automatically turn leds on:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Automatically turn leds on startup before:" Style="{StaticResource TextBlockGrayLight}"/>
-                            <StackPanel Orientation="Horizontal">
-                                <CheckBox Name="cb_LedAutoOnOffBefore" Style="{StaticResource CheckBoxBlack}"/>
-                                <ArnoldVinkTimePicker:TimePicker x:Name="timepicker_LedAutoTimeBefore" IsEnabled="False" Margin="5,0,0,0" Width="120"/>
+                                <TextBlock Margin="0,10,0,0" Text="Device com port:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Select the com port used for the connection." Style="{StaticResource TextBlockGrayLight}"/>
+                                <ComboBox Name="cb_ComPort" Style="{StaticResource ComboBoxBlack}">
+                                    <ComboBoxItem>COM1</ComboBoxItem>
+                                    <ComboBoxItem>COM2</ComboBoxItem>
+                                    <ComboBoxItem>COM3</ComboBoxItem>
+                                    <ComboBoxItem>COM4</ComboBoxItem>
+                                    <ComboBoxItem>COM5</ComboBoxItem>
+                                    <ComboBoxItem>COM6</ComboBoxItem>
+                                    <ComboBoxItem>COM7</ComboBoxItem>
+                                    <ComboBoxItem>COM8</ComboBoxItem>
+                                    <ComboBoxItem>COM9</ComboBoxItem>
+                                    <ComboBoxItem>COM10</ComboBoxItem>
+                                    <ComboBoxItem>COM11</ComboBoxItem>
+                                    <ComboBoxItem>COM12</ComboBoxItem>
+                                    <ComboBoxItem>COM13</ComboBoxItem>
+                                    <ComboBoxItem>COM14</ComboBoxItem>
+                                    <ComboBoxItem>COM15</ComboBoxItem>
+                                    <ComboBoxItem>COM16</ComboBoxItem>
+                                    <ComboBoxItem>COM17</ComboBoxItem>
+                                    <ComboBoxItem>COM18</ComboBoxItem>
+                                    <ComboBoxItem>COM19</ComboBoxItem>
+                                    <ComboBoxItem>COM20</ComboBoxItem>
+                                    <ComboBoxItem>COM21</ComboBoxItem>
+                                    <ComboBoxItem>COM22</ComboBoxItem>
+                                    <ComboBoxItem>COM23</ComboBoxItem>
+                                    <ComboBoxItem>COM24</ComboBoxItem>
+                                    <ComboBoxItem>COM25</ComboBoxItem>
+                                    <ComboBoxItem>COM26</ComboBoxItem>
+                                    <ComboBoxItem>COM27</ComboBoxItem>
+                                    <ComboBoxItem>COM28</ComboBoxItem>
+                                    <ComboBoxItem>COM29</ComboBoxItem>
+                                    <ComboBoxItem>COM30</ComboBoxItem>
+                                    <ComboBoxItem>COM31</ComboBoxItem>
+                                    <ComboBoxItem>COM32</ComboBoxItem>
+                                    <ComboBoxItem>COM33</ComboBoxItem>
+                                    <ComboBoxItem>COM34</ComboBoxItem>
+                                    <ComboBoxItem>COM35</ComboBoxItem>
+                                    <ComboBoxItem>COM36</ComboBoxItem>
+                                    <ComboBoxItem>COM37</ComboBoxItem>
+                                    <ComboBoxItem>COM38</ComboBoxItem>
+                                    <ComboBoxItem>COM39</ComboBoxItem>
+                                    <ComboBoxItem>COM40</ComboBoxItem>
+                                </ComboBox>
+
+                                <TextBlock Margin="0,10,0,0" Text="Device baud rate:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Enter the baud rate used for the connection.&#x0a;Common used rates: 9600, 14400, 19200, 38400, 57600, 115200" Style="{StaticResource TextBlockGrayLight}"/>
+                                <TextBox Name="textbox_BaudRate" Width="180" HorizontalAlignment="Left" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
+
+                                <CheckBox Margin="0,15,0,0" Name="cb_WindowsStartup" Content="Launch on Windows startup" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
+                                <TextBlock Text="Launch AmbiPro automatically on Windows startup." Style="{StaticResource TextBlockGrayLight}"/>
+
+                                <TextBlock Margin="0,10,0,0" Text="Automatically turn leds on:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Automatically turn leds on startup before:" Style="{StaticResource TextBlockGrayLight}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox Name="cb_LedAutoOnOffBefore" Style="{StaticResource CheckBoxBlack}"/>
+                                    <ArnoldVinkTimePicker:TimePicker x:Name="timepicker_LedAutoTimeBefore" IsEnabled="False" Margin="5,0,0,0" Width="120"/>
+                                </StackPanel>
+                                <TextBlock Margin="0,10,0,0" Text="Automatically turn leds on startup after:" Style="{StaticResource TextBlockGrayLight}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox Name="cb_LedAutoOnOffAfter" Style="{StaticResource CheckBoxBlack}"/>
+                                    <ArnoldVinkTimePicker:TimePicker x:Name="timepicker_LedAutoTimeAfter" IsEnabled="False" Margin="5,0,0,0" Width="120"/>
+                                </StackPanel>
                             </StackPanel>
-                            <TextBlock Margin="0,10,0,0" Text="Automatically turn leds on startup after:" Style="{StaticResource TextBlockGrayLight}"/>
-                            <StackPanel Orientation="Horizontal">
-                                <CheckBox Name="cb_LedAutoOnOffAfter" Style="{StaticResource CheckBoxBlack}"/>
-                                <ArnoldVinkTimePicker:TimePicker x:Name="timepicker_LedAutoTimeAfter" IsEnabled="False" Margin="5,0,0,0" Width="120"/>
+
+                            <!-- Modes -->
+                            <StackPanel Name="sp_Modes" Visibility="Collapsed" Margin="5,5,5,5">
+                                <TextBlock Text="Led display mode:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Select the mode that you wish to use." Style="{StaticResource TextBlockGrayLight}"/>
+                                <ComboBox Name="cb_LedMode" Style="{StaticResource ComboBoxBlack}">
+                                    <ComboBoxItem>Screen capture</ComboBoxItem>
+                                    <ComboBoxItem>Solid color</ComboBoxItem>
+                                    <ComboBoxItem>Color loop</ComboBoxItem>
+                                    <ComboBoxItem>Color spectrum</ComboBoxItem>
+                                </ComboBox>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_ColorLoopSpeed" Text="Color loop speed:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change the color loop speed frequency." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                                <Slider Name="sldr_ColorLoopSpeed" Style="{StaticResource SliderWhite}" Minimum="1" Maximum="200"/>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_SpectrumRotationSpeed" Text="Spectrum rotation speed:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change the spectrum color rotation speed frequency." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                                <Slider Name="sldr_SpectrumRotationSpeed" Style="{StaticResource SliderWhite}" Minimum="1" Maximum="120"/>
+
+                                <TextBlock Margin="0,10,0,0" Text="Solid color led output:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Select the solid led color you want to be displayed." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                                <Button Name="button_ColorPickerSolid" Height="35" Margin="0,5,0,0" BorderBrush="{DynamicResource ApplicationGrayBrush}" Style="{StaticResource ButtonImageTransparentBlackBorder}" ToolTipService.ToolTip="Set solid led output color"/>
+                            </StackPanel>
+
+                            <!-- Screen -->
+                            <StackPanel Name="sp_Screen" Visibility="Collapsed" Margin="5,5,5,5">
+                                <TextBlock Text="Monitor screen to capture:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Select the monitor you wish to capture." Style="{StaticResource TextBlockGrayLight}"/>
+                                <ComboBox Name="cb_MonitorCapture" Style="{StaticResource ComboBoxBlack}">
+                                    <ComboBoxItem>Monitor 1</ComboBoxItem>
+                                    <ComboBoxItem>Monitor 2</ComboBoxItem>
+                                    <ComboBoxItem>Monitor 3</ComboBoxItem>
+                                    <ComboBoxItem>Monitor 4</ComboBoxItem>
+                                    <ComboBoxItem>Monitor 5</ComboBoxItem>
+                                    <ComboBoxItem>Monitor 6</ComboBoxItem>
+                                </ComboBox>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_LedCaptureRange" Text="Led capture range:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Adjust the screen capture range resulting in a wider capturing area.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                                <Slider Name="sldr_LedCaptureRange" Style="{StaticResource SliderWhite}" Minimum="5" Maximum="40"/>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_UpdateRate" Text="Led update rate:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change the screen capture update rate target, lowering this will cause less output delay.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                                <Slider Name="sldr_UpdateRate" Style="{StaticResource SliderWhite}" Minimum="1" Maximum="250"/>
+
+                                <TextBlock Margin="0,10,0,0" Text="* This setting has impact on capture and your system performance." Style="{StaticResource TextBlockGrayLight}"/>
+                            </StackPanel>
+
+                            <!-- Blackbars -->
+                            <StackPanel Name="sp_Blackbars" Margin="10" Visibility="Collapsed">
+                                <TextBlock Style="{StaticResource TextBlockBlack}" TextWrapping="Wrap" Text="Welcome to the blackbars test screen, here we will make sure the blackbar detection is working properly by switching through a few different blackbar scenarios."/>
+
+                                <Button Name="btn_BlackbarScenario" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Switch blackbar scenario" Click="btn_BlackbarScenario_Click"/>
+
+                                <CheckBox Margin="0,15,0,0" Name="cb_AdjustBlackBars" Content="Adjust to screen black bars" FontSize="20" FontWeight="Light" Foreground="#1D1D1D" Style="{StaticResource CheckBoxBlack}"/>
+                                <TextBlock Text="Automatically adjust leds to black bars displayed on the screen.*" Style="{StaticResource TextBlockGrayLight}"/>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_AdjustBlackbarRate" Text="Blackbar detection rate:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change the black bars on screen detection rate.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                                <Slider Name="sldr_AdjustBlackbarRate" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="5000" TickFrequency="50"/>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_AdjustBlackbarRange" Text="Blackbar detection range:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change the black bars detection range to move farther in.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                                <Slider Name="sldr_AdjustBlackbarRange" Style="{StaticResource SliderWhite}" Minimum="5" Maximum="75"/>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_AdjustBlackBarBrightness" Text="Blackbar minimum brightness:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change the minimum brightness before it is considered a blackbar." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                                <Slider Name="sldr_AdjustBlackBarBrightness" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="20"/>
+
+                                <TextBlock Margin="0,10,0,0" Text="* This setting has impact on capture and your system performance." Style="{StaticResource TextBlockGrayLight}"/>
+                            </StackPanel>
+
+                            <!-- Rotate -->
+                            <StackPanel Name="sp_LedRotate" Margin="10" Visibility="Collapsed">
+                                <TextBlock Style="{StaticResource TextBlockBlack}" TextWrapping="Wrap" Text="Welcome to the rotate screen, please make sure the colors and dark sides on this screen are matched with the leds placed around the screen for the best possible backlight result."/>
+
+                                <Button Name="btn_RotateClockwise" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Rotate leds clockwise" Click="btn_RotateClockwise_Click"/>
+                                <Button Name="btn_RotateCounterwise" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Rotate leds counterwise" Click="btn_RotateCounterwise_Click"/>
+                                <Button Name="btn_RotateReset" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Reset the leds rotate position" Click="btn_RotateReset_Click"/>
+
+                                <TextBlock Margin="0,5,0,0" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}" Text="* Every screen ratio has it's own separate rotate setting."/>
+                                <TextBlock Margin="0,5,0,0" Name="tb_RotateResolution" Style="{StaticResource TextBlockGrayLight}" Text="Resolution: 0x0 (0)"/>
+                                <TextBlock Margin="0,5,0,0" Name="tb_RotateValue" Style="{StaticResource TextBlockGrayLight}" Text="Led rotation: 0"/>
+                            </StackPanel>
+
+                            <!-- Leds -->
+                            <StackPanel Name="sp_Leds" Visibility="Collapsed" Margin="5,5,5,5">
+                                <TextBlock Text="Led strip sides" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="First led strip side:" Style="{StaticResource TextBlockGrayLight}"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <ComboBox Grid.Column="0" Name="combobox_LedSideFirst" Style="{StaticResource ComboBoxBlack}">
+                                        <ComboBoxItem>None</ComboBoxItem>
+                                        <ComboBoxItem>Bottom (Left to Right)</ComboBoxItem>
+                                        <ComboBoxItem>Bottom (Right to Left)</ComboBoxItem>
+                                        <ComboBoxItem>Top (Left to Right)</ComboBoxItem>
+                                        <ComboBoxItem>Top (Right to Left)</ComboBoxItem>
+                                        <ComboBoxItem>Left (Top to Bottom)</ComboBoxItem>
+                                        <ComboBoxItem>Left (Bottom to Top)</ComboBoxItem>
+                                        <ComboBoxItem>Right (Top to Bottom)</ComboBoxItem>
+                                        <ComboBoxItem>Right (Bottom to Top)</ComboBoxItem>
+                                        <ComboBoxItem>Leds off</ComboBoxItem>
+                                    </ComboBox>
+                                    <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0" Text="Led count:" Style="{StaticResource TextBlockGrayLight}"/>
+                                    <TextBox Grid.Column="2" Name="textbox_LedCountFirst" Width="100" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
+                                </Grid>
+
+                                <TextBlock Text="Second led strip side:" Style="{StaticResource TextBlockGrayLight}"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <ComboBox Grid.Column="0" Name="combobox_LedSideSecond" Style="{StaticResource ComboBoxBlack}">
+                                        <ComboBoxItem>None</ComboBoxItem>
+                                        <ComboBoxItem>Bottom (Left to Right)</ComboBoxItem>
+                                        <ComboBoxItem>Bottom (Right to Left)</ComboBoxItem>
+                                        <ComboBoxItem>Top (Left to Right)</ComboBoxItem>
+                                        <ComboBoxItem>Top (Right to Left)</ComboBoxItem>
+                                        <ComboBoxItem>Left (Top to Bottom)</ComboBoxItem>
+                                        <ComboBoxItem>Left (Bottom to Top)</ComboBoxItem>
+                                        <ComboBoxItem>Right (Top to Bottom)</ComboBoxItem>
+                                        <ComboBoxItem>Right (Bottom to Top)</ComboBoxItem>
+                                        <ComboBoxItem>Leds off</ComboBoxItem>
+                                    </ComboBox>
+                                    <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0" Text="Led count:" Style="{StaticResource TextBlockGrayLight}"/>
+                                    <TextBox Grid.Column="2" Name="textbox_LedCountSecond" Width="100" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
+                                </Grid>
+
+                                <TextBlock Text="Third led strip side:" Style="{StaticResource TextBlockGrayLight}"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <ComboBox Grid.Column="0" Name="combobox_LedSideThird" Style="{StaticResource ComboBoxBlack}">
+                                        <ComboBoxItem>None</ComboBoxItem>
+                                        <ComboBoxItem>Bottom (Left to Right)</ComboBoxItem>
+                                        <ComboBoxItem>Bottom (Right to Left)</ComboBoxItem>
+                                        <ComboBoxItem>Top (Left to Right)</ComboBoxItem>
+                                        <ComboBoxItem>Top (Right to Left)</ComboBoxItem>
+                                        <ComboBoxItem>Left (Top to Bottom)</ComboBoxItem>
+                                        <ComboBoxItem>Left (Bottom to Top)</ComboBoxItem>
+                                        <ComboBoxItem>Right (Top to Bottom)</ComboBoxItem>
+                                        <ComboBoxItem>Right (Bottom to Top)</ComboBoxItem>
+                                        <ComboBoxItem>Leds off</ComboBoxItem>
+                                    </ComboBox>
+                                    <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0" Text="Led count:" Style="{StaticResource TextBlockGrayLight}"/>
+                                    <TextBox Grid.Column="2" Name="textbox_LedCountThird" Width="100" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
+                                </Grid>
+
+                                <TextBlock Text="Fourth led strip side:" Style="{StaticResource TextBlockGrayLight}"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <ComboBox Grid.Column="0" Name="combobox_LedSideFourth" Style="{StaticResource ComboBoxBlack}">
+                                        <ComboBoxItem>None</ComboBoxItem>
+                                        <ComboBoxItem>Bottom (Left to Right)</ComboBoxItem>
+                                        <ComboBoxItem>Bottom (Right to Left)</ComboBoxItem>
+                                        <ComboBoxItem>Top (Left to Right)</ComboBoxItem>
+                                        <ComboBoxItem>Top (Right to Left)</ComboBoxItem>
+                                        <ComboBoxItem>Left (Top to Bottom)</ComboBoxItem>
+                                        <ComboBoxItem>Left (Bottom to Top)</ComboBoxItem>
+                                        <ComboBoxItem>Right (Top to Bottom)</ComboBoxItem>
+                                        <ComboBoxItem>Right (Bottom to Top)</ComboBoxItem>
+                                        <ComboBoxItem>Leds off</ComboBoxItem>
+                                    </ComboBox>
+                                    <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0" Text="Led count:" Style="{StaticResource TextBlockGrayLight}"/>
+                                    <TextBox Grid.Column="2" Name="textbox_LedCountFourth" Width="100" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
+                                </Grid>
+
+                                <TextBlock Margin="0,5,0,0" Name="textblock_LedCount" Text="Total led count:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_LedBottomGap" Text="Led gap bottom stand:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change the gap in the bottom side of led strip for display stand." Style="{StaticResource TextBlockGrayLight}"/>
+                                <Slider Name="sldr_LedBottomGap" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="90" TickFrequency="2"/>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_LedBrightness" Text="Led maximum brightness:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change the maximum displayed led brightness." Style="{StaticResource TextBlockGrayLight}"/>
+                                <Slider Name="sldr_LedBrightness" Style="{StaticResource SliderWhite}" Minimum="5" Maximum="100"/>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_LedMinBrightness" Text="Led minimum brightness:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change the minimum displayed led brightness." Style="{StaticResource TextBlockGrayLight}"/>
+                                <Slider Name="sldr_LedMinBrightness" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="50"/>
+
+                                <Button Name="btn_SwitchLedsOnOrOff" Margin="0,20,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Switch the leds on or off" Click="Btn_SwitchLedsOnOrOff_Click"/>
+                            </StackPanel>
+
+                            <!-- Color -->
+                            <StackPanel Name="sp_Color" Visibility="Collapsed" Margin="5,5,5,5">
+                                <TextBlock Name="tb_LedSaturation" Text="Led color saturation:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change the led color vibrance to your liking." Style="{StaticResource TextBlockGrayLight}"/>
+                                <Image Margin="0,2,0,0" Source="/Assets/SaturationSpectrum.png"/>
+                                <Slider Name="sldr_LedSaturation" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="200"/>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_LedGamma" Text="Led display gamma:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Adjust the gamma to display more black levels." Style="{StaticResource TextBlockGrayLight}"/>
+                                <Image Margin="0,2,0,0" Source="/Assets/GammaSpectrum.png"/>
+                                <Slider Name="sldr_LedGamma" Style="{StaticResource SliderWhite}" Minimum="10" Maximum="150"/>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_LedColorCut" Text="Minimum color brightness:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Only show colors when they reach a certain brightness level." Style="{StaticResource TextBlockGrayLight}"/>
+                                <Slider Name="sldr_LedColorCut" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="25"/>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_LedHue" Text="Led color hue:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change the led color hue tone to your liking." Style="{StaticResource TextBlockGrayLight}"/>
+                                <Image Margin="0,2,0,0" Source="/Assets/HueSpectrum.png"/>
+                                <Slider Name="sldr_LedHue" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="360"/>
+
+                                <TextBlock Margin="0,10,0,0" Text="Led color tuning:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change a specific led color depth to your liking." Style="{StaticResource TextBlockGrayLight}"/>
+                                <Grid Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Name="tb_LedColorRed" Text="Red:" Foreground="Red" Margin="0,0,10,0" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                    <Slider Grid.Column="1" Name="sldr_LedColorRed" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="200" VerticalAlignment="Center"/>
+                                </Grid>
+                                <Grid Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Name="tb_LedColorGreen" Text="Green:" Foreground="Green" Margin="0,0,10,0" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                    <Slider Grid.Column="1" Name="sldr_LedColorGreen" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="200" VerticalAlignment="Center"/>
+                                </Grid>
+                                <Grid Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Name="tb_LedColorBlue" Text="Blue:" Foreground="Blue" Margin="0,0,10,0" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                    <Slider Grid.Column="1" Name="sldr_LedColorBlue" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="200" VerticalAlignment="Center"/>
+                                </Grid>
+
+                                <TextBlock Margin="0,10,0,0" Text="Led color output:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Select the color output of your connected led strip." Style="{StaticResource TextBlockGrayLight}"/>
+                                <ComboBox Name="cb_LedOutput" Style="{StaticResource ComboBoxBlack}">
+                                    <ComboBoxItem>RGB (Red, green and blue)</ComboBoxItem>
+                                    <ComboBoxItem>GBR (Green, blue and red)</ComboBoxItem>
+                                    <ComboBoxItem>BRG (Blue, red and green)</ComboBoxItem>
+                                    <ComboBoxItem>RBG (Red, blue and green)</ComboBoxItem>
+                                    <ComboBoxItem>GRB (Green, red and blue)</ComboBoxItem>
+                                    <ComboBoxItem>BGR (Blue, green and red)</ComboBoxItem>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <!-- Remote -->
+                            <StackPanel Name="sp_Remote" Visibility="Collapsed" Margin="5,5,5,5">
+                                <TextBlock Text="Remote server port:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Please enter the server port you wish to use." Style="{StaticResource TextBlockGrayLight}"/>
+                                <TextBox Name="tb_ServerPort" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
+                                <TextBox Name="tb_RemoteIp" Visibility="Collapsed" Text="127.0.0.1" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
+
+                                <TextBlock Name="txt_Remote_Web" Margin="0,12,0,0" Text="You can access the remote by going to http://ambipro.arnoldvink.com in your browser." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+
+                                <TextBlock Name="txt_Remote_IpText" Margin="0,10,0,0" Text="When you opened the remote use one of the following ip adresses:" Style="{StaticResource TextBlockBlack}"/>
+                                <TextBlock Name="txt_Remote_IpAdres" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+
+                                <Button Name="btn_Remote_Open" Margin="0,15,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Open the remote in browser" Click="Btn_Remote_Open_Click"/>
+
+                                <TextBlock Name="txt_RemoteErrorServerPort" Visibility="Collapsed" Margin="0,10,0,0" Text="* The remote may not be working because the server did not start properly, please make sure that the set server port is not already in use by another application." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                            </StackPanel>
+
+                            <!-- Debug -->
+                            <StackPanel Name="sp_Debug" Visibility="Collapsed" Margin="5,5,5,5">
+                                <CheckBox Name="checkbox_DebugMode" Content="Enable or disable debug mode" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
+                                <TextBlock Text="Enable or disable the debug mode that enables the preview." Style="{StaticResource TextBlockGrayLight}"/>
+
+                                <CheckBox Name="checkbox_DebugColor" Content="Enable or disable color capture debug" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
+                                <TextBlock Text="Enable or disable the color capture areas in the preview." Style="{StaticResource TextBlockGrayLight}"/>
+
+                                <CheckBox Name="checkbox_DebugBlackBar" Content="Enable or disable black bar debug" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
+                                <TextBlock Text="Enable or disable the black bar detection in the preview." Style="{StaticResource TextBlockGrayLight}"/>
+
+                                <CheckBox Name="checkbox_DebugSave" Content="Enable or disable preview image saving" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
+                                <TextBlock Text="Enable or disable preview image saving to root directory." Style="{StaticResource TextBlockGrayLight}"/>
+
+                                <Button Name="btn_BrowseDebugImages" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Browse debug image files" Click="btn_BrowseDebugImages_Click"/>
+                                <Button Name="btn_DeleteDebugImages" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Delete debug image files" Click="btn_DeleteDebugImages_Click"/>
+
+                                <TextBlock Name="textblock_DebugPreview" Margin="0,10,0,0" Text="Screen capture preview:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <Image Name="image_DebugPreview"/>
+                            </StackPanel>
+
+                            <!-- Help -->
+                            <StackPanel Name="sp_Help" Visibility="Collapsed" Margin="5,5,5,5">
+                                <StackPanel Name="sp_Help_Text"/>
+                                <Button Name="btn_Help_ProjectWebsite" Margin="0,15,0,0" Content="Visit Project Website" Style="{StaticResource ButtonAccentBlack}" Click="btn_Help_ProjectWebsite_Click"/>
+                                <Button Name="btn_Help_OpenDonation" Margin="0,10,0,0" Content="Open Donation Page" Style="{StaticResource ButtonAccentBlack}" Click="btn_Help_OpenDonation_Click"/>
                             </StackPanel>
                         </StackPanel>
-
-                        <!-- Modes -->
-                        <StackPanel Name="sp_Modes" Visibility="Collapsed" Margin="5,5,5,5">
-                            <TextBlock Text="Led display mode:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Select the mode that you wish to use." Style="{StaticResource TextBlockGrayLight}"/>
-                            <ComboBox Name="cb_LedMode" Style="{StaticResource ComboBoxBlack}">
-                                <ComboBoxItem>Screen capture</ComboBoxItem>
-                                <ComboBoxItem>Solid color</ComboBoxItem>
-                                <ComboBoxItem>Color loop</ComboBoxItem>
-                                <ComboBoxItem>Color spectrum</ComboBoxItem>
-                            </ComboBox>
-
-                            <TextBlock Margin="0,10,0,0" Name="tb_ColorLoopSpeed" Text="Color loop speed:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Change the color loop speed frequency." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
-                            <Slider Name="sldr_ColorLoopSpeed" Style="{StaticResource SliderWhite}" Minimum="1" Maximum="200"/>
-
-                            <TextBlock Margin="0,10,0,0" Name="tb_SpectrumRotationSpeed" Text="Spectrum rotation speed:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Change the spectrum color rotation speed frequency." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
-                            <Slider Name="sldr_SpectrumRotationSpeed" Style="{StaticResource SliderWhite}" Minimum="1" Maximum="120"/>
-
-                            <TextBlock Margin="0,10,0,0" Text="Solid color led output:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Select the solid led color you want to be displayed." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
-                            <Button Name="button_ColorPickerSolid" Height="35" Margin="0,5,0,0" Style="{StaticResource ButtonImageTransparentBlackBorder}" ToolTipService.ToolTip="Set solid led output color"/>
-                        </StackPanel>
-
-                        <!-- Screen -->
-                        <StackPanel Name="sp_Screen" Visibility="Collapsed" Margin="5,5,5,5">
-                            <TextBlock Text="Monitor screen to capture:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Select the monitor you wish to capture." Style="{StaticResource TextBlockGrayLight}"/>
-                            <ComboBox Name="cb_MonitorCapture" Style="{StaticResource ComboBoxBlack}">
-                                <ComboBoxItem>Monitor 1</ComboBoxItem>
-                                <ComboBoxItem>Monitor 2</ComboBoxItem>
-                                <ComboBoxItem>Monitor 3</ComboBoxItem>
-                                <ComboBoxItem>Monitor 4</ComboBoxItem>
-                                <ComboBoxItem>Monitor 5</ComboBoxItem>
-                                <ComboBoxItem>Monitor 6</ComboBoxItem>
-                            </ComboBox>
-
-                            <TextBlock Margin="0,10,0,0" Name="tb_LedCaptureRange" Text="Led capture range:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Adjust the screen capture range resulting in a wider capturing area.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
-                            <Slider Name="sldr_LedCaptureRange" Style="{StaticResource SliderWhite}" Minimum="5" Maximum="40"/>
-
-                            <TextBlock Margin="0,10,0,0" Name="tb_UpdateRate" Text="Led update rate:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Change the screen capture update rate target, lowering this will cause less output delay.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
-                            <Slider Name="sldr_UpdateRate" Style="{StaticResource SliderWhite}" Minimum="1" Maximum="250"/>
-
-                            <TextBlock Margin="0,10,0,0" Text="* This setting has impact on capture and your system performance." Style="{StaticResource TextBlockGrayLight}"/>
-                        </StackPanel>
-
-                        <!-- Blackbars -->
-                        <StackPanel Name="sp_Blackbars" Margin="10" Visibility="Collapsed">
-                            <TextBlock Style="{StaticResource TextBlockBlack}" TextWrapping="Wrap" Text="Welcome to the blackbars test screen, here we will make sure the blackbar detection is working properly by switching through a few different blackbar scenarios."/>
-
-                            <Button Name="btn_BlackbarScenario" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Switch blackbar scenario" Click="btn_BlackbarScenario_Click"/>
-
-                            <CheckBox Margin="0,15,0,0" Name="cb_AdjustBlackBars" Content="Adjust to screen black bars" FontSize="20" FontWeight="Light" Foreground="#1D1D1D" Style="{StaticResource CheckBoxBlack}"/>
-                            <TextBlock Text="Automatically adjust leds to black bars displayed on the screen.*" Style="{StaticResource TextBlockGrayLight}"/>
-
-                            <TextBlock Margin="0,10,0,0" Name="tb_AdjustBlackbarRate" Text="Blackbar detection rate:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Change the black bars on screen detection rate.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
-                            <Slider Name="sldr_AdjustBlackbarRate" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="5000" TickFrequency="500"/>
-
-                            <TextBlock Margin="0,10,0,0" Name="tb_AdjustBlackBarBrightness" Text="Blackbar minimum brightness:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Change the minimum brightness before it is considered a blackbar." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
-                            <Slider Name="sldr_AdjustBlackBarBrightness" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="20"/>
-
-                            <TextBlock Margin="0,10,0,0" Text="* This setting has impact on capture and your system performance." Style="{StaticResource TextBlockGrayLight}"/>
-                            <ProgressBar Width="10" Height="1" Foreground="#F1F1F1" BorderBrush="Transparent" Background="Transparent" IsIndeterminate="True" Opacity="0.10"/>
-                        </StackPanel>
-
-                        <!-- Rotate -->
-                        <StackPanel Name="sp_LedRotate" Margin="10" Visibility="Collapsed">
-                            <TextBlock Style="{StaticResource TextBlockBlack}" TextWrapping="Wrap" Text="Welcome to the rotate screen, please make sure the colors and dark sides on this screen are matched with the leds placed around the screen for the best possible backlight result."/>
-
-                            <Button Name="btn_RotateClockwise" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Rotate leds clockwise" Click="btn_RotateClockwise_Click"/>
-                            <Button Name="btn_RotateCounterwise" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Rotate leds counterwise" Click="btn_RotateCounterwise_Click"/>
-                            <Button Name="btn_RotateReset" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Reset the leds rotate position" Click="btn_RotateReset_Click"/>
-
-                            <TextBlock Margin="0,5,0,0" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}" Text="* Every screen ratio has it's own separate rotate setting."/>
-                            <TextBlock Margin="0,5,0,0" Name="tb_RotateResolution" Style="{StaticResource TextBlockGrayLight}" Text="Resolution: 0x0 (0)"/>
-                            <TextBlock Margin="0,5,0,0" Name="tb_RotateValue" Style="{StaticResource TextBlockGrayLight}" Text="Led rotation: 0"/>
-                            <ProgressBar Width="10" Height="1" Foreground="#F1F1F1" BorderBrush="Transparent" Background="Transparent" IsIndeterminate="True" Opacity="0.10"/>
-                        </StackPanel>
-
-                        <!-- Leds -->
-                        <StackPanel Name="sp_Leds" Visibility="Collapsed" Margin="5,5,5,5">
-                            <TextBlock Text="Led strip sides" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="First led strip side:" Style="{StaticResource TextBlockGrayLight}"/>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-
-                                <ComboBox Grid.Column="0" Name="combobox_LedSideFirst" Style="{StaticResource ComboBoxBlack}">
-                                    <ComboBoxItem>None</ComboBoxItem>
-                                    <ComboBoxItem>Bottom (Left to Right)</ComboBoxItem>
-                                    <ComboBoxItem>Bottom (Right to Left)</ComboBoxItem>
-                                    <ComboBoxItem>Top (Left to Right)</ComboBoxItem>
-                                    <ComboBoxItem>Top (Right to Left)</ComboBoxItem>
-                                    <ComboBoxItem>Left (Top to Bottom)</ComboBoxItem>
-                                    <ComboBoxItem>Left (Bottom to Top)</ComboBoxItem>
-                                    <ComboBoxItem>Right (Top to Bottom)</ComboBoxItem>
-                                    <ComboBoxItem>Right (Bottom to Top)</ComboBoxItem>
-                                    <ComboBoxItem>Leds off</ComboBoxItem>
-                                </ComboBox>
-                                <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0" Text="Led count:" Style="{StaticResource TextBlockGrayLight}"/>
-                                <TextBox Grid.Column="2" Name="textbox_LedCountFirst" Width="100" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
-                            </Grid>
-
-                            <TextBlock Text="Second led strip side:" Style="{StaticResource TextBlockGrayLight}"/>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-
-                                <ComboBox Grid.Column="0" Name="combobox_LedSideSecond" Style="{StaticResource ComboBoxBlack}">
-                                    <ComboBoxItem>None</ComboBoxItem>
-                                    <ComboBoxItem>Bottom (Left to Right)</ComboBoxItem>
-                                    <ComboBoxItem>Bottom (Right to Left)</ComboBoxItem>
-                                    <ComboBoxItem>Top (Left to Right)</ComboBoxItem>
-                                    <ComboBoxItem>Top (Right to Left)</ComboBoxItem>
-                                    <ComboBoxItem>Left (Top to Bottom)</ComboBoxItem>
-                                    <ComboBoxItem>Left (Bottom to Top)</ComboBoxItem>
-                                    <ComboBoxItem>Right (Top to Bottom)</ComboBoxItem>
-                                    <ComboBoxItem>Right (Bottom to Top)</ComboBoxItem>
-                                    <ComboBoxItem>Leds off</ComboBoxItem>
-                                </ComboBox>
-                                <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0" Text="Led count:" Style="{StaticResource TextBlockGrayLight}"/>
-                                <TextBox Grid.Column="2" Name="textbox_LedCountSecond" Width="100" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
-                            </Grid>
-
-                            <TextBlock Text="Third led strip side:" Style="{StaticResource TextBlockGrayLight}"/>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-
-                                <ComboBox Grid.Column="0" Name="combobox_LedSideThird" Style="{StaticResource ComboBoxBlack}">
-                                    <ComboBoxItem>None</ComboBoxItem>
-                                    <ComboBoxItem>Bottom (Left to Right)</ComboBoxItem>
-                                    <ComboBoxItem>Bottom (Right to Left)</ComboBoxItem>
-                                    <ComboBoxItem>Top (Left to Right)</ComboBoxItem>
-                                    <ComboBoxItem>Top (Right to Left)</ComboBoxItem>
-                                    <ComboBoxItem>Left (Top to Bottom)</ComboBoxItem>
-                                    <ComboBoxItem>Left (Bottom to Top)</ComboBoxItem>
-                                    <ComboBoxItem>Right (Top to Bottom)</ComboBoxItem>
-                                    <ComboBoxItem>Right (Bottom to Top)</ComboBoxItem>
-                                    <ComboBoxItem>Leds off</ComboBoxItem>
-                                </ComboBox>
-                                <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0" Text="Led count:" Style="{StaticResource TextBlockGrayLight}"/>
-                                <TextBox Grid.Column="2" Name="textbox_LedCountThird" Width="100" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
-                            </Grid>
-
-                            <TextBlock Text="Fourth led strip side:" Style="{StaticResource TextBlockGrayLight}"/>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-
-                                <ComboBox Grid.Column="0" Name="combobox_LedSideFourth" Style="{StaticResource ComboBoxBlack}">
-                                    <ComboBoxItem>None</ComboBoxItem>
-                                    <ComboBoxItem>Bottom (Left to Right)</ComboBoxItem>
-                                    <ComboBoxItem>Bottom (Right to Left)</ComboBoxItem>
-                                    <ComboBoxItem>Top (Left to Right)</ComboBoxItem>
-                                    <ComboBoxItem>Top (Right to Left)</ComboBoxItem>
-                                    <ComboBoxItem>Left (Top to Bottom)</ComboBoxItem>
-                                    <ComboBoxItem>Left (Bottom to Top)</ComboBoxItem>
-                                    <ComboBoxItem>Right (Top to Bottom)</ComboBoxItem>
-                                    <ComboBoxItem>Right (Bottom to Top)</ComboBoxItem>
-                                    <ComboBoxItem>Leds off</ComboBoxItem>
-                                </ComboBox>
-                                <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0" Text="Led count:" Style="{StaticResource TextBlockGrayLight}"/>
-                                <TextBox Grid.Column="2" Name="textbox_LedCountFourth" Width="100" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
-                            </Grid>
-
-                            <TextBlock Margin="0,5,0,0" Name="textblock_LedCount" Text="Total led count:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-
-                            <TextBlock Margin="0,10,0,0" Name="tb_LedBottomGap" Text="Led gap bottom stand:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Change the gap in the bottom side of led strip for display stand." Style="{StaticResource TextBlockGrayLight}"/>
-                            <Slider Name="sldr_LedBottomGap" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="90" TickFrequency="2"/>
-
-                            <TextBlock Margin="0,10,0,0" Name="tb_LedBrightness" Text="Led maximum brightness:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Change the maximum displayed led brightness." Style="{StaticResource TextBlockGrayLight}"/>
-                            <Slider Name="sldr_LedBrightness" Style="{StaticResource SliderWhite}" Minimum="5" Maximum="100"/>
-
-                            <TextBlock Margin="0,10,0,0" Name="tb_LedMinBrightness" Text="Led minimum brightness:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Change the minimum displayed led brightness." Style="{StaticResource TextBlockGrayLight}"/>
-                            <Slider Name="sldr_LedMinBrightness" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="25"/>
-
-                            <Button Name="btn_SwitchLedsOnOrOff" Margin="0,20,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Switch the leds on or off" Click="Btn_SwitchLedsOnOrOff_Click"/>
-                        </StackPanel>
-
-                        <!-- Color -->
-                        <StackPanel Name="sp_Color" Visibility="Collapsed" Margin="5,5,5,5">
-                            <TextBlock Name="tb_LedSaturation" Text="Led color saturation:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Change the led color vibrance to your liking." Style="{StaticResource TextBlockGrayLight}"/>
-                            <Image Margin="0,2,0,0" Source="/Assets/SaturationSpectrum.png"/>
-                            <Slider Name="sldr_LedSaturation" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="200"/>
-
-                            <TextBlock Margin="0,10,0,0" Name="tb_LedGamma" Text="Led display gamma:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Adjust the gamma to display more black levels." Style="{StaticResource TextBlockGrayLight}"/>
-                            <Image Margin="0,2,0,0" Source="/Assets/GammaSpectrum.png"/>
-                            <Slider Name="sldr_LedGamma" Style="{StaticResource SliderWhite}" Minimum="5" Maximum="100"/>
-
-                            <TextBlock Margin="0,10,0,0" Name="tb_LedColorCut" Text="Minimum color brightness:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Only show colors when they reach a certain brightness level." Style="{StaticResource TextBlockGrayLight}"/>
-                            <Slider Name="sldr_LedColorCut" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="25"/>
-
-                            <TextBlock Margin="0,10,0,0" Name="tb_LedHue" Text="Led color hue:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Change the led color hue tone to your liking." Style="{StaticResource TextBlockGrayLight}"/>
-                            <Image Margin="0,2,0,0" Source="/Assets/HueSpectrum.png"/>
-                            <Slider Name="sldr_LedHue" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="360"/>
-
-                            <TextBlock Margin="0,10,0,0" Text="Led color tuning:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Change a specific led color depth to your liking." Style="{StaticResource TextBlockGrayLight}"/>
-                            <Grid Margin="0,10,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Name="tb_LedColorRed" Text="Red:" Foreground="Red" Margin="0,0,10,0" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                                <Slider Grid.Column="1" Name="sldr_LedColorRed" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="200" VerticalAlignment="Center"/>
-                            </Grid>
-                            <Grid Margin="0,10,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Name="tb_LedColorGreen" Text="Green:" Foreground="Green" Margin="0,0,10,0" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                                <Slider Grid.Column="1" Name="sldr_LedColorGreen" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="200" VerticalAlignment="Center"/>
-                            </Grid>
-                            <Grid Margin="0,10,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Name="tb_LedColorBlue" Text="Blue:" Foreground="Blue" Margin="0,0,10,0" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                                <Slider Grid.Column="1" Name="sldr_LedColorBlue" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="200" VerticalAlignment="Center"/>
-                            </Grid>
-
-                            <TextBlock Margin="0,10,0,0" Text="Led color output:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Select the color output of your connected led strip." Style="{StaticResource TextBlockGrayLight}"/>
-                            <ComboBox Name="cb_LedOutput" Style="{StaticResource ComboBoxBlack}">
-                                <ComboBoxItem>RGB (Red, green and blue)</ComboBoxItem>
-                                <ComboBoxItem>GBR (Green, blue and red)</ComboBoxItem>
-                                <ComboBoxItem>BRG (Blue, red and green)</ComboBoxItem>
-                                <ComboBoxItem>RBG (Red, blue and green)</ComboBoxItem>
-                                <ComboBoxItem>GRB (Green, red and blue)</ComboBoxItem>
-                                <ComboBoxItem>BGR (Blue, green and red)</ComboBoxItem>
-                            </ComboBox>
-                        </StackPanel>
-
-                        <!-- Remote -->
-                        <StackPanel Name="sp_Remote" Visibility="Collapsed" Margin="5,5,5,5">
-                            <TextBlock Text="Remote server port:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <TextBlock Text="Please enter the server port you wish to use." Style="{StaticResource TextBlockGrayLight}"/>
-                            <TextBox Name="tb_ServerPort" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
-                            <TextBox Name="tb_RemoteIp" Visibility="Collapsed" Text="127.0.0.1" Style="{StaticResource TextBoxBlack}" InputScope="Number"/>
-
-                            <TextBlock Name="txt_Remote_Web" Margin="0,12,0,0" Text="You can access the remote by going to http://ambipro.arnoldvink.com in your browser." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
-
-                            <TextBlock Name="txt_Remote_IpText" Margin="0,10,0,0" Text="When you opened the remote use one of the following ip adresses:" Style="{StaticResource TextBlockBlack}"/>
-                            <TextBlock Name="txt_Remote_IpAdres" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
-
-                            <Button Name="btn_Remote_Open" Margin="0,15,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Open the remote in browser" Click="Btn_Remote_Open_Click"/>
-
-                            <TextBlock Name="txt_RemoteErrorServerPort" Visibility="Collapsed" Margin="0,10,0,0" Text="* The remote may not be working because the server did not start properly, please make sure that the set server port is not already in use by another application." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
-                        </StackPanel>
-
-                        <!-- Debug -->
-                        <StackPanel Name="sp_Debug" Visibility="Collapsed" Margin="5,5,5,5">
-                            <CheckBox Name="checkbox_DebugMode" Content="Enable or disable debug mode" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
-                            <TextBlock Text="Enable or disable the debug mode that enables the preview." Style="{StaticResource TextBlockGrayLight}"/>
-
-                            <CheckBox Name="checkbox_DebugColor" Content="Enable or disable color capture debug" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
-                            <TextBlock Text="Enable or disable the color capture areas in the preview." Style="{StaticResource TextBlockGrayLight}"/>
-
-                            <CheckBox Name="checkbox_DebugBlackBar" Content="Enable or disable black bar debug" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
-                            <TextBlock Text="Enable or disable the black bar detection in the preview." Style="{StaticResource TextBlockGrayLight}"/>
-
-                            <CheckBox Name="checkbox_DebugSave" Content="Enable or disable preview image saving" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
-                            <TextBlock Text="Enable or disable preview image saving to root directory." Style="{StaticResource TextBlockGrayLight}"/>
-
-                            <Button Name="btn_BrowseDebugImages" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Browse debug image files" Click="btn_BrowseDebugImages_Click"/>
-                            <Button Name="btn_DeleteDebugImages" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Delete debug image files" Click="btn_DeleteDebugImages_Click"/>
-
-                            <TextBlock Name="textblock_DebugPreview" Margin="0,10,0,0" Text="Screen capture preview:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                            <Image Name="image_DebugPreview"/>
-                        </StackPanel>
-
-                        <!-- Help -->
-                        <StackPanel Name="sp_Help" Visibility="Collapsed" Margin="5,5,5,5">
-                            <StackPanel Name="sp_Help_Text"/>
-                            <Button Name="btn_Help_ProjectWebsite" Margin="0,15,0,0" Content="Visit Project Website" Style="{StaticResource ButtonAccentBlack}" Click="btn_Help_ProjectWebsite_Click"/>
-                            <Button Name="btn_Help_OpenDonation" Margin="0,10,0,0" Content="Open Donation Page" Style="{StaticResource ButtonAccentBlack}" Click="btn_Help_OpenDonation_Click"/>
-                        </StackPanel>
-                    </StackPanel>
-                </ScrollViewer>
-            </Border>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

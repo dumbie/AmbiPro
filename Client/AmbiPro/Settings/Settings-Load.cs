@@ -61,13 +61,7 @@ namespace AmbiPro.Settings
                 cb_ComPort.SelectedIndex = (Convert.ToInt32(ConfigurationManager.AppSettings["ComPort"]) - 1);
 
                 //Load - Baud Rate
-                if (ConfigurationManager.AppSettings["BaudRate"].ToString() == "9600") { cb_BaudRate.SelectedIndex = 0; }
-                else if (ConfigurationManager.AppSettings["BaudRate"].ToString() == "14400") { cb_BaudRate.SelectedIndex = 1; }
-                else if (ConfigurationManager.AppSettings["BaudRate"].ToString() == "19200") { cb_BaudRate.SelectedIndex = 2; }
-                else if (ConfigurationManager.AppSettings["BaudRate"].ToString() == "28800") { cb_BaudRate.SelectedIndex = 3; }
-                else if (ConfigurationManager.AppSettings["BaudRate"].ToString() == "38400") { cb_BaudRate.SelectedIndex = 4; }
-                else if (ConfigurationManager.AppSettings["BaudRate"].ToString() == "57600") { cb_BaudRate.SelectedIndex = 5; }
-                else if (ConfigurationManager.AppSettings["BaudRate"].ToString() == "115200") { cb_BaudRate.SelectedIndex = 6; }
+                textbox_BaudRate.Text = ConfigurationManager.AppSettings["BaudRate"].ToString();
 
                 //Load - Led Automatic Before
                 bool LedAutoOnOffBefore = Convert.ToBoolean(ConfigurationManager.AppSettings["LedAutoOnOffBefore"]);
@@ -81,7 +75,7 @@ namespace AmbiPro.Settings
                 timepicker_LedAutoTimeAfter.IsEnabled = LedAutoOnOffAfter;
                 timepicker_LedAutoTimeAfter.DateTimeValue = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTimeAfter"], vAppCultureInfo);
 
-                //Load - Remote Port
+                //Load - Server Port
                 tb_ServerPort.Text = ConfigurationManager.AppSettings["ServerPort"].ToString();
 
                 //Load - Monitor Capture
@@ -124,7 +118,6 @@ namespace AmbiPro.Settings
                 //Load - Solid Led Color
                 string SolidLedColor = ConfigurationManager.AppSettings["SolidLedColor"].ToString();
                 button_ColorPickerSolid.Background = new BrushConverter().ConvertFrom(SolidLedColor) as SolidColorBrush;
-                button_ColorPickerSolid.BorderBrush = new BrushConverter().ConvertFrom(SolidLedColor) as SolidColorBrush;
 
                 //Load - Led Hue
                 tb_LedHue.Text = "Led color hue: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedHue2"]) + "°";
@@ -135,15 +128,15 @@ namespace AmbiPro.Settings
                 sldr_LedColorCut.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedColorCut"]);
 
                 //Load - Led Color Red
-                tb_LedColorRed.Text = "Red: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedColorRed"]);
+                tb_LedColorRed.Text = "Red: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedColorRed"]) + "%";
                 sldr_LedColorRed.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedColorRed"]);
 
                 //Load - Led Color Green
-                tb_LedColorGreen.Text = "Green: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedColorGreen"]);
+                tb_LedColorGreen.Text = "Green: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedColorGreen"]) + "%";
                 sldr_LedColorGreen.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedColorGreen"]);
 
                 //Load - Led Color Blue
-                tb_LedColorBlue.Text = "Blue: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedColorBlue"]);
+                tb_LedColorBlue.Text = "Blue: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedColorBlue"]) + "%";
                 sldr_LedColorBlue.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedColorBlue"]);
 
                 //Load - Led Capture Range
@@ -151,9 +144,12 @@ namespace AmbiPro.Settings
                 sldr_LedCaptureRange.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedCaptureRange"]);
 
                 //Load - Blackbar detect rate
-                int AdjustBlackbarRateMs = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRate"]);
-                tb_AdjustBlackbarRate.Text = "Blackbar detection rate: " + AdjustBlackbarRateMs + " ms";
-                sldr_AdjustBlackbarRate.Value = AdjustBlackbarRateMs;
+                tb_AdjustBlackbarRate.Text = "Blackbar detection rate: " + Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRate"]) + " ms";
+                sldr_AdjustBlackbarRate.Value = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRate"]);
+
+                //Load - Blackbar detect range
+                tb_AdjustBlackbarRange.Text = "Blackbar detection range: " + Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRange"]) + "%";
+                sldr_AdjustBlackbarRange.Value = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRange"]);
 
                 //Load - Adjust Blackbar Brightness
                 tb_AdjustBlackBarBrightness.Text = "Blackbar minimum brightness: " + Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarBrightness"]) + "%";

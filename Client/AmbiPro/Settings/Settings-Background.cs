@@ -1,11 +1,99 @@
 ﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using static AmbiPro.AppVariables;
 
 namespace AmbiPro.Settings
 {
     partial class FormSettings
     {
+        //Switch test background
+        private void button_BackgroundSwitch_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SwitchBackground(false, false, false);
+            }
+            catch { }
+        }
+
+        private void SwitchBackground(bool forceBlocks, bool forceBlackbars, bool forceTransparent)
+        {
+            try
+            {
+                //Hide backgrounds
+                grid_BackgroundBlocks.Visibility = Visibility.Collapsed;
+                grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
+                grid_BackgroundSolidWhite.Visibility = Visibility.Collapsed;
+                grid_BackgroundSolidRed.Visibility = Visibility.Collapsed;
+                grid_BackgroundSolidGreen.Visibility = Visibility.Collapsed;
+                grid_BackgroundSolidBlue.Visibility = Visibility.Collapsed;
+                grid_BackgroundSolidYellow.Visibility = Visibility.Collapsed;
+
+                //Show background
+                if (forceBlocks)
+                {
+                    grid_BackgroundBlocks.Visibility = Visibility.Visible;
+                    vCurrentBackground = 1;
+                    return;
+                }
+                else if (forceBlackbars)
+                {
+                    grid_BackgroundBlackbars.Visibility = Visibility.Visible;
+                    vCurrentBackground = 2;
+                    return;
+                }
+                else if (forceTransparent)
+                {
+                    vCurrentBackground = 0;
+                    return;
+                }
+
+                //Show background
+                if (vCurrentBackground == 0)
+                {
+                    grid_BackgroundBlocks.Visibility = Visibility.Visible;
+                    vCurrentBackground = 1;
+                }
+                else if (vCurrentBackground == 1)
+                {
+                    grid_BackgroundBlackbars.Visibility = Visibility.Visible;
+                    vCurrentBackground = 2;
+                }
+                else if (vCurrentBackground == 2)
+                {
+                    grid_BackgroundSolidWhite.Visibility = Visibility.Visible;
+                    vCurrentBackground = 3;
+                }
+                else if (vCurrentBackground == 3)
+                {
+                    grid_BackgroundSolidRed.Visibility = Visibility.Visible;
+                    vCurrentBackground = 4;
+                }
+                else if (vCurrentBackground == 4)
+                {
+                    grid_BackgroundSolidGreen.Visibility = Visibility.Visible;
+                    vCurrentBackground = 5;
+                }
+                else if (vCurrentBackground == 5)
+                {
+                    grid_BackgroundSolidBlue.Visibility = Visibility.Visible;
+                    vCurrentBackground = 6;
+                }
+                else if (vCurrentBackground == 6)
+                {
+                    grid_BackgroundSolidYellow.Visibility = Visibility.Visible;
+                    vCurrentBackground = 7;
+                }
+                else if (vCurrentBackground == 7)
+                {
+                    vCurrentBackground = 0;
+                }
+            }
+            catch { }
+        }
+
         private void sp_DecreaseBlockSize_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             try

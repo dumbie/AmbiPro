@@ -8,8 +8,9 @@ namespace AmbiPro
     {
         //Application Timers
         public static DispatcherTimer vDispatcherTimer_UpdateSettings = new DispatcherTimer();
-        public static DispatcherTimer vDispatcherTimer_LedCount = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
-        public static DispatcherTimer vDispatcherTimer_ServerPort = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
+        public static DispatcherTimer vDispatcherTimer_SettingBaudRate = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
+        public static DispatcherTimer vDispatcherTimer_SettingLedCount = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
+        public static DispatcherTimer vDispatcherTimer_SettingServerPort = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
 
         //Register Application Timers
         public static void ApplicationTimersRegister()

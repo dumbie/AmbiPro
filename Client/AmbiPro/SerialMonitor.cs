@@ -31,11 +31,12 @@ namespace AmbiPro
         //Led settings
         private static bool setAdjustBlackBars = true;
         private static int setAdjustBlackbarRate = 0;
+        private static int setAdjustBlackbarRange = 0;
         private static int setAdjustBlackBarBrightness = 0;
         private static int setUpdateRate = 0;
         private static int setLedBottomGap = 0;
         private static double setLedBrightness = 0;
-        private static int setLedMinBrightness = 0;
+        private static byte setLedMinBrightness = 0;
         private static double setLedGamma = 0;
         private static double setLedSaturation = 0;
         private static int setColorLoopSpeed = 0;
@@ -76,11 +77,12 @@ namespace AmbiPro
                 //Led settings
                 setAdjustBlackBars = Convert.ToBoolean(ConfigurationManager.AppSettings["AdjustBlackBars"]);
                 setAdjustBlackbarRate = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRate"]);
+                setAdjustBlackbarRange = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRange"]);
                 setAdjustBlackBarBrightness = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarBrightness"]);
                 setUpdateRate = Convert.ToInt32(ConfigurationManager.AppSettings["UpdateRate"]);
                 setLedBottomGap = Convert.ToInt32(ConfigurationManager.AppSettings["LedBottomGap"]);
                 setLedBrightness = Convert.ToDouble(ConfigurationManager.AppSettings["LedBrightness"]) / 100;
-                setLedMinBrightness = Convert.ToInt32(ConfigurationManager.AppSettings["LedMinBrightness"]);
+                setLedMinBrightness = Convert.ToByte(ConfigurationManager.AppSettings["LedMinBrightness"]);
                 setLedGamma = Convert.ToDouble(ConfigurationManager.AppSettings["LedGamma"]) / 100;
                 setLedSaturation = Convert.ToDouble(ConfigurationManager.AppSettings["LedSaturation"]) / 100;
                 setColorLoopSpeed = Convert.ToInt32(ConfigurationManager.AppSettings["ColorLoopSpeed"]);
@@ -411,7 +413,7 @@ namespace AmbiPro
                 //Connect to the device
                 vSerialComPort = new SerialPort(setSerialPortName, setSerialBaudRate);
                 vSerialComPort.Open();
-                Debug.WriteLine("Connected to the com port device: " + setSerialPortName);
+                Debug.WriteLine("Connected to the com port device: " + setSerialPortName + "/" + setSerialBaudRate);
 
                 //Create led byte array
                 byte[] SerialBytes = new byte[TotalByteSize];
@@ -420,15 +422,7 @@ namespace AmbiPro
                 SerialBytes[2] = Encoding.Unicode.GetBytes("a").First();
 
                 //Reset default variables
-                vCaptureZoneRange = 0;
-                vMarginBlackLastUpdate = 0;
-                vMarginTop = vMarginMinimumOffset;
-                vMarginBottom = vMarginMinimumOffset;
-                vMarginLeft = vMarginMinimumOffset;
-                vMarginRight = vMarginMinimumOffset;
-                vScreenWidth = 0;
-                vScreenHeight = 0;
-                vScreenOutputSize = 0;
+                ResetVariables();
 
                 //Check led display mode
                 if (setLedMode == 0) { await ModeScreenCapture(InitByteSize, SerialBytes); }

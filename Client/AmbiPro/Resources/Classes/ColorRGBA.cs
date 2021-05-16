@@ -187,7 +187,7 @@ namespace AmbiPro
                 {
                     if (targetAdjust != 1.00)
                     {
-                        double rAdjusted = R * targetAdjust;
+                        double rAdjusted = (0.213 + 0.787 * targetAdjust) * R + (0.715 - 0.715 * targetAdjust) * G + (0.072 - 0.072 * targetAdjust) * B;
                         if (rAdjusted > 255) { rAdjusted = 255; }
                         if (rAdjusted < 0) { rAdjusted = 0; }
 
@@ -204,7 +204,7 @@ namespace AmbiPro
                 {
                     if (targetAdjust != 1.00)
                     {
-                        double gAdjusted = G * targetAdjust;
+                        double gAdjusted = (0.213 - 0.213 * targetAdjust) * R + (0.715 + 0.285 * targetAdjust) * G + (0.072 - 0.072 * targetAdjust) * B;
                         if (gAdjusted > 255) { gAdjusted = 255; }
                         if (gAdjusted < 0) { gAdjusted = 0; }
 
@@ -221,7 +221,7 @@ namespace AmbiPro
                 {
                     if (targetAdjust != 1.00)
                     {
-                        double bAdjusted = B * targetAdjust;
+                        double bAdjusted = (0.213 - 0.213 * targetAdjust) * R + (0.715 - 0.715 * targetAdjust) * G + (0.072 + 0.928 * targetAdjust) * B;
                         if (bAdjusted > 255) { bAdjusted = 255; }
                         if (bAdjusted < 0) { bAdjusted = 0; }
 

@@ -34,6 +34,10 @@ namespace Updater
                     AppRunning = true;
                     CloseProcess.Kill();
                 }
+                foreach (Process CloseProcess in Process.GetProcessesByName("AmbiPro-Admin"))
+                {
+                    CloseProcess.Kill();
+                }
 
                 //Wait for applications to have closed
                 await Task.Delay(1000);
@@ -101,7 +105,7 @@ namespace Updater
                 if (AppRunning)
                 {
                     TextBlockUpdate("Running the updated version of the application.");
-                    await ProcessLauncherWin32Async("AmbiPro.exe", "", "", false, false);
+                    await ProcessLauncherWin32Async("AmbiPro-Admin.exe", "", "", true, false);
                 }
 
                 //Close the application

@@ -20,7 +20,7 @@ namespace AmbiPro.Settings
                 if (sp_Help_Text.Children.Count == 0)
                 {
                     sp_Help_Text.Children.Add(new TextBlock() { Text = "My leds do not always seem to update?", Style = (Style)App.Current.Resources["TextBlockBlack"] });
-                    sp_Help_Text.Children.Add(new TextBlock() { Text = "If a game does not update the leds try running the game in fullscreen windowed mode, administrator prompts and remote desktop connections may also keep the lights from updating while they are active.", Style = (Style)App.Current.Resources["TextBlockGrayLight"], TextWrapping = TextWrapping.Wrap });
+                    sp_Help_Text.Children.Add(new TextBlock() { Text = "If a game does not update the leds try running the game in fullscreen windowed or borderless mode, administrator prompts and remote desktop connections may also keep the lights from updating while they are active.", Style = (Style)App.Current.Resources["TextBlockGrayLight"], TextWrapping = TextWrapping.Wrap });
 
                     sp_Help_Text.Children.Add(new TextBlock() { Text = "\r\nSome video streams cause leds to turn off?", Style = (Style)App.Current.Resources["TextBlockBlack"] });
                     sp_Help_Text.Children.Add(new TextBlock() { Text = "Streams with DRM can turn your leds off because the video gets captured as a black screen due to the copy protection, as a workaround you can use an alternative player like Kodi, or in Chromium browsers you can change the angle graphics backend to DirectX 9, you can do this by typing 'chrome://flags/#use-angle' in your address bar and set the value to D3D9.", Style = (Style)App.Current.Resources["TextBlockGrayLight"], TextWrapping = TextWrapping.Wrap });

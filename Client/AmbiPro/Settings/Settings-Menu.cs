@@ -36,8 +36,7 @@ namespace AmbiPro.Settings
 
                     if (SelStackPanel.Name == "menuButtonBasics")
                     {
-                        grid_BackgroundRotate.Visibility = Visibility.Collapsed;
-                        grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
+                        SwitchBackground(false, false, true);
                         sp_Basics.Visibility = Visibility.Visible;
                         sp_Modes.Visibility = Visibility.Collapsed;
                         sp_Screen.Visibility = Visibility.Collapsed;
@@ -51,8 +50,7 @@ namespace AmbiPro.Settings
                     }
                     if (SelStackPanel.Name == "menuButtonModes")
                     {
-                        grid_BackgroundRotate.Visibility = Visibility.Collapsed;
-                        grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
+                        SwitchBackground(false, false, true);
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Visible;
                         sp_Screen.Visibility = Visibility.Collapsed;
@@ -66,8 +64,7 @@ namespace AmbiPro.Settings
                     }
                     else if (SelStackPanel.Name == "menuButtonScreen")
                     {
-                        grid_BackgroundRotate.Visibility = Visibility.Collapsed;
-                        grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
+                        SwitchBackground(false, false, true);
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Collapsed;
                         sp_Screen.Visibility = Visibility.Visible;
@@ -81,8 +78,7 @@ namespace AmbiPro.Settings
                     }
                     else if (SelStackPanel.Name == "menuButtonLeds")
                     {
-                        grid_BackgroundRotate.Visibility = Visibility.Visible;
-                        grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
+                        SwitchBackground(true, false, false);
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Collapsed;
                         sp_Screen.Visibility = Visibility.Collapsed;
@@ -96,8 +92,7 @@ namespace AmbiPro.Settings
                     }
                     else if (SelStackPanel.Name == "menuButtonColor")
                     {
-                        grid_BackgroundRotate.Visibility = Visibility.Collapsed;
-                        grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
+                        SwitchBackground(false, false, true);
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Collapsed;
                         sp_Screen.Visibility = Visibility.Collapsed;
@@ -111,8 +106,7 @@ namespace AmbiPro.Settings
                     }
                     else if (SelStackPanel.Name == "menuButtonRemote")
                     {
-                        grid_BackgroundRotate.Visibility = Visibility.Collapsed;
-                        grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
+                        SwitchBackground(false, false, true);
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Collapsed;
                         sp_Screen.Visibility = Visibility.Collapsed;
@@ -130,8 +124,7 @@ namespace AmbiPro.Settings
                     }
                     else if (SelStackPanel.Name == "menuButtonHelp")
                     {
-                        grid_BackgroundRotate.Visibility = Visibility.Collapsed;
-                        grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
+                        SwitchBackground(false, false, true);
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Collapsed;
                         sp_Screen.Visibility = Visibility.Collapsed;
@@ -145,8 +138,7 @@ namespace AmbiPro.Settings
                     }
                     else if (SelStackPanel.Name == "menuButtonDebug")
                     {
-                        grid_BackgroundRotate.Visibility = Visibility.Collapsed;
-                        grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
+                        SwitchBackground(false, false, true);
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Collapsed;
                         sp_Screen.Visibility = Visibility.Collapsed;
@@ -160,8 +152,7 @@ namespace AmbiPro.Settings
                     }
                     else if (SelStackPanel.Name == "menuButtonBlackbars")
                     {
-                        grid_BackgroundRotate.Visibility = Visibility.Collapsed;
-                        grid_BackgroundBlackbars.Visibility = Visibility.Visible;
+                        SwitchBackground(false, true, false);
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Collapsed;
                         sp_Screen.Visibility = Visibility.Collapsed;
@@ -172,13 +163,10 @@ namespace AmbiPro.Settings
                         sp_Remote.Visibility = Visibility.Collapsed;
                         sp_Debug.Visibility = Visibility.Collapsed;
                         sp_Help.Visibility = Visibility.Collapsed;
-                        grid_BackgroundRotate.Visibility = Visibility.Collapsed;
-                        grid_BackgroundBlackbars.Visibility = Visibility.Visible;
                     }
                     else if (SelStackPanel.Name == "menuButtonRotate")
                     {
-                        grid_BackgroundRotate.Visibility = Visibility.Visible;
-                        grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
+                        SwitchBackground(true, false, false);
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Collapsed;
                         sp_Screen.Visibility = Visibility.Collapsed;

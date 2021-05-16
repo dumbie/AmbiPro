@@ -2,4 +2,20 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:AdminLauncher">
+    <!--Application Resources-->
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/MainColors.xaml"/>
+                <ResourceDictionary Source="Styles/ControlTemplates/Button.xaml"/>
+                <ResourceDictionary Source="Styles/ControlTemplates/CheckBox.xaml"/>
+                <ResourceDictionary Source="Styles/ControlTemplates/ComboBox.xaml"/>
+                <ResourceDictionary Source="Styles/ControlTemplates/ListBox.xaml"/>
+                <ResourceDictionary Source="Styles/ControlTemplates/Scrollbar.xaml"/>
+                <ResourceDictionary Source="Styles/ControlTemplates/Slider.xaml"/>
+                <ResourceDictionary Source="Styles/ControlTemplates/TextBox.xaml"/>
+                <ResourceDictionary Source="Styles/MainStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>
