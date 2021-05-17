@@ -14,15 +14,21 @@ this application will capture your screen and sync the colors to your led strip.
 - Control the leds on another device with the remote.
 
 ## Installation Instructions
-1) Extract the AmbiPro folder to any directory you want on your computer.
+1) Extract the AmbiPro folder to any directory you want on your device.
 2) Make sure that you have installed all the requirements listed below.
-3) Launch AmbiPro.exe and setup your Arduino in the settings to get started.
+3) Launch AmbiPro executable and setup your Arduino in the settings to get started.
 4) Enjoy using your Arduino ambilight setup with AmbiPro.
+
+## Uninstallation Instructions
+1) Remove the created shortcuts from your startup folder.
+2) Remove the created tasks in Windows task scheduler.
+3) Remove the extracted AmbiPro directory.
 
 ## Tips and tricks
 - Let AmbiPro automatically launch on Windows startup for easier all time usage.
-- Some users may need to run the application as administrator to let it work properly.
+- Some users may need to run the application as administrator to let it work properly.*
 - For more information and help open the "Help" window or tab in the application.
+* You can run it as administrator by using the "AmbiPro-Admin" executable.
 
 ## Requirements
 - Microsoft Visual C++ 2019 Redistributable installed.
