@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Media;
 using static AmbiPro.AppVariables;
 
 namespace AmbiPro.Settings
@@ -25,11 +26,7 @@ namespace AmbiPro.Settings
                 //Hide backgrounds
                 grid_BackgroundBlocks.Visibility = Visibility.Collapsed;
                 grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
-                grid_BackgroundSolidWhite.Visibility = Visibility.Collapsed;
-                grid_BackgroundSolidRed.Visibility = Visibility.Collapsed;
-                grid_BackgroundSolidGreen.Visibility = Visibility.Collapsed;
-                grid_BackgroundSolidBlue.Visibility = Visibility.Collapsed;
-                grid_BackgroundSolidYellow.Visibility = Visibility.Collapsed;
+                grid_BackgroundSolid.Visibility = Visibility.Collapsed;
 
                 //Show background
                 if (forceBlocks)
@@ -63,30 +60,47 @@ namespace AmbiPro.Settings
                 }
                 else if (vCurrentBackground == 2)
                 {
-                    grid_BackgroundSolidWhite.Visibility = Visibility.Visible;
+                    grid_BackgroundSolid.Visibility = Visibility.Visible;
+                    grid_BackgroundSolid.Background = new SolidColorBrush(Colors.White);
                     vCurrentBackground = 3;
                 }
                 else if (vCurrentBackground == 3)
                 {
-                    grid_BackgroundSolidRed.Visibility = Visibility.Visible;
+                    grid_BackgroundSolid.Visibility = Visibility.Visible;
+                    grid_BackgroundSolid.Background = new SolidColorBrush(Colors.Red);
                     vCurrentBackground = 4;
                 }
                 else if (vCurrentBackground == 4)
                 {
-                    grid_BackgroundSolidGreen.Visibility = Visibility.Visible;
+                    grid_BackgroundSolid.Visibility = Visibility.Visible;
+                    grid_BackgroundSolid.Background = new SolidColorBrush(Colors.Green);
                     vCurrentBackground = 5;
                 }
                 else if (vCurrentBackground == 5)
                 {
-                    grid_BackgroundSolidBlue.Visibility = Visibility.Visible;
+                    grid_BackgroundSolid.Visibility = Visibility.Visible;
+                    grid_BackgroundSolid.Background = new SolidColorBrush(Colors.Blue);
                     vCurrentBackground = 6;
                 }
                 else if (vCurrentBackground == 6)
                 {
-                    grid_BackgroundSolidYellow.Visibility = Visibility.Visible;
+                    grid_BackgroundSolid.Visibility = Visibility.Visible;
+                    grid_BackgroundSolid.Background = new SolidColorBrush(Colors.Cyan);
                     vCurrentBackground = 7;
                 }
                 else if (vCurrentBackground == 7)
+                {
+                    grid_BackgroundSolid.Visibility = Visibility.Visible;
+                    grid_BackgroundSolid.Background = new SolidColorBrush(Colors.Magenta);
+                    vCurrentBackground = 8;
+                }
+                else if (vCurrentBackground == 8)
+                {
+                    grid_BackgroundSolid.Visibility = Visibility.Visible;
+                    grid_BackgroundSolid.Background = new SolidColorBrush(Colors.Yellow);
+                    vCurrentBackground = 9;
+                }
+                else if (vCurrentBackground == 9)
                 {
                     vCurrentBackground = 0;
                 }

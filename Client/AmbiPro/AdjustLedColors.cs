@@ -8,7 +8,7 @@ namespace AmbiPro
     public partial class SerialMonitor
     {
         //Adjust the led color values to settings
-        private static void AdjustLedColors(ref ColorRGBA adjustColor, bool ignoreColorCut)
+        private static void AdjustLedColors(ref ColorRGBA adjustColor)
         {
             try
             {
@@ -29,21 +29,27 @@ namespace AmbiPro
                 //Adjust the screen capture brightness
                 adjustColor.AdjustBrightness(setLedBrightness);
 
-                //Adjust color to the color cut off setting
-                if (!ignoreColorCut && adjustColor.R < setLedColorCut && adjustColor.G < setLedColorCut && adjustColor.B < setLedColorCut)
+                //Check current led mode
+                if (setLedMode == 0)
                 {
-                    adjustColor.R = 0;
-                    adjustColor.G = 0;
-                    adjustColor.B = 0;
-                }
+                    //Fix Check if HDR is enabled and apply tonemapping
 
-                //Adjust the minimum brightness to setting
-                if (adjustColor.R < setLedMinBrightness && adjustColor.G < setLedMinBrightness && adjustColor.B < setLedMinBrightness)
-                {
-                    adjustColor.R = setLedMinBrightness;
-                    adjustColor.G = setLedMinBrightness;
-                    adjustColor.B = setLedMinBrightness;
-                    return;
+                    //Adjust color to the color cut off setting
+                    if (adjustColor.R < setLedColorCut && adjustColor.G < setLedColorCut && adjustColor.B < setLedColorCut)
+                    {
+                        adjustColor.R = 0;
+                        adjustColor.G = 0;
+                        adjustColor.B = 0;
+                    }
+
+                    //Adjust the minimum brightness to setting
+                    if (adjustColor.R < setLedMinBrightness && adjustColor.G < setLedMinBrightness && adjustColor.B < setLedMinBrightness)
+                    {
+                        adjustColor.R = setLedMinBrightness;
+                        adjustColor.G = setLedMinBrightness;
+                        adjustColor.B = setLedMinBrightness;
+                        return;
+                    }
                 }
 
                 //Set the color output according to setting

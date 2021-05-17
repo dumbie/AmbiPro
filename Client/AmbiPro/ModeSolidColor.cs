@@ -17,15 +17,15 @@ namespace AmbiPro
                 //Loop mode variables
                 bool ConnectionFailed = false;
 
-                //Update the tray icon
-                AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
+                //Update led status icons
+                UpdateLedStatusIcons(true);
 
                 //Current byte information
                 while (!vTask_LedUpdate.TaskStopRequest)
                 {
                     //Set the used colors and adjust it
                     ColorRGBA CurrentColor = ColorRGBA.HexToRGBA(setSolidLedColor);
-                    AdjustLedColors(ref CurrentColor, true);
+                    AdjustLedColors(ref CurrentColor);
 
                     //Set the current color to the bytes
                     int CurrentSerialByte = InitByteSize;

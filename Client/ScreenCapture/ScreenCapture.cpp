@@ -12,7 +12,7 @@ bool CaptureResetVariables()
 		iDxgiDevice.Release();
 		iDxgiAdapter.Release();
 		iDxgiOutput.Release();
-		iDxgiOutput1.Release();
+		iDxgiOutput6.Release();
 		iDxgiResource.Release();
 		iDxgiOutputDuplication.Release();
 
@@ -84,8 +84,8 @@ extern "C"
 				return false;
 			}
 
-			//Query DXGI Output1
-			hResult = iDxgiOutput->QueryInterface(&iDxgiOutput1);
+			//Query DXGI Output
+			hResult = iDxgiOutput->QueryInterface(&iDxgiOutput6);
 			if (!SUCCEEDED(hResult))
 			{
 				CaptureResetVariables();
@@ -93,7 +93,7 @@ extern "C"
 			}
 
 			//Create desktop duplicate
-			hResult = iDxgiOutput1->DuplicateOutput(iD3DDevice, &iDxgiOutputDuplication);
+			hResult = iDxgiOutput6->DuplicateOutput(iD3DDevice, &iDxgiOutputDuplication);
 			if (!SUCCEEDED(hResult))
 			{
 				CaptureResetVariables();
@@ -178,7 +178,7 @@ extern "C"
 
 			//Wait for vertical blank
 			iDxgiOutput->WaitForVBlank();
-			iDxgiOutput1->WaitForVBlank();
+			iDxgiOutput6->WaitForVBlank();
 
 			//Get output duplication frame
 			hResult = iDxgiOutputDuplication->AcquireNextFrame(INFINITE, &iDxgiOutputDuplicationFrameInfo, &iDxgiResource);

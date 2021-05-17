@@ -144,7 +144,7 @@ namespace AmbiPro
                         if (CapturedColors > 0)
                         {
                             ColorRGBA CurrentColor = new ColorRGBA() { R = (byte)(AverageRed / CapturedColors), G = (byte)(AverageGreen / CapturedColors), B = (byte)(AverageBlue / CapturedColors) };
-                            AdjustLedColors(ref CurrentColor, false);
+                            AdjustLedColors(ref CurrentColor);
 
                             //Set the color to color byte array
                             SerialBytes[CurrentSerialByte] = CurrentColor.R;

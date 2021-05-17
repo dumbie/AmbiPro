@@ -19,39 +19,39 @@ namespace AmbiPro
                 bool ConnectionFailed = false;
                 int CurrentLedRotate = 0;
 
-                //Update the tray icon
-                AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
+                //Update led status icons
+                UpdateLedStatusIcons(true);
 
                 //Current byte information
                 while (!vTask_LedUpdate.TaskStopRequest)
                 {
                     //Set the used colors and adjust them
                     ColorRGBA Color0 = ColorRGBA.HexToRGBA("#f8d000");
-                    AdjustLedColors(ref Color0, true);
+                    AdjustLedColors(ref Color0);
                     ColorRGBA Color1 = ColorRGBA.HexToRGBA("#ffb000");
-                    AdjustLedColors(ref Color1, true);
+                    AdjustLedColors(ref Color1);
                     ColorRGBA Color2 = ColorRGBA.HexToRGBA("#ff7000");
-                    AdjustLedColors(ref Color2, true);
+                    AdjustLedColors(ref Color2);
                     ColorRGBA Color3 = ColorRGBA.HexToRGBA("#fa0000");
-                    AdjustLedColors(ref Color3, true);
+                    AdjustLedColors(ref Color3);
                     ColorRGBA Color4 = ColorRGBA.HexToRGBA("#e80096");
-                    AdjustLedColors(ref Color4, true);
+                    AdjustLedColors(ref Color4);
                     ColorRGBA Color5 = ColorRGBA.HexToRGBA("#70009c");
-                    AdjustLedColors(ref Color5, true);
+                    AdjustLedColors(ref Color5);
                     ColorRGBA Color6 = ColorRGBA.HexToRGBA("#0000be");
-                    AdjustLedColors(ref Color6, true);
+                    AdjustLedColors(ref Color6);
                     ColorRGBA Color7 = ColorRGBA.HexToRGBA("#003ace");
-                    AdjustLedColors(ref Color7, true);
+                    AdjustLedColors(ref Color7);
                     ColorRGBA Color8 = ColorRGBA.HexToRGBA("#00bae7");
-                    AdjustLedColors(ref Color8, true);
+                    AdjustLedColors(ref Color8);
                     ColorRGBA Color9 = ColorRGBA.HexToRGBA("#004500");
-                    AdjustLedColors(ref Color9, true);
+                    AdjustLedColors(ref Color9);
                     ColorRGBA Color10 = ColorRGBA.HexToRGBA("#276800");
-                    AdjustLedColors(ref Color10, true);
+                    AdjustLedColors(ref Color10);
                     ColorRGBA Color11 = ColorRGBA.HexToRGBA("#6c9f00");
-                    AdjustLedColors(ref Color11, true);
+                    AdjustLedColors(ref Color11);
                     ColorRGBA Color12 = ColorRGBA.HexToRGBA("#93b300");
-                    AdjustLedColors(ref Color12, true);
+                    AdjustLedColors(ref Color12);
 
                     //Rotate color variables
                     int CurrentColor = 0;

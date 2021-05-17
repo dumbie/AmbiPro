@@ -10,9 +10,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
+using static ArnoldVinkCode.AVActions;
 
 namespace AmbiPro
 {
@@ -141,9 +143,6 @@ namespace AmbiPro
                     //Update settings
                     UpdateSettings();
 
-                    //Set first launch setting to false
-                    SettingsFunction.Save("FirstLaunch2", "False");
-
                     //Restart the leds
                     if (ledSwitch == LedSwitches.Restart)
                     {
@@ -173,6 +172,31 @@ namespace AmbiPro
             }
         }
 
+        //Update led status icons
+        public static void UpdateLedStatusIcons(bool ledsOn)
+        {
+            try
+            {
+                if (ledsOn)
+                {
+                    ActionDispatcherInvoke(delegate
+                    {
+                        App.vFormSettings.image_SwitchLedsOnOrOff.Source = new BitmapImage(new Uri("/Assets/Icons/Leds.png", UriKind.RelativeOrAbsolute));
+                    });
+                    AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
+                }
+                else
+                {
+                    ActionDispatcherInvoke(delegate
+                    {
+                        App.vFormSettings.image_SwitchLedsOnOrOff.Source = new BitmapImage(new Uri("/Assets/Icons/LedsOff.png", UriKind.RelativeOrAbsolute));
+                    });
+                    AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon-Disabled.ico"));
+                }
+            }
+            catch { }
+        }
+
         //Enable the led updates
         private static void LedsEnable()
         {
@@ -181,7 +205,7 @@ namespace AmbiPro
                 Debug.WriteLine("Enabling the led updates.");
 
                 //Check led count
-                if (setLedCountTotal == 0)
+                if (setLedCountTotal <= 0)
                 {
                     ShowNoLedsSideCountSetup();
                     return;
@@ -203,10 +227,10 @@ namespace AmbiPro
             {
                 Debug.WriteLine("Disabling the led updates.");
 
-                //Update the tray icon
+                //Update led status icons
                 if (!restartLeds)
                 {
-                    AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon-Disabled.ico"));
+                    UpdateLedStatusIcons(false);
                 }
 
                 //Cancel the led task
@@ -290,17 +314,18 @@ namespace AmbiPro
             catch { }
         }
 
-        //Show led set message
+        //Show led setup message
         private static void ShowNoLedsSideCountSetup()
         {
             try
             {
+                Debug.WriteLine("There are currently no leds configured.");
                 AVActions.ActionDispatcherInvoke(async delegate
                 {
                     List<string> MsgBoxAnswers = new List<string>();
                     MsgBoxAnswers.Add("Ok");
 
-                    await new AVMessageBox().Popup(null, "Failed to turn leds on or off", "Please make sure that you have set your led sides and count.", MsgBoxAnswers);
+                    await new AVMessageBox().Popup(null, "Failed to turn leds on or off", "Please make sure that you have setup your led sides and count.", MsgBoxAnswers);
                 });
             }
             catch { }
@@ -396,15 +421,6 @@ namespace AmbiPro
                 //Update the led settings
                 UpdateSettings();
 
-                //Check the led count
-                if (setLedCountTotal <= 0)
-                {
-                    Debug.WriteLine("There are currently no leds configured.");
-                    await LedSwitch(LedSwitches.Disable);
-                    ShowSettings();
-                    return;
-                }
-
                 //Calculate bytes size
                 int InitByteSize = 3;
                 int LedByteSize = setLedCountTotal * 3;
@@ -423,6 +439,9 @@ namespace AmbiPro
 
                 //Reset default variables
                 ResetVariables();
+
+                //Set first launch setting to false
+                SettingsFunction.Save("FirstLaunch2", "False");
 
                 //Check led display mode
                 if (setLedMode == 0) { await ModeScreenCapture(InitByteSize, SerialBytes); }

@@ -3,7 +3,6 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
@@ -30,8 +29,8 @@ namespace AmbiPro
                     return;
                 }
 
-                //Update the tray icon
-                AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
+                //Update led status icons
+                UpdateLedStatusIcons(true);
 
                 //Start updating the leds
                 while (!vTask_LedUpdate.TaskStopRequest)

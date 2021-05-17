@@ -17,11 +17,7 @@
 
     <Grid>
         <!-- Background Solid -->
-        <Grid Name="grid_BackgroundSolidWhite" Background="White" Visibility="Collapsed"/>
-        <Grid Name="grid_BackgroundSolidRed" Background="Red" Visibility="Collapsed"/>
-        <Grid Name="grid_BackgroundSolidGreen" Background="Green" Visibility="Collapsed"/>
-        <Grid Name="grid_BackgroundSolidBlue" Background="Blue" Visibility="Collapsed"/>
-        <Grid Name="grid_BackgroundSolidYellow" Background="Yellow" Visibility="Collapsed"/>
+        <Grid Name="grid_BackgroundSolid" Background="White" Visibility="Collapsed"/>
 
         <!-- Background Blocks -->
         <Grid Name="grid_BackgroundBlocks" Background="Black" Visibility="Collapsed">
@@ -91,17 +87,36 @@
             </Grid.ColumnDefinitions>
 
             <!-- Background Switch -->
-            <Border Grid.Column="1" VerticalAlignment="Top" CornerRadius="0,5,5,0" Margin="0,0,5,0" Width="40" Height="40">
-                <Border.Background>
-                    <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
-                </Border.Background>
-                <Grid>
-                    <ProgressBar Width="10" Height="1" Foreground="#F1F1F1" BorderBrush="Transparent" Background="Transparent" IsIndeterminate="True" Opacity="0.10"/>
+            <StackPanel Grid.Column="1" VerticalAlignment="Top" >
+                <Border CornerRadius="0,5,5,0" Width="40" Height="40">
+                    <Border.Background>
+                        <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
+                    </Border.Background>
                     <Button Name="button_BackgroundSwitch" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Change test background" Click="button_BackgroundSwitch_Click">
                         <Image Source="/Assets/Icons/Background.png"/>
                     </Button>
-                </Grid>
-            </Border>
+                </Border>
+
+                <Border Margin="0,5,0,0" CornerRadius="0,5,5,0" Width="40" Height="40">
+                    <Border.Background>
+                        <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
+                    </Border.Background>
+                    <Button Name="btn_BlackbarScenario" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Switch blackbar scenario" Click="btn_BlackbarScenario_Click">
+                        <Image Source="/Assets/Icons/Blackbars.png"/>
+                    </Button>
+                </Border>
+
+                <Border Margin="0,5,0,0" CornerRadius="0,5,5,0" Width="40" Height="40">
+                    <Border.Background>
+                        <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
+                    </Border.Background>
+                    <Button Name="btn_SwitchLedsOnOrOff" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Switch the leds on or off" Click="Btn_SwitchLedsOnOrOff_Click">
+                        <Image Name="image_SwitchLedsOnOrOff" Source="/Assets/Icons/LedsOff.png"/>
+                    </Button>
+                </Border>
+
+                <ProgressBar Width="10" Height="1" Foreground="#F1F1F1" BorderBrush="Transparent" Background="Transparent" IsIndeterminate="True" Opacity="0.10"/>
+            </StackPanel>
 
             <!-- Grid Main -->
             <Grid Grid.Column="0"  Height="540">
@@ -178,7 +193,7 @@
                         <StackPanel>
                             <!-- Basics -->
                             <StackPanel Name="sp_Basics" Margin="5,5,5,5">
-                                <TextBlock Style="{StaticResource TextBlockBlack}" TextWrapping="Wrap" Text="Welcome to AmbiPro, now it's time to setup some basic settings to get started, you can turn the leds on or off from the leds tab."/>
+                                <TextBlock Style="{StaticResource TextBlockBlack}" TextWrapping="Wrap" Text="Welcome to AmbiPro, now it's time to setup some basic settings to get started, you can turn the leds on or off from the right side tab."/>
 
                                 <TextBlock Margin="0,10,0,0" Text="Device com port:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                                 <TextBlock Text="Select the com port used for the connection." Style="{StaticResource TextBlockGrayLight}"/>
@@ -295,9 +310,7 @@
 
                             <!-- Blackbars -->
                             <StackPanel Name="sp_Blackbars" Margin="10" Visibility="Collapsed">
-                                <TextBlock Style="{StaticResource TextBlockBlack}" TextWrapping="Wrap" Text="Welcome to the blackbars test screen, here we will make sure the blackbar detection is working properly by switching through a few different blackbar scenarios."/>
-
-                                <Button Name="btn_BlackbarScenario" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Switch blackbar scenario" Click="btn_BlackbarScenario_Click"/>
+                                <TextBlock Style="{StaticResource TextBlockBlack}" TextWrapping="Wrap" Text="Welcome to the blackbars test screen, here we will make sure the blackbar detection is working properly by switching through a few different blackbar scenarios, you can switch through scenarios from the side bar on the right."/>
 
                                 <CheckBox Margin="0,15,0,0" Name="cb_AdjustBlackBars" Content="Adjust to screen black bars" FontSize="20" FontWeight="Light" Foreground="#1D1D1D" Style="{StaticResource CheckBoxBlack}"/>
                                 <TextBlock Text="Automatically adjust leds to black bars displayed on the screen.*" Style="{StaticResource TextBlockGrayLight}"/>
@@ -442,8 +455,6 @@
                                 <TextBlock Margin="0,10,0,0" Name="tb_LedMinBrightness" Text="Led minimum brightness:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                                 <TextBlock Text="Change the minimum displayed led brightness." Style="{StaticResource TextBlockGrayLight}"/>
                                 <Slider Name="sldr_LedMinBrightness" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="50"/>
-
-                                <Button Name="btn_SwitchLedsOnOrOff" Margin="0,20,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Switch the leds on or off" Click="Btn_SwitchLedsOnOrOff_Click"/>
                             </StackPanel>
 
                             <!-- Color -->

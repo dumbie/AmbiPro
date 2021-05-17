@@ -1,7 +1,7 @@
 #define WIN32_LEAN_AND_MEAN
 #pragma comment(lib, "D3D11.lib")
 #include <atlbase.h>
-#include <dxgi1_2.h>
+#include <dxgi1_6.h>
 #include <d3d11.h>
 
 //D3D feature levels
@@ -18,7 +18,7 @@ UINT NumD3DFeatureLevels = ARRAYSIZE(ArrayD3DFeatureLevels);
 CComPtr<IDXGIDevice> iDxgiDevice;
 CComPtr<IDXGIAdapter> iDxgiAdapter;
 CComPtr<IDXGIOutput> iDxgiOutput;
-CComPtr<IDXGIOutput1> iDxgiOutput1;
+CComPtr<IDXGIOutput6> iDxgiOutput6;
 CComPtr<IDXGIResource> iDxgiResource;
 CComPtr<IDXGIOutputDuplication> iDxgiOutputDuplication;
 DXGI_OUTDUPL_DESC iDxgiOutputDuplicationDescription;
