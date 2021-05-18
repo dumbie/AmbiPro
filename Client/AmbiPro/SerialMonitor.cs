@@ -236,9 +236,6 @@ namespace AmbiPro
                 //Cancel the led task
                 await AVActions.TaskStopLoop(vTask_LedUpdate);
 
-                //Reset the screen capturer
-                AppImport.CaptureReset();
-
                 //Disable the serial port
                 if (vSerialComPort.IsOpen)
                 {
@@ -397,20 +394,6 @@ namespace AmbiPro
                 });
             }
             catch { }
-        }
-
-        //Initialize Screen Capturer
-        private static async Task<bool> InitializeScreenCapturer()
-        {
-            bool InitFailed = false;
-            try
-            {
-                Debug.WriteLine("Initializing screen capturer: " + DateTime.Now);
-                InitFailed = AppImport.CaptureInitialize(Convert.ToInt32(ConfigurationManager.AppSettings["MonitorCapture"]));
-                await Task.Delay(100);
-            }
-            catch { }
-            return InitFailed;
         }
 
         //Update the leds in loop

@@ -1,6 +1,4 @@
 ﻿using ArnoldVinkCode;
-using System.Drawing;
-using System.Reflection;
 using System.Threading.Tasks;
 using static AmbiPro.AppClasses;
 using static AmbiPro.AppTasks;

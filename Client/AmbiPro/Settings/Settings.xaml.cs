@@ -38,12 +38,13 @@ namespace AmbiPro.Settings
             {
                 Process.Start("Debug");
             }
-            catch
+            catch (Exception ex)
             {
                 List<string> MsgBoxAnswers = new List<string>();
                 MsgBoxAnswers.Add("Ok");
 
                 await new AVMessageBox().Popup(null, "Debug image folder not found.", "", MsgBoxAnswers);
+                Debug.WriteLine("Failed to open debug bitmap images: " + ex.Message);
             }
         }
 
@@ -65,6 +66,10 @@ namespace AmbiPro.Settings
             }
             catch (Exception ex)
             {
+                List<string> MsgBoxAnswers = new List<string>();
+                MsgBoxAnswers.Add("Ok");
+
+                await new AVMessageBox().Popup(null, "Failed to delete debug image files.", "", MsgBoxAnswers);
                 Debug.WriteLine("Failed to delete debug bitmap images: " + ex.Message);
             }
         }

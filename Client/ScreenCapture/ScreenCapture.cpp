@@ -5,26 +5,38 @@ bool CaptureResetVariables()
 {
 	try
 	{
-		//Disable debug reporting
-		_CrtSetReportMode(_CRT_ASSERT, 0);
-
-		//DXGI Variables
+		//Capture Variables
 		iDxgiDevice.Release();
 		iDxgiAdapter.Release();
 		iDxgiOutput.Release();
 		iDxgiOutput6.Release();
-		iDxgiResource.Release();
 		iDxgiOutputDuplication.Release();
-
-		//D3D Variables
 		iD3DDevice.Release();
 		iD3DDeviceContext.Release();
-		iD3DDestinationTexture.Release();
-		iD3DScreenCaptureTexture.Release();
 
 		//Result Variables
 		hResult = E_FAIL;
+		return true;
+	}
+	catch (bool)
+	{
+		return false;
+	}
+}
 
+bool ScreenshotResetVariables()
+{
+	try
+	{
+		//Screenshot Variables
+		iDxgiResource.Release();
+		iD3DScreenCaptureTextureOriginal.Release();
+		iD3DScreenCaptureTextureOutput.Release();
+		iD3DScreenCaptureTextureResize.Release();
+		iD3D11ShaderResourceView.Release();
+
+		//Result Variables
+		hResult = E_FAIL;
 		return true;
 	}
 	catch (bool)
@@ -39,12 +51,16 @@ extern "C"
 	{
 		try
 		{
-			//Reset initialize variables
+			//Disable debug reporting
+			_CrtSetReportMode(_CRT_ASSERT, 0);
+
+			//Reset capture variables
 			CaptureResetVariables();
 
 			//Create D3D Device
 			for (UINT FeatureIndex = 0; FeatureIndex < NumD3DFeatureLevels; FeatureIndex++)
 			{
+				D3D_FEATURE_LEVEL iD3DFeatureLevel;
 				hResult = D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, &ArrayD3DFeatureLevels[FeatureIndex], 1, D3D11_SDK_VERSION, &iD3DDevice, &iD3DFeatureLevel, &iD3DDeviceContext);
 				if (SUCCEEDED(hResult)) { break; }
 				else
@@ -86,6 +102,7 @@ extern "C"
 
 			//Query DXGI Output
 			hResult = iDxgiOutput->QueryInterface(&iDxgiOutput6);
+			iDxgiOutput.Release();
 			if (!SUCCEEDED(hResult))
 			{
 				CaptureResetVariables();
@@ -99,43 +116,6 @@ extern "C"
 				CaptureResetVariables();
 				return false;
 			}
-
-			//Get duplicate description
-			iDxgiOutputDuplication->GetDesc(&iDxgiOutputDuplicationDescription);
-
-			//Create CPU staging texture
-			iD3DTextureDescription.Width = iDxgiOutputDuplicationDescription.ModeDesc.Width;
-			iD3DTextureDescription.Height = iDxgiOutputDuplicationDescription.ModeDesc.Height;
-			iD3DTextureDescription.Format = DXGI_FORMAT_B8G8R8A8_TYPELESS;
-			iD3DTextureDescription.ArraySize = 1;
-			iD3DTextureDescription.BindFlags = 0;
-			iD3DTextureDescription.MiscFlags = 0;
-			iD3DTextureDescription.SampleDesc.Count = 1;
-			iD3DTextureDescription.SampleDesc.Quality = 0;
-			iD3DTextureDescription.MipLevels = 1;
-			iD3DTextureDescription.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
-			iD3DTextureDescription.Usage = D3D11_USAGE_STAGING;
-
-			hResult = iD3DDevice->CreateTexture2D(&iD3DTextureDescription, NULL, &iD3DDestinationTexture);
-			iD3DDevice.Release();
-			if (!SUCCEEDED(hResult))
-			{
-				CaptureResetVariables();
-				return false;
-			}
-
-			//Map CPU texture to bitmap buffer
-			hResult = iD3DDeviceContext->Map(iD3DDestinationTexture, 0, D3D11_MAP_READ, 0, &iD3DMappedSubResource);
-			if (!SUCCEEDED(hResult))
-			{
-				CaptureResetVariables();
-				return false;
-			}
-
-			//Calculate and set bitmap information
-			BitmapWidthPixels = iD3DMappedSubResource.RowPitch / 4;
-			BitmapHeightPixels = iDxgiOutputDuplicationDescription.ModeDesc.Height;
-			BitmapByteSize = BitmapWidthPixels * iDxgiOutputDuplicationDescription.ModeDesc.Height * 4;
 			return true;
 		}
 		catch (bool)
@@ -149,7 +129,7 @@ extern "C"
 	{
 		try
 		{
-			return CaptureResetVariables();
+			return CaptureResetVariables() && ScreenshotResetVariables();
 		}
 		catch (bool)
 		{
@@ -157,91 +137,143 @@ extern "C"
 		}
 	}
 
-	__declspec(dllexport) bool CaptureFreeMemory(void* FreeMemory)
+	__declspec(dllexport) BYTE* CaptureScreenshot(UINT* OutputWidth, UINT* OutputHeight, UINT* OutputSize, UINT ResizeMipLevel)
 	{
 		try
 		{
-			delete[] FreeMemory;
-			return true;
-		}
-		catch (bool)
-		{
-			return false;
-		}
-	}
-
-	__declspec(dllexport) BYTE* CaptureScreenshot(UINT* OutputWidth, UINT* OutputHeight, UINT* OutputSize)
-	{
-		try
-		{
-			if (iDxgiOutputDuplication == NULL) { return NULL; }
-
 			//Wait for vertical blank
-			iDxgiOutput->WaitForVBlank();
 			iDxgiOutput6->WaitForVBlank();
 
 			//Get output duplication frame
+			DXGI_OUTDUPL_FRAME_INFO iDxgiOutputDuplicationFrameInfo;
 			hResult = iDxgiOutputDuplication->AcquireNextFrame(INFINITE, &iDxgiOutputDuplicationFrameInfo, &iDxgiResource);
-			if (!SUCCEEDED(hResult)) { return NULL; }
+			if (!SUCCEEDED(hResult))
+			{
+				ScreenshotResetVariables();
+				return NULL;
+			}
 
-			//Query for D3D screen texture
-			hResult = iDxgiResource->QueryInterface(&iD3DScreenCaptureTexture);
+			//Get screen texture
+			hResult = iDxgiResource->QueryInterface(&iD3DScreenCaptureTextureOriginal);
 			iDxgiResource.Release();
-			if (!SUCCEEDED(hResult)) { return NULL; }
+			if (!SUCCEEDED(hResult))
+			{
+				ScreenshotResetVariables();
+				return NULL;
+			}
 
-			//Copy image into CPU texture
-			iD3DDeviceContext->CopyResource(iD3DDestinationTexture, iD3DScreenCaptureTexture);
-			iD3DDeviceContext->Unmap(iD3DDestinationTexture, 0);
-			iD3DDeviceContext->Unmap(iD3DScreenCaptureTexture, 0);
-			iD3DScreenCaptureTexture.Release();
+			//Get screen description
+			D3D11_TEXTURE2D_DESC iD3DTextureDescriptionOriginal;
+			iD3DScreenCaptureTextureOriginal->GetDesc(&iD3DTextureDescriptionOriginal);
+
+			//Check resize resolution
+			UINT widthResize = iD3DTextureDescriptionOriginal.Width >> ResizeMipLevel;
+			UINT heightResize = iD3DTextureDescriptionOriginal.Height >> ResizeMipLevel;
+			if (widthResize < 300 || heightResize < 300)
+			{
+				ResizeMipLevel = 0;
+			}
+
+			//Create output texture
+			if (ResizeMipLevel > 0)
+			{
+				//Create resize description
+				iD3DTextureDescriptionOriginal.MipLevels = ResizeMipLevel + 1;
+				iD3DTextureDescriptionOriginal.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS;
+
+				//Create resize texture
+				hResult = iD3DDevice->CreateTexture2D(&iD3DTextureDescriptionOriginal, NULL, &iD3DScreenCaptureTextureResize);
+				if (!SUCCEEDED(hResult))
+				{
+					ScreenshotResetVariables();
+					return NULL;
+				}
+
+				//Create resize shader view
+				hResult = iD3DDevice->CreateShaderResourceView(iD3DScreenCaptureTextureResize, NULL, &iD3D11ShaderResourceView);
+				if (!SUCCEEDED(hResult))
+				{
+					ScreenshotResetVariables();
+					return NULL;
+				}
+
+				//Create output description
+				D3D11_TEXTURE2D_DESC iD3DTextureDescriptionOutput;
+				iD3DTextureDescriptionOutput.Width = widthResize;
+				iD3DTextureDescriptionOutput.Height = heightResize;
+				iD3DTextureDescriptionOutput.MipLevels = 1;
+				iD3DTextureDescriptionOutput.ArraySize = 1;
+				iD3DTextureDescriptionOutput.Format = DXGI_FORMAT_B8G8R8A8_TYPELESS;
+				iD3DTextureDescriptionOutput.SampleDesc.Count = 1;
+				iD3DTextureDescriptionOutput.SampleDesc.Quality = 0;
+				iD3DTextureDescriptionOutput.Usage = D3D11_USAGE_STAGING;
+				iD3DTextureDescriptionOutput.BindFlags = 0;
+				iD3DTextureDescriptionOutput.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+				iD3DTextureDescriptionOutput.MiscFlags = 0;
+
+				//Create output texture
+				hResult = iD3DDevice->CreateTexture2D(&iD3DTextureDescriptionOutput, NULL, &iD3DScreenCaptureTextureOutput);
+				if (!SUCCEEDED(hResult))
+				{
+					ScreenshotResetVariables();
+					return NULL;
+				}
+
+				//Copy resize to output texture
+				iD3DDeviceContext->CopySubresourceRegion(iD3DScreenCaptureTextureResize, 0, 0, 0, 0, iD3DScreenCaptureTextureOriginal, 0, NULL);
+				iD3DDeviceContext->GenerateMips(iD3D11ShaderResourceView);
+				iD3DDeviceContext->CopySubresourceRegion(iD3DScreenCaptureTextureOutput, 0, 0, 0, 0, iD3DScreenCaptureTextureResize, ResizeMipLevel, NULL);
+			}
+			else
+			{
+				//Create output description
+				iD3DTextureDescriptionOriginal.Format = DXGI_FORMAT_B8G8R8A8_TYPELESS;
+				iD3DTextureDescriptionOriginal.Usage = D3D11_USAGE_STAGING;
+				iD3DTextureDescriptionOriginal.BindFlags = 0;
+				iD3DTextureDescriptionOriginal.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+				iD3DTextureDescriptionOriginal.MiscFlags = 0;
+
+				//Create output texture
+				hResult = iD3DDevice->CreateTexture2D(&iD3DTextureDescriptionOriginal, NULL, &iD3DScreenCaptureTextureOutput);
+				if (!SUCCEEDED(hResult))
+				{
+					ScreenshotResetVariables();
+					return NULL;
+				}
+
+				//Copy original to output texture
+				iD3DDeviceContext->CopySubresourceRegion(iD3DScreenCaptureTextureOutput, 0, 0, 0, 0, iD3DScreenCaptureTextureOriginal, 0, NULL);
+			}
 
 			//Release output duplication frame
-			iDxgiOutputDuplication->ReleaseFrame();
+			hResult = iDxgiOutputDuplication->ReleaseFrame();
+			if (!SUCCEEDED(hResult))
+			{
+				ScreenshotResetVariables();
+				return NULL;
+			}
+
+			//Map texture to subresource
+			D3D11_MAPPED_SUBRESOURCE iD3DMappedSubResource;
+			hResult = iD3DDeviceContext->Map(iD3DScreenCaptureTextureOutput, 0, D3D11_MAP_READ, 0, &iD3DMappedSubResource);
+			if (!SUCCEEDED(hResult))
+			{
+				ScreenshotResetVariables();
+				return NULL;
+			}
+
+			//Reset screenshot variables
+			ScreenshotResetVariables();
 
 			//Return image byte array
-			*OutputWidth = BitmapWidthPixels;
-			*OutputHeight = BitmapHeightPixels;
-			*OutputSize = BitmapByteSize;
+			*OutputWidth = iD3DMappedSubResource.RowPitch / 4;
+			*OutputHeight = iD3DMappedSubResource.DepthPitch / iD3DMappedSubResource.RowPitch;
+			*OutputSize = *OutputHeight * iD3DMappedSubResource.RowPitch;
 			return (BYTE*)iD3DMappedSubResource.pData;
 		}
 		catch (BYTE*)
 		{
-			return NULL;
-		}
-	}
-
-	__declspec(dllexport) BYTE* CaptureResizeNearest(BYTE* BitmapData, UINT ResizeWidth, UINT ResizeHeight, UINT* OutputSize)
-	{
-		try
-		{
-			if (BitmapData == NULL) { return NULL; }
-
-			UINT PixelSize = 4;
-			double ScaleWidth = (double)ResizeWidth / (double)BitmapWidthPixels;
-			double ScaleHeight = (double)ResizeHeight / (double)BitmapHeightPixels;
-
-			UINT ResizeByteSize = ResizeWidth * ResizeHeight * PixelSize;
-			BYTE* ResizeBuffer = new BYTE[ResizeByteSize];
-
-			for (UINT xHeight = 0; xHeight < ResizeHeight; xHeight++)
-			{
-				for (UINT xWidth = 0; xWidth < ResizeWidth; xWidth++)
-				{
-					UINT pixel = PixelSize * (xHeight * ResizeWidth + xWidth);
-					UINT nearest = PixelSize * ((UINT)(xHeight / ScaleHeight) * BitmapWidthPixels + (UINT)(xWidth / ScaleWidth));
-					ResizeBuffer[pixel++] = BitmapData[nearest++];
-					ResizeBuffer[pixel++] = BitmapData[nearest++];
-					ResizeBuffer[pixel++] = BitmapData[nearest++];
-					ResizeBuffer[pixel] = BitmapData[nearest];
-				}
-			}
-
-			//Return image byte array
-			*OutputSize = ResizeByteSize;
-			return ResizeBuffer;
-		}
-		catch (BYTE*)
-		{
+			ScreenshotResetVariables();
 			return NULL;
 		}
 	}

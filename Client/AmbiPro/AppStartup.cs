@@ -106,9 +106,6 @@ namespace AmbiPro
                 //Disable application timers
                 AppTimers.ApplicationTimersDisable();
 
-                //Reset the screen capturer
-                AppImport.CaptureReset();
-
                 //Hide the tray icon
                 AppTray.NotifyIcon.Visible = false;
 

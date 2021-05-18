@@ -1,8 +1,8 @@
 ﻿using ArnoldVinkCode;
 using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Threading.Tasks;
 using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
@@ -13,6 +13,40 @@ namespace AmbiPro
 {
     partial class SerialMonitor
     {
+        //Initialize Screen Capture
+        private static async Task<bool> InitializeScreenCapture(int delayTime)
+        {
+            try
+            {
+                Debug.WriteLine("Initializing screen capture: " + DateTime.Now);
+                return AppImport.CaptureInitialize(Convert.ToInt32(ConfigurationManager.AppSettings["MonitorCapture"]));
+            }
+            catch
+            {
+                Debug.WriteLine("Failed to initialize screen capture.");
+                return false;
+            }
+            finally
+            {
+                await Task.Delay(delayTime);
+            }
+        }
+
+        //Reset Screen Capture
+        private static bool ResetScreenCapture()
+        {
+            try
+            {
+                Debug.WriteLine("Resetting screen capture: " + DateTime.Now);
+                return AppImport.CaptureReset();
+            }
+            catch
+            {
+                Debug.WriteLine("Failed to reset screen capture.");
+                return false;
+            }
+        }
+
         //Loop cature the screen
         private static async Task ModeScreenCapture(int InitByteSize, byte[] SerialBytes)
         {
@@ -22,7 +56,7 @@ namespace AmbiPro
                 bool ConnectionFailed = false;
 
                 //Initialize Screen Capturer
-                if (!await InitializeScreenCapturer())
+                if (!await InitializeScreenCapture(200))
                 {
                     Debug.WriteLine("Failed to initialize the screen capturer.");
                     ShowFailedCaptureMessage();
@@ -38,13 +72,12 @@ namespace AmbiPro
                     int CurrentSerialByte = InitByteSize;
                     IntPtr BitmapIntPtr = IntPtr.Zero;
                     Bitmap BitmapImage = null;
-                    bool BitmapResize = false;
                     try
                     {
                         //Capture screenshot
                         try
                         {
-                            BitmapIntPtr = AppImport.CaptureScreenshot(out vScreenWidth, out vScreenHeight, out vScreenOutputSize);
+                            BitmapIntPtr = AppImport.CaptureScreenshot(out vScreenWidth, out vScreenHeight, out vScreenOutputSize, 2);
                         }
                         catch { }
 
@@ -52,50 +85,9 @@ namespace AmbiPro
                         if (BitmapIntPtr == IntPtr.Zero)
                         {
                             Debug.WriteLine("Screenshot is corrupted, restarting capture.");
-                            await InitializeScreenCapturer();
-                            await TaskDelayLoop(1000, vTask_LedUpdate);
+                            await InitializeScreenCapture(500);
                             continue;
                         }
-
-                        //Resize screenshot
-                        try
-                        {
-                            int[] ledCounts = { setLedCountFirst, setLedCountSecond, setLedCountThird, setLedCountFourth };
-                            int minimumSize = ledCounts.Max() * 2;
-                            int ignoreSize = 300; //Under 900p
-
-                            int screenWidthResize = vScreenWidth / 3;
-                            int screenHeightResize = vScreenHeight / 3;
-                            if (screenWidthResize >= ignoreSize && screenHeightResize >= ignoreSize)
-                            {
-                                BitmapResize = true;
-                            }
-                            else
-                            {
-                                screenWidthResize = vScreenWidth;
-                                screenHeightResize = vScreenHeight;
-                                BitmapResize = false;
-                            }
-
-                            if (screenWidthResize < minimumSize || screenHeightResize < minimumSize)
-                            {
-                                if (ignoreSize < minimumSize) { ignoreSize = minimumSize; }
-                                double ratioWidth = (double)ignoreSize / (double)vScreenWidth;
-                                double ratioHeight = (double)ignoreSize / (double)vScreenHeight;
-                                double ratioMax = Math.Max(ratioWidth, ratioHeight);
-                                screenWidthResize = (int)(vScreenWidth * ratioMax);
-                                screenHeightResize = (int)(vScreenHeight * ratioMax);
-                                BitmapResize = true;
-                            }
-
-                            if (BitmapResize)
-                            {
-                                vScreenWidth = screenWidthResize;
-                                vScreenHeight = screenHeightResize;
-                                BitmapIntPtr = AppImport.CaptureResizeNearest(BitmapIntPtr, vScreenWidth, vScreenHeight, out vScreenOutputSize);
-                            }
-                        }
-                        catch { }
 
                         //Set capture range
                         if (vScreenHeight < vScreenWidth)
@@ -198,10 +190,6 @@ namespace AmbiPro
                     finally
                     {
                         //Clear screen capture resources
-                        if (BitmapResize && BitmapIntPtr != IntPtr.Zero)
-                        {
-                            AppImport.CaptureFreeMemory(BitmapIntPtr);
-                        }
                         if (BitmapImage != null)
                         {
                             BitmapImage.Dispose();
@@ -218,6 +206,10 @@ namespace AmbiPro
             catch (Exception ex)
             {
                 Debug.WriteLine("Screen capture task failed: " + ex.Message);
+            }
+            finally
+            {
+                ResetScreenCapture();
             }
         }
     }

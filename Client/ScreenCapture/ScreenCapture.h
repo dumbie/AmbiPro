@@ -14,29 +14,21 @@ D3D_FEATURE_LEVEL ArrayD3DFeatureLevels[] =
 };
 UINT NumD3DFeatureLevels = ARRAYSIZE(ArrayD3DFeatureLevels);
 
-//DXGI Variables
+//Capture Variables
 CComPtr<IDXGIDevice> iDxgiDevice;
 CComPtr<IDXGIAdapter> iDxgiAdapter;
 CComPtr<IDXGIOutput> iDxgiOutput;
 CComPtr<IDXGIOutput6> iDxgiOutput6;
-CComPtr<IDXGIResource> iDxgiResource;
 CComPtr<IDXGIOutputDuplication> iDxgiOutputDuplication;
-DXGI_OUTDUPL_DESC iDxgiOutputDuplicationDescription;
-DXGI_OUTDUPL_FRAME_INFO iDxgiOutputDuplicationFrameInfo;
-
-//D3D Variables
 CComPtr<ID3D11Device> iD3DDevice;
 CComPtr<ID3D11DeviceContext> iD3DDeviceContext;
-CComPtr<ID3D11Texture2D> iD3DDestinationTexture;
-CComPtr<ID3D11Texture2D> iD3DScreenCaptureTexture;
-D3D11_MAPPED_SUBRESOURCE iD3DMappedSubResource;
-D3D11_TEXTURE2D_DESC iD3DTextureDescription;
-D3D_FEATURE_LEVEL iD3DFeatureLevel;
 
-//Bitmap Variables
-UINT BitmapByteSize;
-UINT BitmapWidthPixels;
-UINT BitmapHeightPixels;
+//Screenshot Variables
+CComPtr<IDXGIResource> iDxgiResource;
+CComPtr<ID3D11Texture2D> iD3DScreenCaptureTextureOriginal;
+CComPtr<ID3D11Texture2D> iD3DScreenCaptureTextureOutput;
+CComPtr<ID3D11Texture2D> iD3DScreenCaptureTextureResize;
+CComPtr<ID3D11ShaderResourceView> iD3D11ShaderResourceView;
 
 //Result Variables
 HRESULT hResult = E_FAIL;
