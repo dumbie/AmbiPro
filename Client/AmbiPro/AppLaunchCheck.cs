@@ -1,15 +1,17 @@
-﻿using System;
+﻿using ArnoldVinkCode;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Windows;
+using System.Threading.Tasks;
 using static ArnoldVinkCode.AVFiles;
 
 namespace AmbiPro
 {
     public partial class AppLaunchCheck
     {
-        public static void Application_LaunchCheck(string ApplicationName, string ProcessName, ProcessPriorityClass ProcessPriority, bool skipFileCheck)
+        public static async Task Application_LaunchCheck(string ApplicationName, string ProcessName, ProcessPriorityClass ProcessPriority, bool skipFileCheck)
         {
             try
             {
@@ -36,12 +38,16 @@ namespace AmbiPro
                 //Check for missing application files
                 if (!skipFileCheck)
                 {
-                    string[] ApplicationFiles = { "Resources/ScreenCapture.dll", "AmbiPro.exe", "AmbiPro.exe.Config", "Updater.exe", "Updater.exe.Config" };
-                    foreach (string CheckFile in ApplicationFiles)
+                    string[] ApplicationFiles = { "Resources/ScreenCapture.dll", "Resources/Microsoft.Win32.TaskScheduler.dll", "Resources/Newtonsoft.Json.dll", "AmbiPro.exe", "AmbiPro.exe.Config", "Updater.exe", "Updater.exe.Config" };
+                    foreach (string checkFile in ApplicationFiles)
                     {
-                        if (!File.Exists(CheckFile))
+                        if (!File.Exists(checkFile))
                         {
-                            MessageBox.Show("File: " + CheckFile + " could not be found, please check your installation.", ApplicationName);
+                            List<string> messageAnswers = new List<string>();
+                            messageAnswers.Add("Ok");
+                            await new AVMessageBox().Popup(null, "File not found", checkFile + " could not be found, please check your installation.", messageAnswers);
+
+                            //Close the application
                             Environment.Exit(0);
                             return;
                         }

@@ -21,7 +21,7 @@ namespace AmbiPro
                 Debug.WriteLine("Welcome to AmbiPro.");
 
                 //Check the application status
-                Application_LaunchCheck("AmbiPro", "AmbiPro", ProcessPriorityClass.High, false);
+                await Application_LaunchCheck("AmbiPro", "AmbiPro", ProcessPriorityClass.High, false);
 
                 //Check application settings
                 SettingsFunction.SettingsCheck();

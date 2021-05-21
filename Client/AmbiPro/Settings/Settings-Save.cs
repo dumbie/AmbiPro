@@ -343,9 +343,9 @@ namespace AmbiPro.Settings
                     }
                 };
             }
-            catch
+            catch (Exception ex)
             {
-                Debug.WriteLine("Failed to save the settings.");
+                Debug.WriteLine("Failed to save the settings: " + ex.Message);
             }
         }
 

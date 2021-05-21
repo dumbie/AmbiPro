@@ -189,8 +189,7 @@
       <Link>ArnoldVinkCode\Styles\ArnoldVinkTimePicker\TimePicker.xaml.cs</Link>
     </Compile>
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Styles\MainStyles.xaml.cs">
-      <Link>Styles\MainStyles.xaml.cs</Link>
-      <DependentUpon>MainStyles.xaml</DependentUpon>
+      <Link>ArnoldVinkCode\Styles\MainStyles.xaml.cs</Link>
     </Compile>
     <Compile Include="AdjustBlackBars.cs" />
     <Compile Include="AdjustLedColors.cs" />
@@ -241,47 +240,47 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="..\..\..\ArnoldVinkCode\Desktop\Styles\ControlTemplates\Button.xaml">
-      <Link>Styles\ControlTemplates\Button.xaml</Link>
+      <Link>ArnoldVinkCode\Styles\ControlTemplates\Button.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="..\..\..\ArnoldVinkCode\Desktop\Styles\ControlTemplates\CheckBox.xaml">
-      <Link>Styles\ControlTemplates\CheckBox.xaml</Link>
+      <Link>ArnoldVinkCode\Styles\ControlTemplates\CheckBox.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="..\..\..\ArnoldVinkCode\Desktop\Styles\ControlTemplates\ComboBox.xaml">
-      <Link>Styles\ControlTemplates\ComboBox.xaml</Link>
+      <Link>ArnoldVinkCode\Styles\ControlTemplates\ComboBox.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="..\..\..\ArnoldVinkCode\Desktop\Styles\ControlTemplates\ListBox.xaml">
-      <Link>Styles\ControlTemplates\ListBox.xaml</Link>
+      <Link>ArnoldVinkCode\Styles\ControlTemplates\ListBox.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="..\..\..\ArnoldVinkCode\Desktop\Styles\ControlTemplates\Scrollbar.xaml">
-      <Link>Styles\ControlTemplates\Scrollbar.xaml</Link>
+      <Link>ArnoldVinkCode\Styles\ControlTemplates\Scrollbar.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="..\..\..\ArnoldVinkCode\Desktop\Styles\ControlTemplates\Slider.xaml">
-      <Link>Styles\ControlTemplates\Slider.xaml</Link>
+      <Link>ArnoldVinkCode\Styles\ControlTemplates\Slider.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="..\..\..\ArnoldVinkCode\Desktop\Styles\ControlTemplates\TextBox.xaml">
-      <Link>Styles\ControlTemplates\TextBox.xaml</Link>
+      <Link>ArnoldVinkCode\Styles\ControlTemplates\TextBox.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="..\..\..\ArnoldVinkCode\Desktop\Styles\MainColors.xaml">
-      <Link>Styles\MainColors.xaml</Link>
+      <Link>ArnoldVinkCode\Styles\MainColors.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="..\..\..\ArnoldVinkCode\Desktop\Styles\MainStyles.xaml">
-      <Link>Styles\MainStyles.xaml</Link>
+      <Link>ArnoldVinkCode\Styles\MainStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

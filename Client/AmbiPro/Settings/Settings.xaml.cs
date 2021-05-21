@@ -125,7 +125,7 @@ namespace AmbiPro.Settings
                 //Wait for resolution change
                 if (delayed)
                 {
-                    await Task.Delay(2000);
+                    await Task.Delay(500);
                 }
 
                 //Update the rotation ratio

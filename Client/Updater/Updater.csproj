@@ -93,13 +93,53 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="..\..\..\arnoldvinkcode\desktop\styles\arnoldvinkmessagebox\MessageBox.xaml">
+      <Link>ArnoldVinkCode\Styles\ArnoldVinkMessageBox\MessageBox.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\..\arnoldvinkcode\desktop\styles\controltemplates\Button.xaml">
+      <Link>ArnoldVinkCode\Styles\ControlTemplates\Button.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\..\arnoldvinkcode\desktop\styles\controltemplates\CheckBox.xaml">
+      <Link>ArnoldVinkCode\Styles\ControlTemplates\CheckBox.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\..\arnoldvinkcode\desktop\styles\controltemplates\ComboBox.xaml">
+      <Link>ArnoldVinkCode\Styles\ControlTemplates\ComboBox.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\..\arnoldvinkcode\desktop\styles\controltemplates\ListBox.xaml">
+      <Link>ArnoldVinkCode\Styles\ControlTemplates\ListBox.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\..\arnoldvinkcode\desktop\styles\controltemplates\Scrollbar.xaml">
+      <Link>ArnoldVinkCode\Styles\ControlTemplates\Scrollbar.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\..\arnoldvinkcode\desktop\styles\controltemplates\Slider.xaml">
+      <Link>ArnoldVinkCode\Styles\ControlTemplates\Slider.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\..\arnoldvinkcode\desktop\styles\controltemplates\TextBox.xaml">
+      <Link>ArnoldVinkCode\Styles\ControlTemplates\TextBox.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="..\..\..\ArnoldVinkCode\Desktop\Styles\MainColors.xaml">
-      <Link>Styles\MainColors.xaml</Link>
+      <Link>ArnoldVinkCode\Styles\MainColors.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="..\..\..\ArnoldVinkCode\Desktop\Styles\MainStyles.xaml">
-      <Link>Styles\MainStyles.xaml</Link>
+      <Link>ArnoldVinkCode\Styles\MainStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -161,9 +201,12 @@
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Interop\AVInteropDll.cs">
       <Link>ArnoldVinkCode\Interop\AVInteropDll.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\arnoldvinkcode\desktop\styles\arnoldvinkmessagebox\MessageBox.xaml.cs">
+      <Link>ArnoldVinkCode\Styles\ArnoldVinkMessageBox\MessageBox.xaml.cs</Link>
+      <DependentUpon>MessageBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Styles\MainStyles.xaml.cs">
-      <Link>Styles\MainStyles.xaml.cs</Link>
-      <DependentUpon>MainStyles.xaml</DependentUpon>
+      <Link>ArnoldVinkCode\Styles\MainStyles.xaml.cs</Link>
     </Compile>
     <Compile Include="..\AmbiPro\AppLaunchCheck.cs">
       <Link>AppLaunchCheck.cs</Link>
