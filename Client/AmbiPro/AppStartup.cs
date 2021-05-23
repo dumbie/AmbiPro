@@ -32,9 +32,6 @@ namespace AmbiPro
                 //Register application timers
                 AppTimers.ApplicationTimersRegister();
 
-                //Enable the socket server
-                EnableSocketServer();
-
                 //Settings screen if first run
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                 {
@@ -68,6 +65,9 @@ namespace AmbiPro
                     await LedSwitch(LedSwitches.Automatic);
                 }
 
+                //Enable the socket server
+                await EnableSocketServer();
+
                 //Check for available application update
                 await AppUpdate.CheckForAppUpdate(true);
             }
@@ -75,14 +75,16 @@ namespace AmbiPro
         }
 
         //Enable the socket server
-        private void EnableSocketServer()
+        private async Task EnableSocketServer()
         {
             try
             {
                 int SocketServerPort = Convert.ToInt32(ConfigurationManager.AppSettings["ServerPort"]);
 
                 vArnoldVinkSockets = new ArnoldVinkSockets("127.0.0.1", SocketServerPort, true, false);
+                vArnoldVinkSockets.vSocketTimeout = 2000;
                 vArnoldVinkSockets.EventBytesReceived += SocketHandlers.ReceivedSocketHandler;
+                await vArnoldVinkSockets.SocketServerEnable();
             }
             catch { }
         }
