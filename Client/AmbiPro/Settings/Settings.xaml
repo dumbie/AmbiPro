@@ -462,7 +462,7 @@
                                 <TextBlock Name="tb_LedSaturation" Text="Led color saturation:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                                 <TextBlock Text="Change the led color vibrance to your liking." Style="{StaticResource TextBlockGrayLight}"/>
                                 <Image Margin="0,2,0,0" Source="/Assets/SaturationSpectrum.png"/>
-                                <Slider Name="sldr_LedSaturation" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="200"/>
+                                <Slider Name="sldr_LedSaturation" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="400"/>
 
                                 <TextBlock Margin="0,10,0,0" Name="tb_LedGamma" Text="Led display gamma:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                                 <TextBlock Text="Adjust the gamma to display more black levels." Style="{StaticResource TextBlockGrayLight}"/>

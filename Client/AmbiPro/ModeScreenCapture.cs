@@ -19,7 +19,7 @@ namespace AmbiPro
             try
             {
                 Debug.WriteLine("Initializing screen capture: " + DateTime.Now);
-                return AppImport.CaptureInitialize(Convert.ToInt32(ConfigurationManager.AppSettings["MonitorCapture"]));
+                return AppImport.CaptureInitialize(Convert.ToInt32(ConfigurationManager.AppSettings["MonitorCapture"]), out vScreenOutputHDR);
             }
             catch
             {
@@ -77,7 +77,7 @@ namespace AmbiPro
                         //Capture screenshot
                         try
                         {
-                            BitmapIntPtr = AppImport.CaptureScreenshot(out vScreenWidth, out vScreenHeight, out vScreenOutputSize, 2);
+                            BitmapIntPtr = AppImport.CaptureScreenshot(out vScreenOutputWidth, out vScreenOutputHeight, out vScreenOutputSize, 2);
                         }
                         catch { }
 
@@ -85,18 +85,18 @@ namespace AmbiPro
                         if (BitmapIntPtr == IntPtr.Zero)
                         {
                             Debug.WriteLine("Screenshot is corrupted, restarting capture.");
-                            await InitializeScreenCapture(500);
+                            await InitializeScreenCapture(200);
                             continue;
                         }
 
                         //Set capture range
-                        if (vScreenHeight < vScreenWidth)
+                        if (vScreenOutputHeight < vScreenOutputWidth)
                         {
-                            vCaptureRange = (setLedCaptureRange * vScreenHeight) / 100 / 2;
+                            vCaptureRange = (setLedCaptureRange * vScreenOutputHeight) / 100 / 2;
                         }
                         else
                         {
-                            vCaptureRange = (setLedCaptureRange * vScreenWidth) / 100 / 2;
+                            vCaptureRange = (setLedCaptureRange * vScreenOutputWidth) / 100 / 2;
                         }
                         //Debug.WriteLine("Screen width: " + vScreenWidth + " / Screen height: " + vScreenHeight + " / Capture range: " + vCaptureZoneRange + " / Resize: " + resizeScreenshot);
 
@@ -110,10 +110,10 @@ namespace AmbiPro
                                 if (setAdjustBlackbarRate == 0 || (Environment.TickCount - vMarginBlackLastUpdate) > setAdjustBlackbarRate)
                                 {
                                     //Set blackbar range
-                                    vBlackBarStepVertical = (setAdjustBlackbarRange * vScreenHeight) / 100;
-                                    vBlackBarRangeVertical = vScreenWidth - vMarginMinimumOffset;
-                                    vBlackBarStepHorizontal = (setAdjustBlackbarRange * vScreenWidth) / 100;
-                                    vBlackBarRangeHorizontal = vScreenHeight - vMarginMinimumOffset;
+                                    vBlackBarStepVertical = (setAdjustBlackbarRange * vScreenOutputHeight) / 100;
+                                    vBlackBarRangeVertical = vScreenOutputWidth - vMarginMinimumOffset;
+                                    vBlackBarStepHorizontal = (setAdjustBlackbarRange * vScreenOutputWidth) / 100;
+                                    vBlackBarRangeHorizontal = vScreenOutputHeight - vMarginMinimumOffset;
                                     AdjustBlackBars(setLedSideFirst, BitmapData);
                                     AdjustBlackBars(setLedSideSecond, BitmapData);
                                     AdjustBlackBars(setLedSideThird, BitmapData);
@@ -132,7 +132,7 @@ namespace AmbiPro
                             if (setDebugMode)
                             {
                                 //Convert IntPtr to bitmap image
-                                BitmapImage = ConvertDataToBitmap(BitmapData, vScreenWidth, vScreenHeight, vScreenOutputSize, false);
+                                BitmapImage = ConvertDataToBitmap(BitmapData, vScreenOutputWidth, vScreenOutputHeight, vScreenOutputSize, false);
 
                                 //Debug update screen capture preview
                                 ActionDispatcherInvoke(delegate

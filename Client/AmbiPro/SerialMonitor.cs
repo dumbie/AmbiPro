@@ -115,7 +115,7 @@ namespace AmbiPro
                 setDebugSave = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugSave"]);
 
                 //Update the rotation based on ratio
-                string ScreenRatio = AVFunctions.ScreenAspectRatio(vScreenWidth, vScreenHeight, false);
+                string ScreenRatio = AVFunctions.ScreenAspectRatio(vScreenOutputWidth, vScreenOutputHeight, false);
                 if (SettingsFunction.Check("LedRotate" + ScreenRatio))
                 {
                     setLedRotate = Convert.ToInt32(ConfigurationManager.AppSettings["LedRotate" + ScreenRatio]);

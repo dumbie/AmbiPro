@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using static AmbiPro.AppClasses;
 using static AmbiPro.AppEnums;
+using static AmbiPro.AppVariables;
 
 namespace AmbiPro
 {
@@ -12,6 +13,12 @@ namespace AmbiPro
         {
             try
             {
+                //Check if HDR is enabled and apply tonemapping
+                if (setLedMode == 0 && vScreenOutputHDR)
+                {
+                    //adjustColor.AdjustHdrReinhard();
+                }
+
                 //Adjust the screen capture hue
                 adjustColor.AdjustHue(setLedHue);
 
@@ -32,8 +39,6 @@ namespace AmbiPro
                 //Check current led mode
                 if (setLedMode == 0)
                 {
-                    //Fix Check if HDR is enabled and apply tonemapping
-
                     //Adjust color to the color cut off setting
                     if (adjustColor.R < setLedColorCut && adjustColor.G < setLedColorCut && adjustColor.B < setLedColorCut)
                     {

@@ -63,7 +63,7 @@ namespace AmbiPro.Settings
             try
             {
                 //Set the current screen resolution and ratio
-                vCurrentRatio = AVFunctions.ScreenAspectRatio(vScreenWidth, vScreenHeight, false);
+                vCurrentRatio = AVFunctions.ScreenAspectRatio(vScreenOutputWidth, vScreenOutputHeight, false);
                 if (string.IsNullOrWhiteSpace(vCurrentRatio))
                 {
                     btn_RotateCounterwise.IsEnabled = false;
@@ -75,8 +75,8 @@ namespace AmbiPro.Settings
                 }
                 else
                 {
-                    textblock_DebugPreview.Text = "Screen capture preview " + vScreenWidth + "x" + vScreenHeight + " (" + vCurrentRatio + "):";
-                    tb_RotateResolution.Text = "Capture resolution: " + vScreenWidth + "x" + vScreenHeight + " (" + vCurrentRatio + ")";
+                    textblock_DebugPreview.Text = "Screen capture preview " + vScreenOutputWidth + "x" + vScreenOutputHeight + " (" + vCurrentRatio + "):";
+                    tb_RotateResolution.Text = "Capture resolution: " + vScreenOutputWidth + "x" + vScreenOutputHeight + " (" + vCurrentRatio + ")";
                 }
 
                 //Update the rotation based on ratio
@@ -94,7 +94,7 @@ namespace AmbiPro.Settings
         {
             try
             {
-                if (vScreenWidth == 0 || vScreenHeight == 0)
+                if (vScreenOutputWidth == 0 || vScreenOutputHeight == 0)
                 {
                     btn_RotateClockwise.IsEnabled = false;
                     btn_RotateCounterwise.IsEnabled = false;

@@ -1,7 +1,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include "ScreenCapture.h"
 
-bool CaptureResetVariables()
+BOOL CaptureResetVariables()
 {
 	try
 	{
@@ -18,13 +18,13 @@ bool CaptureResetVariables()
 		hResult = E_FAIL;
 		return true;
 	}
-	catch (bool)
+	catch (BOOL)
 	{
 		return false;
 	}
 }
 
-bool ScreenshotResetVariables()
+BOOL ScreenshotResetVariables()
 {
 	try
 	{
@@ -39,7 +39,7 @@ bool ScreenshotResetVariables()
 		hResult = E_FAIL;
 		return true;
 	}
-	catch (bool)
+	catch (BOOL)
 	{
 		return false;
 	}
@@ -47,7 +47,7 @@ bool ScreenshotResetVariables()
 
 extern "C"
 {
-	__declspec(dllexport) bool CaptureInitialize(UINT CaptureMonitor)
+	__declspec(dllexport) BOOL CaptureInitialize(UINT CaptureMonitor, BOOL* OutputHDR)
 	{
 		try
 		{
@@ -109,29 +109,42 @@ extern "C"
 				return false;
 			}
 
-			//Create desktop duplicate
+			//Create output duplicate
 			hResult = iDxgiOutput6->DuplicateOutput(iD3DDevice, &iDxgiOutputDuplication);
 			if (!SUCCEEDED(hResult))
 			{
 				CaptureResetVariables();
 				return false;
 			}
+
+			//Get output description
+			DXGI_OUTPUT_DESC1 iDxgiOutputDescription;
+			hResult = iDxgiOutput6->GetDesc1(&iDxgiOutputDescription);
+			iDxgiOutput6.Release();
+			if (!SUCCEEDED(hResult))
+			{
+				CaptureResetVariables();
+				return false;
+			}
+
+			//Check if HDR is enabled
+			*OutputHDR = iDxgiOutputDescription.ColorSpace == DXGI_COLOR_SPACE_RGB_FULL_G2084_NONE_P2020 || iDxgiOutputDescription.ColorSpace == DXGI_COLOR_SPACE_RGB_STUDIO_G2084_NONE_P2020;
 			return true;
 		}
-		catch (bool)
+		catch (BOOL)
 		{
 			CaptureResetVariables();
 			return false;
 		}
 	}
 
-	__declspec(dllexport) bool CaptureReset()
+	__declspec(dllexport) BOOL CaptureReset()
 	{
 		try
 		{
 			return CaptureResetVariables() && ScreenshotResetVariables();
 		}
-		catch (bool)
+		catch (BOOL)
 		{
 			return false;
 		}
@@ -141,9 +154,6 @@ extern "C"
 	{
 		try
 		{
-			//Wait for vertical blank
-			iDxgiOutput6->WaitForVBlank();
-
 			//Get output duplication frame
 			DXGI_OUTDUPL_FRAME_INFO iDxgiOutputDuplicationFrameInfo;
 			hResult = iDxgiOutputDuplication->AcquireNextFrame(INFINITE, &iDxgiOutputDuplicationFrameInfo, &iDxgiResource);
