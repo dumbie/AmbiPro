@@ -91,20 +91,24 @@ namespace AmbiPro.Settings
                 tb_LedBottomGap.Text = "Led gap bottom stand: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedBottomGap"]) + " leds";
                 sldr_LedBottomGap.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedBottomGap"]);
 
-                //Load - Led Maximum Brightness
-                tb_LedBrightness.Text = "Led maximum brightness: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedBrightness"]) + "%";
+                //Load - Led contrast level
+                tb_LedContrast.Text = "Contrast level: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedContrast"]);
+                sldr_LedContrast.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedContrast"]);
+
+                //Load - Led brightness level
+                tb_LedBrightness.Text = "Brightness level: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedBrightness"]) + "%";
                 sldr_LedBrightness.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedBrightness"]);
 
                 //Load - Led Minimum Brightness
-                tb_LedMinBrightness.Text = "Led minimum brightness: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedMinBrightness"]) + "%";
+                tb_LedMinBrightness.Text = "Minimum brightness level: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedMinBrightness"]) + "%";
                 sldr_LedMinBrightness.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedMinBrightness"]);
 
                 //Load - Led Gamma
-                tb_LedGamma.Text = "Led display gamma: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedGamma"]) + "%";
+                tb_LedGamma.Text = "Gamma level: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedGamma"]) + "%";
                 sldr_LedGamma.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedGamma"]);
 
                 //Load - Led Saturation
-                tb_LedSaturation.Text = "Led color saturation: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedSaturation"]) + "%";
+                tb_LedSaturation.Text = "Color saturation: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedSaturation"]) + "%";
                 sldr_LedSaturation.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedSaturation"]);
 
                 //Load - Color Loop Speed
@@ -120,7 +124,7 @@ namespace AmbiPro.Settings
                 button_ColorPickerSolid.Background = new BrushConverter().ConvertFrom(SolidLedColor) as SolidColorBrush;
 
                 //Load - Led Hue
-                tb_LedHue.Text = "Led color hue: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedHue2"]) + "°";
+                tb_LedHue.Text = "Color hue: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedHue2"]) + "°";
                 sldr_LedHue.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedHue2"]);
 
                 //Load - Led Color Cut

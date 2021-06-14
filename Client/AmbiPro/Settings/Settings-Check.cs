@@ -96,10 +96,16 @@ namespace AmbiPro.Settings
                     SettingsFunction.Save("LedBottomGap", "0");
                 }
 
-                //Check - Led Brightness
+                //Check - Led Contrast Level
+                if (ConfigurationManager.AppSettings["LedContrast"] == null)
+                {
+                    SettingsFunction.Save("LedContrast", "0");
+                }
+
+                //Check - Led Brightness Level
                 if (ConfigurationManager.AppSettings["LedBrightness"] == null)
                 {
-                    SettingsFunction.Save("LedBrightness", "75");
+                    SettingsFunction.Save("LedBrightness", "80");
                 }
 
                 //Check - Led Minimum Brightness
@@ -117,7 +123,7 @@ namespace AmbiPro.Settings
                 //Check - Led Saturation
                 if (ConfigurationManager.AppSettings["LedSaturation"] == null)
                 {
-                    SettingsFunction.Save("LedSaturation", "130");
+                    SettingsFunction.Save("LedSaturation", "120");
                 }
 
                 //Check - Color Loop Speed

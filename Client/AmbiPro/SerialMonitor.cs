@@ -12,7 +12,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using static AmbiPro.AppEnums;
-using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
 using static ArnoldVinkCode.AVActions;
 
@@ -37,6 +36,7 @@ namespace AmbiPro
         private static int setAdjustBlackBarBrightness = 0;
         private static int setUpdateRate = 0;
         private static int setLedBottomGap = 0;
+        private static double setLedContrast = 0;
         private static double setLedBrightness = 0;
         private static byte setLedMinBrightness = 0;
         private static double setLedGamma = 0;
@@ -83,6 +83,7 @@ namespace AmbiPro
                 setAdjustBlackBarBrightness = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarBrightness"]);
                 setUpdateRate = Convert.ToInt32(ConfigurationManager.AppSettings["UpdateRate"]);
                 setLedBottomGap = Convert.ToInt32(ConfigurationManager.AppSettings["LedBottomGap"]);
+                setLedContrast = Convert.ToDouble(ConfigurationManager.AppSettings["LedContrast"]) / 100;
                 setLedBrightness = Convert.ToDouble(ConfigurationManager.AppSettings["LedBrightness"]) / 100;
                 setLedMinBrightness = Convert.ToByte(ConfigurationManager.AppSettings["LedMinBrightness"]);
                 setLedGamma = Convert.ToDouble(ConfigurationManager.AppSettings["LedGamma"]) / 100;
@@ -152,7 +153,7 @@ namespace AmbiPro
                     }
 
                     //Disable the leds
-                    if (ledSwitch == LedSwitches.Disable || vTask_LedUpdate.TaskRunning)
+                    if (ledSwitch == LedSwitches.Disable || vTask_UpdateLed.TaskRunning)
                     {
                         await LedsDisable(false);
                         vSwitching = false;
@@ -212,7 +213,7 @@ namespace AmbiPro
                 }
 
                 //Start led update loop
-                AVActions.TaskStartLoop(LoopUpdateLeds, vTask_LedUpdate);
+                AVActions.TaskStartLoop(LoopUpdateLeds, vTask_UpdateLed);
             }
             catch (Exception ex)
             {
@@ -234,7 +235,7 @@ namespace AmbiPro
                 }
 
                 //Cancel the led task
-                await AVActions.TaskStopLoop(vTask_LedUpdate);
+                await AVActions.TaskStopLoop(vTask_UpdateLed);
 
                 //Disable the serial port
                 if (vSerialComPort.IsOpen)

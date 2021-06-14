@@ -43,7 +43,7 @@ namespace AmbiPro.Settings
                         sp_Blackbars.Visibility = Visibility.Collapsed;
                         sp_LedRotate.Visibility = Visibility.Collapsed;
                         sp_Leds.Visibility = Visibility.Collapsed;
-                        sp_Color.Visibility = Visibility.Collapsed;
+                        sp_Adjust.Visibility = Visibility.Collapsed;
                         sp_Remote.Visibility = Visibility.Collapsed;
                         sp_Debug.Visibility = Visibility.Collapsed;
                         sp_Help.Visibility = Visibility.Collapsed;
@@ -57,7 +57,7 @@ namespace AmbiPro.Settings
                         sp_Blackbars.Visibility = Visibility.Collapsed;
                         sp_LedRotate.Visibility = Visibility.Collapsed;
                         sp_Leds.Visibility = Visibility.Collapsed;
-                        sp_Color.Visibility = Visibility.Collapsed;
+                        sp_Adjust.Visibility = Visibility.Collapsed;
                         sp_Remote.Visibility = Visibility.Collapsed;
                         sp_Debug.Visibility = Visibility.Collapsed;
                         sp_Help.Visibility = Visibility.Collapsed;
@@ -71,7 +71,7 @@ namespace AmbiPro.Settings
                         sp_Blackbars.Visibility = Visibility.Collapsed;
                         sp_LedRotate.Visibility = Visibility.Collapsed;
                         sp_Leds.Visibility = Visibility.Collapsed;
-                        sp_Color.Visibility = Visibility.Collapsed;
+                        sp_Adjust.Visibility = Visibility.Collapsed;
                         sp_Remote.Visibility = Visibility.Collapsed;
                         sp_Debug.Visibility = Visibility.Collapsed;
                         sp_Help.Visibility = Visibility.Collapsed;
@@ -85,12 +85,12 @@ namespace AmbiPro.Settings
                         sp_Blackbars.Visibility = Visibility.Collapsed;
                         sp_LedRotate.Visibility = Visibility.Collapsed;
                         sp_Leds.Visibility = Visibility.Visible;
-                        sp_Color.Visibility = Visibility.Collapsed;
+                        sp_Adjust.Visibility = Visibility.Collapsed;
                         sp_Remote.Visibility = Visibility.Collapsed;
                         sp_Debug.Visibility = Visibility.Collapsed;
                         sp_Help.Visibility = Visibility.Collapsed;
                     }
-                    else if (SelStackPanel.Name == "menuButtonColor")
+                    else if (SelStackPanel.Name == "menuButtonAdjust")
                     {
                         SwitchBackground(false, false, true);
                         sp_Basics.Visibility = Visibility.Collapsed;
@@ -99,7 +99,7 @@ namespace AmbiPro.Settings
                         sp_Blackbars.Visibility = Visibility.Collapsed;
                         sp_LedRotate.Visibility = Visibility.Collapsed;
                         sp_Leds.Visibility = Visibility.Collapsed;
-                        sp_Color.Visibility = Visibility.Visible;
+                        sp_Adjust.Visibility = Visibility.Visible;
                         sp_Remote.Visibility = Visibility.Collapsed;
                         sp_Debug.Visibility = Visibility.Collapsed;
                         sp_Help.Visibility = Visibility.Collapsed;
@@ -113,7 +113,7 @@ namespace AmbiPro.Settings
                         sp_Blackbars.Visibility = Visibility.Collapsed;
                         sp_LedRotate.Visibility = Visibility.Collapsed;
                         sp_Leds.Visibility = Visibility.Collapsed;
-                        sp_Color.Visibility = Visibility.Collapsed;
+                        sp_Adjust.Visibility = Visibility.Collapsed;
                         sp_Remote.Visibility = Visibility.Visible;
                         sp_Debug.Visibility = Visibility.Collapsed;
                         sp_Help.Visibility = Visibility.Collapsed;
@@ -131,7 +131,7 @@ namespace AmbiPro.Settings
                         sp_Blackbars.Visibility = Visibility.Collapsed;
                         sp_LedRotate.Visibility = Visibility.Collapsed;
                         sp_Leds.Visibility = Visibility.Collapsed;
-                        sp_Color.Visibility = Visibility.Collapsed;
+                        sp_Adjust.Visibility = Visibility.Collapsed;
                         sp_Remote.Visibility = Visibility.Collapsed;
                         sp_Debug.Visibility = Visibility.Collapsed;
                         sp_Help.Visibility = Visibility.Visible;
@@ -145,7 +145,7 @@ namespace AmbiPro.Settings
                         sp_Blackbars.Visibility = Visibility.Collapsed;
                         sp_LedRotate.Visibility = Visibility.Collapsed;
                         sp_Leds.Visibility = Visibility.Collapsed;
-                        sp_Color.Visibility = Visibility.Collapsed;
+                        sp_Adjust.Visibility = Visibility.Collapsed;
                         sp_Remote.Visibility = Visibility.Collapsed;
                         sp_Debug.Visibility = Visibility.Visible;
                         sp_Help.Visibility = Visibility.Collapsed;
@@ -159,7 +159,7 @@ namespace AmbiPro.Settings
                         sp_Blackbars.Visibility = Visibility.Visible;
                         sp_LedRotate.Visibility = Visibility.Collapsed;
                         sp_Leds.Visibility = Visibility.Collapsed;
-                        sp_Color.Visibility = Visibility.Collapsed;
+                        sp_Adjust.Visibility = Visibility.Collapsed;
                         sp_Remote.Visibility = Visibility.Collapsed;
                         sp_Debug.Visibility = Visibility.Collapsed;
                         sp_Help.Visibility = Visibility.Collapsed;
@@ -173,7 +173,7 @@ namespace AmbiPro.Settings
                         sp_Blackbars.Visibility = Visibility.Collapsed;
                         sp_LedRotate.Visibility = Visibility.Visible;
                         sp_Leds.Visibility = Visibility.Collapsed;
-                        sp_Color.Visibility = Visibility.Collapsed;
+                        sp_Adjust.Visibility = Visibility.Collapsed;
                         sp_Remote.Visibility = Visibility.Collapsed;
                         sp_Debug.Visibility = Visibility.Collapsed;
                         sp_Help.Visibility = Visibility.Collapsed;

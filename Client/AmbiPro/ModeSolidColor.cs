@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using static AmbiPro.AppClasses;
-using static AmbiPro.AppTasks;
 using static ArnoldVinkCode.AVActions;
 
 namespace AmbiPro
@@ -19,7 +18,7 @@ namespace AmbiPro
                 UpdateLedStatusIcons(true);
 
                 //Current byte information
-                while (!vTask_LedUpdate.TaskStopRequest)
+                while (!vTask_UpdateLed.TaskStopRequest)
                 {
                     //Set the used colors and adjust it
                     ColorRGBA CurrentColor = ColorRGBA.HexToRGBA(setSolidLedColor);
@@ -47,7 +46,7 @@ namespace AmbiPro
                     }
 
                     //Delay the loop task
-                    await TaskDelayLoop(1000, vTask_LedUpdate);
+                    await TaskDelayLoop(1000, vTask_UpdateLed);
                 }
 
                 //Show failed connection message

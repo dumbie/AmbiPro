@@ -4,7 +4,6 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Threading.Tasks;
-using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
 using static AmbiPro.Resources.BitmapProcessing;
 using static ArnoldVinkCode.AVActions;
@@ -19,7 +18,7 @@ namespace AmbiPro
             try
             {
                 Debug.WriteLine("Initializing screen capture: " + DateTime.Now);
-                return AppImport.CaptureInitialize(Convert.ToInt32(ConfigurationManager.AppSettings["MonitorCapture"]), out vScreenOutputHDR);
+                return AppImport.CaptureInitialize(Convert.ToInt32(ConfigurationManager.AppSettings["MonitorCapture"]));
             }
             catch
             {
@@ -67,7 +66,7 @@ namespace AmbiPro
                 UpdateLedStatusIcons(true);
 
                 //Start updating the leds
-                while (!vTask_LedUpdate.TaskStopRequest)
+                while (!vTask_UpdateLed.TaskStopRequest)
                 {
                     int CurrentSerialByte = InitByteSize;
                     IntPtr BitmapIntPtr = IntPtr.Zero;
@@ -132,7 +131,7 @@ namespace AmbiPro
                             if (setDebugMode)
                             {
                                 //Convert IntPtr to bitmap image
-                                BitmapImage = ConvertDataToBitmap(BitmapData, vScreenOutputWidth, vScreenOutputHeight, vScreenOutputSize, false);
+                                BitmapImage = BitmapConvertData(BitmapData, vScreenOutputWidth, vScreenOutputHeight, vScreenOutputSize, false);
 
                                 //Debug update screen capture preview
                                 ActionDispatcherInvoke(delegate
@@ -147,7 +146,7 @@ namespace AmbiPro
                                 //Debug save screen capture as image
                                 if (setDebugSave)
                                 {
-                                    SaveScreenCaptureBitmap(BitmapImage);
+                                    BitmapSaveScreenCapture(BitmapImage);
                                 }
                             }
                         }
@@ -181,7 +180,7 @@ namespace AmbiPro
                         }
 
                         //Delay the loop task
-                        await TaskDelayLoop(setUpdateRate, vTask_LedUpdate);
+                        await TaskDelayLoop(setUpdateRate, vTask_UpdateLed);
                     }
                     catch (Exception ex)
                     {

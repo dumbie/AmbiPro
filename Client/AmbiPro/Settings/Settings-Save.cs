@@ -119,32 +119,39 @@ namespace AmbiPro.Settings
                     tb_LedBottomGap.Text = "Led gap bottom stand: " + sldr_LedBottomGap.Value.ToString("0") + " leds";
                 };
 
-                //Save - Led Maximum Brightness
+                //Save - Led contrast level
+                sldr_LedContrast.ValueChanged += (sender, e) =>
+                {
+                    SettingsFunction.Save("LedContrast", sldr_LedContrast.Value.ToString("0"));
+                    tb_LedContrast.Text = "Contrast level: " + sldr_LedContrast.Value.ToString("0");
+                };
+
+                //Save - Led brightness level
                 sldr_LedBrightness.ValueChanged += (sender, e) =>
                 {
                     SettingsFunction.Save("LedBrightness", sldr_LedBrightness.Value.ToString("0"));
-                    tb_LedBrightness.Text = "Led maximum brightness: " + sldr_LedBrightness.Value.ToString("0") + "%";
+                    tb_LedBrightness.Text = "Brightness level: " + sldr_LedBrightness.Value.ToString("0") + "%";
                 };
 
                 //Save - Led Minimum Brightness
                 sldr_LedMinBrightness.ValueChanged += (sender, e) =>
                 {
                     SettingsFunction.Save("LedMinBrightness", sldr_LedMinBrightness.Value.ToString("0"));
-                    tb_LedMinBrightness.Text = "Led minimum brightness: " + sldr_LedMinBrightness.Value.ToString("0") + "%";
+                    tb_LedMinBrightness.Text = "Minimum brightness level: " + sldr_LedMinBrightness.Value.ToString("0") + "%";
                 };
 
                 //Save - Led Gamma
                 sldr_LedGamma.ValueChanged += (sender, e) =>
                 {
                     SettingsFunction.Save("LedGamma", sldr_LedGamma.Value.ToString("0"));
-                    tb_LedGamma.Text = "Led display gamma: " + sldr_LedGamma.Value.ToString("0") + "%";
+                    tb_LedGamma.Text = "Gamma level: " + sldr_LedGamma.Value.ToString("0") + "%";
                 };
 
                 //Save - Led Saturation
                 sldr_LedSaturation.ValueChanged += (sender, e) =>
                 {
                     SettingsFunction.Save("LedSaturation", sldr_LedSaturation.Value.ToString("0"));
-                    tb_LedSaturation.Text = "Led color saturation: " + sldr_LedSaturation.Value.ToString("0") + "%";
+                    tb_LedSaturation.Text = "Color saturation: " + sldr_LedSaturation.Value.ToString("0") + "%";
                 };
 
                 //Save - Color Loop Speed
@@ -177,7 +184,7 @@ namespace AmbiPro.Settings
                 sldr_LedHue.ValueChanged += (sender, e) =>
                 {
                     SettingsFunction.Save("LedHue2", sldr_LedHue.Value.ToString("0"));
-                    tb_LedHue.Text = "Led color hue: " + sldr_LedHue.Value.ToString("0") + "°";
+                    tb_LedHue.Text = "Color hue: " + sldr_LedHue.Value.ToString("0") + "°";
                 };
 
                 //Save - Led Color Cut

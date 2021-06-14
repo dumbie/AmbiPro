@@ -9,7 +9,7 @@ BOOL CaptureResetVariables()
 		iDxgiDevice.Release();
 		iDxgiAdapter.Release();
 		iDxgiOutput.Release();
-		iDxgiOutput6.Release();
+		iDxgiOutput1.Release();
 		iDxgiOutputDuplication.Release();
 		iD3DDevice.Release();
 		iD3DDeviceContext.Release();
@@ -47,7 +47,7 @@ BOOL ScreenshotResetVariables()
 
 extern "C"
 {
-	__declspec(dllexport) BOOL CaptureInitialize(UINT CaptureMonitor, BOOL* OutputHDR)
+	__declspec(dllexport) BOOL CaptureInitialize(UINT CaptureMonitor)
 	{
 		try
 		{
@@ -101,7 +101,7 @@ extern "C"
 			}
 
 			//Query DXGI Output
-			hResult = iDxgiOutput->QueryInterface(&iDxgiOutput6);
+			hResult = iDxgiOutput->QueryInterface(&iDxgiOutput1);
 			iDxgiOutput.Release();
 			if (!SUCCEEDED(hResult))
 			{
@@ -110,25 +110,12 @@ extern "C"
 			}
 
 			//Create output duplicate
-			hResult = iDxgiOutput6->DuplicateOutput(iD3DDevice, &iDxgiOutputDuplication);
+			hResult = iDxgiOutput1->DuplicateOutput(iD3DDevice, &iDxgiOutputDuplication);
 			if (!SUCCEEDED(hResult))
 			{
 				CaptureResetVariables();
 				return false;
 			}
-
-			//Get output description
-			DXGI_OUTPUT_DESC1 iDxgiOutputDescription;
-			hResult = iDxgiOutput6->GetDesc1(&iDxgiOutputDescription);
-			iDxgiOutput6.Release();
-			if (!SUCCEEDED(hResult))
-			{
-				CaptureResetVariables();
-				return false;
-			}
-
-			//Check if HDR is enabled
-			*OutputHDR = iDxgiOutputDescription.ColorSpace == DXGI_COLOR_SPACE_RGB_FULL_G2084_NONE_P2020 || iDxgiOutputDescription.ColorSpace == DXGI_COLOR_SPACE_RGB_STUDIO_G2084_NONE_P2020;
 			return true;
 		}
 		catch (BOOL)

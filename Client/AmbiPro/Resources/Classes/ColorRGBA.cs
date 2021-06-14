@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Globalization;
+using System.Linq;
 
 namespace AmbiPro
 {
@@ -66,9 +68,10 @@ namespace AmbiPro
                 {
                     if (targetAdjust != 1.00)
                     {
-                        double rAdjusted = 255 * Math.Pow(R / 255.0, 1.0 / targetAdjust);
-                        double gAdjusted = 255 * Math.Pow(G / 255.0, 1.0 / targetAdjust);
-                        double bAdjusted = 255 * Math.Pow(B / 255.0, 1.0 / targetAdjust);
+                        double preCalc = 1.0 / targetAdjust;
+                        double rAdjusted = 255 * Math.Pow(R / 255.0, preCalc);
+                        double gAdjusted = 255 * Math.Pow(G / 255.0, preCalc);
+                        double bAdjusted = 255 * Math.Pow(B / 255.0, preCalc);
 
                         R = ValidateColor(rAdjusted);
                         G = ValidateColor(gAdjusted);
@@ -98,12 +101,48 @@ namespace AmbiPro
                 catch { }
             }
 
+            public void AdjustContrast(double targetAdjust)
+            {
+                try
+                {
+                    if (targetAdjust != 0)
+                    {
+                        ColorMatrix colorMatrix = new ColorMatrix()
+                        {
+                            Matrix40 = (float)targetAdjust,
+                            Matrix41 = (float)targetAdjust,
+                            Matrix42 = (float)targetAdjust,
+                        };
+                        ApplyColorMatrix(colorMatrix);
+                        //Debug.WriteLine("Contrast adjusted: R" + R + "/G" + G + "/B" + B + "/T" + targetAdjust);
+                    }
+                }
+                catch { }
+            }
+
             public void AdjustSaturation(double targetAdjust)
             {
                 try
                 {
                     if (targetAdjust != 1.00)
                     {
+                        //double preCalc = 1.0 - targetAdjust;
+                        //double redSaturation = 0.3086;
+                        //double greenSaturation = 0.6094;
+                        //double blueSaturation = 0.0820;
+                        //ColorMatrix colorMatrix = new ColorMatrix()
+                        //{
+                        //    Matrix00 = (float)(preCalc * redSaturation + targetAdjust),
+                        //    Matrix01 = (float)(preCalc * redSaturation),
+                        //    Matrix02 = (float)(preCalc * redSaturation),
+                        //    Matrix10 = (float)(preCalc * greenSaturation),
+                        //    Matrix11 = (float)(preCalc * greenSaturation + targetAdjust),
+                        //    Matrix12 = (float)(preCalc * greenSaturation),
+                        //    Matrix20 = (float)(preCalc * blueSaturation),
+                        //    Matrix21 = (float)(preCalc * blueSaturation),
+                        //    Matrix22 = (float)(preCalc * blueSaturation + targetAdjust),
+                        //};
+
                         ColorMatrix colorMatrix = new ColorMatrix()
                         {
                             Matrix00 = (float)(0.213 + 0.787 * targetAdjust),
@@ -213,9 +252,9 @@ namespace AmbiPro
             {
                 try
                 {
-                    float rReinhard = (R / 1 + R);
-                    float gReinhard = (G / 1 + G);
-                    float bReinhard = (B / 1 + B);
+                    float rReinhard = R / 1 + R;
+                    float gReinhard = G / 1 + G;
+                    float bReinhard = B / 1 + B;
                     R = ValidateColor(rReinhard);
                     G = ValidateColor(gReinhard);
                     B = ValidateColor(bReinhard);
@@ -224,20 +263,58 @@ namespace AmbiPro
                 catch { }
             }
 
+            public void AdjustHdrBT2020toBT709()
+            {
+                try
+                {
+                    ColorMatrix colorMatrix = new ColorMatrix()
+                    {
+                        Matrix00 = (float)1.6605,
+                        Matrix01 = (float)-0.5876,
+                        Matrix02 = (float)-0.0728,
+                        Matrix10 = (float)-0.1246,
+                        Matrix11 = (float)1.1329,
+                        Matrix12 = (float)-0.0083,
+                        Matrix20 = (float)-0.0182,
+                        Matrix21 = (float)-0.1006,
+                        Matrix22 = (float)1.1187,
+                    };
+                    ApplyColorMatrix(colorMatrix);
+                    //Debug.WriteLine("Adjusted BT2020 to BT907: " + R + " / G" + G + " / B" + B);
+                }
+                catch { }
+            }
+
             public void ApplyColorMatrix(ColorMatrix colorMatrix)
             {
                 try
                 {
-                    double rAdjusted = (R * colorMatrix.Matrix00) + (G * colorMatrix.Matrix01) + (B * colorMatrix.Matrix02) + (A * colorMatrix.Matrix03) + (255 * colorMatrix.Matrix40);
-                    double gAdjusted = (R * colorMatrix.Matrix10) + (G * colorMatrix.Matrix11) + (B * colorMatrix.Matrix12) + (A * colorMatrix.Matrix13) + (255 * colorMatrix.Matrix41);
-                    double bAdjusted = (R * colorMatrix.Matrix20) + (G * colorMatrix.Matrix21) + (B * colorMatrix.Matrix22) + (A * colorMatrix.Matrix23) + (255 * colorMatrix.Matrix42);
-                    double aAdjusted = (R * colorMatrix.Matrix30) + (G * colorMatrix.Matrix31) + (B * colorMatrix.Matrix32) + (A * colorMatrix.Matrix33) + (255 * colorMatrix.Matrix43);
+                    //Calculate color matrix rgb
+                    float rAdjusted = (R * colorMatrix.Matrix00) + (G * colorMatrix.Matrix01) + (B * colorMatrix.Matrix02) + (A * colorMatrix.Matrix03) + (255 * colorMatrix.Matrix40);
+                    float gAdjusted = (R * colorMatrix.Matrix10) + (G * colorMatrix.Matrix11) + (B * colorMatrix.Matrix12) + (A * colorMatrix.Matrix13) + (255 * colorMatrix.Matrix41);
+                    float bAdjusted = (R * colorMatrix.Matrix20) + (G * colorMatrix.Matrix21) + (B * colorMatrix.Matrix22) + (A * colorMatrix.Matrix23) + (255 * colorMatrix.Matrix42);
+                    float aAdjusted = (R * colorMatrix.Matrix30) + (G * colorMatrix.Matrix31) + (B * colorMatrix.Matrix32) + (A * colorMatrix.Matrix33) + (255 * colorMatrix.Matrix43);
+
+                    //Check color matrix rgb
+                    float maxDouble = new float[] { rAdjusted, gAdjusted, bAdjusted }.Max();
+                    if (maxDouble > 255)
+                    {
+                        float differenceFloat = maxDouble / 255;
+                        rAdjusted /= differenceFloat;
+                        gAdjusted /= differenceFloat;
+                        bAdjusted /= differenceFloat;
+                    }
+
+                    //Validate color rgb
                     R = ValidateColor(rAdjusted);
                     G = ValidateColor(gAdjusted);
                     B = ValidateColor(bAdjusted);
                     A = ValidateColor(aAdjusted);
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Failed to apply color matrix: " + ex.Message);
+                }
             }
 
             public byte ValidateColor(double checkColor)

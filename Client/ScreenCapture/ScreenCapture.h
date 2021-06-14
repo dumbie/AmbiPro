@@ -18,7 +18,7 @@ UINT NumD3DFeatureLevels = ARRAYSIZE(ArrayD3DFeatureLevels);
 CComPtr<IDXGIDevice> iDxgiDevice;
 CComPtr<IDXGIAdapter> iDxgiAdapter;
 CComPtr<IDXGIOutput> iDxgiOutput;
-CComPtr<IDXGIOutput6> iDxgiOutput6;
+CComPtr<IDXGIOutput1> iDxgiOutput1;
 CComPtr<IDXGIOutputDuplication> iDxgiOutputDuplication;
 CComPtr<ID3D11Device> iD3DDevice;
 CComPtr<ID3D11DeviceContext> iD3DDeviceContext;

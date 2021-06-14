@@ -6,7 +6,7 @@ namespace AmbiPro
     class AppImport
     {
         [DllImport("Resources\\ScreenCapture.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool CaptureInitialize(int CaptureMonitor, out bool OutputHDR);
+        public static extern bool CaptureInitialize(int CaptureMonitor);
 
         [DllImport("Resources\\ScreenCapture.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool CaptureReset();

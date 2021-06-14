@@ -75,8 +75,14 @@ namespace AmbiPro.Settings
                 }
                 else
                 {
-                    textblock_DebugPreview.Text = "Screen capture preview " + vScreenOutputWidth + "x" + vScreenOutputHeight + " (" + vCurrentRatio + "):";
-                    tb_RotateResolution.Text = "Capture resolution: " + vScreenOutputWidth + "x" + vScreenOutputHeight + " (" + vCurrentRatio + ")";
+                    string captureInfo = vScreenOutputWidth + "x" + vScreenOutputHeight + " (" + vCurrentRatio + ")";
+                    if (vScreenOutputHDR)
+                    {
+                        captureInfo += " (HDR)";
+                    }
+
+                    textblock_DebugPreview.Text = "Screen capture preview " + captureInfo + ":";
+                    tb_RotateResolution.Text = "Capture resolution: " + captureInfo;
                 }
 
                 //Update the rotation based on ratio

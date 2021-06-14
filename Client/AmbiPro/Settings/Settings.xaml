@@ -140,6 +140,10 @@
                             <Image Source="/Assets/Icons/Leds.png" Width="55" HorizontalAlignment="Center"/>
                             <TextBlock Text="Leds" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
                         </StackPanel>
+                        <StackPanel Name="menuButtonAdjust" Style="{StaticResource ListBoxMenuStackPanel}">
+                            <Image Source="/Assets/Icons/Color.png" Width="55" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Adjust" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                        </StackPanel>
                         <StackPanel Name="menuButtonModes" Style="{StaticResource ListBoxMenuStackPanel}">
                             <Image Source="/Assets/Icons/Modes.png" Width="55" HorizontalAlignment="Center"/>
                             <TextBlock Text="Modes" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
@@ -155,10 +159,6 @@
                         <StackPanel Name="menuButtonRotate" Style="{StaticResource ListBoxMenuStackPanel}">
                             <Image Source="/Assets/Icons/Rotate.png" Width="55" HorizontalAlignment="Center"/>
                             <TextBlock Text="Rotate" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Name="menuButtonColor" Style="{StaticResource ListBoxMenuStackPanel}">
-                            <Image Source="/Assets/Icons/Color.png" Width="55" HorizontalAlignment="Center"/>
-                            <TextBlock Text="Color" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
                         </StackPanel>
                         <StackPanel Name="menuButtonRemote" Style="{StaticResource ListBoxMenuStackPanel}">
                             <Image Source="/Assets/Icons/Remote.png" Width="55" HorizontalAlignment="Center"/>
@@ -447,36 +447,40 @@
                                 <TextBlock Margin="0,10,0,0" Name="tb_LedBottomGap" Text="Led gap bottom stand:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                                 <TextBlock Text="Change the gap in the bottom side of led strip for display stand." Style="{StaticResource TextBlockGrayLight}"/>
                                 <Slider Name="sldr_LedBottomGap" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="90" TickFrequency="2"/>
-
-                                <TextBlock Margin="0,10,0,0" Name="tb_LedBrightness" Text="Led maximum brightness:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                                <TextBlock Text="Change the maximum displayed led brightness." Style="{StaticResource TextBlockGrayLight}"/>
-                                <Slider Name="sldr_LedBrightness" Style="{StaticResource SliderWhite}" Minimum="5" Maximum="100"/>
-
-                                <TextBlock Margin="0,10,0,0" Name="tb_LedMinBrightness" Text="Led minimum brightness:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                                <TextBlock Text="Change the minimum displayed led brightness." Style="{StaticResource TextBlockGrayLight}"/>
-                                <Slider Name="sldr_LedMinBrightness" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="50"/>
                             </StackPanel>
 
-                            <!-- Color -->
-                            <StackPanel Name="sp_Color" Visibility="Collapsed" Margin="5,5,5,5">
-                                <TextBlock Name="tb_LedSaturation" Text="Led color saturation:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                                <TextBlock Text="Change the led color vibrance to your liking." Style="{StaticResource TextBlockGrayLight}"/>
-                                <Image Margin="0,2,0,0" Source="/Assets/SaturationSpectrum.png"/>
-                                <Slider Name="sldr_LedSaturation" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="400"/>
+                            <!-- Adjust -->
+                            <StackPanel Name="sp_Adjust" Visibility="Collapsed" Margin="5,5,5,5">
+                                <TextBlock Name="tb_LedBrightness" Text="Brightness level:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change the displayed led brightness level." Style="{StaticResource TextBlockGrayLight}"/>
+                                <Slider Name="sldr_LedBrightness" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="100"/>
 
-                                <TextBlock Margin="0,10,0,0" Name="tb_LedGamma" Text="Led display gamma:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                                <TextBlock Text="Adjust the gamma to display more black levels." Style="{StaticResource TextBlockGrayLight}"/>
+                                <TextBlock Margin="0,10,0,0" Name="tb_LedContrast" Text="Contrast level:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change the displayed led contrast level." Style="{StaticResource TextBlockGrayLight}"/>
+                                <Slider Name="sldr_LedContrast" Style="{StaticResource SliderWhite}" Minimum="-20" Maximum="20"/>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_LedGamma" Text="Gamma level:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change the displayed led gamma level." Style="{StaticResource TextBlockGrayLight}"/>
                                 <Image Margin="0,2,0,0" Source="/Assets/GammaSpectrum.png"/>
                                 <Slider Name="sldr_LedGamma" Style="{StaticResource SliderWhite}" Minimum="10" Maximum="150"/>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_LedMinBrightness" Text="Minimum brightness level:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change the minimum displayed led brightness." Style="{StaticResource TextBlockGrayLight}"/>
+                                <Slider Name="sldr_LedMinBrightness" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="50"/>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_LedSaturation" Text="Color saturation:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change the led color vibrance to your liking." Style="{StaticResource TextBlockGrayLight}"/>
+                                <Image Margin="0,2,0,0" Source="/Assets/SaturationSpectrum.png"/>
+                                <Slider Name="sldr_LedSaturation" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="300"/>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_LedHue" Text="Color hue:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change the led color hue tone to your liking." Style="{StaticResource TextBlockGrayLight}"/>
+                                <Image Margin="0,2,0,0" Source="/Assets/HueSpectrum.png"/>
+                                <Slider Name="sldr_LedHue" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="360"/>
 
                                 <TextBlock Margin="0,10,0,0" Name="tb_LedColorCut" Text="Minimum color brightness:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                                 <TextBlock Text="Only show colors when they reach a certain brightness level." Style="{StaticResource TextBlockGrayLight}"/>
                                 <Slider Name="sldr_LedColorCut" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="25"/>
-
-                                <TextBlock Margin="0,10,0,0" Name="tb_LedHue" Text="Led color hue:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                                <TextBlock Text="Change the led color hue tone to your liking." Style="{StaticResource TextBlockGrayLight}"/>
-                                <Image Margin="0,2,0,0" Source="/Assets/HueSpectrum.png"/>
-                                <Slider Name="sldr_LedHue" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="360"/>
 
                                 <TextBlock Margin="0,10,0,0" Text="Led color tuning:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                                 <TextBlock Text="Change a specific led color depth to your liking." Style="{StaticResource TextBlockGrayLight}"/>

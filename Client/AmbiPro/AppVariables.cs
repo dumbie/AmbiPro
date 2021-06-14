@@ -41,6 +41,7 @@ namespace AmbiPro
         public static int vScreenOutputHeight = 0;
         public static int vScreenOutputSize = 0;
         public static bool vScreenOutputHDR = false;
+        public static int vScreenOutputHDRWhiteLevel = 0;
 
         //Update Variables
         public static bool vCheckingForUpdate = false;
@@ -71,7 +72,6 @@ namespace AmbiPro
                 vScreenOutputWidth = 0;
                 vScreenOutputHeight = 0;
                 vScreenOutputSize = 0;
-                vScreenOutputHDR = false;
             }
             catch { }
         }

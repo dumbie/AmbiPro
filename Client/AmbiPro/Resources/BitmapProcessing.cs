@@ -10,7 +10,7 @@ namespace AmbiPro.Resources
     public class BitmapProcessing
     {
         //Convert data to bitmap
-        public static unsafe Bitmap ConvertDataToBitmap(byte* bitmapData, int bitmapWidth, int bitmapHeight, int bitmapSize, bool flipImage)
+        public static unsafe Bitmap BitmapConvertData(byte* bitmapData, int bitmapWidth, int bitmapHeight, int bitmapSize, bool flipImage)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace AmbiPro.Resources
         }
 
         //Get data from bitmap
-        public static unsafe byte* GetDataFromBitmap(Bitmap imageBitmap)
+        public static unsafe byte* BitmapGetData(Bitmap imageBitmap)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace AmbiPro.Resources
         }
 
         //Save screen capture as image file
-        public static void SaveScreenCaptureBitmap(Bitmap bitmapSave)
+        public static void BitmapSaveScreenCapture(Bitmap bitmapSave)
         {
             try
             {
@@ -94,6 +94,28 @@ namespace AmbiPro.Resources
             }
             catch { }
             return null;
+        }
+
+        //Apply color matrix to bitmap
+        public static void BitmapApplyColorMatrix(Bitmap imageBitmap, ColorMatrix colorMatrix)
+        {
+            try
+            {
+                //Get graphics from image
+                using (Graphics imageGraphics = Graphics.FromImage(imageBitmap))
+                {
+                    //Create screen rectangle
+                    Rectangle screenRectangle = new Rectangle(0, 0, imageBitmap.Width, imageBitmap.Height);
+
+                    //Create image attributes
+                    using (ImageAttributes imageAttributes = new ImageAttributes())
+                    {
+                        imageAttributes.SetColorMatrix(colorMatrix);
+                        imageGraphics.DrawImage(imageBitmap, screenRectangle, 0, 0, imageBitmap.Width, imageBitmap.Height, GraphicsUnit.Pixel, imageAttributes);
+                    }
+                }
+            }
+            catch { }
         }
     }
 }

@@ -161,6 +161,24 @@
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkSockets\SocketVariables.cs">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkSockets\SocketVariables.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVDisplayMonitor\AVDisplayMonitorDisplayConfig.cs">
+      <Link>ArnoldVinkCode\Functions\AVDisplayMonitor\AVDisplayMonitorDisplayConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVDisplayMonitor\AVDisplayMonitorEnumDisplay.cs">
+      <Link>ArnoldVinkCode\Functions\AVDisplayMonitor\AVDisplayMonitorEnumDisplay.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVDisplayMonitor\AVDisplayMonitorSwitch.cs">
+      <Link>ArnoldVinkCode\Functions\AVDisplayMonitor\AVDisplayMonitorSwitch.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVDisplayMonitor\Classes\DisplayMonitor.cs">
+      <Link>ArnoldVinkCode\Functions\AVDisplayMonitor\Classes\DisplayMonitor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVDisplayMonitor\Interop\InteropDisplayConfig.cs">
+      <Link>ArnoldVinkCode\Functions\AVDisplayMonitor\Interop\InteropDisplayConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVDisplayMonitor\Interop\InteropEnumDisplay.cs">
+      <Link>ArnoldVinkCode\Functions\AVDisplayMonitor\Interop\InteropEnumDisplay.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVDownloader.cs">
       <Link>ArnoldVinkCode\Functions\AVDownloader.cs</Link>
     </Compile>
@@ -204,6 +222,7 @@
     <Compile Include="AppTasks.cs" />
     <Compile Include="AppTimers.cs" />
     <Compile Include="AppUpdate.cs" />
+    <Compile Include="ScreenStatus.cs" />
     <Compile Include="Settings\Settings-Rotate.cs" />
     <Compile Include="ModeColorSpectrum.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
