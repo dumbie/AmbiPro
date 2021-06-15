@@ -154,6 +154,13 @@ namespace AmbiPro.Settings
                     tb_LedSaturation.Text = "Color saturation: " + sldr_LedSaturation.Value.ToString("0") + "%";
                 };
 
+                //Save - Led Temperature
+                sldr_LedTemperature.ValueChanged += (sender, e) =>
+                {
+                    SettingsFunction.Save("LedTemperature", sldr_LedTemperature.Value.ToString("0"));
+                    tb_LedTemperature.Text = "Color temperature: " + sldr_LedTemperature.Value.ToString("0") + "K";
+                };
+
                 //Save - Color Loop Speed
                 sldr_ColorLoopSpeed.ValueChanged += (sender, e) =>
                 {
@@ -187,11 +194,11 @@ namespace AmbiPro.Settings
                     tb_LedHue.Text = "Color hue: " + sldr_LedHue.Value.ToString("0") + "°";
                 };
 
-                //Save - Led Color Cut
-                sldr_LedColorCut.ValueChanged += (sender, e) =>
+                //Save - Led Minimum Color
+                sldr_LedMinColor.ValueChanged += (sender, e) =>
                 {
-                    SettingsFunction.Save("LedColorCut", sldr_LedColorCut.Value.ToString("0"));
-                    tb_LedColorCut.Text = "Minimum color brightness: " + sldr_LedColorCut.Value.ToString("0") + "%";
+                    SettingsFunction.Save("LedMinColor", sldr_LedMinColor.Value.ToString("0"));
+                    tb_LedMinColor.Text = "Minimum color brightness: " + sldr_LedMinColor.Value.ToString("0") + "%";
                 };
 
                 //Save - Led Color Red

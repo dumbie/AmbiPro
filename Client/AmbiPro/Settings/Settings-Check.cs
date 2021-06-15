@@ -105,25 +105,25 @@ namespace AmbiPro.Settings
                 //Check - Led Brightness Level
                 if (ConfigurationManager.AppSettings["LedBrightness"] == null)
                 {
-                    SettingsFunction.Save("LedBrightness", "80");
-                }
-
-                //Check - Led Minimum Brightness
-                if (ConfigurationManager.AppSettings["LedMinBrightness"] == null)
-                {
-                    SettingsFunction.Save("LedMinBrightness", "5");
+                    SettingsFunction.Save("LedBrightness", "90");
                 }
 
                 //Check - Led Gamma
                 if (ConfigurationManager.AppSettings["LedGamma"] == null)
                 {
-                    SettingsFunction.Save("LedGamma", "80");
+                    SettingsFunction.Save("LedGamma", "70");
                 }
 
                 //Check - Led Saturation
                 if (ConfigurationManager.AppSettings["LedSaturation"] == null)
                 {
-                    SettingsFunction.Save("LedSaturation", "120");
+                    SettingsFunction.Save("LedSaturation", "130");
+                }
+
+                //Check - Led Temperature
+                if (ConfigurationManager.AppSettings["LedTemperature"] == null)
+                {
+                    SettingsFunction.Save("LedTemperature", "0");
                 }
 
                 //Check - Color Loop Speed
@@ -150,10 +150,16 @@ namespace AmbiPro.Settings
                     SettingsFunction.Save("LedHue2", "0");
                 }
 
-                //Check - Led Color Cut
-                if (ConfigurationManager.AppSettings["LedColorCut"] == null)
+                //Check - Led Minimum Brightness
+                if (ConfigurationManager.AppSettings["LedMinBrightness"] == null)
                 {
-                    SettingsFunction.Save("LedColorCut", "3");
+                    SettingsFunction.Save("LedMinBrightness", "10");
+                }
+
+                //Check - Led Minimum Color
+                if (ConfigurationManager.AppSettings["LedMinColor"] == null)
+                {
+                    SettingsFunction.Save("LedMinColor", "5");
                 }
 
                 //Check - Led Color Red

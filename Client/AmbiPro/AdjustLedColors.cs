@@ -25,6 +25,9 @@ namespace AmbiPro
                 //Adjust the screen capture saturation
                 adjustColor.AdjustSaturation(setLedSaturation);
 
+                //Adjust the screen capture temperature
+                adjustColor.AdjustTemperature(setLedTemperature);
+
                 //Adjust specific color values
                 adjustColor.AdjustColorRed(setLedColorRed);
                 adjustColor.AdjustColorGreen(setLedColorGreen);
@@ -42,15 +45,15 @@ namespace AmbiPro
                 //Check current led mode
                 if (setLedMode == 0)
                 {
-                    //Adjust color to the color cut off setting
-                    if (adjustColor.R < setLedColorCut && adjustColor.G < setLedColorCut && adjustColor.B < setLedColorCut)
+                    //Adjust color to the minimum color setting
+                    if (adjustColor.R < setLedMinColor && adjustColor.G < setLedMinColor && adjustColor.B < setLedMinColor)
                     {
                         adjustColor.R = 0;
                         adjustColor.G = 0;
                         adjustColor.B = 0;
                     }
 
-                    //Adjust the minimum brightness to setting
+                    //Adjust led to the minimum brightness setting
                     if (adjustColor.R < setLedMinBrightness && adjustColor.G < setLedMinBrightness && adjustColor.B < setLedMinBrightness)
                     {
                         adjustColor.R = setLedMinBrightness;

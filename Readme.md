@@ -45,11 +45,14 @@ When you are walking into any problems or a bug you can go to my help page at ht
 If you appreciate my project and want to support me with my projects you can make a donation through https://donation.arnoldvink.com
 
 ## Changelog
+v0.11.0.0 (-June-2021)
+- Added color temperature setting.
+* Miscellaneous application improvements and fixes.
+
 v0.10.0.0 (13-May-2021)
 - Rewrote screen color capture code to reduce cpu usage and fill in gaps.
 - Changed the way led count and sides are setup for more flexibility.
 - Added AmbiPro administrator launcher.
-* Miscellaneous application improvements and fixes.
 
 v0.9.4.5 (22-January-2018)
 - The color spectrum mode now rotates it's colors.

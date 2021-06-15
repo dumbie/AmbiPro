@@ -349,13 +349,19 @@
     <Resource Include="Assets\Icons\Update.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Assets\HueSpectrum.png" />
+    <Resource Include="Assets\HueSpectrum.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\Icons\Remote.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <EmbeddedResource Include="Assets\ApplicationIcon-Disabled.ico" />
-    <Resource Include="Assets\SaturationSpectrum.png" />
-    <Resource Include="Assets\GammaSpectrum.png" />
+    <Resource Include="Assets\SaturationSpectrum.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\GammaSpectrum.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\Icons\Modes.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -372,6 +378,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\Icons\LedsOff.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\TemperatureSpectrum.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Content Include="Script\Script.ino">

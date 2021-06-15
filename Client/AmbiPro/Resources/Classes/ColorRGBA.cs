@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Globalization;
-using System.Linq;
 
 namespace AmbiPro
 {
@@ -126,34 +125,21 @@ namespace AmbiPro
                 {
                     if (targetAdjust != 1.00)
                     {
-                        //double preCalc = 1.0 - targetAdjust;
-                        //double redSaturation = 0.3086;
-                        //double greenSaturation = 0.6094;
-                        //double blueSaturation = 0.0820;
-                        //ColorMatrix colorMatrix = new ColorMatrix()
-                        //{
-                        //    Matrix00 = (float)(preCalc * redSaturation + targetAdjust),
-                        //    Matrix01 = (float)(preCalc * redSaturation),
-                        //    Matrix02 = (float)(preCalc * redSaturation),
-                        //    Matrix10 = (float)(preCalc * greenSaturation),
-                        //    Matrix11 = (float)(preCalc * greenSaturation + targetAdjust),
-                        //    Matrix12 = (float)(preCalc * greenSaturation),
-                        //    Matrix20 = (float)(preCalc * blueSaturation),
-                        //    Matrix21 = (float)(preCalc * blueSaturation),
-                        //    Matrix22 = (float)(preCalc * blueSaturation + targetAdjust),
-                        //};
-
+                        double preCalc = 1.0 - targetAdjust;
+                        double redSaturation = 0.3086;
+                        double greenSaturation = 0.6094;
+                        double blueSaturation = 0.0820;
                         ColorMatrix colorMatrix = new ColorMatrix()
                         {
-                            Matrix00 = (float)(0.213 + 0.787 * targetAdjust),
-                            Matrix01 = (float)(0.715 - 0.715 * targetAdjust),
-                            Matrix02 = (float)(0.072 - 0.072 * targetAdjust),
-                            Matrix10 = (float)(0.213 - 0.213 * targetAdjust),
-                            Matrix11 = (float)(0.715 + 0.285 * targetAdjust),
-                            Matrix12 = (float)(0.072 - 0.072 * targetAdjust),
-                            Matrix20 = (float)(0.213 - 0.213 * targetAdjust),
-                            Matrix21 = (float)(0.715 - 0.715 * targetAdjust),
-                            Matrix22 = (float)(0.072 + 0.928 * targetAdjust),
+                            Matrix00 = (float)(preCalc * redSaturation + targetAdjust),
+                            Matrix01 = (float)(preCalc * redSaturation),
+                            Matrix02 = (float)(preCalc * redSaturation),
+                            Matrix10 = (float)(preCalc * greenSaturation),
+                            Matrix11 = (float)(preCalc * greenSaturation + targetAdjust),
+                            Matrix12 = (float)(preCalc * greenSaturation),
+                            Matrix20 = (float)(preCalc * blueSaturation),
+                            Matrix21 = (float)(preCalc * blueSaturation),
+                            Matrix22 = (float)(preCalc * blueSaturation + targetAdjust),
                         };
                         ApplyColorMatrix(colorMatrix);
                         //Debug.WriteLine("Saturation adjusted: R" + R + "/G" + G + "/B" + B + "/T" + targetAdjust);
@@ -191,6 +177,61 @@ namespace AmbiPro
                 catch { }
             }
 
+            public void AdjustTemperature(double targetAdjust)
+            {
+                try
+                {
+                    if (targetAdjust != 0)
+                    {
+                        double redTemp = 255;
+                        if (targetAdjust > 66)
+                        {
+                            redTemp = targetAdjust - 60;
+                            redTemp = 329.698727466 * Math.Pow(redTemp, -0.1332047592);
+                            redTemp = ValidateColor(redTemp);
+                        }
+
+                        double greenTemp = 0;
+                        if (targetAdjust <= 66)
+                        {
+                            greenTemp = targetAdjust;
+                            greenTemp = (99.4708025861 * Math.Log(greenTemp)) - 161.1195681661;
+                        }
+                        else
+                        {
+                            greenTemp = targetAdjust - 60;
+                            greenTemp = 288.1221695283 * Math.Pow(greenTemp, -0.0755148492);
+                        }
+                        greenTemp = ValidateColor(greenTemp);
+
+                        double blueTemp = 255;
+                        if (targetAdjust < 66)
+                        {
+                            if (targetAdjust <= 19)
+                            {
+                                blueTemp = 0;
+                            }
+                            else
+                            {
+                                blueTemp = targetAdjust - 10;
+                                blueTemp = (138.5177312231 * Math.Log(blueTemp)) - 305.0447927307;
+                                blueTemp = ValidateColor(blueTemp);
+                            }
+                        }
+
+                        ColorMatrix colorMatrix = new ColorMatrix()
+                        {
+                            Matrix00 = (float)(redTemp / 255),
+                            Matrix11 = (float)(greenTemp / 255),
+                            Matrix22 = (float)(blueTemp / 255),
+                        };
+                        ApplyColorMatrix(colorMatrix);
+                        //Debug.WriteLine("Temperature adjusted: R" + R + "/G" + G + "/B" + B + "/T" + targetAdjust);
+                    }
+                }
+                catch { }
+            }
+
             public void AdjustColorRed(double targetAdjust)
             {
                 try
@@ -199,9 +240,7 @@ namespace AmbiPro
                     {
                         ColorMatrix colorMatrix = new ColorMatrix()
                         {
-                            Matrix00 = (float)(0.213 + 0.787 * targetAdjust),
-                            Matrix01 = (float)(0.715 - 0.715 * targetAdjust),
-                            Matrix02 = (float)(0.072 - 0.072 * targetAdjust),
+                            Matrix00 = (float)targetAdjust,
                         };
                         ApplyColorMatrix(colorMatrix);
                         //Debug.WriteLine("Red adjusted to: " + R + "/T" + targetAdjust);
@@ -218,9 +257,7 @@ namespace AmbiPro
                     {
                         ColorMatrix colorMatrix = new ColorMatrix()
                         {
-                            Matrix10 = (float)(0.213 - 0.213 * targetAdjust),
-                            Matrix11 = (float)(0.715 + 0.285 * targetAdjust),
-                            Matrix12 = (float)(0.072 - 0.072 * targetAdjust),
+                            Matrix11 = (float)targetAdjust,
                         };
                         ApplyColorMatrix(colorMatrix);
                         //Debug.WriteLine("Green adjusted to: " + G + "/T" + targetAdjust);
@@ -237,9 +274,7 @@ namespace AmbiPro
                     {
                         ColorMatrix colorMatrix = new ColorMatrix()
                         {
-                            Matrix20 = (float)(0.213 - 0.213 * targetAdjust),
-                            Matrix21 = (float)(0.715 - 0.715 * targetAdjust),
-                            Matrix22 = (float)(0.072 + 0.928 * targetAdjust),
+                            Matrix22 = (float)targetAdjust,
                         };
                         ApplyColorMatrix(colorMatrix);
                         //Debug.WriteLine("Blue adjusted to: " + B + "/T" + targetAdjust);
@@ -252,13 +287,13 @@ namespace AmbiPro
             {
                 try
                 {
-                    float rReinhard = R / 1 + R;
-                    float gReinhard = G / 1 + G;
-                    float bReinhard = B / 1 + B;
+                    float rReinhard = R / (R + 1.0f);
+                    float gReinhard = G / (G + 1.0f);
+                    float bReinhard = B / (B + 1.0f);
                     R = ValidateColor(rReinhard);
                     G = ValidateColor(gReinhard);
                     B = ValidateColor(bReinhard);
-                    //Debug.WriteLine("HDR Reinhard adjusted: " + R + " / G" + G + " / B" + B);
+                    //Debug.WriteLine("HDR to SDR Reinhard adjusted: " + R + " / G" + G + " / B" + B);
                 }
                 catch { }
             }
@@ -289,23 +324,13 @@ namespace AmbiPro
             {
                 try
                 {
-                    //Calculate color matrix rgb
-                    float rAdjusted = (R * colorMatrix.Matrix00) + (G * colorMatrix.Matrix01) + (B * colorMatrix.Matrix02) + (A * colorMatrix.Matrix03) + (255 * colorMatrix.Matrix40);
-                    float gAdjusted = (R * colorMatrix.Matrix10) + (G * colorMatrix.Matrix11) + (B * colorMatrix.Matrix12) + (A * colorMatrix.Matrix13) + (255 * colorMatrix.Matrix41);
-                    float bAdjusted = (R * colorMatrix.Matrix20) + (G * colorMatrix.Matrix21) + (B * colorMatrix.Matrix22) + (A * colorMatrix.Matrix23) + (255 * colorMatrix.Matrix42);
-                    float aAdjusted = (R * colorMatrix.Matrix30) + (G * colorMatrix.Matrix31) + (B * colorMatrix.Matrix32) + (A * colorMatrix.Matrix33) + (255 * colorMatrix.Matrix43);
+                    //Adjust color matrix rgb
+                    float rAdjusted = (R * colorMatrix[0, 0]) + (G * colorMatrix[1, 0]) + (B * colorMatrix[2, 0]) + (A * colorMatrix[3, 0]) + (255 * colorMatrix[4, 0]);
+                    float gAdjusted = (R * colorMatrix[0, 1]) + (G * colorMatrix[1, 1]) + (B * colorMatrix[2, 1]) + (A * colorMatrix[3, 1]) + (255 * colorMatrix[4, 1]);
+                    float bAdjusted = (R * colorMatrix[0, 2]) + (G * colorMatrix[1, 2]) + (B * colorMatrix[2, 2]) + (A * colorMatrix[3, 2]) + (255 * colorMatrix[4, 2]);
+                    float aAdjusted = (R * colorMatrix[0, 3]) + (G * colorMatrix[1, 3]) + (B * colorMatrix[2, 3]) + (A * colorMatrix[3, 3]) + (255 * colorMatrix[4, 3]);
 
-                    //Check color matrix rgb
-                    float maxDouble = new float[] { rAdjusted, gAdjusted, bAdjusted }.Max();
-                    if (maxDouble > 255)
-                    {
-                        float differenceFloat = maxDouble / 255;
-                        rAdjusted /= differenceFloat;
-                        gAdjusted /= differenceFloat;
-                        bAdjusted /= differenceFloat;
-                    }
-
-                    //Validate color rgb
+                    //Validate color matrix rgb
                     R = ValidateColor(rAdjusted);
                     G = ValidateColor(gAdjusted);
                     B = ValidateColor(bAdjusted);

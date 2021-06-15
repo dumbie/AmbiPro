@@ -41,11 +41,12 @@ namespace AmbiPro
         private static byte setLedMinBrightness = 0;
         private static double setLedGamma = 0;
         private static double setLedSaturation = 0;
+        private static double setLedTemperature = 0;
         private static int setColorLoopSpeed = 0;
         private static int setSpectrumRotationSpeed = 0;
         private static string setSolidLedColor = string.Empty;
         private static double setLedHue = 0;
-        private static int setLedColorCut = 0;
+        private static int setLedMinColor = 0;
         private static double setLedColorRed = 0;
         private static double setLedColorGreen = 0;
         private static double setLedColorBlue = 0;
@@ -88,11 +89,12 @@ namespace AmbiPro
                 setLedMinBrightness = Convert.ToByte(ConfigurationManager.AppSettings["LedMinBrightness"]);
                 setLedGamma = Convert.ToDouble(ConfigurationManager.AppSettings["LedGamma"]) / 100;
                 setLedSaturation = Convert.ToDouble(ConfigurationManager.AppSettings["LedSaturation"]) / 100;
+                setLedTemperature = Convert.ToDouble(ConfigurationManager.AppSettings["LedTemperature"]) / 100;
                 setColorLoopSpeed = Convert.ToInt32(ConfigurationManager.AppSettings["ColorLoopSpeed"]);
                 setSpectrumRotationSpeed = Convert.ToInt32(ConfigurationManager.AppSettings["SpectrumRotationSpeed"]);
                 setSolidLedColor = ConfigurationManager.AppSettings["SolidLedColor"].ToString();
                 setLedHue = Convert.ToDouble(ConfigurationManager.AppSettings["LedHue2"]);
-                setLedColorCut = Convert.ToInt32(ConfigurationManager.AppSettings["LedColorCut"]);
+                setLedMinColor = Convert.ToInt32(ConfigurationManager.AppSettings["LedMinColor"]);
                 setLedColorRed = Convert.ToDouble(ConfigurationManager.AppSettings["LedColorRed"]) / 100;
                 setLedColorGreen = Convert.ToDouble(ConfigurationManager.AppSettings["LedColorGreen"]) / 100;
                 setLedColorBlue = Convert.ToDouble(ConfigurationManager.AppSettings["LedColorBlue"]) / 100;
