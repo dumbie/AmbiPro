@@ -186,6 +186,11 @@ namespace AmbiPro.Settings
                 tb_UpdateRate.Text = "Led update rate: " + updateRateMs + " ms (" + updateRateFps + " fps)";
                 sldr_UpdateRate.Value = updateRateMs;
 
+                //Load - Led Smoothing
+                int smoothingFrames = Convert.ToInt32(ConfigurationManager.AppSettings["LedSmoothing"]);
+                tb_LedSmoothing.Text = "Led smoothing: " + smoothingFrames + " frames";
+                sldr_LedSmoothing.Value = smoothingFrames;
+
                 //Load - Debug Mode
                 checkbox_DebugMode.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugMode"]);
                 checkbox_DebugBlackBar.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugBlackBar"]);

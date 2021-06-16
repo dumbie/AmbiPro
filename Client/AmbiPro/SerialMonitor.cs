@@ -35,6 +35,7 @@ namespace AmbiPro
         private static int setAdjustBlackbarRange = 0;
         private static int setAdjustBlackBarBrightness = 0;
         private static int setUpdateRate = 0;
+        private static int setLedSmoothing = 0;
         private static int setLedBottomGap = 0;
         private static double setLedContrast = 0;
         private static double setLedBrightness = 0;
@@ -83,6 +84,7 @@ namespace AmbiPro
                 setAdjustBlackbarRange = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRange"]);
                 setAdjustBlackBarBrightness = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarBrightness"]);
                 setUpdateRate = Convert.ToInt32(ConfigurationManager.AppSettings["UpdateRate"]);
+                setLedSmoothing = Convert.ToInt32(ConfigurationManager.AppSettings["LedSmoothing"]);
                 setLedBottomGap = Convert.ToInt32(ConfigurationManager.AppSettings["LedBottomGap"]);
                 setLedContrast = Convert.ToDouble(ConfigurationManager.AppSettings["LedContrast"]) / 100;
                 setLedBrightness = Convert.ToDouble(ConfigurationManager.AppSettings["LedBrightness"]) / 100;
@@ -372,7 +374,7 @@ namespace AmbiPro
                     List<string> MsgBoxAnswers = new List<string>();
                     MsgBoxAnswers.Add("Change monitor setting");
                     MsgBoxAnswers.Add("Change the led mode");
-                    MsgBoxAnswers.Add("Retry to capture");
+                    MsgBoxAnswers.Add("Retry to capture screen");
                     MsgBoxAnswers.Add("Close application");
 
                     string MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to start capturing your monitor screen", "Please make sure the correct monitor screen is selected, Microsoft Visual C++ 2019 Redistributable is installed on your PC, that you have a 64bit Windows installation and that you have a DirectX 12 or higher capable graphics adapter installed.", MsgBoxAnswers);
@@ -386,7 +388,7 @@ namespace AmbiPro
                         await LedSwitch(LedSwitches.Disable);
                         ShowSettings();
                     }
-                    else if (MsgBoxResult == "Retry to capture")
+                    else if (MsgBoxResult == "Retry to capture screen")
                     {
                         await LedSwitch(LedSwitches.Restart);
                     }

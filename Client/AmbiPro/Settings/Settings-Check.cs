@@ -111,13 +111,13 @@ namespace AmbiPro.Settings
                 //Check - Led Gamma
                 if (ConfigurationManager.AppSettings["LedGamma"] == null)
                 {
-                    SettingsFunction.Save("LedGamma", "70");
+                    SettingsFunction.Save("LedGamma", "75");
                 }
 
                 //Check - Led Saturation
                 if (ConfigurationManager.AppSettings["LedSaturation"] == null)
                 {
-                    SettingsFunction.Save("LedSaturation", "130");
+                    SettingsFunction.Save("LedSaturation", "120");
                 }
 
                 //Check - Led Temperature
@@ -232,6 +232,12 @@ namespace AmbiPro.Settings
                 if (ConfigurationManager.AppSettings["UpdateRate"] == null)
                 {
                     SettingsFunction.Save("UpdateRate", "30");
+                }
+
+                //Check - Led Smoothing
+                if (ConfigurationManager.AppSettings["LedSmoothing"] == null)
+                {
+                    SettingsFunction.Save("LedSmoothing", "1");
                 }
 
                 //Check - Debug Mode

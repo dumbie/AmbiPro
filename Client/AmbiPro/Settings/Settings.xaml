@@ -305,6 +305,10 @@
                                 <TextBlock Text="Change the screen capture update rate target, lowering this will cause less output delay.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
                                 <Slider Name="sldr_UpdateRate" Style="{StaticResource SliderWhite}" Minimum="1" Maximum="250"/>
 
+                                <TextBlock Margin="0,10,0,0" Name="tb_LedSmoothing" Text="Led smoothing:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Merge previous colors with current color to smoothen led updates.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                                <Slider Name="sldr_LedSmoothing" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="3"/>
+
                                 <TextBlock Margin="0,10,0,0" Text="* This setting has impact on capture and your system performance." Style="{StaticResource TextBlockGrayLight}"/>
                             </StackPanel>
 

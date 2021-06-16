@@ -4,9 +4,11 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Threading.Tasks;
+using static AmbiPro.AppImport;
 using static AmbiPro.AppVariables;
 using static AmbiPro.Resources.BitmapProcessing;
 using static ArnoldVinkCode.AVActions;
+using static ArnoldVinkCode.AVClassConverters;
 
 namespace AmbiPro
 {
@@ -18,7 +20,8 @@ namespace AmbiPro
             try
             {
                 Debug.WriteLine("Initializing screen capture: " + DateTime.Now);
-                return AppImport.CaptureInitialize(Convert.ToInt32(ConfigurationManager.AppSettings["MonitorCapture"]));
+                int captureMonitor = Convert.ToInt32(ConfigurationManager.AppSettings["MonitorCapture"]);
+                return AppImport.CaptureInitialize(captureMonitor, out vScreenOutputWidth, out vScreenOutputHeight, out vScreenOutputSize, out vScreenOutputHDR, 2);
             }
             catch
             {
@@ -76,7 +79,7 @@ namespace AmbiPro
                         //Capture screenshot
                         try
                         {
-                            BitmapIntPtr = AppImport.CaptureScreenshot(out vScreenOutputWidth, out vScreenOutputHeight, out vScreenOutputSize, 2);
+                            BitmapIntPtr = AppImport.CaptureScreenshot();
                         }
                         catch { }
 
@@ -151,6 +154,34 @@ namespace AmbiPro
                             }
                         }
 
+                        //Smooth led frame transition
+                        if (setLedSmoothing > 0)
+                        {
+                            //Merge current bytes with history
+                            for (int ledCount = InitByteSize; ledCount < (SerialBytes.Length - InitByteSize); ledCount++)
+                            {
+                                //Debug.WriteLine("Led smoothing old: " + SerialBytes[ledCount]);
+                                if (vCaptureByteHistory1 != null && setLedSmoothing >= 1)
+                                {
+                                    SerialBytes[ledCount] = Convert.ToByte((vCaptureByteHistory1[ledCount] + SerialBytes[ledCount]) / 2);
+                                }
+                                if (vCaptureByteHistory2 != null && setLedSmoothing >= 2)
+                                {
+                                    SerialBytes[ledCount] = Convert.ToByte((vCaptureByteHistory2[ledCount] + SerialBytes[ledCount]) / 2);
+                                }
+                                if (vCaptureByteHistory3 != null && setLedSmoothing >= 3)
+                                {
+                                    SerialBytes[ledCount] = Convert.ToByte((vCaptureByteHistory3[ledCount] + SerialBytes[ledCount]) / 2);
+                                }
+                                //Debug.WriteLine("Led smoothing new: " + SerialBytes[ledCount]);
+                            }
+
+                            //Update capture bytes history
+                            vCaptureByteHistory3 = vCaptureByteHistory2;
+                            vCaptureByteHistory2 = vCaptureByteHistory1;
+                            vCaptureByteHistory1 = CloneByteArray(SerialBytes);
+                        }
+
                         //Rotate the leds as calibrated
                         if (setLedRotate > 0)
                         {
@@ -189,6 +220,10 @@ namespace AmbiPro
                     finally
                     {
                         //Clear screen capture resources
+                        if (BitmapIntPtr != IntPtr.Zero)
+                        {
+                            CaptureFreeMemory(BitmapIntPtr);
+                        }
                         if (BitmapImage != null)
                         {
                             BitmapImage.Dispose();

@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using static AmbiPro.AppClasses;
 using static AmbiPro.AppEnums;
-using static AmbiPro.AppVariables;
 
 namespace AmbiPro
 {
@@ -13,11 +12,11 @@ namespace AmbiPro
         {
             try
             {
-                //Check if HDR is enabled and adjust colors
-                if (setLedMode == 0 && vScreenOutputHDR)
-                {
-                    //Debug.WriteLine("HDR" + vScreenOutputHDRWhiteLevel);
-                }
+                ////Check if HDR is enabled and adjust colors
+                //if (setLedMode == 0 && vScreenOutputHDR)
+                //{
+                //    //Debug.WriteLine("HDR" + vScreenOutputHDRWhiteLevel);
+                //}
 
                 //Adjust the screen capture hue
                 adjustColor.AdjustHue(setLedHue);

@@ -20,9 +20,6 @@ namespace AmbiPro
         //Color loop Variables
         public static ColorRGBA vCurrentLoopColor = new ColorRGBA() { R = 20 };
 
-        //Capture Variables
-        public static int vCaptureRange = 0;
-
         //Blackbar Variables
         public const int vMarginBlackAccuracy = 4;
         public const int vMarginMinimumOffset = 2;
@@ -36,12 +33,15 @@ namespace AmbiPro
         public static int vBlackBarRangeHorizontal = 0;
         public static int vBlackBarRangeVertical = 0;
 
-        //Screen Variables
+        //Screen capture Variables
+        public static int vCaptureRange = 0;
+        public static byte[] vCaptureByteHistory1 = null;
+        public static byte[] vCaptureByteHistory2 = null;
+        public static byte[] vCaptureByteHistory3 = null;
         public static int vScreenOutputWidth = 0;
         public static int vScreenOutputHeight = 0;
         public static int vScreenOutputSize = 0;
         public static bool vScreenOutputHDR = false;
-        public static int vScreenOutputHDRWhiteLevel = 0;
 
         //Update Variables
         public static bool vCheckingForUpdate = false;
@@ -54,9 +54,6 @@ namespace AmbiPro
         {
             try
             {
-                //Capture Variables
-                vCaptureRange = 0;
-
                 //Blackbar Variables
                 vMarginBlackLastUpdate = 0;
                 vMarginTop = vMarginMinimumOffset;
@@ -68,10 +65,15 @@ namespace AmbiPro
                 vBlackBarRangeHorizontal = 0;
                 vBlackBarRangeVertical = 0;
 
-                //Screen Variables
+                //Screen capture Variables
+                vCaptureRange = 0;
+                vCaptureByteHistory1 = null;
+                vCaptureByteHistory2 = null;
+                vCaptureByteHistory3 = null;
                 vScreenOutputWidth = 0;
                 vScreenOutputHeight = 0;
                 vScreenOutputSize = 0;
+                vScreenOutputHDR = false;
             }
             catch { }
         }

@@ -302,6 +302,14 @@ namespace AmbiPro.Settings
                     tb_UpdateRate.Text = "Led update rate: " + updateRateMs + " ms (" + updateRateFps + " fps)";
                 };
 
+                //Save - Led Smoothing
+                sldr_LedSmoothing.ValueChanged += (sender, e) =>
+                {
+                    SettingsFunction.Save("LedSmoothing", sldr_LedSmoothing.Value.ToString("0"));
+                    int smoothingFrames = Convert.ToInt32(sldr_LedSmoothing.Value);
+                    tb_LedSmoothing.Text = "Led smoothing: " + smoothingFrames + " frames";
+                };
+
                 //Save - Windows Startup
                 cb_WindowsStartup.Click += (sender, e) => { ManageShortcutStartup(); };
 

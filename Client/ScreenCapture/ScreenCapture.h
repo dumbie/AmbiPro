@@ -18,7 +18,7 @@ UINT NumD3DFeatureLevels = ARRAYSIZE(ArrayD3DFeatureLevels);
 CComPtr<IDXGIDevice> iDxgiDevice;
 CComPtr<IDXGIAdapter> iDxgiAdapter;
 CComPtr<IDXGIOutput> iDxgiOutput;
-CComPtr<IDXGIOutput1> iDxgiOutput1;
+CComPtr<IDXGIOutput6> iDxgiOutput6;
 CComPtr<IDXGIOutputDuplication> iDxgiOutputDuplication;
 CComPtr<ID3D11Device> iD3DDevice;
 CComPtr<ID3D11DeviceContext> iD3DDeviceContext;
@@ -29,6 +29,13 @@ CComPtr<ID3D11Texture2D> iD3DScreenCaptureTextureOriginal;
 CComPtr<ID3D11Texture2D> iD3DScreenCaptureTextureOutput;
 CComPtr<ID3D11Texture2D> iD3DScreenCaptureTextureResize;
 CComPtr<ID3D11ShaderResourceView> iD3D11ShaderResourceView;
+
+//Bitmap Variables
+UINT BitmapWidthPixels;
+UINT BitmapHeightPixels;
+UINT BitmapWidthRows;
+UINT BitmapByteSize;
+UINT BitmapMipLevel;
 
 //Result Variables
 HRESULT hResult = E_FAIL;

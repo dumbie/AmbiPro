@@ -65,9 +65,6 @@ namespace AmbiPro
                     await LedSwitch(LedSwitches.Automatic);
                 }
 
-                //Start the background tasks
-                TasksBackgroundStart();
-
                 //Enable the socket server
                 await EnableSocketServer();
 
@@ -98,9 +95,6 @@ namespace AmbiPro
             try
             {
                 Debug.WriteLine("Exiting application.");
-
-                //Stop the background tasks
-                await TasksBackgroundStop();
 
                 //Stop updating the leds
                 await LedSwitch(LedSwitches.Disable);

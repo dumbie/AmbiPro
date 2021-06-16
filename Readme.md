@@ -45,7 +45,8 @@ When you are walking into any problems or a bug you can go to my help page at ht
 If you appreciate my project and want to support me with my projects you can make a donation through https://donation.arnoldvink.com
 
 ## Changelog
-v0.11.0.0 (-June-2021)
+v0.11.0.0 (17-June-2021)
+- Added led smoothing setting.
 - Added color temperature setting.
 * Miscellaneous application improvements and fixes.
 
