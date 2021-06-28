@@ -10,9 +10,11 @@
     <script src="scripts/scripts.js" type="text/javascript"></script>
     <!-- Styles -->
     <link href="styles/styles.css" media="all" rel="stylesheet" type="text/css">
-	<!-- Icons -->
-    <link href="images/AmbiPro.ico" rel="shortcut icon">
-	<meta name="application-name" content=" "/>
+    <!-- Icons -->
+    <link href="images/AmbiProIcon.png" rel="apple-touch-icon">
+    <link href="images/AmbiProIcon.png" rel="shortcut icon">
+    <link href="images/AmbiProIcon.png" rel="icon">
+    <meta name="application-name" content=" "/>
 </head>
 <body>
     <div class="buttonAccent marginCenterTop"><a href="javascript:sendLedSwitch()"><span class="txtButton">Switch the leds on or off</span></a></div>
