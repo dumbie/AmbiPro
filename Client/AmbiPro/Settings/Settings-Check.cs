@@ -75,7 +75,7 @@ namespace AmbiPro.Settings
                 //Check - Blackbar Update Rate
                 if (ConfigurationManager.AppSettings["AdjustBlackbarRate"] == null)
                 {
-                    SettingsFunction.Save("AdjustBlackbarRate", "1000");
+                    SettingsFunction.Save("AdjustBlackbarRate", "3000");
                 }
 
                 //Check - Blackbar Update Range
@@ -87,7 +87,7 @@ namespace AmbiPro.Settings
                 //Check - Adjust Blackbar Brightness
                 if (ConfigurationManager.AppSettings["AdjustBlackBarBrightness"] == null)
                 {
-                    SettingsFunction.Save("AdjustBlackBarBrightness", "8");
+                    SettingsFunction.Save("AdjustBlackBarBrightness", "5");
                 }
 
                 //Check - Led Bottom Gap
@@ -111,7 +111,7 @@ namespace AmbiPro.Settings
                 //Check - Led Gamma
                 if (ConfigurationManager.AppSettings["LedGamma"] == null)
                 {
-                    SettingsFunction.Save("LedGamma", "75");
+                    SettingsFunction.Save("LedGamma", "70");
                 }
 
                 //Check - Led Saturation
@@ -153,13 +153,13 @@ namespace AmbiPro.Settings
                 //Check - Led Minimum Brightness
                 if (ConfigurationManager.AppSettings["LedMinBrightness"] == null)
                 {
-                    SettingsFunction.Save("LedMinBrightness", "10");
+                    SettingsFunction.Save("LedMinBrightness", "0");
                 }
 
                 //Check - Led Minimum Color
                 if (ConfigurationManager.AppSettings["LedMinColor"] == null)
                 {
-                    SettingsFunction.Save("LedMinColor", "5");
+                    SettingsFunction.Save("LedMinColor", "0");
                 }
 
                 //Check - Led Color Red
@@ -237,7 +237,7 @@ namespace AmbiPro.Settings
                 //Check - Led Smoothing
                 if (ConfigurationManager.AppSettings["LedSmoothing"] == null)
                 {
-                    SettingsFunction.Save("LedSmoothing", "1");
+                    SettingsFunction.Save("LedSmoothing", "2");
                 }
 
                 //Check - Debug Mode
