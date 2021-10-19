@@ -45,10 +45,13 @@ When you are walking into any problems or a bug you can go to my help page at ht
 If you appreciate my project and want to support me with my projects you can make a donation through https://donation.arnoldvink.com
 
 ## Changelog
+v0.11.2.0 (18-October-2021)
+- You can now change the solid led color with the remote.
+* Miscellaneous application improvements and fixes.
+
 v0.11.0.0 (17-June-2021)
 - Added led smoothing setting.
 - Added color temperature setting.
-* Miscellaneous application improvements and fixes.
 
 v0.10.0.0 (13-May-2021)
 - Rewrote screen color capture code to reduce cpu usage and fill in gaps.

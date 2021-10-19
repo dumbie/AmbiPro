@@ -10,11 +10,15 @@ function sendLedMode() {
     sendSocket("LedMode‡" + $("#LedMode").val());
 }
 
+function sendSolidLedColor() {
+    sendSocket("SolidLedColor‡" + $("#SolidLedColor").val());
+}
+
 function sendSocket(SendData) {
     var ServerIp = $("#ServerIp").val();
     var ServerPort = $("#ServerPort").val();
     if (ServerIp == "" || ServerPort == "") { return; }
-    var ServerUrl = "//" + ServerIp + ":" + ServerPort + "/?" + SendData;
+    var ServerUrl = "//" + ServerIp + ":" + ServerPort + "/?" + encodeURIComponent(SendData);
 
     var xHttpRequest = new XMLHttpRequest();
     xHttpRequest.open("GET", ServerUrl, true);

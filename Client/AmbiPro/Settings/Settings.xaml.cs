@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
@@ -99,7 +101,25 @@ namespace AmbiPro.Settings
                 //Check if resolution has changed
                 SystemEvents.DisplaySettingsChanged += SystemEvents_DisplaySettingsChanged;
 
+                //Check if solid led color has changed
+                AppEvents.EventUpdateSettingsSolidLedColor += UpdateSettingsSolidLedColor;
+
                 Debug.WriteLine("Settings window initialized.");
+            }
+            catch { }
+        }
+
+        //Update solid led color
+        void UpdateSettingsSolidLedColor()
+        {
+            try
+            {
+                Debug.WriteLine("Updating solid led color in interface.");
+                AVActions.ActionDispatcherInvoke(delegate
+                {
+                    string solidLedColor = ConfigurationManager.AppSettings["SolidLedColor"].ToString();
+                    button_ColorPickerSolid.Background = new BrushConverter().ConvertFrom(solidLedColor) as SolidColorBrush;
+                });
             }
             catch { }
         }

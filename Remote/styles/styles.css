@@ -65,9 +65,9 @@ input {
     padding: 5px;
 }
 
-    .buttonAccent:hover {
-        opacity: 0.75;
-    }
+.buttonAccent:hover {
+    opacity: 0.75;
+}
 /* Sliders
 -------------------------------------------------*/
 .slider {
@@ -80,19 +80,19 @@ input {
     outline: none;
 }
 
-    .slider::-webkit-slider-thumb {
-        appearance: none;
-        -webkit-appearance: none;
-        width: 25px;
-        height: 25px;
-        background: #00c7ff;
-        border: 0;
-        outline: none;
-    }
+.slider::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #00c7ff;
+    border: 0;
+    outline: none;
+}
 
-    .slider:hover {
-        opacity: 0.75;
-    }
+.slider:hover {
+    opacity: 0.75;
+}
 /* Selector
 -------------------------------------------------*/
 .select {
@@ -102,6 +102,30 @@ input {
     padding: 2px;
     border: 0;
     outline: none;
+}
+/* Colorpicker
+-------------------------------------------------*/
+.colorpicker {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 250px;
+    height: 25px;
+    padding: 0;
+    border: 0;
+    outline: none;
+}
+
+.colorpicker::-webkit-color-swatch-wrapper {
+    background: #F1F1F1;
+    padding: 2px;
+}
+
+.colorpicker::-webkit-color-swatch {
+    border: 0;
+}
+
+.colorpicker:hover {
+    opacity: 0.75;
 }
 /* Images
 -------------------------------------------------*/
@@ -116,5 +140,5 @@ a {
 /* Effects
 -------------------------------------------------*/
 .effOpacity {
-    opacity: 0.65;
+    opacity: 0.75;
 }

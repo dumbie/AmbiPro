@@ -79,6 +79,11 @@ namespace AmbiPro
                     SettingsFunction.Save("LedMode", messageValue);
                     await LedSwitch(LedSwitches.Restart);
                 }
+                else if (messageType.Contains("SolidLedColor"))
+                {
+                    SettingsFunction.Save("SolidLedColor", messageValue);
+                    AppEvents.EventUpdateSettingsSolidLedColor();
+                }
             }
             catch { }
             return "Ok";

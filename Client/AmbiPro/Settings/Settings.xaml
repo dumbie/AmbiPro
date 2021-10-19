@@ -184,7 +184,7 @@
                 </Border>
 
                 <!-- Grid Settings -->
-                <Border Grid.Column="1" CornerRadius="0,0,5,0" Padding="5,0,5,0" Width="500">
+                <Border Grid.Column="1" BorderBrush="#F01D1D1D" BorderThickness="2" CornerRadius="0,0,5,0" Padding="5,0,5,0" Width="500">
                     <Border.Background>
                         <SolidColorBrush Color="#F1F1F1" Opacity="0.95"/>
                     </Border.Background>

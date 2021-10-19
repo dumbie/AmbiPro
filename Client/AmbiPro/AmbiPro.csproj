@@ -217,6 +217,7 @@
     <Compile Include="AppLaunchCheck.cs" />
     <Compile Include="AppImport.cs" />
     <Compile Include="AppStartup.cs" />
+    <Compile Include="AppEvents.cs" />
     <Compile Include="Resources\Classes\ColorRGBA.cs" />
     <Compile Include="Resources\Enums\LedOutputTypes.cs" />
     <Compile Include="Resources\Enums\LedSwitches.cs" />

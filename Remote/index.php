@@ -6,8 +6,8 @@
     <meta content="AmbiPro Remote" name="description">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" name="viewport">
     <!-- jQuery -->
-    <script src="//code.jquery.com/jquery.min.js" type="text/javascript"></script>
-    <script src="scripts/scripts.js" type="text/javascript"></script>
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="scripts/scripts.js"></script>
     <!-- Styles -->
     <link href="styles/styles.css" media="all" rel="stylesheet" type="text/css">
     <!-- Icons -->
@@ -21,7 +21,7 @@
 
     <div class="clearBoth marginCenterTop">
         <span class="txtSettings marginCenter">Change led brightness:</span>
-        <input id="LedBrightness" class="slider" type="range" min="5" max="100" step="5" value="50" oninput="sendLedBrightness();">
+        <input id="LedBrightness" class="slider" type="range" min="5" max="100" step="5" value="50" oninput="sendLedBrightness();"/>
     </div>
 
     <div class="clearBoth marginCenterTop">
@@ -35,15 +35,20 @@
         </select>
     </div>
 
+    <div class="clearBoth marginCenterTop">
+        <span class="txtSettings marginCenter">Change solid led color:</span>
+        <input id="SolidLedColor" class="colorpicker" type="color" value="#00C7FF" onchange="sendSolidLedColor();"/>
+    </div>
+
 	<div class="Bottom">
 		<div class="clearBoth marginCenterTop effOpacity">
 			<span class="txtSettings marginCenter">Remote connection settings:</span>
-			<input id="ServerIp" type="text" placeholder="Server ip" oninput="updateServerIp();" size="16" />
-			<input id="ServerPort" type="number" placeholder="Server port" oninput="updateServerPort();" size="8" />
+			<input id="ServerIp" type="text" placeholder="Server ip" oninput="updateServerIp();"/>
+			<input id="ServerPort" type="number" placeholder="Server port" oninput="updateServerPort();"/>
 		</div>
 
 		<div class="clearBoth marginCenterTop effOpacity">
-			<img width="120" src="images/AmbiPro.png" />
+			<img alt="AmbiPro Remote" width="180" src="images/AmbiPro.png"/>
 		</div>
     </div>
 </body>
