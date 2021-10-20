@@ -3,7 +3,9 @@
 }
 
 function sendLedBrightness() {
-    sendSocket("LedBrightness‡" + $("#LedBrightness").val());
+    var sendBrightness = $("#LedBrightness").val();
+    $("#LedBrightnessText").text("Change led brightness: " + sendBrightness + "%");
+    sendSocket("LedBrightness‡" + sendBrightness);
 }
 
 function sendLedMode() {
