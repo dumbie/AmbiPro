@@ -1,0 +1,47 @@
+﻿<Page
+    x:Class="AmbiProRemote.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AmbiProRemote"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Grid.Row="0">
+            <StackPanel>
+                <Button HorizontalAlignment="Center" Width="250" Style="{StaticResource ButtonAccent}" Content="Switch the leds on or off"/>
+
+                <TextBlock Margin="0,20,0,0" HorizontalAlignment="Center" Text="Change led brightness:"/>
+                <Slider HorizontalAlignment="Center" Width="250" Style="{StaticResource SliderAccent}" Value="50"/>
+
+                <TextBlock Margin="0,20,0,0" HorizontalAlignment="Center" Text="Change led display mode:"/>
+                <ComboBox HorizontalAlignment="Center" Width="250" Style="{StaticResource ComboBox}" PlaceholderText="Please select a mode...">
+                    <ComboBoxItem>Screen capture</ComboBoxItem>
+                    <ComboBoxItem>Solid color</ComboBoxItem>
+                    <ComboBoxItem>Color loop</ComboBoxItem>
+                    <ComboBoxItem>Color spectrum</ComboBoxItem>
+                </ComboBox>
+
+                <TextBlock Margin="0,20,0,0" HorizontalAlignment="Center" Text="Change led solid color:"/>
+                <Button HorizontalAlignment="Center" Width="250" Height="35" Style="{StaticResource ButtonAccent}"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="1">
+            <TextBlock HorizontalAlignment="Center" Text="Remote connection settings:"/>
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <TextBox PlaceholderText="Server ip..." Width="150" Style="{StaticResource TextBox}"/>
+                <TextBox Margin="5,0,0,0" PlaceholderText="Server port..." Width="110" Style="{StaticResource TextBox}"/>
+            </StackPanel>
+
+            <Image Margin="0,15,0,5" VerticalAlignment="Bottom" Source="/Assets/AmbiProBar.png" Height="30"/>
+        </StackPanel>
+    </Grid>
+</Page>

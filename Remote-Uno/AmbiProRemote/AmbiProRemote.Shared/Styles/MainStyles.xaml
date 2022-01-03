@@ -1,0 +1,220 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- TextBlock Styles -->
+    <Style x:Key="TextBlockWhite" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#F1F1F1"/>
+    </Style>
+    <Style x:Key="TextBlockWhiteLight" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#F1F1F1"/>
+        <Setter Property="FontWeight" Value="SemiLight"/>
+    </Style>
+
+    <Style x:Key="TextBlockBlack" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#1D1D1D"/>
+    </Style>
+    <Style x:Key="TextBlockBlackLight" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#1D1D1D"/>
+        <Setter Property="FontWeight" Value="SemiLight"/>
+    </Style>
+
+    <Style x:Key="TextBlockLightGray" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#888"/>
+    </Style>
+    <Style x:Key="TextBlockLightGrayLight" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#888"/>
+        <Setter Property="FontWeight" Value="SemiLight"/>
+    </Style>
+
+    <Style x:Key="TextBlockAccent" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource ApplicationAccentLightBrush}"/>
+    </Style>
+    <Style x:Key="TextBlockAccentLight" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource ApplicationAccentLightBrush}"/>
+        <Setter Property="FontWeight" Value="SemiLight"/>
+    </Style>
+
+    <Style x:Key="TextBlockRed" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#CD1928"/>
+    </Style>
+    <Style x:Key="TextBlockGreen" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#1EB955"/>
+    </Style>
+
+    <!-- RichTextBlock Styles -->
+    <Style x:Key="RichTextBlockLightGray" TargetType="RichTextBlock">
+        <Setter Property="Foreground" Value="#888"/>
+    </Style>
+
+    <!--ComboBox Styles-->
+    <Style x:Key="ComboBox" TargetType="ComboBox">
+        <Setter Property="FontSize" Value="{StaticResource TextSizeInterface}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ApplicationAccentLightBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
+    <!--CheckBox Styles-->
+    <Style x:Key="CheckBox" TargetType="CheckBox">
+        <Setter Property="FontSize" Value="{StaticResource TextSizeInterface}"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+
+    <!--TextBox Styles-->
+    <Style x:Key="TextBox" TargetType="TextBox">
+        <Setter Property="FontSize" Value="{StaticResource TextSizeInterface}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ApplicationAccentLightBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style x:Key="TextBoxNoBorder" TargetType="TextBox">
+        <Setter Property="FontSize" Value="{StaticResource TextSizeInterface}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style x:Key="PasswordBox" TargetType="PasswordBox">
+        <Setter Property="FontSize" Value="{StaticResource TextSizeInterface}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ApplicationAccentLightBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+
+    <!--AutoSuggestBox Styles-->
+    <Style x:Key="AutoSuggestBox" TargetType="AutoSuggestBox">
+        <Setter Property="BorderBrush" Value="{StaticResource ApplicationAccentLightBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style x:Key="AutoSuggestBoxTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource AutoSuggestBoxTextBoxStyle}">
+        <Setter Property="BorderBrush" Value="{StaticResource ApplicationAccentLightBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+
+    <!--Rectangle Styles-->
+    <Style x:Key="RectangleAccent" TargetType="Rectangle">
+        <Setter Property="Height" Value="2"/>
+        <Setter Property="Fill" Value="{StaticResource ApplicationAccentLightBrush}"/>
+    </Style>
+
+    <!--ProgressBar Styles-->
+    <Style x:Key="ProgressBarAccent" TargetType="ProgressBar">
+        <Setter Property="Height" Value="3"/>
+        <Setter Property="Margin" Value="0,3,0,3"/>
+        <Setter Property="Background" Value="#CDCDCD"/>
+        <Setter Property="BorderBrush" Value="#CDCDCD"/>
+        <Setter Property="Foreground" Value="{StaticResource ApplicationAccentLightBrush}"/>
+    </Style>
+
+    <!--Button Styles-->
+    <Style x:Key="ButtonAccent" TargetType="Button">
+        <Setter Property="FontSize" Value="{StaticResource TextSizeInterface}"/>
+        <Setter Property="Foreground" Value="#F1F1F1"/>
+        <Setter Property="Background" Value="{StaticResource ApplicationAccentLightBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ApplicationAccentLightBrush}"/>
+        <Setter Property="BorderThickness" Value="2"/>
+    </Style>
+    <Style x:Key="ButtonImage" TargetType="Button">
+        <Setter Property="FontSize" Value="{StaticResource TextSizeInterface}"/>
+        <Setter Property="Foreground" Value="Transparent"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
+    <!--Slider Styles-->
+    <Style x:Key="SliderAccent" TargetType="Slider">
+        <Setter Property="Foreground" Value="{StaticResource ApplicationAccentLightBrush}"/>
+        <Setter Property="Background" Value="#888"/>
+    </Style>
+
+    <!--ListView Styles-->
+    <Style x:Key="ListViewVertical" TargetType="ListView">
+        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <ItemsStackPanel Orientation="Vertical" Background="Transparent" ManipulationMode="TranslateX, System"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ListViewHorizontal" TargetType="ListView">
+        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Auto"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <ItemsStackPanel Orientation="Horizontal" Background="Transparent" ManipulationMode="TranslateX, System"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ListViewItemStretched" TargetType="ListViewItem">
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    </Style>
+
+    <Style x:Key="ListViewItemStretchedVertical" TargetType="ListViewItem">
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Padding" Value="10,0,10,10"/>
+    </Style>
+
+    <Style x:Key="ListViewItemStretchedHorizontal" TargetType="ListViewItem">
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Padding" Value="10,0,10,0"/>
+    </Style>
+
+    <Style x:Key="ListViewItemNoPadding" TargetType="ListViewItem">
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
+    <Style x:Key="ListViewItemStretchedNoPadding" TargetType="ListViewItem">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
+    <Style x:Key="ListViewItemDisabled" TargetType="ListViewItem">
+        <Setter Property="IsHitTestVisible" Value="False"/>
+    </Style>
+
+    <Style x:Key="ListViewItemStretchedDisabled" TargetType="ListViewItem">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
+    </Style>
+
+    <!--ScrollViewer Styles-->
+    <Style x:Key="ScrollViewer" TargetType="ScrollViewer">
+        <Setter Property="HorizontalScrollMode" Value="Auto"/>
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="VerticalScrollMode" Value="Auto"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+    </Style>
+
+    <Style x:Key="ScrollViewerHorizontal" TargetType="ScrollViewer">
+        <Setter Property="HorizontalScrollMode" Value="Auto"/>
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="VerticalScrollMode" Value="Disabled"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Disabled"/>
+    </Style>
+
+    <Style x:Key="ScrollViewerVertical" TargetType="ScrollViewer">
+        <Setter Property="HorizontalScrollMode" Value="Disabled"/>
+        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="VerticalScrollMode" Value="Auto"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+    </Style>
+</ResourceDictionary>
