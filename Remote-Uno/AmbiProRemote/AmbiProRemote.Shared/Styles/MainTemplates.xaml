@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--Horizontal Wrap Grid-->
+    <ItemsPanelTemplate x:Key="WrapGridHorizontal">
+        <ItemsWrapGrid Orientation="Horizontal"/>
+    </ItemsPanelTemplate>
+
+    <!--Colorpicker item-->
+    <DataTemplate x:Key="ListBoxItemColorPicker">
+        <Border CornerRadius="2" Background="{Binding}" Width="70" Height="70"/>
+    </DataTemplate>
+</ResourceDictionary>

@@ -9,39 +9,96 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        <!-- Main Grid -->
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <ScrollViewer Grid.Row="0">
+            <ScrollViewer Grid.Row="0">
+                <StackPanel>
+                    <Button x:Name="button_LedsOnOffSwitch" HorizontalAlignment="Stretch" Style="{StaticResource ButtonAccent}" Content="Switch the leds on or off" Click="Button_LedsOnOffSwitch"/>
+
+                    <TextBlock Margin="0,20,0,0" HorizontalAlignment="Center" Text="Change led brightness:"/>
+                    <Slider HorizontalAlignment="Stretch" Style="{StaticResource SliderAccent}" Value="50"/>
+
+                    <TextBlock Margin="0,20,0,0" HorizontalAlignment="Center" Text="Change led display mode:"/>
+                    <ComboBox HorizontalAlignment="Stretch" Style="{StaticResource ComboBox}" PlaceholderText="Please select a mode...">
+                        <ComboBoxItem>Screen capture</ComboBoxItem>
+                        <ComboBoxItem>Solid color</ComboBoxItem>
+                        <ComboBoxItem>Color loop</ComboBoxItem>
+                        <ComboBoxItem>Color spectrum</ComboBoxItem>
+                    </ComboBox>
+
+                    <Button Margin="0,20,0,0" HorizontalAlignment="Stretch" Style="{StaticResource ButtonAccent}" Content="Change led solid color" Click="Button_ShowColorPicker_Click"/>
+                </StackPanel>
+            </ScrollViewer>
+
+            <StackPanel Grid.Row="1">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                    <Button x:Name="button_ShowHelp" Style="{StaticResource ButtonImage}" Click="Button_ShowHelp_Click">
+                        <Image Source="/Assets/iconHelp.png" Height="30"/>
+                    </Button>
+                    <Button Margin="10,0,0,0" HorizontalAlignment="Center" x:Name="button_ShowSettings" Style="{StaticResource ButtonImage}" Click="Button_ShowSettings_Click">
+                        <Image Source="/Assets/iconSettings.png" Height="30"/>
+                    </Button>
+                </StackPanel>
+
+                <Image Margin="0,5,0,0" VerticalAlignment="Bottom" Source="/Assets/AmbiProBar.png" Height="30"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- ColorPicker Popup -->
+        <Grid x:Name="popup_ColorPicker" Visibility="Collapsed">
+            <Grid.Background>
+                <SolidColorBrush Color="Black" Opacity="0.90"/>
+            </Grid.Background>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <GridView Grid.Column="0" x:Name="listbox_ColorPicker" ItemsPanel="{StaticResource WrapGridHorizontal}" ItemTemplate="{StaticResource ListBoxItemColorPicker}" SelectionChanged="listbox_ColorPicker_SelectionChanged"/>
+                
+                <Button Grid.Column="1" x:Name="button_ColorPicker" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource ButtonImage}" Click="Button_ClosePopups_Click">
+                    <Image Source="/Assets/iconClose.png" Height="30"/>
+                </Button>
+            </Grid>
+        </Grid>
+
+        <!-- Help Popup -->
+        <Grid x:Name="popup_Help" Visibility="Collapsed">
+            <Grid.Background>
+                <SolidColorBrush Color="Black" Opacity="0.90"/>
+            </Grid.Background>
+
+            <Button VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource ButtonImage}" Click="Button_ClosePopups_Click">
+                <Image Source="/Assets/iconClose.png" Height="30"/>
+            </Button>
+
+            <TextBlock>help text</TextBlock>
+        </Grid>
+
+        <!-- Settings Popup -->
+        <Grid x:Name="popup_Settings" Visibility="Collapsed">
+            <Grid.Background>
+                <SolidColorBrush Color="Black" Opacity="0.90"/>
+            </Grid.Background>
+
+            <Button VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource ButtonImage}" Click="Button_ClosePopups_Click">
+                <Image Source="/Assets/iconClose.png" Height="30"/>
+            </Button>
+
             <StackPanel>
-                <Button HorizontalAlignment="Center" Width="250" Style="{StaticResource ButtonAccent}" Content="Switch the leds on or off"/>
-
-                <TextBlock Margin="0,20,0,0" HorizontalAlignment="Center" Text="Change led brightness:"/>
-                <Slider HorizontalAlignment="Center" Width="250" Style="{StaticResource SliderAccent}" Value="50"/>
-
-                <TextBlock Margin="0,20,0,0" HorizontalAlignment="Center" Text="Change led display mode:"/>
-                <ComboBox HorizontalAlignment="Center" Width="250" Style="{StaticResource ComboBox}" PlaceholderText="Please select a mode...">
-                    <ComboBoxItem>Screen capture</ComboBoxItem>
-                    <ComboBoxItem>Solid color</ComboBoxItem>
-                    <ComboBoxItem>Color loop</ComboBoxItem>
-                    <ComboBoxItem>Color spectrum</ComboBoxItem>
-                </ComboBox>
-
-                <TextBlock Margin="0,20,0,0" HorizontalAlignment="Center" Text="Change led solid color:"/>
-                <Button HorizontalAlignment="Center" Width="250" Height="35" Style="{StaticResource ButtonAccent}"/>
+                <TextBlock HorizontalAlignment="Center" Text="Remote connection settings:"/>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <TextBox PlaceholderText="Server ip..." Width="150" Style="{StaticResource TextBox}" InputScope="Number"/>
+                    <TextBox Margin="5,0,0,0" PlaceholderText="Server port..." Width="110" Style="{StaticResource TextBox}" InputScope="Number"/>
+                </StackPanel>
             </StackPanel>
-        </ScrollViewer>
-
-        <StackPanel Grid.Row="1">
-            <TextBlock HorizontalAlignment="Center" Text="Remote connection settings:"/>
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <TextBox PlaceholderText="Server ip..." Width="150" Style="{StaticResource TextBox}"/>
-                <TextBox Margin="5,0,0,0" PlaceholderText="Server port..." Width="110" Style="{StaticResource TextBox}"/>
-            </StackPanel>
-
-            <Image Margin="0,15,0,5" VerticalAlignment="Bottom" Source="/Assets/AmbiProBar.png" Height="30"/>
-        </StackPanel>
+        </Grid>
     </Grid>
 </Page>
