@@ -14,8 +14,8 @@ namespace AmbiProRemote
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            try 
-            { 
+            try
+            {
                 ColorPickerLoad();
                 //Fix: Check if server ip and port are set open settings otherwise
             }
@@ -38,15 +38,40 @@ namespace AmbiProRemote
             try
             {
                 ClosePopups();
-            } 
+            }
             catch { }
         }
 
-        private async void Button_LedsOnOffSwitch(object sender, RoutedEventArgs e)
+        private async void Button_LedsOnOffSwitch_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 await SocketSend.SocketSendAmbiPro("LedSwitch");
+            }
+            catch { }
+        }
+
+        private async void Slider_LedBrightness_ValueChanged(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Slider senderElement = (Slider)sender;
+                text_LedBrightness.Text = "Change led brightness: " + senderElement.Value;
+
+                int valueInt = Convert.ToInt32(senderElement.Value);
+                string valueString = Convert.ToString(valueInt);
+
+                await SocketSend.SocketSendAmbiPro("LedBrightness‡" + valueString);
+            }
+            catch { }
+        }
+
+        private async void Combobox_LedDisplayMode_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ComboBox senderElement = (ComboBox)sender;
+                await SocketSend.SocketSendAmbiPro("LedMode‡" + senderElement.SelectedIndex);
             }
             catch { }
         }

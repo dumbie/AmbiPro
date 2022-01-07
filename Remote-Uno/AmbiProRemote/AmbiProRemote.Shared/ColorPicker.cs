@@ -6,12 +6,17 @@ namespace AmbiProRemote
     public partial class MainPage
     {
         //Selection Changed Event
-        private void listbox_ColorPicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Listbox_ColorPicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine("Event changed.");
-                //Send color
+                SolidColorBrush selectedSolidColorBrush = (SolidColorBrush)listbox_ColorPicker.SelectedItem;
+                Windows.UI.Color selectedColor = selectedSolidColorBrush.Color;
+                string selectedString = selectedColor.ToString().Replace("#", string.Empty);
+
+                System.Diagnostics.Debug.WriteLine("Selected color: " + selectedString);
+                await SocketSend.SocketSendAmbiPro("SolidLedColor‡" + selectedString);
+
                 ClosePopups();
             }
             catch { }

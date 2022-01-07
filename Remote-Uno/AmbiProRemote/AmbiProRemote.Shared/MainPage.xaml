@@ -18,13 +18,13 @@
 
             <ScrollViewer Grid.Row="0">
                 <StackPanel>
-                    <Button x:Name="button_LedsOnOffSwitch" HorizontalAlignment="Stretch" Style="{StaticResource ButtonAccent}" Content="Switch the leds on or off" Click="Button_LedsOnOffSwitch"/>
+                    <Button x:Name="button_LedsOnOffSwitch" HorizontalAlignment="Stretch" Style="{StaticResource ButtonAccent}" Content="Switch the leds on or off" Click="Button_LedsOnOffSwitch_Click"/>
 
-                    <TextBlock Margin="0,20,0,0" HorizontalAlignment="Center" Text="Change led brightness:"/>
-                    <Slider HorizontalAlignment="Stretch" Style="{StaticResource SliderAccent}" Value="50"/>
+                    <TextBlock x:Name="text_LedBrightness" Margin="0,20,0,0" HorizontalAlignment="Center" Text="Change led brightness:"/>
+                    <Slider x:Name="slider_LedBrightness" HorizontalAlignment="Stretch" Style="{StaticResource SliderAccent}" Value="50" ValueChanged="Slider_LedBrightness_ValueChanged"/>
 
                     <TextBlock Margin="0,20,0,0" HorizontalAlignment="Center" Text="Change led display mode:"/>
-                    <ComboBox HorizontalAlignment="Stretch" Style="{StaticResource ComboBox}" PlaceholderText="Please select a mode...">
+                    <ComboBox x:Name="combobox_LedDisplayMode" HorizontalAlignment="Stretch" Style="{StaticResource ComboBox}" PlaceholderText="Please select a mode..." SelectionChanged="Combobox_LedDisplayMode_SelectionChanged">
                         <ComboBoxItem>Screen capture</ComboBoxItem>
                         <ComboBoxItem>Solid color</ComboBoxItem>
                         <ComboBoxItem>Color loop</ComboBoxItem>
@@ -61,7 +61,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 
-                <GridView Grid.Column="0" x:Name="listbox_ColorPicker" ItemsPanel="{StaticResource WrapGridHorizontal}" ItemTemplate="{StaticResource ListBoxItemColorPicker}" SelectionChanged="listbox_ColorPicker_SelectionChanged"/>
+                <GridView Grid.Column="0" x:Name="listbox_ColorPicker" ItemsPanel="{StaticResource WrapGridHorizontal}" ItemTemplate="{StaticResource ListBoxItemColorPicker}" SelectionChanged="Listbox_ColorPicker_SelectionChanged"/>
                 
                 <Button Grid.Column="1" x:Name="button_ColorPicker" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource ButtonImage}" Click="Button_ClosePopups_Click">
                     <Image Source="/Assets/iconClose.png" Height="30"/>
