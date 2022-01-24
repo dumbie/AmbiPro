@@ -12,7 +12,7 @@ namespace AmbiProRemote
             {
                 SolidColorBrush selectedSolidColorBrush = (SolidColorBrush)listbox_ColorPicker.SelectedItem;
                 Windows.UI.Color selectedColor = selectedSolidColorBrush.Color;
-                string selectedString = selectedColor.ToString().Replace("#", string.Empty);
+                string selectedString = selectedColor.ToString();
 
                 System.Diagnostics.Debug.WriteLine("Selected color: " + selectedString);
                 await SocketSend.SocketSendAmbiPro("SolidLedColor‡" + selectedString);
