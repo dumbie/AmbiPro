@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Popups;
 using static AmbiProRemote.AppVariables;
 
 namespace AmbiProRemote
@@ -65,31 +66,22 @@ namespace AmbiProRemote
                     //Convert string to bytes
                     byte[] targetBytes = Encoding.UTF8.GetBytes(sendData);
 
-                    //Create udp client
-                    using (UdpClient udpClient = new UdpClient(serverIp, serverPort))
+                    //Create tcp client
+                    using (TcpClient tcpClient = new TcpClient(serverIp, serverPort))
                     {
-                        await udpClient.SendAsync(targetBytes, targetBytes.Length);
+                        using (NetworkStream networkStream = tcpClient.GetStream())
+                        {
+                            await networkStream.WriteAsync(targetBytes, 0, targetBytes.Length);
+                        }
                     }
 
                     System.Diagnostics.Debug.WriteLine("Socket sended: " + sendData);
-
-                    //app_StatusBar.Visibility = Visibility.Collapsed;
-                    //txt_ErrorConnect.Visibility = Visibility.Collapsed;
-                    //txt_ErrorConnect2.Visibility = Visibility.Collapsed;
                 }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("Socket send failed: " + ex.Message);
-
-                //app_StatusBar.Visibility = Visibility.Collapsed;
-                //if (!AVFunctions.DevMobile())
-                //{
-                //    txt_ErrorConnect.Visibility = Visibility.Visible;
-                //    txt_ErrorConnect2.Visibility = Visibility.Visible;
-                //}
-
-                //await new MessageDialog("Failed to connect to the AmbiPro application on your PC please check this app settings, your network connection and make sure that AmbiPro is running on the target PC.", App.vApplicationName).ShowAsync();
+                await new MessageDialog("Failed to connect to the AmbiPro application on your PC please check this app settings, your network connection and make sure that AmbiPro is running on the target PC.", "AmbiPro Remote").ShowAsync();
             }
             finally
             {

@@ -60,9 +60,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <GridView Grid.Column="0" x:Name="listbox_ColorPicker" ItemsPanel="{StaticResource WrapGridHorizontal}" ItemTemplate="{StaticResource ListBoxItemColorPicker}" SelectionChanged="Listbox_ColorPicker_SelectionChanged"/>
-                
                 <Button Grid.Column="1" x:Name="button_ColorPicker" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource ButtonImage}" Click="Button_ClosePopups_Click">
                     <Image Source="/Assets/iconClose.png" Height="30"/>
                 </Button>
