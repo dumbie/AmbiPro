@@ -35,17 +35,20 @@ namespace ScreenCapturePreview
                         IntPtr BitmapIntPtr = AppImport.CaptureScreenshot();
                         byte* BitmapData = (byte*)BitmapIntPtr;
 
-                        //Convert IntPtr to bitmap image
-                        Bitmap BitmapImage = BitmapProcessing.BitmapConvertData(BitmapData, vScreenOutputWidth, vScreenOutputHeight, vScreenOutputSize, false);
+                        //Convert data to bitmap
+                        Bitmap Bitmap = BitmapProcessing.BitmapConvertData(BitmapData, vScreenOutputWidth, vScreenOutputHeight, vScreenOutputSize, false);
 
                         //Capture free memory
                         AppImport.CaptureFreeMemory(BitmapIntPtr);
 
                         //Update screen capture preview
-                        image_DebugPreview.Source = BitmapProcessing.BitmapToBitmapImage(BitmapImage);
+                        image_DebugPreview.Source = BitmapProcessing.BitmapToBitmapImage(Bitmap);
+
+                        //Dispose the bitmap
+                        Bitmap.Dispose();
                     }
 
-                    await Task.Delay(500);
+                    await Task.Delay(100);
                 }
             }
             catch { }
