@@ -36,7 +36,7 @@ BOOL ScreenshotResetVariables()
 		iD3D11Texture2D1Cpu.Release();
 		iD3DBlob0.Release();
 		iD3D11PixelShader0.Release();
-		iD3D11ShaderResourceView1.Release();
+		iD3D11ShaderResourceView0Resize.Release();
 
 		//Result Variables
 		hResult = E_FAIL;
@@ -48,7 +48,7 @@ BOOL ScreenshotResetVariables()
 	}
 }
 
-BOOL Texture2D1ResizeMip(CComPtr<ID3D11Texture2D1> &iD3D11Texture2D1Target)
+BOOL Texture2D1ResizeMip(CComPtr<ID3D11Texture2D1>& iD3D11Texture2D1Target)
 {
 	try
 	{
@@ -61,16 +61,16 @@ BOOL Texture2D1ResizeMip(CComPtr<ID3D11Texture2D1> &iD3D11Texture2D1Target)
 		//Create resize texture
 		iD3DDevice5->CreateTexture2D1(&iD3DTexture2D1DescResize, NULL, &iD3D11Texture2D1Resize);
 
-		//Create resize shader view
-		iD3DDevice5->CreateShaderResourceView1(iD3D11Texture2D1Resize, NULL, &iD3D11ShaderResourceView1);
-
-		//Copy resize to target texture
+		//Copy target to resize texture
 		iD3DDeviceContext4->CopySubresourceRegion(iD3D11Texture2D1Resize, 0, 0, 0, 0, iD3D11Texture2D1Target, 0, NULL);
-		iD3DDeviceContext4->GenerateMips(iD3D11ShaderResourceView1);
+
+		//Create resize shader view
+		iD3DDevice5->CreateShaderResourceView(iD3D11Texture2D1Resize, NULL, &iD3D11ShaderResourceView0Resize);
+		iD3DDeviceContext4->GenerateMips(iD3D11ShaderResourceView0Resize);
 
 		//Release texture resource
 		iD3D11Texture2D1Target.Release();
-		iD3D11ShaderResourceView1.Release();
+		iD3D11ShaderResourceView0Resize.Release();
 
 		//Replace texture resource
 		iD3D11Texture2D1Target = iD3D11Texture2D1Resize;
@@ -82,7 +82,7 @@ BOOL Texture2D1ResizeMip(CComPtr<ID3D11Texture2D1> &iD3D11Texture2D1Target)
 	}
 }
 
-BYTE* Texture2D1ToBitmapData(CComPtr<ID3D11Texture2D1> &iD3D11Texture2D1Target)
+BYTE* Texture2D1ToBitmapData(CComPtr<ID3D11Texture2D1>& iD3D11Texture2D1Target)
 {
 	try
 	{
@@ -123,6 +123,7 @@ BYTE* Texture2D1ToBitmapData(CComPtr<ID3D11Texture2D1> &iD3D11Texture2D1Target)
 		iD3DDeviceContext4->Map(iD3D11Texture2D1Cpu, 0, D3D11_MAP_READ, 0, &iD3DMappedSubResource);
 
 		//Release texture resource
+		iD3DDeviceContext4->Unmap(iD3D11Texture2D1Cpu, 0);
 		iD3D11Texture2D1Cpu.Release();
 		iD3D11Texture2D1Target.Release();
 
@@ -141,6 +142,42 @@ BYTE* Texture2D1ToBitmapData(CComPtr<ID3D11Texture2D1> &iD3D11Texture2D1Target)
 	catch (...)
 	{
 		return NULL;
+	}
+}
+
+BOOL BitmapDataToBmpFile(BYTE* bitmapData, std::string filePath)
+{
+	try
+	{
+		//Create bitmap info
+		BITMAPINFO bmpInfo;
+		bmpInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+		bmpInfo.bmiHeader.biWidth = BitmapWidthPixels;
+		bmpInfo.bmiHeader.biHeight = BitmapHeightPixels;
+		bmpInfo.bmiHeader.biPlanes = 1;
+		bmpInfo.bmiHeader.biBitCount = 32;
+		bmpInfo.bmiHeader.biCompression = BI_RGB;
+		bmpInfo.bmiHeader.biSizeImage = BitmapByteSize;
+
+		//Create bitmap file header
+		BITMAPFILEHEADER bmpFileHeader;
+		bmpFileHeader.bfType = 'MB';
+		bmpFileHeader.bfSize = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + bmpInfo.bmiHeader.biSizeImage;
+		bmpFileHeader.bfReserved1 = 0;
+		bmpFileHeader.bfReserved2 = 0;
+		bmpFileHeader.bfOffBits = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);
+
+		//Write bitmap file
+		FILE* bitmapFile = fopen(filePath.c_str(), "wb");
+		fwrite(&bmpFileHeader, sizeof(BITMAPFILEHEADER), 1, bitmapFile);
+		fwrite(&bmpInfo.bmiHeader, sizeof(BITMAPINFO), 1, bitmapFile);
+		fwrite(bitmapData, bmpInfo.bmiHeader.biSizeImage, 1, bitmapFile);
+		fclose(bitmapFile);
+		return true;
+	}
+	catch (...)
+	{
+		return false;
 	}
 }
 
@@ -324,7 +361,7 @@ extern "C"
 				return NULL;
 			}
 
-			//Resize the original texture
+			//Resize the texture
 			if (BitmapMipLevel > 0)
 			{
 				Texture2D1ResizeMip(iD3D11Texture2D1Original);
@@ -332,6 +369,7 @@ extern "C"
 
 			//Convert texture to bitmap data
 			BYTE* bitmapData = Texture2D1ToBitmapData(iD3D11Texture2D1Original);
+			//BitmapDataToBmpFile(bitmapData, "ScreenCapture.bmp");
 
 			//Release output duplication frame
 			hResult = iDxgiOutputDuplication0->ReleaseFrame();
