@@ -1,6 +1,6 @@
 #include "FastLED.h"
 #define LedAmount 60
-#define UsedDataPin 6
+#define UsedDataPin 7
 #define SerialRate 115200
 CRGB LedArray[LedAmount];
 
@@ -24,23 +24,22 @@ void setup()
 
 void loop()
 {
-  //Read incoming data and check begin
-  while (!Serial.available());
-  if ('A' != Serial.read()) return;
-  while (!Serial.available());
-  if ('d' != Serial.read()) return;
-  while (!Serial.available());
-  if ('a' != Serial.read()) return;
-
-  //Read incoming data and updated leds
-  for (uint8_t LedId = 0; LedId < LedAmount; LedId++)
+  if (Serial.available())
   {
-    while (!Serial.available());
-    LedArray[LedId].r = Serial.read();
-    while (!Serial.available());
-    LedArray[LedId].g = Serial.read();
-    while (!Serial.available());
-    LedArray[LedId].b = Serial.read();
+    //Read incoming data and check header
+    if (Serial.read() != 'A') { return; }
+    if (Serial.read() != 'd') { return; }
+    if (Serial.read() != 'a') { return; }
+
+    //Read incoming data and set colors
+    for (uint16_t LedId = 0; LedId < LedAmount; LedId++)
+    {
+      LedArray[LedId].r = Serial.read();
+      LedArray[LedId].g = Serial.read();
+      LedArray[LedId].b = Serial.read();
+    }
+
+    //Update the led strip
+    FastLED.show();
   }
-  FastLED.show();
 }
