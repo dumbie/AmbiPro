@@ -4,16 +4,15 @@
 #include <d3d11_4.h>
 #include <d3dcompiler.h>
 #include <atlbase.h>
+#include <string>
 
 //D3D feature levels
-D3D_FEATURE_LEVEL ArrayD3DFeatureLevels[] =
+D3D_FEATURE_LEVEL D3DFeatureLevelsArray[] =
 {
-	D3D_FEATURE_LEVEL_12_1,
-	D3D_FEATURE_LEVEL_11_1,
-	D3D_FEATURE_LEVEL_10_1,
-	D3D_FEATURE_LEVEL_9_3
+	D3D_FEATURE_LEVEL_12_2,
+	D3D_FEATURE_LEVEL_11_1
 };
-UINT NumD3DFeatureLevels = ARRAYSIZE(ArrayD3DFeatureLevels);
+UINT D3DFeatureLevelsCount = ARRAYSIZE(D3DFeatureLevelsArray);
 
 //Capture Variables
 CComPtr<IDXGIDevice4> iDxgiDevice4;
@@ -33,7 +32,7 @@ CComPtr<ID3D11Texture2D1> iD3D11Texture2D1Resize;
 CComPtr<ID3D11Texture2D1> iD3D11Texture2D1Cpu;
 CComPtr<ID3DBlob> iD3DBlob0;
 CComPtr<ID3D11PixelShader> iD3D11PixelShader0;
-CComPtr<ID3D11ShaderResourceView1> iD3D11ShaderResourceView1;
+CComPtr<ID3D11ShaderResourceView> iD3D11ShaderResourceView0;
 
 //Bitmap Variables
 UINT BitmapWidthPixels;
@@ -41,7 +40,7 @@ UINT BitmapHeightPixels;
 UINT BitmapWidthRows;
 UINT BitmapByteSize;
 UINT BitmapMipLevel;
-BOOL BitmapHDR;
+BOOL BitmapHDREnabled;
 
 //Result Variables
 HRESULT hResult = E_FAIL;

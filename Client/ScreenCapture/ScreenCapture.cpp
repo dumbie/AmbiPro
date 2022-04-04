@@ -36,7 +36,7 @@ BOOL ScreenshotResetVariables()
 		iD3D11Texture2D1Cpu.Release();
 		iD3DBlob0.Release();
 		iD3D11PixelShader0.Release();
-		iD3D11ShaderResourceView0Resize.Release();
+		iD3D11ShaderResourceView0.Release();
 
 		//Result Variables
 		hResult = E_FAIL;
@@ -65,12 +65,12 @@ BOOL Texture2D1ResizeMip(CComPtr<ID3D11Texture2D1>& iD3D11Texture2D1Target)
 		iD3DDeviceContext4->CopySubresourceRegion(iD3D11Texture2D1Resize, 0, 0, 0, 0, iD3D11Texture2D1Target, 0, NULL);
 
 		//Create resize shader view
-		iD3DDevice5->CreateShaderResourceView(iD3D11Texture2D1Resize, NULL, &iD3D11ShaderResourceView0Resize);
-		iD3DDeviceContext4->GenerateMips(iD3D11ShaderResourceView0Resize);
+		iD3DDevice5->CreateShaderResourceView(iD3D11Texture2D1Resize, NULL, &iD3D11ShaderResourceView0);
+		iD3DDeviceContext4->GenerateMips(iD3D11ShaderResourceView0);
 
 		//Release texture resource
 		iD3D11Texture2D1Target.Release();
-		iD3D11ShaderResourceView0Resize.Release();
+		iD3D11ShaderResourceView0.Release();
 
 		//Replace texture resource
 		iD3D11Texture2D1Target = iD3D11Texture2D1Resize;
@@ -196,9 +196,9 @@ extern "C"
 
 			//Create D3D Device
 			D3D_FEATURE_LEVEL iD3DFeatureLevel;
-			for (UINT FeatureIndex = 0; FeatureIndex < NumD3DFeatureLevels; FeatureIndex++)
+			for (UINT FeatureIndex = 0; FeatureIndex < D3DFeatureLevelsCount; FeatureIndex++)
 			{
-				hResult = D3D11CreateDevice(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, &ArrayD3DFeatureLevels[FeatureIndex], 1, D3D11_SDK_VERSION, &iD3DDevice0, &iD3DFeatureLevel, &iD3DDeviceContext0);
+				hResult = D3D11CreateDevice(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, &D3DFeatureLevelsArray[FeatureIndex], 1, D3D11_SDK_VERSION, &iD3DDevice0, &iD3DFeatureLevel, &iD3DDeviceContext0);
 				if (SUCCEEDED(hResult)) { break; }
 				else
 				{
@@ -303,8 +303,8 @@ extern "C"
 			*OutputByteSize = BitmapByteSize;
 
 			//Check if HDR is enabled
-			BitmapHDR = iDxgiOutputDescription.ColorSpace == DXGI_COLOR_SPACE_RGB_FULL_G2084_NONE_P2020 || iDxgiOutputDescription.ColorSpace == DXGI_COLOR_SPACE_RGB_STUDIO_G2084_NONE_P2020;
-			*OutputHDR = BitmapHDR;
+			BitmapHDREnabled = iDxgiOutputDescription.ColorSpace == DXGI_COLOR_SPACE_RGB_FULL_G2084_NONE_P2020 || iDxgiOutputDescription.ColorSpace == DXGI_COLOR_SPACE_RGB_STUDIO_G2084_NONE_P2020;
+			*OutputHDR = BitmapHDREnabled;
 			return true;
 		}
 		catch (...)
