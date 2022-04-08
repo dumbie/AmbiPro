@@ -313,19 +313,6 @@ namespace AmbiPro.Settings
                 //Save - Windows Startup
                 cb_WindowsStartup.Click += (sender, e) => { ManageShortcutStartup(); };
 
-                //Save - Debug mode
-                checkbox_DebugMode.Click += (sender, e) =>
-                {
-                    if ((bool)checkbox_DebugMode.IsChecked)
-                    {
-                        SettingsFunction.Save("DebugMode", "True");
-                    }
-                    else
-                    {
-                        SettingsFunction.Save("DebugMode", "False");
-                    }
-                };
-
                 //Save - Debug BlackBar
                 checkbox_DebugBlackBar.Click += (sender, e) =>
                 {

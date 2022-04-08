@@ -32,37 +32,38 @@ namespace AmbiPro
                 //Register application timers
                 AppTimers.ApplicationTimersRegister();
 
-                //Settings screen if first run
+                //Settings check if first launch
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                 {
                     Debug.WriteLine("First launch, showing the settings screen.");
                     App.vFormSettings.Show();
-                    return;
-                }
-
-                //Start updating the leds
-                bool turnLedsOn = false;
-                if (Convert.ToBoolean(ConfigurationManager.AppSettings["LedAutoOnOffBefore"]) || Convert.ToBoolean(ConfigurationManager.AppSettings["LedAutoOnOffAfter"]))
-                {
-                    DateTime LedTimeBefore = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTimeBefore"], vAppCultureInfo);
-                    if (DateTime.Now.TimeOfDay < LedTimeBefore.TimeOfDay)
-                    {
-                        turnLedsOn = true;
-                    }
-                    DateTime LedTimeAfter = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTimeAfter"], vAppCultureInfo);
-                    if (DateTime.Now.TimeOfDay >= LedTimeAfter.TimeOfDay)
-                    {
-                        turnLedsOn = true;
-                    }
                 }
                 else
                 {
-                    turnLedsOn = true;
-                }
+                    //Start updating the leds
+                    bool turnLedsOn = false;
+                    if (Convert.ToBoolean(ConfigurationManager.AppSettings["LedAutoOnOffBefore"]) || Convert.ToBoolean(ConfigurationManager.AppSettings["LedAutoOnOffAfter"]))
+                    {
+                        DateTime LedTimeBefore = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTimeBefore"], vAppCultureInfo);
+                        if (DateTime.Now.TimeOfDay < LedTimeBefore.TimeOfDay)
+                        {
+                            turnLedsOn = true;
+                        }
+                        DateTime LedTimeAfter = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTimeAfter"], vAppCultureInfo);
+                        if (DateTime.Now.TimeOfDay >= LedTimeAfter.TimeOfDay)
+                        {
+                            turnLedsOn = true;
+                        }
+                    }
+                    else
+                    {
+                        turnLedsOn = true;
+                    }
 
-                if (turnLedsOn)
-                {
-                    await LedSwitch(LedSwitches.Automatic);
+                    if (turnLedsOn)
+                    {
+                        await LedSwitch(LedSwitches.Automatic);
+                    }
                 }
 
                 //Enable the socket server

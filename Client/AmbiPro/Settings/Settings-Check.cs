@@ -75,7 +75,7 @@ namespace AmbiPro.Settings
                 //Check - Blackbar Update Rate
                 if (ConfigurationManager.AppSettings["AdjustBlackbarRate"] == null)
                 {
-                    SettingsFunction.Save("AdjustBlackbarRate", "3000");
+                    SettingsFunction.Save("AdjustBlackbarRate", "2000");
                 }
 
                 //Check - Blackbar Update Range
@@ -111,7 +111,7 @@ namespace AmbiPro.Settings
                 //Check - Led Gamma
                 if (ConfigurationManager.AppSettings["LedGamma"] == null)
                 {
-                    SettingsFunction.Save("LedGamma", "70");
+                    SettingsFunction.Save("LedGamma", "75");
                 }
 
                 //Check - Led Saturation
@@ -231,7 +231,7 @@ namespace AmbiPro.Settings
                 //Check - Update Rate
                 if (ConfigurationManager.AppSettings["UpdateRate"] == null)
                 {
-                    SettingsFunction.Save("UpdateRate", "30");
+                    SettingsFunction.Save("UpdateRate", "25");
                 }
 
                 //Check - Led Smoothing
@@ -241,10 +241,6 @@ namespace AmbiPro.Settings
                 }
 
                 //Check - Debug Mode
-                if (ConfigurationManager.AppSettings["DebugMode"] == null)
-                {
-                    SettingsFunction.Save("DebugMode", "False");
-                }
                 if (ConfigurationManager.AppSettings["DebugBlackBar"] == null)
                 {
                     SettingsFunction.Save("DebugBlackBar", "False");

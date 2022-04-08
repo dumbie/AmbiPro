@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using static AmbiPro.AppVariables;
 
 namespace AmbiPro.Settings
 {
@@ -32,153 +33,86 @@ namespace AmbiPro.Settings
             {
                 if (lb_Menu.SelectedIndex >= 0)
                 {
-                    StackPanel SelStackPanel = (StackPanel)lb_Menu.SelectedItem;
+                    StackPanel selectedStackPanel = (StackPanel)lb_Menu.SelectedItem;
 
-                    if (SelStackPanel.Name == "menuButtonBasics")
+                    if (selectedStackPanel.Name != "menuButtonUpdate" && selectedStackPanel.Name != "menuButtonClose")
                     {
-                        SwitchBackground(false, false, true);
+                        //Update current visible menu
+                        vCurrentVisibleMenu = selectedStackPanel.Name;
+
+                        //Disable debug capture
+                        vDebugCaptureAllowed = false;
+                        image_DebugPreview.Source = null;
+
+                        //Hide all setting tabs
+                        sp_Basics.Visibility = Visibility.Collapsed;
+                        sp_Modes.Visibility = Visibility.Collapsed;
+                        sp_Screen.Visibility = Visibility.Collapsed;
+                        sp_Blackbars.Visibility = Visibility.Collapsed;
+                        sp_LedRotate.Visibility = Visibility.Collapsed;
+                        sp_Leds.Visibility = Visibility.Collapsed;
+                        sp_Adjust.Visibility = Visibility.Collapsed;
+                        sp_Remote.Visibility = Visibility.Collapsed;
+                        sp_Debug.Visibility = Visibility.Collapsed;
+                        sp_Help.Visibility = Visibility.Collapsed;
+                    }
+
+                    if (selectedStackPanel.Name == "menuButtonBasics")
+                    {
+                        SwitchBackground(false, false, false, true);
                         sp_Basics.Visibility = Visibility.Visible;
-                        sp_Modes.Visibility = Visibility.Collapsed;
-                        sp_Screen.Visibility = Visibility.Collapsed;
-                        sp_Blackbars.Visibility = Visibility.Collapsed;
-                        sp_LedRotate.Visibility = Visibility.Collapsed;
-                        sp_Leds.Visibility = Visibility.Collapsed;
-                        sp_Adjust.Visibility = Visibility.Collapsed;
-                        sp_Remote.Visibility = Visibility.Collapsed;
-                        sp_Debug.Visibility = Visibility.Collapsed;
-                        sp_Help.Visibility = Visibility.Collapsed;
                     }
-                    if (SelStackPanel.Name == "menuButtonModes")
+                    else if (selectedStackPanel.Name == "menuButtonModes")
                     {
-                        SwitchBackground(false, false, true);
-                        sp_Basics.Visibility = Visibility.Collapsed;
+                        SwitchBackground(false, false, false, true);
                         sp_Modes.Visibility = Visibility.Visible;
-                        sp_Screen.Visibility = Visibility.Collapsed;
-                        sp_Blackbars.Visibility = Visibility.Collapsed;
-                        sp_LedRotate.Visibility = Visibility.Collapsed;
-                        sp_Leds.Visibility = Visibility.Collapsed;
-                        sp_Adjust.Visibility = Visibility.Collapsed;
-                        sp_Remote.Visibility = Visibility.Collapsed;
-                        sp_Debug.Visibility = Visibility.Collapsed;
-                        sp_Help.Visibility = Visibility.Collapsed;
                     }
-                    else if (SelStackPanel.Name == "menuButtonScreen")
+                    else if (selectedStackPanel.Name == "menuButtonScreen")
                     {
-                        SwitchBackground(false, false, true);
-                        sp_Basics.Visibility = Visibility.Collapsed;
-                        sp_Modes.Visibility = Visibility.Collapsed;
+                        SwitchBackground(false, false, false, true);
                         sp_Screen.Visibility = Visibility.Visible;
-                        sp_Blackbars.Visibility = Visibility.Collapsed;
-                        sp_LedRotate.Visibility = Visibility.Collapsed;
-                        sp_Leds.Visibility = Visibility.Collapsed;
-                        sp_Adjust.Visibility = Visibility.Collapsed;
-                        sp_Remote.Visibility = Visibility.Collapsed;
-                        sp_Debug.Visibility = Visibility.Collapsed;
-                        sp_Help.Visibility = Visibility.Collapsed;
                     }
-                    else if (SelStackPanel.Name == "menuButtonLeds")
+                    else if (selectedStackPanel.Name == "menuButtonLeds")
                     {
-                        SwitchBackground(true, false, false);
-                        sp_Basics.Visibility = Visibility.Collapsed;
-                        sp_Modes.Visibility = Visibility.Collapsed;
-                        sp_Screen.Visibility = Visibility.Collapsed;
-                        sp_Blackbars.Visibility = Visibility.Collapsed;
-                        sp_LedRotate.Visibility = Visibility.Collapsed;
+                        SwitchBackground(true, false, false, false);
                         sp_Leds.Visibility = Visibility.Visible;
-                        sp_Adjust.Visibility = Visibility.Collapsed;
-                        sp_Remote.Visibility = Visibility.Collapsed;
-                        sp_Debug.Visibility = Visibility.Collapsed;
-                        sp_Help.Visibility = Visibility.Collapsed;
                     }
-                    else if (SelStackPanel.Name == "menuButtonAdjust")
+                    else if (selectedStackPanel.Name == "menuButtonAdjust")
                     {
-                        SwitchBackground(false, false, true);
-                        sp_Basics.Visibility = Visibility.Collapsed;
-                        sp_Modes.Visibility = Visibility.Collapsed;
-                        sp_Screen.Visibility = Visibility.Collapsed;
-                        sp_Blackbars.Visibility = Visibility.Collapsed;
-                        sp_LedRotate.Visibility = Visibility.Collapsed;
-                        sp_Leds.Visibility = Visibility.Collapsed;
+                        SwitchBackground(false, false, false, true);
                         sp_Adjust.Visibility = Visibility.Visible;
-                        sp_Remote.Visibility = Visibility.Collapsed;
-                        sp_Debug.Visibility = Visibility.Collapsed;
-                        sp_Help.Visibility = Visibility.Collapsed;
                     }
-                    else if (SelStackPanel.Name == "menuButtonRemote")
+                    else if (selectedStackPanel.Name == "menuButtonRemote")
                     {
-                        SwitchBackground(false, false, true);
-                        sp_Basics.Visibility = Visibility.Collapsed;
-                        sp_Modes.Visibility = Visibility.Collapsed;
-                        sp_Screen.Visibility = Visibility.Collapsed;
-                        sp_Blackbars.Visibility = Visibility.Collapsed;
-                        sp_LedRotate.Visibility = Visibility.Collapsed;
-                        sp_Leds.Visibility = Visibility.Collapsed;
-                        sp_Adjust.Visibility = Visibility.Collapsed;
+                        SwitchBackground(false, false, false, true);
                         sp_Remote.Visibility = Visibility.Visible;
-                        sp_Debug.Visibility = Visibility.Collapsed;
-                        sp_Help.Visibility = Visibility.Collapsed;
                     }
-                    else if (SelStackPanel.Name == "menuButtonUpdate")
+                    else if (selectedStackPanel.Name == "menuButtonUpdate")
                     {
                         await AppUpdate.CheckForAppUpdate(false);
                     }
-                    else if (SelStackPanel.Name == "menuButtonHelp")
+                    else if (selectedStackPanel.Name == "menuButtonHelp")
                     {
-                        SwitchBackground(false, false, true);
-                        sp_Basics.Visibility = Visibility.Collapsed;
-                        sp_Modes.Visibility = Visibility.Collapsed;
-                        sp_Screen.Visibility = Visibility.Collapsed;
-                        sp_Blackbars.Visibility = Visibility.Collapsed;
-                        sp_LedRotate.Visibility = Visibility.Collapsed;
-                        sp_Leds.Visibility = Visibility.Collapsed;
-                        sp_Adjust.Visibility = Visibility.Collapsed;
-                        sp_Remote.Visibility = Visibility.Collapsed;
-                        sp_Debug.Visibility = Visibility.Collapsed;
+                        SwitchBackground(false, false, false, true);
                         sp_Help.Visibility = Visibility.Visible;
                     }
-                    else if (SelStackPanel.Name == "menuButtonDebug")
+                    else if (selectedStackPanel.Name == "menuButtonDebug")
                     {
-                        SwitchBackground(false, false, true);
-                        sp_Basics.Visibility = Visibility.Collapsed;
-                        sp_Modes.Visibility = Visibility.Collapsed;
-                        sp_Screen.Visibility = Visibility.Collapsed;
-                        sp_Blackbars.Visibility = Visibility.Collapsed;
-                        sp_LedRotate.Visibility = Visibility.Collapsed;
-                        sp_Leds.Visibility = Visibility.Collapsed;
-                        sp_Adjust.Visibility = Visibility.Collapsed;
-                        sp_Remote.Visibility = Visibility.Collapsed;
+                        SwitchBackground(false, false, false, true);
                         sp_Debug.Visibility = Visibility.Visible;
-                        sp_Help.Visibility = Visibility.Collapsed;
+                        vDebugCaptureAllowed = true;
                     }
-                    else if (SelStackPanel.Name == "menuButtonBlackbars")
+                    else if (selectedStackPanel.Name == "menuButtonBlackbars")
                     {
-                        SwitchBackground(false, true, false);
-                        sp_Basics.Visibility = Visibility.Collapsed;
-                        sp_Modes.Visibility = Visibility.Collapsed;
-                        sp_Screen.Visibility = Visibility.Collapsed;
+                        SwitchBackground(false, true, false, false);
                         sp_Blackbars.Visibility = Visibility.Visible;
-                        sp_LedRotate.Visibility = Visibility.Collapsed;
-                        sp_Leds.Visibility = Visibility.Collapsed;
-                        sp_Adjust.Visibility = Visibility.Collapsed;
-                        sp_Remote.Visibility = Visibility.Collapsed;
-                        sp_Debug.Visibility = Visibility.Collapsed;
-                        sp_Help.Visibility = Visibility.Collapsed;
                     }
-                    else if (SelStackPanel.Name == "menuButtonRotate")
+                    else if (selectedStackPanel.Name == "menuButtonRotate")
                     {
-                        SwitchBackground(true, false, false);
-                        sp_Basics.Visibility = Visibility.Collapsed;
-                        sp_Modes.Visibility = Visibility.Collapsed;
-                        sp_Screen.Visibility = Visibility.Collapsed;
-                        sp_Blackbars.Visibility = Visibility.Collapsed;
+                        SwitchBackground(true, false, false, false);
                         sp_LedRotate.Visibility = Visibility.Visible;
-                        sp_Leds.Visibility = Visibility.Collapsed;
-                        sp_Adjust.Visibility = Visibility.Collapsed;
-                        sp_Remote.Visibility = Visibility.Collapsed;
-                        sp_Debug.Visibility = Visibility.Collapsed;
-                        sp_Help.Visibility = Visibility.Collapsed;
                     }
-                    else if (SelStackPanel.Name == "menuButtonClose")
+                    else if (selectedStackPanel.Name == "menuButtonClose")
                     {
                         this.Close();
                     }
@@ -195,8 +129,8 @@ namespace AmbiPro.Settings
                 vSingleTappedEvent = false;
                 if (lb_Menu.SelectedIndex >= 0)
                 {
-                    StackPanel SelStackPanel = (StackPanel)lb_Menu.SelectedItem;
-                    //if (SelStackPanel.Name == "menuButtonShutdown") { await Application_Exit(false); }
+                    StackPanel selectedStackPanel = (StackPanel)lb_Menu.SelectedItem;
+                    //if (selectedStackPanel.Name == "menuButtonShutdown") { await Application_Exit(false); }
                 }
             }
             catch { }

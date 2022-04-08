@@ -4,7 +4,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Threading.Tasks;
-using static AmbiPro.AppImport;
+using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
 using static AmbiPro.Resources.BitmapProcessing;
 using static ArnoldVinkCode.AVActions;
@@ -21,7 +21,15 @@ namespace AmbiPro
             {
                 Debug.WriteLine("Initializing screen capture: " + DateTime.Now);
                 int captureMonitor = Convert.ToInt32(ConfigurationManager.AppSettings["MonitorCapture"]);
-                return AppImport.CaptureInitialize(captureMonitor, out vScreenOutputWidth, out vScreenOutputHeight, out vScreenOutputSize, out vScreenOutputHDR, 2);
+                bool initialized = AppImport.CaptureInitialize(captureMonitor, out vCaptureWidth, out vCaptureHeight, out vCaptureTotalByteSize, out vCaptureHDREnabled, 500);
+
+                //Update screen information
+                ActionDispatcherInvoke(delegate
+                {
+                    App.vFormSettings.UpdateScreenInformation();
+                });
+
+                return initialized;
             }
             catch
             {
@@ -92,13 +100,13 @@ namespace AmbiPro
                         }
 
                         //Set capture range
-                        if (vScreenOutputHeight < vScreenOutputWidth)
+                        if (vCaptureHeight < vCaptureWidth)
                         {
-                            vCaptureRange = (setLedCaptureRange * vScreenOutputHeight) / 100 / 2;
+                            vCaptureRange = (setLedCaptureRange * vCaptureHeight) / 100 / 2;
                         }
                         else
                         {
-                            vCaptureRange = (setLedCaptureRange * vScreenOutputWidth) / 100 / 2;
+                            vCaptureRange = (setLedCaptureRange * vCaptureWidth) / 100 / 2;
                         }
                         //Debug.WriteLine("Screen width: " + vScreenWidth + " / Screen height: " + vScreenHeight + " / Capture range: " + vCaptureZoneRange + " / Resize: " + resizeScreenshot);
 
@@ -112,10 +120,10 @@ namespace AmbiPro
                                 if (setAdjustBlackbarRate == 0 || (Environment.TickCount - vMarginBlackLastUpdate) > setAdjustBlackbarRate)
                                 {
                                     //Set blackbar range
-                                    vBlackBarStepVertical = (setAdjustBlackbarRange * vScreenOutputHeight) / 100;
-                                    vBlackBarRangeVertical = vScreenOutputWidth - vMarginMinimumOffset;
-                                    vBlackBarStepHorizontal = (setAdjustBlackbarRange * vScreenOutputWidth) / 100;
-                                    vBlackBarRangeHorizontal = vScreenOutputHeight - vMarginMinimumOffset;
+                                    vBlackBarStepVertical = (setAdjustBlackbarRange * vCaptureHeight) / 100;
+                                    vBlackBarRangeVertical = vCaptureWidth - vMarginMinimumOffset;
+                                    vBlackBarStepHorizontal = (setAdjustBlackbarRange * vCaptureWidth) / 100;
+                                    vBlackBarRangeHorizontal = vCaptureHeight - vMarginMinimumOffset;
                                     AdjustBlackBars(setLedSideFirst, BitmapData);
                                     AdjustBlackBars(setLedSideSecond, BitmapData);
                                     AdjustBlackBars(setLedSideThird, BitmapData);
@@ -131,10 +139,10 @@ namespace AmbiPro
                             ScreenColors(setLedSideFourth, setLedCountFourth, SerialBytes, BitmapData, ref CurrentSerialByte);
 
                             //Check if debug mode is enabled
-                            if (setDebugMode)
+                            if (vDebugCaptureAllowed)
                             {
-                                //Convert IntPtr to bitmap image
-                                BitmapImage = BitmapConvertData(BitmapData, vScreenOutputWidth, vScreenOutputHeight, vScreenOutputSize, false);
+                                //Convert bytes to bitmap image
+                                BitmapImage = BitmapConvertData(BitmapData, vCaptureWidth, vCaptureHeight, vCaptureTotalByteSize, false);
 
                                 //Debug update screen capture preview
                                 ActionDispatcherInvoke(delegate
@@ -222,7 +230,7 @@ namespace AmbiPro
                         //Clear screen capture resources
                         if (BitmapIntPtr != IntPtr.Zero)
                         {
-                            CaptureFreeMemory(BitmapIntPtr);
+                            AppImport.CaptureFreeMemory(BitmapIntPtr);
                         }
                         if (BitmapImage != null)
                         {

@@ -3,6 +3,7 @@ using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.Windows;
+using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
 
 namespace AmbiPro.Settings
@@ -57,40 +58,47 @@ namespace AmbiPro.Settings
             catch { }
         }
 
-        //Update the rotation ratio
-        void UpdateRotationRatio()
+        //Update screen information
+        public void UpdateScreenInformation()
         {
             try
             {
-                //Set the current screen resolution and ratio
-                vCurrentRatio = AVFunctions.ScreenAspectRatio(vScreenOutputWidth, vScreenOutputHeight, false);
-                if (string.IsNullOrWhiteSpace(vCurrentRatio))
+                //Check if screen capture is enabled
+                bool captureEnabled = vTask_UpdateLed.TaskRunning && SettingsFunction.Load("LedMode", typeof(int)) == 0;
+                if (!captureEnabled)
                 {
                     btn_RotateCounterwise.IsEnabled = false;
                     btn_RotateClockwise.IsEnabled = false;
                     btn_RotateReset.IsEnabled = false;
                     textblock_DebugPreview.Text = "Select screen capture mode and turn leds on to debug.";
+                    image_DebugPreview.Source = null;
                     tb_RotateResolution.Text = "Select screen capture mode and turn leds on to start calibration.";
                     return;
                 }
+
+                //Get the current screen resolution and ratio
+                vCurrentRatio = AVFunctions.ScreenAspectRatio(vCaptureWidth, vCaptureHeight, false);
+                string captureInfo = vCaptureWidth + "x" + vCaptureHeight + " (" + vCurrentRatio + ")";
+                if (vCaptureHDREnabled)
+                {
+                    captureInfo += " (HDR)";
+                }
                 else
                 {
-                    string captureInfo = vScreenOutputWidth + "x" + vScreenOutputHeight + " (" + vCurrentRatio + ")";
-                    if (vScreenOutputHDR)
-                    {
-                        captureInfo += " (HDR)";
-                    }
-
-                    textblock_DebugPreview.Text = "Screen capture preview " + captureInfo + ":";
-                    tb_RotateResolution.Text = "Capture resolution: " + captureInfo;
+                    captureInfo += " (SDR)";
                 }
 
-                //Update the rotation based on ratio
+                //Update debug screen
+                textblock_DebugPreview.Text = "Screen capture preview " + captureInfo + ":";
+
+                //Update rotation screen
                 if (SettingsFunction.Check("LedRotate" + vCurrentRatio))
                 {
                     vCurrentRotation = Convert.ToInt32(ConfigurationManager.AppSettings["LedRotate" + vCurrentRatio]);
                 }
                 tb_RotateValue.Text = "Led rotation: " + vCurrentRotation;
+                tb_RotateResolution.Text = "Capture resolution: " + captureInfo;
+                CheckMaximumRotationCount();
             }
             catch { }
         }
@@ -100,7 +108,7 @@ namespace AmbiPro.Settings
         {
             try
             {
-                if (vScreenOutputWidth == 0 || vScreenOutputHeight == 0)
+                if (vCaptureWidth == 0 || vCaptureHeight == 0)
                 {
                     btn_RotateClockwise.IsEnabled = false;
                     btn_RotateCounterwise.IsEnabled = false;

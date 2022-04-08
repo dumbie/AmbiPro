@@ -36,23 +36,12 @@
                 <StackPanel Grid.Row="1" Grid.Column="1" Background="Yellow"/>
             </Grid>
             <Grid>
-                <DockPanel Name="sp_Block1" HorizontalAlignment="Left" Background="#1A1A1A" Width="100" Height="100" PreviewMouseUp="sp_DecreaseBlockSize_PreviewMouseUp" Cursor="Hand">
-                    <DockPanel HorizontalAlignment="Right" Background="#333">
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource TextBlockWhite}" FontSize="{StaticResource TextSizeLarge}" Text="-"/>
-                    </DockPanel>
-                </DockPanel>
-
+                <StackPanel Name="sp_Block1" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#1A1A1A" Width="100" Height="100"/>
                 <StackPanel Name="sp_Block2" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#1A1A1A" Width="100" Height="100"/>
                 <StackPanel Name="sp_Block3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="#1A1A1A" Width="100" Height="100"/>
                 <StackPanel Name="sp_Block4" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#1A1A1A" Width="100" Height="100"/>
                 <StackPanel Name="sp_Block5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="#1A1A1A" Width="100" Height="100"/>
-
-                <DockPanel Name="sp_Block6" HorizontalAlignment="Right" Background="#1A1A1A" Width="100" Height="100" PreviewMouseUp="sp_IncreaseBlockSize_PreviewMouseUp" Cursor="Hand">
-                    <DockPanel HorizontalAlignment="Left" Background="#333">
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource TextBlockWhite}" FontSize="{StaticResource TextSizeLarge}" Text="+"/>
-                    </DockPanel>
-                </DockPanel>
-
+                <StackPanel Name="sp_Block6" HorizontalAlignment="Right" VerticalAlignment="Center" Background="#1A1A1A" Width="100" Height="100"/>
                 <StackPanel Name="sp_Block7" HorizontalAlignment="Right" VerticalAlignment="Top" Background="#1A1A1A" Width="100" Height="100"/>
                 <StackPanel Name="sp_Block8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#1A1A1A" Width="100" Height="100"/>
             </Grid>
@@ -80,14 +69,15 @@
             </Grid>
         </Grid>
 
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <!-- Main Window -->
+        <Grid Name="grid_MainWindow" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Background Switch -->
-            <StackPanel Grid.Column="1" VerticalAlignment="Top" >
+            <!-- Side menu -->
+            <StackPanel Grid.Column="1" VerticalAlignment="Top">
                 <Border CornerRadius="0,5,5,0" Width="40" Height="40">
                     <Border.Background>
                         <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
@@ -101,8 +91,8 @@
                     <Border.Background>
                         <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
                     </Border.Background>
-                    <Button Name="btn_BlackbarScenario" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Switch blackbar scenario" Click="btn_BlackbarScenario_Click">
-                        <Image Source="/Assets/Icons/Blackbars.png"/>
+                    <Button Name="btn_SwitchLedsOnOrOff" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Switch the leds on or off" Click="Btn_SwitchLedsOnOrOff_Click">
+                        <Image Name="image_SwitchLedsOnOrOff" Source="/Assets/Icons/LedsOff.png"/>
                     </Button>
                 </Border>
 
@@ -110,8 +100,44 @@
                     <Border.Background>
                         <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
                     </Border.Background>
-                    <Button Name="btn_SwitchLedsOnOrOff" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Switch the leds on or off" Click="Btn_SwitchLedsOnOrOff_Click">
-                        <Image Name="image_SwitchLedsOnOrOff" Source="/Assets/Icons/LedsOff.png"/>
+                    <Button Name="btn_MoveWindow" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Move the window" PreviewMouseDown="btn_MoveWindow_PreviewMouseDown" PreviewMouseMove="btn_MoveWindow_PreviewMouseMove">
+                        <Image Name="image_MoveWindow" Source="/Assets/Icons/Move.png"/>
+                    </Button>
+                </Border>
+
+                <Border Name="btn_BlockIncrease" Margin="0,5,0,0" CornerRadius="0,5,5,0" Width="40" Height="40" Visibility="Collapsed">
+                    <Border.Background>
+                        <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
+                    </Border.Background>
+                    <Button Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Increase block sizes" Click="sp_IncreaseBlockSize_PreviewMouseUp">
+                        <Image Source="/Assets/Icons/Plus.png"/>
+                    </Button>
+                </Border>
+
+                <Border Name="btn_BlockDecrease" Margin="0,5,0,0" CornerRadius="0,5,5,0" Width="40" Height="40" Visibility="Collapsed">
+                    <Border.Background>
+                        <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
+                    </Border.Background>
+                    <Button Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Decrease block sizes" Click="sp_DecreaseBlockSize_PreviewMouseUp">
+                        <Image Source="/Assets/Icons/Minus.png"/>
+                    </Button>
+                </Border>
+
+                <Border Name="btn_ColorSolidSwitch" Margin="0,5,0,0" CornerRadius="0,5,5,0" Width="40" Height="40" Visibility="Collapsed">
+                    <Border.Background>
+                        <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
+                    </Border.Background>
+                    <Button Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Switch test color" Click="btn_ColorSolidSwitch_Click">
+                        <Image Source="/Assets/Icons/ColorSwitch.png"/>
+                    </Button>
+                </Border>
+
+                <Border Name="btn_BlackbarsScenario" Margin="0,5,0,0" CornerRadius="0,5,5,0" Width="40" Height="40" Visibility="Collapsed">
+                    <Border.Background>
+                        <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
+                    </Border.Background>
+                    <Button Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Switch blackbar scenario" Click="btn_BlackbarScenario_Click">
+                        <Image Source="/Assets/Icons/Blackbars.png"/>
                     </Button>
                 </Border>
 
@@ -119,7 +145,7 @@
             </StackPanel>
 
             <!-- Grid Main -->
-            <Grid Grid.Column="0"  Height="540">
+            <Grid Grid.Column="0" Height="560">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -184,7 +210,7 @@
                 </Border>
 
                 <!-- Grid Settings -->
-                <Border Grid.Column="1" BorderBrush="#F01D1D1D" BorderThickness="2" CornerRadius="0,0,5,0" Padding="5,0,5,0" Width="500">
+                <Border Name="grid_Settings" Grid.Column="1" BorderBrush="#F01D1D1D" BorderThickness="2" CornerRadius="0,0,5,0" Padding="5,0,5,0" Width="500">
                     <Border.Background>
                         <SolidColorBrush Color="#F1F1F1" Opacity="0.95"/>
                     </Border.Background>
@@ -247,17 +273,19 @@
                                 <CheckBox Margin="0,15,0,0" Name="cb_WindowsStartup" Content="Launch on Windows startup" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
                                 <TextBlock Text="Launch AmbiPro automatically on Windows startup." Style="{StaticResource TextBlockGrayLight}"/>
 
-                                <TextBlock Margin="0,10,0,0" Text="Automatically turn leds on:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                                <TextBlock Text="Automatically turn leds on startup before:" Style="{StaticResource TextBlockGrayLight}"/>
+                                <TextBlock Margin="0,10,0,0" Text="Automatically turn the leds on" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Only automatically turn leds on startup before: *" Style="{StaticResource TextBlockGrayLight}"/>
                                 <StackPanel Orientation="Horizontal">
                                     <CheckBox Name="cb_LedAutoOnOffBefore" Style="{StaticResource CheckBoxBlack}"/>
                                     <ArnoldVinkTimePicker:TimePicker x:Name="timepicker_LedAutoTimeBefore" IsEnabled="False" Margin="5,0,0,0" Width="120"/>
                                 </StackPanel>
-                                <TextBlock Margin="0,10,0,0" Text="Automatically turn leds on startup after:" Style="{StaticResource TextBlockGrayLight}"/>
+                                <TextBlock Margin="0,10,0,0" Text="Only automatically turn leds on startup after: *" Style="{StaticResource TextBlockGrayLight}"/>
                                 <StackPanel Orientation="Horizontal">
                                     <CheckBox Name="cb_LedAutoOnOffAfter" Style="{StaticResource CheckBoxBlack}"/>
                                     <ArnoldVinkTimePicker:TimePicker x:Name="timepicker_LedAutoTimeAfter" IsEnabled="False" Margin="5,0,0,0" Width="120"/>
                                 </StackPanel>
+
+                                <TextBlock Margin="0,10,0,0" Text="* When both settings are turned off the leds will always turn on." Style="{StaticResource TextBlockGrayLight}"/>
                             </StackPanel>
 
                             <!-- Modes -->
@@ -549,9 +577,6 @@
 
                             <!-- Debug -->
                             <StackPanel Name="sp_Debug" Visibility="Collapsed" Margin="5,5,5,5">
-                                <CheckBox Name="checkbox_DebugMode" Content="Enable or disable debug mode" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
-                                <TextBlock Text="Enable or disable the debug mode that enables the preview." Style="{StaticResource TextBlockGrayLight}"/>
-
                                 <CheckBox Name="checkbox_DebugColor" Content="Enable or disable color capture debug" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
                                 <TextBlock Text="Enable or disable the color capture areas in the preview." Style="{StaticResource TextBlockGrayLight}"/>
 

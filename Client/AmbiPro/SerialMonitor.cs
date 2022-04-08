@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using static AmbiPro.AppEnums;
+using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
 using static ArnoldVinkCode.AVActions;
 
@@ -64,13 +65,12 @@ namespace AmbiPro
         private static int setLedCountThird = 0;
         private static int setLedCountFourth = 0;
         private static int setLedCountTotal = 0;
-        private static bool setDebugMode = false;
         private static bool setDebugBlackBar = false;
         private static bool setDebugColor = true;
         private static bool setDebugSave = false;
 
-        //Update the led settings
-        public static void UpdateSettings()
+        //Update led setting variables
+        public static void UpdateSettingVariables()
         {
             try
             {
@@ -114,13 +114,12 @@ namespace AmbiPro
                 setLedCountTotal = setLedCountFirst + setLedCountSecond + setLedCountThird + setLedCountFourth;
 
                 //Debug settings
-                setDebugMode = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugMode"]);
                 setDebugBlackBar = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugBlackBar"]);
                 setDebugColor = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugColor"]);
                 setDebugSave = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugSave"]);
 
                 //Update the rotation based on ratio
-                string ScreenRatio = AVFunctions.ScreenAspectRatio(vScreenOutputWidth, vScreenOutputHeight, false);
+                string ScreenRatio = AVFunctions.ScreenAspectRatio(vCaptureWidth, vCaptureHeight, false);
                 if (SettingsFunction.Check("LedRotate" + ScreenRatio))
                 {
                     setLedRotate = Convert.ToInt32(ConfigurationManager.AppSettings["LedRotate" + ScreenRatio]);
@@ -145,34 +144,43 @@ namespace AmbiPro
                 {
                     vSwitching = true;
 
-                    //Update settings
-                    UpdateSettings();
+                    //Update led setting variables
+                    UpdateSettingVariables();
 
                     //Restart the leds
                     if (ledSwitch == LedSwitches.Restart)
                     {
-                        await LedsRestart();
-                        vSwitching = false;
+                        Debug.WriteLine("Restarting the led updates.");
+                        await LedsDisable(true);
+                        LedsEnable();
                         return;
                     }
 
-                    //Disable the leds
+                    //Check if leds are enabled
                     if (ledSwitch == LedSwitches.Disable || vTask_UpdateLed.TaskRunning)
                     {
+                        //Disable the leds
                         await LedsDisable(false);
-                        vSwitching = false;
-                        return;
-                    }
 
-                    //Enable the leds
-                    LedsEnable();
-                    vSwitching = false;
-                    return;
+                        //Update screen information
+                        ActionDispatcherInvoke(delegate
+                        {
+                            App.vFormSettings.UpdateScreenInformation();
+                        });
+                    }
+                    else
+                    {
+                        //Enable the leds
+                        LedsEnable();
+                    }
                 }
             }
             catch
             {
                 Debug.WriteLine("Failed switching the leds on or off.");
+            }
+            finally
+            {
                 vSwitching = false;
             }
         }
@@ -272,21 +280,6 @@ namespace AmbiPro
             }
         }
 
-        //Restart the led updates
-        private static async Task LedsRestart()
-        {
-            try
-            {
-                Debug.WriteLine("Restarting the led updates.");
-                await LedsDisable(true);
-                LedsEnable();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Failed to restart the led updates: " + ex.Message);
-            }
-        }
-
         //Write to serial com port
         public static bool SerialComPortWrite(byte[] SerialBytes)
         {
@@ -377,7 +370,7 @@ namespace AmbiPro
                     MsgBoxAnswers.Add("Retry to capture screen");
                     MsgBoxAnswers.Add("Close application");
 
-                    string MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to start capturing your monitor screen", "Please make sure the correct monitor screen is selected, Microsoft Visual C++ 2019 Redistributable is installed on your PC, that you have a 64bit Windows installation and that you have a DirectX 12 or higher capable graphics adapter installed.", MsgBoxAnswers);
+                    string MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to start capturing your monitor screen", "Please make sure the correct monitor screen is selected, all the requirements are installed on your PC, that you have a 64bit Windows installation and that you have a DirectX 12 or higher capable graphics adapter installed.", MsgBoxAnswers);
                     if (MsgBoxResult == "Change monitor setting")
                     {
                         await LedSwitch(LedSwitches.Disable);
@@ -406,9 +399,6 @@ namespace AmbiPro
         {
             try
             {
-                //Update the led settings
-                UpdateSettings();
-
                 //Calculate bytes size
                 int InitByteSize = 3;
                 int LedByteSize = setLedCountTotal * 3;

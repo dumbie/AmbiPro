@@ -10,9 +10,27 @@
     <Filter Include="Header files">
       <UniqueIdentifier>{6ecee073-3fda-4d87-ad79-cc039befef5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader files">
+      <UniqueIdentifier>{af8352ed-25f6-401c-9231-9d6e4a79e08c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ScreenCapture.cpp">
+    <ClCompile Include="CaptureScreen.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptureInitialize.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptureBitmap.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptureTexture.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptureClasses.h">
+      <Filter>Header files</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptureDetails.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -22,8 +40,16 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ScreenCapture.h">
+    <ClInclude Include="CaptureVariables.h">
       <Filter>Header files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Shaders\PixelShader.hlsl">
+      <Filter>Shader files</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Shaders\VertexShader.hlsl">
+      <Filter>Shader files</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

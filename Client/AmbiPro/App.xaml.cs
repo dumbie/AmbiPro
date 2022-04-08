@@ -1,4 +1,5 @@
 ﻿using AmbiPro.Settings;
+using System.IO;
 using System.Reflection;
 using System.Windows;
 using static ArnoldVinkCode.AVFirewall;
@@ -14,6 +15,9 @@ namespace AmbiPro
         {
             try
             {
+                //Set the working directory to executable directory
+                Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
+
                 //Allow application in firewall
                 string appFilePath = Assembly.GetEntryAssembly().Location;
                 Firewall_ExecutableAllow("AmbiPro", appFilePath, true);

@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
@@ -76,6 +77,34 @@ namespace AmbiPro.Settings
             }
         }
 
+        //Handle move window
+        private Point MoveWindowPointBegin;
+        private void btn_MoveWindow_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (e.LeftButton == MouseButtonState.Pressed)
+                {
+                    MoveWindowPointBegin = Mouse.GetPosition(grid_MainWindow);
+                }
+            }
+            catch { }
+        }
+        private void btn_MoveWindow_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                if (e.LeftButton == MouseButtonState.Pressed)
+                {
+                    Point mouseOffset = Mouse.GetPosition(grid_MainWindow);
+                    double marginLeft = mouseOffset.X + grid_MainWindow.Margin.Left - MoveWindowPointBegin.X;
+                    double marginTop = mouseOffset.Y + grid_MainWindow.Margin.Top - MoveWindowPointBegin.Y;
+                    grid_MainWindow.Margin = new Thickness(marginLeft, marginTop, 0, 0);
+                }
+            }
+            catch { }
+        }
+
         //Handle switch button
         private async void Btn_SwitchLedsOnOrOff_Click(object sender, RoutedEventArgs e)
         {
@@ -131,6 +160,9 @@ namespace AmbiPro.Settings
             {
                 Debug.WriteLine("Resolution has been changed.");
 
+                //Reset main window margin
+                grid_MainWindow.Margin = new Thickness(0, 0, 0, 0);
+
                 //Update settings information
                 await UpdateSettingsInformation(true);
             }
@@ -148,8 +180,8 @@ namespace AmbiPro.Settings
                     await Task.Delay(500);
                 }
 
-                //Update the rotation ratio
-                UpdateRotationRatio();
+                //Update screen information
+                UpdateScreenInformation();
 
                 //Check the maximum rotation count
                 CheckMaximumRotationCount();
@@ -200,6 +232,12 @@ namespace AmbiPro.Settings
                 //Update settings information
                 await UpdateSettingsInformation(false);
 
+                //Allow debug capture
+                if (vCurrentVisibleMenu == "menuButtonDebug")
+                {
+                    vDebugCaptureAllowed = true;
+                }
+
                 Debug.WriteLine("Settings window activated.");
             }
             catch { }
@@ -213,9 +251,8 @@ namespace AmbiPro.Settings
                 e.Cancel = true;
                 Debug.WriteLine("Settings window closing.");
 
-                //Disable debug to save performance
-                SettingsFunction.Save("DebugMode", "False");
-                checkbox_DebugMode.IsChecked = false;
+                //Disable debug capture
+                vDebugCaptureAllowed = false;
                 image_DebugPreview.Source = null;
 
                 //Hide the settings window

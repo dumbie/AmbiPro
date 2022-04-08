@@ -12,10 +12,12 @@ namespace AmbiPro
         public static CultureInfo vAppCultureInfo = CultureInfo.InvariantCulture;
 
         //Setting Variables
+        public static string vCurrentVisibleMenu = string.Empty;
         public static string vCurrentRatio = string.Empty;
         public static int vCurrentRotation = 0;
         public static int vCurrentBlackbar = 0;
         public static int vCurrentBackground = 0;
+        public static int vCurrentSolidColor = 0;
 
         //Color loop Variables
         public static ColorRGBA vCurrentLoopColor = new ColorRGBA() { R = 20 };
@@ -38,13 +40,14 @@ namespace AmbiPro
         public static byte[] vCaptureByteHistory1 = null;
         public static byte[] vCaptureByteHistory2 = null;
         public static byte[] vCaptureByteHistory3 = null;
-        public static int vScreenOutputWidth = 0;
-        public static int vScreenOutputHeight = 0;
-        public static int vScreenOutputSize = 0;
-        public static bool vScreenOutputHDR = false;
+        public static int vCaptureWidth = 0;
+        public static int vCaptureHeight = 0;
+        public static int vCaptureTotalByteSize = 0;
+        public static bool vCaptureHDREnabled = false;
 
         //Update Variables
         public static bool vCheckingForUpdate = false;
+        public static bool vDebugCaptureAllowed = false;
 
         //Sockets Variables
         public static ArnoldVinkSockets vArnoldVinkSockets = null;
@@ -70,10 +73,10 @@ namespace AmbiPro
                 vCaptureByteHistory1 = null;
                 vCaptureByteHistory2 = null;
                 vCaptureByteHistory3 = null;
-                vScreenOutputWidth = 0;
-                vScreenOutputHeight = 0;
-                vScreenOutputSize = 0;
-                vScreenOutputHDR = false;
+                vCaptureWidth = 0;
+                vCaptureHeight = 0;
+                vCaptureTotalByteSize = 0;
+                vCaptureHDREnabled = false;
             }
             catch { }
         }

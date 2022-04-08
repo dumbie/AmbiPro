@@ -32,16 +32,16 @@ namespace AmbiPro
             {
                 for (int captureStep = vMarginMinimumOffset; captureStep < vBlackBarStepVertical; captureStep += vMarginBlackAccuracy)
                 {
-                    int CaptureZoneVer = vScreenOutputHeight - captureStep;
+                    int CaptureZoneVer = vCaptureHeight - captureStep;
                     for (int captureRange = vMarginMinimumOffset; captureRange < vBlackBarRangeVertical; captureRange += vMarginBlackAccuracy)
                     {
                         int CaptureZoneHor = captureRange;
-                        ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vScreenOutputWidth, vScreenOutputHeight, CaptureZoneHor, CaptureZoneVer);
+                        ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vCaptureWidth, vCaptureHeight, CaptureZoneHor, CaptureZoneVer);
                         if (ColorPixel != null)
                         {
-                            if (setDebugMode && setDebugBlackBar)
+                            if (vDebugCaptureAllowed && setDebugBlackBar)
                             {
-                                ColorProcessing.SetPixelColor(bitmapData, vScreenOutputWidth, vScreenOutputHeight, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
+                                ColorProcessing.SetPixelColor(bitmapData, vCaptureWidth, vCaptureHeight, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
                             }
                             if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
                             {
@@ -68,12 +68,12 @@ namespace AmbiPro
                     for (int captureRange = vMarginMinimumOffset; captureRange < vBlackBarRangeVertical; captureRange += vMarginBlackAccuracy)
                     {
                         int CaptureZoneHor = captureRange;
-                        ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vScreenOutputWidth, vScreenOutputHeight, CaptureZoneHor, CaptureZoneVer);
+                        ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vCaptureWidth, vCaptureHeight, CaptureZoneHor, CaptureZoneVer);
                         if (ColorPixel != null)
                         {
-                            if (setDebugMode && setDebugBlackBar)
+                            if (vDebugCaptureAllowed && setDebugBlackBar)
                             {
-                                ColorProcessing.SetPixelColor(bitmapData, vScreenOutputWidth, vScreenOutputHeight, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
+                                ColorProcessing.SetPixelColor(bitmapData, vCaptureWidth, vCaptureHeight, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
                             }
                             if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
                             {
@@ -96,16 +96,16 @@ namespace AmbiPro
             {
                 for (int captureStep = vMarginMinimumOffset; captureStep < vBlackBarStepHorizontal; captureStep += vMarginBlackAccuracy)
                 {
-                    int CaptureZoneHor = vScreenOutputWidth - captureStep;
+                    int CaptureZoneHor = vCaptureWidth - captureStep;
                     for (int captureRange = vMarginMinimumOffset; captureRange < vBlackBarRangeHorizontal; captureRange += vMarginBlackAccuracy)
                     {
                         int CaptureZoneVer = captureRange;
-                        ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vScreenOutputWidth, vScreenOutputHeight, CaptureZoneHor, CaptureZoneVer);
+                        ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vCaptureWidth, vCaptureHeight, CaptureZoneHor, CaptureZoneVer);
                         if (ColorPixel != null)
                         {
-                            if (setDebugMode && setDebugBlackBar)
+                            if (vDebugCaptureAllowed && setDebugBlackBar)
                             {
-                                ColorProcessing.SetPixelColor(bitmapData, vScreenOutputWidth, vScreenOutputHeight, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
+                                ColorProcessing.SetPixelColor(bitmapData, vCaptureWidth, vCaptureHeight, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
                             }
                             if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
                             {
@@ -132,12 +132,12 @@ namespace AmbiPro
                     for (int captureRange = vMarginMinimumOffset; captureRange < vBlackBarRangeHorizontal; captureRange += vMarginBlackAccuracy)
                     {
                         int CaptureZoneVer = captureRange;
-                        ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vScreenOutputWidth, vScreenOutputHeight, CaptureZoneHor, CaptureZoneVer);
+                        ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapData, vCaptureWidth, vCaptureHeight, CaptureZoneHor, CaptureZoneVer);
                         if (ColorPixel != null)
                         {
-                            if (setDebugMode && setDebugBlackBar)
+                            if (vDebugCaptureAllowed && setDebugBlackBar)
                             {
-                                ColorProcessing.SetPixelColor(bitmapData, vScreenOutputWidth, vScreenOutputHeight, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
+                                ColorProcessing.SetPixelColor(bitmapData, vCaptureWidth, vCaptureHeight, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
                             }
                             if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
                             {

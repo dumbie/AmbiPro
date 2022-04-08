@@ -21,7 +21,7 @@ namespace AmbiPro
 
                 //Create timer to update the led settings
                 vDispatcherTimer_UpdateSettings.Interval = TimeSpan.FromSeconds(1);
-                vDispatcherTimer_UpdateSettings.Tick += delegate { SerialMonitor.UpdateSettings(); };
+                vDispatcherTimer_UpdateSettings.Tick += delegate { SerialMonitor.UpdateSettingVariables(); };
                 vDispatcherTimer_UpdateSettings.Start();
             }
             catch { }

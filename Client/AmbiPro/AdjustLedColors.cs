@@ -12,12 +12,6 @@ namespace AmbiPro
         {
             try
             {
-                ////Check if HDR is enabled and adjust colors
-                //if (setLedMode == 0 && vScreenOutputHDR)
-                //{
-                //    //Debug.WriteLine("HDR" + vScreenOutputHDRWhiteLevel);
-                //}
-
                 //Adjust the screen capture hue
                 adjustColor.AdjustHue(setLedHue);
 

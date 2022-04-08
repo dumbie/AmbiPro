@@ -2,7 +2,7 @@
 
 namespace AmbiPro
 {
-    partial class SerialMonitor
+    public class AppTasks
     {
         //Application Tasks
         public static AVTaskDetails vTask_UpdateLed = new AVTaskDetails();
