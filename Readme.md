@@ -10,6 +10,8 @@ this application will capture your screen and sync the colors to your led strip.
 - Optimized for fullscreen performance gaming.
 - Automatically adapt to displayed content blackbars.
 - Easily calibrate your led strip in the application.
+- HDR content gets converted to SDR for accurate led colors.
+- Frame smoothing for reduced flickering during fast motion.
 - Switch between screen capture and several color modes.
 - Control the leds on another device with the remote.
 
@@ -31,7 +33,7 @@ this application will capture your screen and sync the colors to your led strip.
 * You can run it as administrator by using the "AmbiPro-Admin" executable.
 
 ## Requirements
-- Microsoft Visual C++ 2019 Redistributable installed.
+- Microsoft Visual C++ Redistributable installed.
 - Windows operating system 10 64-bit or higher is required.
 - A DirectX 12 or higher capable graphics adapter.
 
@@ -45,9 +47,11 @@ When you are walking into any problems or a bug you can go to my help page at ht
 If you appreciate my project and want to support me with my projects you can make a donation through https://donation.arnoldvink.com
 
 ## Changelog
+v0.12.0.0 (8-April-2022)
+- Added screen capture HDR to SDR tonemapping.
+
 v0.11.2.0 (18-October-2021)
 - You can now change the solid led color with the remote.
-* Miscellaneous application improvements and fixes.
 
 v0.11.0.0 (17-June-2021)
 - Added led smoothing setting.
