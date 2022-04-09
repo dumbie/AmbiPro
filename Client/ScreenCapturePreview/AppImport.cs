@@ -14,8 +14,14 @@ namespace ScreenCapturePreview
         [DllImport("Resources\\ScreenCapture.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool CaptureFreeMemory(IntPtr BitmapData);
 
-        [DllImport("Resources\\ScreenCapture.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern bool CaptureSaveBitmap(IntPtr BitmapData, string FilePath);
+        [DllImport("Resources\\ScreenCapture.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool CaptureSaveFileBmp(IntPtr BitmapData, [MarshalAs(UnmanagedType.LPWStr)] string FilePath);
+
+        [DllImport("Resources\\ScreenCapture.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool CaptureSaveFileJpg(IntPtr BitmapData, [MarshalAs(UnmanagedType.LPWStr)] string FilePath, int SaveQuality);
+
+        [DllImport("Resources\\ScreenCapture.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool CaptureSaveFilePng(IntPtr BitmapData, [MarshalAs(UnmanagedType.LPWStr)] string FilePath);
 
         [DllImport("Resources\\ScreenCapture.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr CaptureScreenshot();

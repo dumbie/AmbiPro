@@ -70,11 +70,35 @@ namespace
 			}
 		}
 
-		__declspec(dllexport) BOOL CaptureSaveBitmap(BYTE* bitmapData, const char* filePath)
+		__declspec(dllexport) BOOL CaptureSaveFileBmp(BYTE* bitmapData, WCHAR* filePath)
 		{
 			try
 			{
-				return BitmapDataSaveBmpFile(bitmapData, filePath);
+				return BitmapDataSaveFileBmp(bitmapData, filePath);
+			}
+			catch (...)
+			{
+				return false;
+			}
+		}
+
+		__declspec(dllexport) BOOL CaptureSaveFileJpg(BYTE* bitmapData, WCHAR* filePath, UINT saveQuality)
+		{
+			try
+			{
+				return BitmapDataSaveFileJpg(bitmapData, filePath, saveQuality);
+			}
+			catch (...)
+			{
+				return false;
+			}
+		}
+
+		__declspec(dllexport) BOOL CaptureSaveFilePng(BYTE* bitmapData, WCHAR* filePath)
+		{
+			try
+			{
+				return BitmapDataSaveFilePng(bitmapData, filePath);
 			}
 			catch (...)
 			{

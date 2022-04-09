@@ -142,7 +142,7 @@ namespace AmbiPro
                             if (vDebugCaptureAllowed)
                             {
                                 //Convert bytes to bitmap image
-                                BitmapImage = BitmapConvertData(BitmapData, vCaptureWidth, vCaptureHeight, vCaptureTotalByteSize, false);
+                                BitmapImage = BitmapFromData(BitmapData, vCaptureWidth, vCaptureHeight, vCaptureTotalByteSize, false);
 
                                 //Debug update screen capture preview
                                 ActionDispatcherInvoke(delegate

@@ -1,11 +1,13 @@
 #pragma once
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
+#pragma comment(lib, "gdiplus.lib")
 #include "CaptureClasses.h"
 #include <dxgi1_6.h>
 #include <d3d11_4.h>
 #include <directxmath.h>
 #include <d3dcompiler.h>
+#include <gdiplus.h>
 #include <atlbase.h>
 
 namespace

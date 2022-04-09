@@ -59,11 +59,14 @@ namespace ScreenCapturePreview
                             byte* BitmapData = (byte*)BitmapIntPtr;
 
                             //Convert data to bitmap
-                            BitmapImage = BitmapProcessing.BitmapConvertData(BitmapData, vScreenOutputWidth, vScreenOutputHeight, vScreenOutputSize, false);
+                            BitmapImage = BitmapProcessing.BitmapFromData(BitmapData, vScreenOutputWidth, vScreenOutputHeight, vScreenOutputSize, false);
                         }
 
                         //Save screenshot directly
-                        //AppImport.CaptureSaveBitmap(BitmapIntPtr, "E:\\Screenshot " + DateTime.Now.ToString("hh.mm (MM-dd-yyyy)") + ".bmp");
+                        string fileName = DateTime.Now.ToString("HH.mm.ss.ffff (MM-dd-yyyy)");
+                        //AppImport.CaptureSaveFileBmp(BitmapIntPtr, "E:\\Screenshot " + fileName + ".bmp");
+                        //AppImport.CaptureSaveFileJpg(BitmapIntPtr, "E:\\Screenshot " + fileName + ".jpg", 100);
+                        //AppImport.CaptureSaveFilePng(BitmapIntPtr, "E:\\Screenshot " + fileName + ".png");
 
                         //Update screen capture preview
                         image_DebugPreview.Source = BitmapProcessing.BitmapToBitmapImage(BitmapImage);

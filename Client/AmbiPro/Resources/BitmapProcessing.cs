@@ -9,25 +9,26 @@ namespace AmbiPro.Resources
 {
     public class BitmapProcessing
     {
-        //Convert data to bitmap
-        public static unsafe Bitmap BitmapConvertData(byte* bitmapData, int bitmapWidth, int bitmapHeight, int bitmapSize, bool flipImage)
+        //Get bitmap from data
+        public static unsafe Bitmap BitmapFromData(byte* bitmapData, int bitmapWidth, int bitmapHeight, int bitmapSize, bool flipImage)
         {
             try
             {
-                Bitmap imageBitmap = new Bitmap(bitmapWidth, bitmapHeight);
-                Rectangle ScreenRectangle = new Rectangle(0, 0, imageBitmap.Width, imageBitmap.Height);
+                //Create bitmap
+                Bitmap gdiBitmap = new Bitmap(bitmapWidth, bitmapHeight);
+                Rectangle nodRectangle = new Rectangle(0, 0, bitmapWidth, bitmapHeight);
 
-                BitmapData ScreenBitmapData = imageBitmap.LockBits(ScreenRectangle, ImageLockMode.ReadWrite, imageBitmap.PixelFormat);
-                byte* imageData = (byte*)ScreenBitmapData.Scan0;
-                for (int y = 0; y < bitmapSize; y++) { imageData[y] = bitmapData[y]; }
-                imageBitmap.UnlockBits(ScreenBitmapData);
+                //Copy data to bitmap
+                BitmapData bitmapDataLock = gdiBitmap.LockBits(nodRectangle, ImageLockMode.ReadWrite, gdiBitmap.PixelFormat);
+                Buffer.MemoryCopy(bitmapData, (byte*)bitmapDataLock.Scan0, bitmapSize, bitmapSize);
+                gdiBitmap.UnlockBits(bitmapDataLock);
 
                 if (flipImage)
                 {
-                    imageBitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                    gdiBitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
                 }
 
-                return imageBitmap;
+                return gdiBitmap;
             }
             catch (Exception ex)
             {
@@ -68,7 +69,7 @@ namespace AmbiPro.Resources
                 }
 
                 //Save image file
-                bitmapSave.Save("Debug\\" + Environment.TickCount + ".bmp", ImageFormat.Bmp);
+                bitmapSave.Save("Debug\\" + Environment.TickCount + ".jpg", ImageFormat.Jpeg);
             }
             catch (Exception ex)
             {
