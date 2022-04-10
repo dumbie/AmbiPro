@@ -12,9 +12,9 @@ struct PS_INPUT
 	float2 TexCoord : TEXCOORD;
 };
 
-float4 AdjustHDRWhiteLevel(float4 color)
+float4 AdjustSDRWhiteLevel(float4 color)
 {
-	return color / (SDRWhiteLevel / 75.0F);
+	return color / (SDRWhiteLevel / 70.0F);
 }
 
 float4 main(PS_INPUT input) : SV_TARGET
@@ -22,7 +22,7 @@ float4 main(PS_INPUT input) : SV_TARGET
 	float4 color = _texture2D.Sample(_samplerState, input.TexCoord);
 	if (HDREnabled)
 	{
-		color = AdjustHDRWhiteLevel(color);
+		color = AdjustSDRWhiteLevel(color);
 	}
 	return color;
 }
