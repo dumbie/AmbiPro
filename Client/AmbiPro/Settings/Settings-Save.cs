@@ -308,6 +308,9 @@ namespace AmbiPro.Settings
                     SettingsFunction.Save("LedSmoothing", sldr_LedSmoothing.Value.ToString("0"));
                     int smoothingFrames = Convert.ToInt32(sldr_LedSmoothing.Value);
                     tb_LedSmoothing.Text = "Led smoothing: " + smoothingFrames + " frames";
+
+                    //Reset smoothing byte history
+                    vCaptureByteHistoryArray = new byte[20][];
                 };
 
                 //Save - Windows Startup

@@ -37,12 +37,10 @@ namespace AmbiPro
 
         //Screen capture Variables
         public static int vCaptureRange = 0;
-        public static byte[] vCaptureByteHistory1 = null;
-        public static byte[] vCaptureByteHistory2 = null;
-        public static byte[] vCaptureByteHistory3 = null;
         public static int vCaptureWidth = 0;
         public static int vCaptureHeight = 0;
         public static int vCaptureTotalByteSize = 0;
+        public static byte[][] vCaptureByteHistoryArray = new byte[20][];
         public static bool vCaptureHDREnabled = false;
 
         //Update Variables
@@ -70,12 +68,10 @@ namespace AmbiPro
 
                 //Screen capture Variables
                 vCaptureRange = 0;
-                vCaptureByteHistory1 = null;
-                vCaptureByteHistory2 = null;
-                vCaptureByteHistory3 = null;
                 vCaptureWidth = 0;
                 vCaptureHeight = 0;
                 vCaptureTotalByteSize = 0;
+                vCaptureByteHistoryArray = new byte[20][];
                 vCaptureHDREnabled = false;
             }
             catch { }

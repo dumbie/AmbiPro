@@ -283,43 +283,6 @@ namespace AmbiPro
                 catch { }
             }
 
-            public void AdjustHdrReinhard()
-            {
-                try
-                {
-                    float rReinhard = R / (R + 1.0f);
-                    float gReinhard = G / (G + 1.0f);
-                    float bReinhard = B / (B + 1.0f);
-                    R = ValidateColor(rReinhard);
-                    G = ValidateColor(gReinhard);
-                    B = ValidateColor(bReinhard);
-                    //Debug.WriteLine("HDR to SDR Reinhard adjusted: " + R + " / G" + G + " / B" + B);
-                }
-                catch { }
-            }
-
-            public void AdjustHdrBT2020toBT709()
-            {
-                try
-                {
-                    ColorMatrix colorMatrix = new ColorMatrix()
-                    {
-                        Matrix00 = (float)1.6605,
-                        Matrix01 = (float)-0.5876,
-                        Matrix02 = (float)-0.0728,
-                        Matrix10 = (float)-0.1246,
-                        Matrix11 = (float)1.1329,
-                        Matrix12 = (float)-0.0083,
-                        Matrix20 = (float)-0.0182,
-                        Matrix21 = (float)-0.1006,
-                        Matrix22 = (float)1.1187,
-                    };
-                    ApplyColorMatrix(colorMatrix);
-                    //Debug.WriteLine("Adjusted BT2020 to BT907: " + R + " / G" + G + " / B" + B);
-                }
-                catch { }
-            }
-
             public void ApplyColorMatrix(ColorMatrix colorMatrix)
             {
                 try

@@ -123,37 +123,30 @@ namespace AmbiPro
                     }
 
                     //Skip bottom gap leds
-                    bool skipCapture = false;
                     if (BottomGapMax != 0 && AVFunctions.BetweenNumbers(currentLed, BottomGapMin, BottomGapMax, false))
                     {
                         //Debug.WriteLine("Led: " + currentLed + " / GapMin: " + BottomGapMin + " / GapMax: " + BottomGapMax + " / GapLeds: " + setLedBottomGap);
-                        skipCapture = true;
                     }
-
-                    if (!skipCapture)
+                    else
                     {
-                        //Capture the colors
-                        int CapturedColors = 0;
-                        int AverageRed = 0;
-                        int AverageGreen = 0;
-                        int AverageBlue = 0;
-                        CaptureColorAlgorithm(BitmapData, ref CapturedColors, ref AverageRed, ref AverageGreen, ref AverageBlue, CaptureZoneHor, CaptureZoneVer, CaptureZoneSize, SideType);
+                        //Capture the average color from the bitmap screen capture
+                        CaptureColorAlgorithm(BitmapData, out ColorRGBA CaptureColor, CaptureZoneHor, CaptureZoneVer, CaptureZoneSize, SideType);
+                        //Debug.WriteLine("Captured average color R" + CaptureColor.R + "G" + CaptureColor.G + "B" + CaptureColor.B + " from the bitmap data.");
 
-                        //Calculate average color from the bitmap screen capture
-                        //Debug.WriteLine("Captured " + UsedColors + " pixel colors from the bitmap data.");
-                        if (CapturedColors > 0)
+                        //Check if average color is black
+                        if (CaptureColor != null && (CaptureColor.R > 0 || CaptureColor.G > 0 || CaptureColor.B > 0))
                         {
-                            ColorRGBA CurrentColor = new ColorRGBA() { R = (byte)(AverageRed / CapturedColors), G = (byte)(AverageGreen / CapturedColors), B = (byte)(AverageBlue / CapturedColors) };
-                            AdjustLedColors(ref CurrentColor);
+                            //Adjust the colors to settings
+                            AdjustLedColors(ref CaptureColor);
 
                             //Set the color to color byte array
-                            SerialBytes[CurrentSerialByte] = CurrentColor.R;
+                            SerialBytes[CurrentSerialByte] = CaptureColor.R;
                             CurrentSerialByte++;
 
-                            SerialBytes[CurrentSerialByte] = CurrentColor.G;
+                            SerialBytes[CurrentSerialByte] = CaptureColor.G;
                             CurrentSerialByte++;
 
-                            SerialBytes[CurrentSerialByte] = CurrentColor.B;
+                            SerialBytes[CurrentSerialByte] = CaptureColor.B;
                             CurrentSerialByte++;
                         }
                         else
@@ -201,10 +194,14 @@ namespace AmbiPro
         }
 
         //Capture the color pixels
-        private static unsafe void CaptureColorAlgorithm(byte* BitmapData, ref int CapturedColors, ref int AverageRed, ref int AverageGreen, ref int AverageBlue, int CaptureZoneHor, int CaptureZoneVer, int CaptureZoneSize, LedSideTypes SideType)
+        private static unsafe void CaptureColorAlgorithm(byte* BitmapData, out ColorRGBA AverageColor, int CaptureZoneHor, int CaptureZoneVer, int CaptureZoneSize, LedSideTypes SideType)
         {
             try
             {
+                int ColorCount = 0;
+                int ColorAverageR = 0;
+                int ColorAverageG = 0;
+                int ColorAverageB = 0;
                 int CaptureEvenStep = 1;
                 int CaptureZoneHorRange = 0;
                 int CaptureZoneVerRange = 0;
@@ -262,15 +259,28 @@ namespace AmbiPro
                                 ColorProcessing.SetPixelColor(BitmapData, vCaptureWidth, vCaptureHeight, CaptureZoneHor + CaptureZoneHorRange, CaptureZoneVer + CaptureZoneVerRange, ColorRGBA.Purple);
                             }
 
-                            AverageRed += ColorPixel.R;
-                            AverageGreen += ColorPixel.G;
-                            AverageBlue += ColorPixel.B;
-                            CapturedColors++;
+                            //Add pixel color to average color
+                            ColorAverageR += ColorPixel.R;
+                            ColorAverageG += ColorPixel.G;
+                            ColorAverageB += ColorPixel.B;
+                            ColorCount++;
                         }
                     }
                 }
+
+                //Calculate the average color
+                AverageColor = new ColorRGBA()
+                {
+                    R = (byte)(ColorAverageR / ColorCount),
+                    G = (byte)(ColorAverageG / ColorCount),
+                    B = (byte)(ColorAverageB / ColorCount)
+                };
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed to capture pixel colors: " + ex.Message);
+                AverageColor = null;
+            }
         }
     }
 }

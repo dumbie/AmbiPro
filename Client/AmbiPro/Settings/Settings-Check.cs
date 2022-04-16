@@ -237,7 +237,7 @@ namespace AmbiPro.Settings
                 //Check - Led Smoothing
                 if (ConfigurationManager.AppSettings["LedSmoothing"] == null)
                 {
-                    SettingsFunction.Save("LedSmoothing", "2");
+                    SettingsFunction.Save("LedSmoothing", "6");
                 }
 
                 //Check - Debug Mode

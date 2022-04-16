@@ -165,29 +165,36 @@ namespace AmbiPro
                         //Smooth led frame transition
                         if (setLedSmoothing > 0)
                         {
-                            //Merge current bytes with history
+                            //Make copy of current color bytes
+                            byte[] CaptureByteCurrent = CloneByteArray(SerialBytes);
+
+                            //Merge current colors with history
                             for (int ledCount = InitByteSize; ledCount < (SerialBytes.Length - InitByteSize); ledCount++)
                             {
                                 //Debug.WriteLine("Led smoothing old: " + SerialBytes[ledCount]);
-                                if (vCaptureByteHistory1 != null && setLedSmoothing >= 1)
+
+                                int ColorCount = 1;
+                                int ColorAverage = SerialBytes[ledCount];
+                                for (int smoothCount = 0; smoothCount < setLedSmoothing; smoothCount++)
                                 {
-                                    SerialBytes[ledCount] = Convert.ToByte((vCaptureByteHistory1[ledCount] + SerialBytes[ledCount]) / 2);
+                                    if (vCaptureByteHistoryArray[smoothCount] != null)
+                                    {
+                                        ColorAverage += vCaptureByteHistoryArray[smoothCount][ledCount];
+                                        ColorCount++;
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
                                 }
-                                if (vCaptureByteHistory2 != null && setLedSmoothing >= 2)
-                                {
-                                    SerialBytes[ledCount] = Convert.ToByte((vCaptureByteHistory2[ledCount] + SerialBytes[ledCount]) / 2);
-                                }
-                                if (vCaptureByteHistory3 != null && setLedSmoothing >= 3)
-                                {
-                                    SerialBytes[ledCount] = Convert.ToByte((vCaptureByteHistory3[ledCount] + SerialBytes[ledCount]) / 2);
-                                }
+
+                                SerialBytes[ledCount] = (byte)(ColorAverage / ColorCount);
                                 //Debug.WriteLine("Led smoothing new: " + SerialBytes[ledCount]);
                             }
 
-                            //Update capture bytes history
-                            vCaptureByteHistory3 = vCaptureByteHistory2;
-                            vCaptureByteHistory2 = vCaptureByteHistory1;
-                            vCaptureByteHistory1 = CloneByteArray(SerialBytes);
+                            //Update capture color bytes history
+                            Array.Copy(vCaptureByteHistoryArray, 0, vCaptureByteHistoryArray, 1, vCaptureByteHistoryArray.Length - 1);
+                            vCaptureByteHistoryArray[0] = CaptureByteCurrent;
                         }
 
                         //Rotate the leds as calibrated
@@ -202,8 +209,7 @@ namespace AmbiPro
                         }
                         else if (setLedRotate < 0)
                         {
-                            int LedRotateAbs = Math.Abs(setLedRotate);
-                            for (int RotateCount = 0; RotateCount < LedRotateAbs; RotateCount++)
+                            for (int RotateCount = 0; RotateCount < Math.Abs(setLedRotate); RotateCount++)
                             {
                                 AVFunctions.MoveByteInArrayRight(SerialBytes, SerialBytes.Length - 1, 3);
                                 AVFunctions.MoveByteInArrayRight(SerialBytes, SerialBytes.Length - 1, 3);
