@@ -1,12 +1,11 @@
 ﻿using ArnoldVinkCode;
+using ScreenCapture;
 using System;
 using System.Configuration;
 using System.Diagnostics;
-using System.Drawing;
 using System.Threading.Tasks;
 using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
-using static AmbiPro.Resources.BitmapProcessing;
 using static ArnoldVinkCode.AVActions;
 using static ArnoldVinkCode.AVClassConverters;
 
@@ -21,7 +20,19 @@ namespace AmbiPro
             {
                 Debug.WriteLine("Initializing screen capture: " + DateTime.Now);
                 int captureMonitor = Convert.ToInt32(ConfigurationManager.AppSettings["MonitorCapture"]);
-                bool initialized = AppImport.CaptureInitialize(captureMonitor, out vCaptureWidth, out vCaptureHeight, out vCaptureTotalByteSize, out vCaptureHDREnabled, 500);
+
+                //Set capture settings
+                vCaptureSettings = new CaptureSettings
+                {
+                    MonitorId = 0,
+                    MaxPixelDimension = 500
+                };
+
+                //Initialize screen capture
+                bool captureInitialized = CaptureImport.CaptureInitialize(vCaptureSettings, out vCaptureDetails);
+
+                //Update capture variables
+                UpdateCaptureVariables();
 
                 //Update screen information
                 ActionDispatcherInvoke(delegate
@@ -29,7 +40,7 @@ namespace AmbiPro
                     App.vFormSettings.UpdateScreenInformation();
                 });
 
-                return initialized;
+                return captureInitialized;
             }
             catch
             {
@@ -42,13 +53,38 @@ namespace AmbiPro
             }
         }
 
+        private static void UpdateCaptureVariables()
+        {
+            try
+            {
+                //Set capture range
+                if (vCaptureDetails.Height < vCaptureDetails.Width)
+                {
+                    vCaptureRange = (setLedCaptureRange * vCaptureDetails.Height) / 100 / 2;
+                }
+                else
+                {
+                    vCaptureRange = (setLedCaptureRange * vCaptureDetails.Width) / 100 / 2;
+                }
+                //Debug.WriteLine("Capture range set to: " + vCaptureRange);
+
+                //Set blackbar range
+                vBlackBarStepVertical = (setAdjustBlackbarRange * vCaptureDetails.Height) / 100;
+                vBlackBarRangeVertical = vCaptureDetails.Width - vMarginMinimumOffset;
+                vBlackBarStepHorizontal = (setAdjustBlackbarRange * vCaptureDetails.Width) / 100;
+                vBlackBarRangeHorizontal = vCaptureDetails.Height - vMarginMinimumOffset;
+                //Debug.WriteLine("Blackbar range set to: V" + vBlackBarRangeVertical + "/H" + vBlackBarRangeHorizontal);
+            }
+            catch { }
+        }
+
         //Reset Screen Capture
         private static bool ResetScreenCapture()
         {
             try
             {
                 Debug.WriteLine("Resetting screen capture: " + DateTime.Now);
-                return AppImport.CaptureReset();
+                return CaptureImport.CaptureReset();
             }
             catch
             {
@@ -79,86 +115,65 @@ namespace AmbiPro
                 //Start updating the leds
                 while (!vTask_UpdateLed.TaskStopRequest)
                 {
-                    int CurrentSerialByte = InitByteSize;
-                    IntPtr BitmapIntPtr = IntPtr.Zero;
-                    Bitmap BitmapImage = null;
+                    int currentSerialByte = InitByteSize;
+                    IntPtr bitmapIntPtr = IntPtr.Zero;
                     try
                     {
                         //Capture screenshot
                         try
                         {
-                            BitmapIntPtr = AppImport.CaptureScreenshot();
+                            bitmapIntPtr = CaptureImport.CaptureScreenshot();
                         }
                         catch { }
 
                         //Check screenshot
-                        if (BitmapIntPtr == IntPtr.Zero)
+                        if (bitmapIntPtr == IntPtr.Zero)
                         {
                             Debug.WriteLine("Screenshot is corrupted, restarting capture.");
                             await InitializeScreenCapture(200);
                             continue;
                         }
 
-                        //Set capture range
-                        if (vCaptureHeight < vCaptureWidth)
-                        {
-                            vCaptureRange = (setLedCaptureRange * vCaptureHeight) / 100 / 2;
-                        }
-                        else
-                        {
-                            vCaptureRange = (setLedCaptureRange * vCaptureWidth) / 100 / 2;
-                        }
-                        //Debug.WriteLine("Screen width: " + vScreenWidth + " / Screen height: " + vScreenHeight + " / Capture range: " + vCaptureZoneRange + " / Resize: " + resizeScreenshot);
+                        //Convert BitmapIntPtr to BitmapByteArray
+                        byte[] bitmapByteArray = CaptureBitmap.BitmapIntPtrToBitmapByteArray(bitmapIntPtr, vCaptureDetails);
 
-                        unsafe
+                        //Adjust the black bars margin
+                        if (setAdjustBlackBars)
                         {
-                            byte* BitmapData = (byte*)BitmapIntPtr;
-
-                            //Adjust the black bars margin
-                            if (setAdjustBlackBars)
+                            if (setAdjustBlackbarRate == 0 || (Environment.TickCount - vMarginBlackLastUpdate) > setAdjustBlackbarRate)
                             {
-                                if (setAdjustBlackbarRate == 0 || (Environment.TickCount - vMarginBlackLastUpdate) > setAdjustBlackbarRate)
-                                {
-                                    //Set blackbar range
-                                    vBlackBarStepVertical = (setAdjustBlackbarRange * vCaptureHeight) / 100;
-                                    vBlackBarRangeVertical = vCaptureWidth - vMarginMinimumOffset;
-                                    vBlackBarStepHorizontal = (setAdjustBlackbarRange * vCaptureWidth) / 100;
-                                    vBlackBarRangeHorizontal = vCaptureHeight - vMarginMinimumOffset;
-                                    AdjustBlackBars(setLedSideFirst, BitmapData);
-                                    AdjustBlackBars(setLedSideSecond, BitmapData);
-                                    AdjustBlackBars(setLedSideThird, BitmapData);
-                                    AdjustBlackBars(setLedSideFourth, BitmapData);
-                                    vMarginBlackLastUpdate = Environment.TickCount;
-                                }
+                                //Set blackbar range
+                                AdjustBlackBars(setLedSideFirst, bitmapByteArray);
+                                AdjustBlackBars(setLedSideSecond, bitmapByteArray);
+                                AdjustBlackBars(setLedSideThird, bitmapByteArray);
+                                AdjustBlackBars(setLedSideFourth, bitmapByteArray);
+                                vMarginBlackLastUpdate = Environment.TickCount;
                             }
+                        }
 
-                            //Check led capture sides color
-                            ScreenColors(setLedSideFirst, setLedCountFirst, SerialBytes, BitmapData, ref CurrentSerialByte);
-                            ScreenColors(setLedSideSecond, setLedCountSecond, SerialBytes, BitmapData, ref CurrentSerialByte);
-                            ScreenColors(setLedSideThird, setLedCountThird, SerialBytes, BitmapData, ref CurrentSerialByte);
-                            ScreenColors(setLedSideFourth, setLedCountFourth, SerialBytes, BitmapData, ref CurrentSerialByte);
+                        //Check led capture sides color
+                        ScreenColors(setLedSideFirst, setLedCountFirst, SerialBytes, bitmapByteArray, ref currentSerialByte);
+                        ScreenColors(setLedSideSecond, setLedCountSecond, SerialBytes, bitmapByteArray, ref currentSerialByte);
+                        ScreenColors(setLedSideThird, setLedCountThird, SerialBytes, bitmapByteArray, ref currentSerialByte);
+                        ScreenColors(setLedSideFourth, setLedCountFourth, SerialBytes, bitmapByteArray, ref currentSerialByte);
 
-                            //Check if debug mode is enabled
-                            if (vDebugCaptureAllowed)
-                            {
-                                //Convert bytes to bitmap image
-                                BitmapImage = BitmapFromData(BitmapData, vCaptureWidth, vCaptureHeight, vCaptureTotalByteSize, false);
-
-                                //Debug update screen capture preview
-                                ActionDispatcherInvoke(delegate
+                        //Check if debug mode is enabled
+                        if (vDebugCaptureAllowed)
+                        {
+                            //Update debug screen capture preview
+                            ActionDispatcherInvoke(delegate
                                 {
                                     try
                                     {
-                                        App.vFormSettings.image_DebugPreview.Source = BitmapToBitmapImage(BitmapImage);
+                                        App.vFormSettings.image_DebugPreview.Source = CaptureBitmap.BitmapIntPtrToBitmapSource(bitmapIntPtr, vCaptureDetails, vCaptureSettings);
                                     }
                                     catch { }
                                 });
 
-                                //Debug save screen capture as image
-                                if (setDebugSave)
-                                {
-                                    BitmapSaveScreenCapture(BitmapImage);
-                                }
+                            //Debug save screen capture as image
+                            if (setDebugSave)
+                            {
+                                CaptureImport.CaptureSaveFilePng(bitmapIntPtr, "Debug\\" + Environment.TickCount + ".png");
                             }
                         }
 
@@ -234,13 +249,9 @@ namespace AmbiPro
                     finally
                     {
                         //Clear screen capture resources
-                        if (BitmapIntPtr != IntPtr.Zero)
+                        if (bitmapIntPtr != IntPtr.Zero)
                         {
-                            AppImport.CaptureFreeMemory(BitmapIntPtr);
-                        }
-                        if (BitmapImage != null)
-                        {
-                            BitmapImage.Dispose();
+                            CaptureImport.CaptureFreeMemory(bitmapIntPtr);
                         }
                     }
                 }

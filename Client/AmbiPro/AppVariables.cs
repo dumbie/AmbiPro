@@ -1,4 +1,5 @@
 ﻿using ArnoldVinkCode;
+using ScreenCapture;
 using System.Configuration;
 using System.Globalization;
 using static AmbiPro.AppClasses;
@@ -37,11 +38,9 @@ namespace AmbiPro
 
         //Screen capture Variables
         public static int vCaptureRange = 0;
-        public static int vCaptureWidth = 0;
-        public static int vCaptureHeight = 0;
-        public static int vCaptureTotalByteSize = 0;
+        public static CaptureDetails vCaptureDetails;
+        public static CaptureSettings vCaptureSettings;
         public static byte[][] vCaptureByteHistoryArray = new byte[20][];
-        public static bool vCaptureHDREnabled = false;
 
         //Update Variables
         public static bool vCheckingForUpdate = false;
@@ -68,11 +67,9 @@ namespace AmbiPro
 
                 //Screen capture Variables
                 vCaptureRange = 0;
-                vCaptureWidth = 0;
-                vCaptureHeight = 0;
-                vCaptureTotalByteSize = 0;
+                vCaptureDetails = new CaptureDetails();
+                vCaptureSettings = new CaptureSettings();
                 vCaptureByteHistoryArray = new byte[20][];
-                vCaptureHDREnabled = false;
             }
             catch { }
         }

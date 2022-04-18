@@ -1,5 +1,4 @@
-﻿using AmbiPro.Settings;
-using ArnoldVinkCode;
+﻿using ArnoldVinkCode;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -42,12 +41,11 @@ namespace AmbiPro
         private static double setLedBrightness = 0;
         private static byte setLedMinBrightness = 0;
         private static double setLedGamma = 0;
+        private static double setLedVibrance = 0;
         private static double setLedSaturation = 0;
-        private static double setLedTemperature = 0;
         private static int setColorLoopSpeed = 0;
         private static int setSpectrumRotationSpeed = 0;
         private static string setSolidLedColor = string.Empty;
-        private static double setLedHue = 0;
         private static int setLedMinColor = 0;
         private static double setLedColorRed = 0;
         private static double setLedColorGreen = 0;
@@ -89,13 +87,12 @@ namespace AmbiPro
                 setLedContrast = Convert.ToDouble(ConfigurationManager.AppSettings["LedContrast"]) / 100;
                 setLedBrightness = Convert.ToDouble(ConfigurationManager.AppSettings["LedBrightness"]) / 100;
                 setLedMinBrightness = Convert.ToByte(ConfigurationManager.AppSettings["LedMinBrightness"]);
-                setLedGamma = Convert.ToDouble(ConfigurationManager.AppSettings["LedGamma"]) / 100;
+                setLedGamma = AVSettings.Load(vConfiguration, "LedGamma3", typeof(double));
+                setLedVibrance = Convert.ToDouble(ConfigurationManager.AppSettings["LedVibrance"]) / 100;
                 setLedSaturation = Convert.ToDouble(ConfigurationManager.AppSettings["LedSaturation"]) / 100;
-                setLedTemperature = Convert.ToDouble(ConfigurationManager.AppSettings["LedTemperature"]) / 100;
                 setColorLoopSpeed = Convert.ToInt32(ConfigurationManager.AppSettings["ColorLoopSpeed"]);
                 setSpectrumRotationSpeed = Convert.ToInt32(ConfigurationManager.AppSettings["SpectrumRotationSpeed"]);
                 setSolidLedColor = ConfigurationManager.AppSettings["SolidLedColor"].ToString();
-                setLedHue = Convert.ToDouble(ConfigurationManager.AppSettings["LedHue2"]);
                 setLedMinColor = Convert.ToInt32(ConfigurationManager.AppSettings["LedMinColor"]);
                 setLedColorRed = Convert.ToDouble(ConfigurationManager.AppSettings["LedColorRed"]) / 100;
                 setLedColorGreen = Convert.ToDouble(ConfigurationManager.AppSettings["LedColorGreen"]) / 100;
@@ -118,11 +115,13 @@ namespace AmbiPro
                 setDebugColor = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugColor"]);
                 setDebugSave = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugSave"]);
 
+                //Update capture variables
+                UpdateCaptureVariables();
+
                 //Update the rotation based on ratio
-                string ScreenRatio = AVFunctions.ScreenAspectRatio(vCaptureWidth, vCaptureHeight, false);
-                if (SettingsFunction.Check("LedRotate" + ScreenRatio))
+                if (AVSettings.Check(vConfiguration, "LedRotate" + vCurrentRatio))
                 {
-                    setLedRotate = Convert.ToInt32(ConfigurationManager.AppSettings["LedRotate" + ScreenRatio]);
+                    setLedRotate = Convert.ToInt32(ConfigurationManager.AppSettings["LedRotate" + vCurrentRatio]);
                 }
                 else
                 {
@@ -419,7 +418,7 @@ namespace AmbiPro
                 ResetVariables();
 
                 //Set first launch setting to false
-                SettingsFunction.Save("FirstLaunch2", "False");
+                AVSettings.Save(vConfiguration, "FirstLaunch2", "False");
 
                 //Check led display mode
                 if (setLedMode == 0) { await ModeScreenCapture(InitByteSize, SerialBytes); }

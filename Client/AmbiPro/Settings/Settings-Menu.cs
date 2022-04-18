@@ -79,7 +79,7 @@ namespace AmbiPro.Settings
                     }
                     else if (selectedStackPanel.Name == "menuButtonAdjust")
                     {
-                        SwitchBackground(false, false, false, true);
+                        SwitchBackground(false, false, true, false);
                         sp_Adjust.Visibility = Visibility.Visible;
                     }
                     else if (selectedStackPanel.Name == "menuButtonRemote")

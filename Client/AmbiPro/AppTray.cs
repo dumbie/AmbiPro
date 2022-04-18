@@ -1,10 +1,11 @@
-﻿using AmbiPro.Settings;
+﻿using ArnoldVinkCode;
 using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 using static AmbiPro.AppEnums;
+using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
 
 namespace AmbiPro
@@ -97,10 +98,10 @@ namespace AmbiPro
             try
             {
                 MenuItem ClickMenuItem = (sender as MenuItem);
-                if (ClickMenuItem.Text == "Screen capture") { SettingsFunction.Save("LedMode", "0"); }
-                else if (ClickMenuItem.Text == "Solid color") { SettingsFunction.Save("LedMode", "1"); }
-                else if (ClickMenuItem.Text == "Color loop") { SettingsFunction.Save("LedMode", "2"); }
-                else if (ClickMenuItem.Text == "Color spectrum") { SettingsFunction.Save("LedMode", "3"); }
+                if (ClickMenuItem.Text == "Screen capture") { AVSettings.Save(vConfiguration, "LedMode", "0"); }
+                else if (ClickMenuItem.Text == "Solid color") { AVSettings.Save(vConfiguration, "LedMode", "1"); }
+                else if (ClickMenuItem.Text == "Color loop") { AVSettings.Save(vConfiguration, "LedMode", "2"); }
+                else if (ClickMenuItem.Text == "Color spectrum") { AVSettings.Save(vConfiguration, "LedMode", "3"); }
                 await LedSwitch(LedSwitches.Restart);
             }
             catch { }

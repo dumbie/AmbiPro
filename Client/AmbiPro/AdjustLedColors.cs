@@ -12,28 +12,23 @@ namespace AmbiPro
         {
             try
             {
-                //Adjust the screen capture hue
-                adjustColor.AdjustHue(setLedHue);
+                //Adjust the screen capture vibrance
+                adjustColor.AdjustVibrance(setLedVibrance);
 
                 //Adjust the screen capture saturation
-                adjustColor.AdjustSaturation(setLedSaturation);
-
-                //Adjust the screen capture temperature
-                adjustColor.AdjustTemperature(setLedTemperature);
+                adjustColor.AdjustSaturate(setLedSaturation);
 
                 //Adjust specific color values
-                adjustColor.AdjustColorRed(setLedColorRed);
-                adjustColor.AdjustColorGreen(setLedColorGreen);
-                adjustColor.AdjustColorBlue(setLedColorBlue);
-
-                //Adjust the screen capture gamma
-                adjustColor.AdjustGamma(setLedGamma);
+                adjustColor.AdjustColorChannels(setLedColorRed, setLedColorGreen, setLedColorBlue);
 
                 //Adjust the screen capture brightness
                 adjustColor.AdjustBrightness(setLedBrightness);
 
                 //Adjust the screen capture contrast
                 adjustColor.AdjustContrast(setLedContrast);
+
+                //Adjust the screen capture gamma
+                adjustColor.AdjustGamma(setLedGamma);
 
                 //Check current led mode
                 if (setLedMode == 0)

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using ArnoldVinkCode;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
@@ -30,7 +31,7 @@ namespace AmbiPro.Settings
                 //Hide buttons
                 btn_BlockIncrease.Visibility = Visibility.Collapsed;
                 btn_BlockDecrease.Visibility = Visibility.Collapsed;
-                btn_ColorSolidSwitch.Visibility = Visibility.Collapsed;
+                border_ColorMenu.Visibility = Visibility.Collapsed;
                 btn_BlackbarsScenario.Visibility = Visibility.Collapsed;
 
                 //Change background forced
@@ -52,7 +53,7 @@ namespace AmbiPro.Settings
                 }
                 else if (forceSolid)
                 {
-                    btn_ColorSolidSwitch.Visibility = Visibility.Visible;
+                    border_ColorMenu.Visibility = Visibility.Visible;
                     grid_BackgroundSolid.Visibility = Visibility.Visible;
                     vCurrentBackground = 3;
                     return;
@@ -80,7 +81,7 @@ namespace AmbiPro.Settings
                 }
                 else if (vCurrentBackground == 2)
                 {
-                    btn_ColorSolidSwitch.Visibility = Visibility.Visible;
+                    border_ColorMenu.Visibility = Visibility.Visible;
                     grid_BackgroundSolid.Visibility = Visibility.Visible;
                     vCurrentBackground = 3;
                 }
@@ -92,45 +93,24 @@ namespace AmbiPro.Settings
             catch { }
         }
 
-        private void btn_ColorSolidSwitch_Click(object sender, RoutedEventArgs e)
+        private async void button_BackgroundColorChange_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (vCurrentSolidColor == 0)
+                Color? newColor = await new AVColorPicker().Popup(null);
+                if (newColor != null)
                 {
-                    grid_BackgroundSolid.Background = new SolidColorBrush(Colors.Red);
-                    vCurrentSolidColor = 1;
+                    grid_BackgroundSolidColor.Background = new SolidColorBrush((Color)newColor);
                 }
-                else if (vCurrentSolidColor == 1)
-                {
-                    grid_BackgroundSolid.Background = new SolidColorBrush(Colors.Green);
-                    vCurrentSolidColor = 2;
-                }
-                else if (vCurrentSolidColor == 2)
-                {
-                    grid_BackgroundSolid.Background = new SolidColorBrush(Colors.Blue);
-                    vCurrentSolidColor = 3;
-                }
-                else if (vCurrentSolidColor == 3)
-                {
-                    grid_BackgroundSolid.Background = new SolidColorBrush(Colors.Cyan);
-                    vCurrentSolidColor = 4;
-                }
-                else if (vCurrentSolidColor == 4)
-                {
-                    grid_BackgroundSolid.Background = new SolidColorBrush(Colors.Magenta);
-                    vCurrentSolidColor = 5;
-                }
-                else if (vCurrentSolidColor == 5)
-                {
-                    grid_BackgroundSolid.Background = new SolidColorBrush(Colors.Yellow);
-                    vCurrentSolidColor = 6;
-                }
-                else if (vCurrentSolidColor == 6)
-                {
-                    grid_BackgroundSolid.Background = new SolidColorBrush(Colors.White);
-                    vCurrentSolidColor = 0;
-                }
+            }
+            catch { }
+        }
+
+        private void slider_BackgroundColorBrightness_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            try
+            {
+                grid_BackgroundSolidColor.Opacity = slider_BackgroundColorBrightness.Value;
             }
             catch { }
         }

@@ -1,5 +1,4 @@
-﻿using AmbiPro.Settings;
-using ArnoldVinkCode;
+﻿using ArnoldVinkCode;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -7,6 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using static AmbiPro.AppEnums;
+using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
 using static ArnoldVinkCode.ArnoldVinkSockets;
 
@@ -72,16 +72,16 @@ namespace AmbiPro
                 }
                 else if (messageType.Contains("LedBrightness"))
                 {
-                    SettingsFunction.Save("LedBrightness", messageValue);
+                    AVSettings.Save(vConfiguration, "LedBrightness", messageValue);
                 }
                 else if (messageType.Contains("LedMode"))
                 {
-                    SettingsFunction.Save("LedMode", messageValue);
+                    AVSettings.Save(vConfiguration, "LedMode", messageValue);
                     await LedSwitch(LedSwitches.Restart);
                 }
                 else if (messageType.Contains("SolidLedColor"))
                 {
-                    SettingsFunction.Save("SolidLedColor", messageValue);
+                    AVSettings.Save(vConfiguration, "SolidLedColor", messageValue);
                     AppEvents.EventUpdateSettingsSolidLedColor();
                 }
             }

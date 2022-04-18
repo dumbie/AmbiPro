@@ -6,7 +6,7 @@ namespace AmbiPro.Resources
     public class ColorProcessing
     {
         //Get the color of a pixel
-        public static unsafe ColorRGBA GetPixelColor(byte* bitmapData, int screenWidth, int screenHeight, int pixelHor, int pixelVer)
+        public static ColorRGBA GetPixelColor(byte[] bitmapByteArray, int screenWidth, int screenHeight, int pixelHor, int pixelVer)
         {
             try
             {
@@ -23,10 +23,10 @@ namespace AmbiPro.Resources
                 int Pixel = PixelSize * ((screenHeight - pixelVer) * screenWidth + pixelHor);
 
                 //Get the color from pixel
-                byte b = bitmapData[Pixel++];
-                byte g = bitmapData[Pixel++];
-                byte r = bitmapData[Pixel++];
-                byte a = bitmapData[Pixel];
+                byte b = bitmapByteArray[Pixel++];
+                byte g = bitmapByteArray[Pixel++];
+                byte r = bitmapByteArray[Pixel++];
+                byte a = bitmapByteArray[Pixel];
                 return new ColorRGBA { R = r, G = g, B = b, A = a };
             }
             catch
@@ -37,7 +37,7 @@ namespace AmbiPro.Resources
         }
 
         //Set the color of a pixel
-        public static unsafe bool SetPixelColor(byte* bitmapData, int screenWidth, int screenHeight, int pixelHor, int pixelVer, ColorRGBA newColor)
+        public static bool SetPixelColor(byte[] bitmapByteArray, int screenWidth, int screenHeight, int pixelHor, int pixelVer, ColorRGBA newColor)
         {
             try
             {
@@ -54,10 +54,10 @@ namespace AmbiPro.Resources
                 int Pixel = PixelSize * ((screenHeight - pixelVer) * screenWidth + pixelHor);
 
                 //Set the color to pixel
-                bitmapData[Pixel++] = newColor.B;
-                bitmapData[Pixel++] = newColor.G;
-                bitmapData[Pixel++] = newColor.R;
-                bitmapData[Pixel] = newColor.A;
+                bitmapByteArray[Pixel++] = newColor.B;
+                bitmapByteArray[Pixel++] = newColor.G;
+                bitmapByteArray[Pixel++] = newColor.R;
+                bitmapByteArray[Pixel] = newColor.A;
                 return true;
             }
             catch

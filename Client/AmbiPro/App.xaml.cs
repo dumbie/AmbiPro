@@ -18,6 +18,12 @@ namespace AmbiPro
                 //Set the working directory to executable directory
                 Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
 
+                //Create debug export directory
+                if (!Directory.Exists("Debug"))
+                {
+                    Directory.CreateDirectory("Debug");
+                }
+
                 //Allow application in firewall
                 string appFilePath = Assembly.GetEntryAssembly().Location;
                 Firewall_ExecutableAllow("AmbiPro", appFilePath, true);

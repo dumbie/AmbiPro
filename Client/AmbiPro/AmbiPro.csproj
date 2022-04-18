@@ -27,6 +27,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -39,6 +40,7 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Assets\ApplicationIcon.ico</ApplicationIcon>
@@ -197,6 +199,9 @@
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVFunctions.cs">
       <Link>ArnoldVinkCode\Functions\AVFunctions.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVSettings.cs">
+      <Link>ArnoldVinkCode\Functions\AVSettings.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Interop\AVInteropCom.cs">
       <Link>ArnoldVinkCode\Interop\AVInteropCom.cs</Link>
     </Compile>
@@ -218,7 +223,9 @@
     <Compile Include="AdjustBlackBars.cs" />
     <Compile Include="AdjustLedColors.cs" />
     <Compile Include="AppLaunchCheck.cs" />
-    <Compile Include="AppImport.cs" />
+    <Compile Include="ScreenCapture\CaptureBitmap.cs" />
+    <Compile Include="ScreenCapture\CaptureClasses.cs" />
+    <Compile Include="ScreenCapture\CaptureImport.cs" />
     <Compile Include="AppStartup.cs" />
     <Compile Include="AppEvents.cs" />
     <Compile Include="Resources\Classes\ColorRGBA.cs" />
@@ -232,7 +239,6 @@
     <Compile Include="Settings\Settings-Rotate.cs" />
     <Compile Include="ModeColorSpectrum.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
-    <Compile Include="Resources\BitmapProcessing.cs" />
     <Compile Include="Settings\Settings-Blackbars.cs" />
     <Compile Include="Settings\Settings-Help.cs" />
     <Compile Include="Settings\Settings-Background.cs" />
@@ -244,7 +250,6 @@
     <Compile Include="ScreenColors.cs" />
     <Compile Include="SerialMonitor.cs" />
     <Compile Include="Settings\Settings-Load.cs" />
-    <Compile Include="Settings\Settings-Function.cs" />
     <Compile Include="Settings\Settings-Menu.cs" />
     <Compile Include="Settings\Settings-Save.cs" />
     <Compile Include="Settings\Settings-Check.cs" />
@@ -355,9 +360,6 @@
     <Resource Include="Assets\Icons\Update.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Assets\HueSpectrum.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Assets\Icons\Remote.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -386,9 +388,6 @@
     <Resource Include="Assets\Icons\LedsOff.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Assets\TemperatureSpectrum.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Assets\Icons\Move.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -399,6 +398,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\Icons\ColorSwitch.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\BlackbarSwitch.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\Brightness.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\VibranceSpectrum.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Content Include="Script\Script.ino">

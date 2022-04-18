@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArnoldVinkCode;
+using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
@@ -53,7 +54,7 @@ namespace AmbiPro.Settings
 
                     if (Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                     {
-                        SettingsFunction.Save("ComPort", PortNumberRaw.ToString());
+                        AVSettings.Save(vConfiguration, "ComPort", PortNumberRaw.ToString());
                     }
                 }
 
@@ -104,16 +105,16 @@ namespace AmbiPro.Settings
                 sldr_LedMinBrightness.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedMinBrightness"]);
 
                 //Load - Led Gamma
-                tb_LedGamma.Text = "Gamma level: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedGamma"]) + "%";
-                sldr_LedGamma.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedGamma"]);
+                tb_LedGamma.Text = "Gamma curve: " + AVSettings.Load(vConfiguration, "LedGamma3", typeof(double)).ToString("0.00");
+                sldr_LedGamma.Value = AVSettings.Load(vConfiguration, "LedGamma3", typeof(double));
+
+                //Load - Led Vibrance
+                tb_LedVibrance.Text = "Color vibrance: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedVibrance"]) + "%";
+                sldr_LedVibrance.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedVibrance"]);
 
                 //Load - Led Saturation
                 tb_LedSaturation.Text = "Color saturation: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedSaturation"]) + "%";
                 sldr_LedSaturation.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedSaturation"]);
-
-                //Load - Led Temperature
-                tb_LedTemperature.Text = "Color temperature: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedTemperature"]) + "K";
-                sldr_LedTemperature.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedTemperature"]);
 
                 //Load - Color Loop Speed
                 tb_ColorLoopSpeed.Text = "Color loop speed: " + Convert.ToInt32(ConfigurationManager.AppSettings["ColorLoopSpeed"]) + " ms";
@@ -126,10 +127,6 @@ namespace AmbiPro.Settings
                 //Load - Solid Led Color
                 string SolidLedColor = ConfigurationManager.AppSettings["SolidLedColor"].ToString();
                 button_ColorPickerSolid.Background = new BrushConverter().ConvertFrom(SolidLedColor) as SolidColorBrush;
-
-                //Load - Led Hue
-                tb_LedHue.Text = "Color hue: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedHue2"]) + "°";
-                sldr_LedHue.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedHue2"]);
 
                 //Load - Led Minimum Color
                 tb_LedMinColor.Text = "Minimum color brightness: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedMinColor"]) + "%";
