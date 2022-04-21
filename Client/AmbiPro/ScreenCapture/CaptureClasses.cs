@@ -14,7 +14,7 @@
             BlueChannel = 1.0F;
             Brightness = 1.0F;
             Contrast = 0.0F;
-            Gamma = 1.1F;
+            Gamma = 1.0F;
         }
         public int MonitorId { get; set; }
         public int MaxPixelDimension { get; set; }

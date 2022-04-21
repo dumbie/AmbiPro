@@ -1,6 +1,7 @@
 ﻿using ArnoldVinkCode;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
 using static AmbiPro.AppVariables;
@@ -28,17 +29,17 @@ namespace AmbiPro.Settings
                 grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
                 grid_BackgroundSolid.Visibility = Visibility.Collapsed;
 
-                //Hide buttons
-                btn_BlockIncrease.Visibility = Visibility.Collapsed;
-                btn_BlockDecrease.Visibility = Visibility.Collapsed;
+                //Hide top menus
                 border_ColorMenu.Visibility = Visibility.Collapsed;
-                btn_BlackbarsScenario.Visibility = Visibility.Collapsed;
+                grid_ColorMenu_Blocks.Visibility = Visibility.Collapsed;
+                grid_ColorMenu_Blackbars.Visibility = Visibility.Collapsed;
+                grid_ColorMenu_SolidColor.Visibility = Visibility.Collapsed;
 
                 //Change background forced
                 if (forceBlocks)
                 {
-                    btn_BlockIncrease.Visibility = Visibility.Visible;
-                    btn_BlockDecrease.Visibility = Visibility.Visible;
+                    border_ColorMenu.Visibility = Visibility.Visible;
+                    grid_ColorMenu_Blocks.Visibility = Visibility.Visible;
                     grid_BackgroundBlocks.Visibility = Visibility.Visible;
                     vCurrentBackground = 1;
                     return;
@@ -46,7 +47,8 @@ namespace AmbiPro.Settings
                 else if (forceBlackbars)
                 {
                     grid_MainWindow.Margin = new Thickness(0, 0, 0, 0);
-                    btn_BlackbarsScenario.Visibility = Visibility.Visible;
+                    border_ColorMenu.Visibility = Visibility.Visible;
+                    grid_ColorMenu_Blackbars.Visibility = Visibility.Visible;
                     grid_BackgroundBlackbars.Visibility = Visibility.Visible;
                     vCurrentBackground = 2;
                     return;
@@ -54,6 +56,7 @@ namespace AmbiPro.Settings
                 else if (forceSolid)
                 {
                     border_ColorMenu.Visibility = Visibility.Visible;
+                    grid_ColorMenu_SolidColor.Visibility = Visibility.Visible;
                     grid_BackgroundSolid.Visibility = Visibility.Visible;
                     vCurrentBackground = 3;
                     return;
@@ -67,21 +70,23 @@ namespace AmbiPro.Settings
                 //Change background automatic
                 if (vCurrentBackground == 0)
                 {
-                    btn_BlockIncrease.Visibility = Visibility.Visible;
-                    btn_BlockDecrease.Visibility = Visibility.Visible;
+                    border_ColorMenu.Visibility = Visibility.Visible;
+                    grid_ColorMenu_Blocks.Visibility = Visibility.Visible;
                     grid_BackgroundBlocks.Visibility = Visibility.Visible;
                     vCurrentBackground = 1;
                 }
                 else if (vCurrentBackground == 1)
                 {
                     grid_MainWindow.Margin = new Thickness(0, 0, 0, 0);
-                    btn_BlackbarsScenario.Visibility = Visibility.Visible;
+                    border_ColorMenu.Visibility = Visibility.Visible;
+                    grid_ColorMenu_Blackbars.Visibility = Visibility.Visible;
                     grid_BackgroundBlackbars.Visibility = Visibility.Visible;
                     vCurrentBackground = 2;
                 }
                 else if (vCurrentBackground == 2)
                 {
                     border_ColorMenu.Visibility = Visibility.Visible;
+                    grid_ColorMenu_SolidColor.Visibility = Visibility.Visible;
                     grid_BackgroundSolid.Visibility = Visibility.Visible;
                     vCurrentBackground = 3;
                 }
@@ -93,7 +98,7 @@ namespace AmbiPro.Settings
             catch { }
         }
 
-        private void button_BackgroundColorShowHide_Click(object sender, RoutedEventArgs e)
+        private void button_BackgroundSolidShowHide_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -109,7 +114,7 @@ namespace AmbiPro.Settings
             catch { }
         }
 
-        private async void button_BackgroundColorChange_Click(object sender, RoutedEventArgs e)
+        private async void button_BackgroundSolidChange_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -122,11 +127,28 @@ namespace AmbiPro.Settings
             catch { }
         }
 
-        private void slider_BackgroundColorBrightness_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void slider_BackgroundSolidBrightness_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             try
             {
-                grid_BackgroundSolidColor.Opacity = slider_BackgroundColorBrightness.Value;
+                Slider senderSlider = (Slider)sender;
+                grid_BackgroundSolidColor.Opacity = senderSlider.Value;
+            }
+            catch { }
+        }
+
+        private void button_BackgroundBlocksShowHide_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (grid_BackgroundBlocks.Visibility == Visibility.Visible)
+                {
+                    grid_BackgroundBlocks.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    grid_BackgroundBlocks.Visibility = Visibility.Visible;
+                }
             }
             catch { }
         }

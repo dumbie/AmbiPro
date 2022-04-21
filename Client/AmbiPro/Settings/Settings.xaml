@@ -86,33 +86,55 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Bottom Menu -->
-            <Border Grid.Row="1" Name="border_ColorMenu" Margin="0,5,0,0" Padding="5" CornerRadius="5" HorizontalAlignment="Center" Visibility="Collapsed">
+            <!-- Top Menu -->
+            <Border Grid.Row="0" Name="border_ColorMenu" Margin="5" Padding="5" CornerRadius="5" HorizontalAlignment="Center" Visibility="Collapsed">
                 <Border.Background>
                     <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
                 </Border.Background>
 
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+                    <StackPanel Name="grid_ColorMenu_Blocks" Orientation="Horizontal" Visibility="Collapsed">
+                        <Button Margin="0,0,5,0" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Increase block sizes" Click="sp_IncreaseBlockSize_PreviewMouseUp">
+                            <Image Height="25" Source="/Assets/Icons/Plus.png"/>
+                        </Button>
+                        <Button Margin="0,0,5,0" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Decrease block sizes" Click="sp_DecreaseBlockSize_PreviewMouseUp">
+                            <Image Height="25" Source="/Assets/Icons/Minus.png"/>
+                        </Button>
+                        <Button Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Show or hide background" Click="button_BackgroundBlocksShowHide_Click">
+                            <Image Height="25" Source="/Assets/Icons/Transparent.png"/>
+                        </Button>
+                    </StackPanel>
 
-                    <Button Grid.Column="0" Name="button_BackgroundColorChange" Margin="0,0,5,0" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Change test color" Click="button_BackgroundColorChange_Click">
-                        <Image Height="20" Source="/Assets/Icons/ColorSwitch.png"/>
-                    </Button>
-                    <Button Grid.Column="1" Name="button_BackgroundColorShowHide" Margin="0,0,5,0" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Show or hide color" Click="button_BackgroundColorShowHide_Click">
-                        <Image Height="20" Source="/Assets/Icons/Transparent.png"/>
-                    </Button>
-                    <Image Grid.Column="2" Height="20" Margin="0,0,5,0" Source="/Assets/Icons/Brightness.png"/>
-                    <Slider Grid.Column="3" Name="slider_BackgroundColorBrightness" Value="1.0" Minimum="0.05" Maximum="1.0" Width="335" ValueChanged="slider_BackgroundColorBrightness_ValueChanged"/>
+                    <StackPanel Name="grid_ColorMenu_Blackbars" Orientation="Horizontal" Visibility="Collapsed">
+                        <Button Margin="0,0,5,0" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Switch blackbar scenario" Click="btn_BlackbarScenario_Click">
+                            <Image Height="25" Source="/Assets/Icons/BlackbarSwitch.png"/>
+                        </Button>
+                        <Button Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Show or hide background" Click="button_BackgroundBlackbarsShowHide_Click">
+                            <Image Height="25" Source="/Assets/Icons/Transparent.png"/>
+                        </Button>
+                    </StackPanel>
+
+                    <Grid Name="grid_ColorMenu_SolidColor" Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Margin="0,0,5,0" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Change test color" Click="button_BackgroundSolidChange_Click">
+                            <Image Height="25" Source="/Assets/Icons/ColorSwitch.png"/>
+                        </Button>
+                        <Button Grid.Column="1" Margin="0,0,5,0" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Show or hide background" Click="button_BackgroundSolidShowHide_Click">
+                            <Image Height="25" Source="/Assets/Icons/Transparent.png"/>
+                        </Button>
+                        <Image Grid.Column="2" Height="25" Margin="0,0,5,0" Source="/Assets/Icons/Brightness.png"/>
+                        <Slider Grid.Column="3" Value="1.0" Minimum="0.05" Maximum="1.0" Width="335" ValueChanged="slider_BackgroundSolidBrightness_ValueChanged"/>
+                    </Grid>
                 </Grid>
             </Border>
 
             <!-- Center Grid -->
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
@@ -144,33 +166,6 @@
                         </Border.Background>
                         <Button Name="btn_MoveWindow" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Move the window" PreviewMouseDown="btn_MoveWindow_PreviewMouseDown" PreviewMouseMove="btn_MoveWindow_PreviewMouseMove">
                             <Image Name="image_MoveWindow" Source="/Assets/Icons/Move.png"/>
-                        </Button>
-                    </Border>
-
-                    <Border Name="btn_BlockIncrease" Margin="0,5,0,0" CornerRadius="0,5,5,0" Width="40" Height="40" Visibility="Collapsed">
-                        <Border.Background>
-                            <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
-                        </Border.Background>
-                        <Button Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Increase block sizes" Click="sp_IncreaseBlockSize_PreviewMouseUp">
-                            <Image Source="/Assets/Icons/Plus.png"/>
-                        </Button>
-                    </Border>
-
-                    <Border Name="btn_BlockDecrease" Margin="0,5,0,0" CornerRadius="0,5,5,0" Width="40" Height="40" Visibility="Collapsed">
-                        <Border.Background>
-                            <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
-                        </Border.Background>
-                        <Button Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Decrease block sizes" Click="sp_DecreaseBlockSize_PreviewMouseUp">
-                            <Image Source="/Assets/Icons/Minus.png"/>
-                        </Button>
-                    </Border>
-
-                    <Border Name="btn_BlackbarsScenario" Margin="0,5,0,0" CornerRadius="0,5,5,0" Width="40" Height="40" Visibility="Collapsed">
-                        <Border.Background>
-                            <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
-                        </Border.Background>
-                        <Button Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Switch blackbar scenario" Click="btn_BlackbarScenario_Click">
-                            <Image Source="/Assets/Icons/BlackbarSwitch.png"/>
                         </Button>
                     </Border>
 
@@ -522,12 +517,12 @@
 
                                     <TextBlock Margin="0,10,0,0" Name="tb_LedContrast" Text="Contrast level:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                                     <TextBlock Text="Change the displayed led contrast level." Style="{StaticResource TextBlockGrayLight}"/>
-                                    <Slider Name="sldr_LedContrast" Style="{StaticResource SliderWhite}" Minimum="-20" Maximum="20"/>
+                                    <Slider Name="sldr_LedContrast" Style="{StaticResource SliderWhite}" Minimum="-5" Maximum="5"/>
 
                                     <TextBlock Margin="0,10,0,0" Name="tb_LedGamma" Text="Gamma curve:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                                     <TextBlock Text="Change the displayed led gamma curve." Style="{StaticResource TextBlockGrayLight}"/>
                                     <Image Margin="0,2,0,0" Source="/Assets/GammaSpectrum.png"/>
-                                    <Slider Name="sldr_LedGamma" Style="{StaticResource SliderWhite}" TickFrequency="0.05" Minimum="0.1" Maximum="3.0"/>
+                                    <Slider Name="sldr_LedGamma" Style="{StaticResource SliderWhite}" TickFrequency="0.01" Minimum="0.1" Maximum="3.0"/>
 
                                     <TextBlock Margin="0,10,0,0" Name="tb_LedSaturation" Text="Color saturation:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                                     <TextBlock Text="Change the led color saturation to your liking." Style="{StaticResource TextBlockGrayLight}"/>

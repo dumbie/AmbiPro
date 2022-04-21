@@ -44,7 +44,12 @@ namespace AmbiPro
                             {
                                 ColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
                             }
-                            if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
+
+                            //Calculate color luminance
+                            int colorLuminance = (ColorPixel.R + ColorPixel.G + ColorPixel.B) / 3;
+
+                            //Check color for black bar
+                            if (colorLuminance > setAdjustBlackBarBrightness)
                             {
                                 targetMargin = captureStep;
                                 //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
@@ -76,7 +81,12 @@ namespace AmbiPro
                             {
                                 ColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
                             }
-                            if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
+
+                            //Calculate color luminance
+                            int colorLuminance = (ColorPixel.R + ColorPixel.G + ColorPixel.B) / 3;
+
+                            //Check color for black bar
+                            if (colorLuminance > setAdjustBlackBarBrightness)
                             {
                                 targetMargin = captureStep;
                                 //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
@@ -108,7 +118,12 @@ namespace AmbiPro
                             {
                                 ColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
                             }
-                            if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
+
+                            //Calculate color luminance
+                            int colorLuminance = (ColorPixel.R + ColorPixel.G + ColorPixel.B) / 3;
+
+                            //Check color for black bar
+                            if (colorLuminance > setAdjustBlackBarBrightness)
                             {
                                 targetMargin = captureStep;
                                 //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
@@ -140,7 +155,12 @@ namespace AmbiPro
                             {
                                 ColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, CaptureZoneHor, CaptureZoneVer, ColorRGBA.Orange);
                             }
-                            if (ColorPixel.R > setAdjustBlackBarBrightness || ColorPixel.G > setAdjustBlackBarBrightness || ColorPixel.B > setAdjustBlackBarBrightness)
+
+                            //Calculate color luminance
+                            int colorLuminance = (ColorPixel.R + ColorPixel.G + ColorPixel.B) / 3;
+
+                            //Check color for black bar
+                            if (colorLuminance > setAdjustBlackBarBrightness)
                             {
                                 targetMargin = captureStep;
                                 //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);

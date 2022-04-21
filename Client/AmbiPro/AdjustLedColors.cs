@@ -13,6 +13,9 @@ namespace AmbiPro
         {
             try
             {
+                //Adjust led color correction
+                adjustColor.AdjustLedColorCorrection(setLedStripCorrection);
+
                 //Adjust the screen capture saturation
                 adjustColor.AdjustSaturation(setLedSaturation);
 
@@ -28,14 +31,14 @@ namespace AmbiPro
                 //Adjust the screen capture gamma
                 adjustColor.AdjustGamma(setLedGamma);
 
-                //Adjust led color correction
-                adjustColor.AdjustLedColorCorrection(setLedStripCorrection);
-
                 //Check current led mode
                 if (setLedMode == 0)
                 {
+                    //Calculate color luminance
+                    int colorLuminance = (adjustColor.R + adjustColor.G + adjustColor.B) / 3;
+
                     //Adjust color to the minimum color setting
-                    if (adjustColor.R < setLedMinColor && adjustColor.G < setLedMinColor && adjustColor.B < setLedMinColor)
+                    if (colorLuminance < setLedMinColor)
                     {
                         adjustColor.R = 0;
                         adjustColor.G = 0;
@@ -43,7 +46,7 @@ namespace AmbiPro
                     }
 
                     //Adjust led to the minimum brightness setting
-                    if (adjustColor.R < setLedMinBrightness && adjustColor.G < setLedMinBrightness && adjustColor.B < setLedMinBrightness)
+                    if (colorLuminance < setLedMinBrightness)
                     {
                         adjustColor.R = setLedMinBrightness;
                         adjustColor.G = setLedMinBrightness;

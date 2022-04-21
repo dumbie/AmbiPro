@@ -83,13 +83,13 @@ namespace AmbiPro.Settings
                 //Check - Blackbar Update Range
                 if (ConfigurationManager.AppSettings["AdjustBlackbarRange"] == null)
                 {
-                    AVSettings.Save(vConfiguration, "AdjustBlackbarRange", "40");
+                    AVSettings.Save(vConfiguration, "AdjustBlackbarRange", "25");
                 }
 
                 //Check - Adjust Blackbar Brightness
                 if (ConfigurationManager.AppSettings["AdjustBlackBarBrightness"] == null)
                 {
-                    AVSettings.Save(vConfiguration, "AdjustBlackBarBrightness", "3");
+                    AVSettings.Save(vConfiguration, "AdjustBlackBarBrightness", "2");
                 }
 
                 //Check - Led Bottom Gap
@@ -113,13 +113,13 @@ namespace AmbiPro.Settings
                 //Check - Led Gamma
                 if (ConfigurationManager.AppSettings["LedGamma3"] == null)
                 {
-                    AVSettings.Save(vConfiguration, "LedGamma3", "1.70");
+                    AVSettings.Save(vConfiguration, "LedGamma3", "1.50");
                 }
 
                 //Check - Led Saturation
                 if (ConfigurationManager.AppSettings["LedSaturation"] == null)
                 {
-                    AVSettings.Save(vConfiguration, "LedSaturation", "120");
+                    AVSettings.Save(vConfiguration, "LedSaturation", "110");
                 }
 
                 //Check - Color Loop Speed

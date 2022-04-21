@@ -147,7 +147,7 @@ namespace AmbiPro
             {
                 try
                 {
-                    if (targetAdjust == 1.1F) { return; }
+                    if (targetAdjust == 1.0F) { return; }
 
                     float rFloat = R / 255.0F;
                     float gFloat = G / 255.0F;
@@ -175,11 +175,8 @@ namespace AmbiPro
                     //Check if led correction is enabled
                     if (!ledCorrection) { return; }
 
-                    //Check if the color is black
-                    if (R == 0 && G == 0 && B == 0) { return; }
-
                     //Check color difference
-                    if (B - G < 40 && R < 5)
+                    if ((B - G) >= 5 && R <= 5)
                     {
                         float adjustRed = 1.0F - 0.3086F;
                         float adjustGreen = 1.0F - 0.6094F;
