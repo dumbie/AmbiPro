@@ -2,6 +2,7 @@
 using static AmbiPro.AppClasses;
 using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
+using static AmbiPro.PreloadSettings;
 using static ArnoldVinkCode.AVActions;
 
 namespace AmbiPro

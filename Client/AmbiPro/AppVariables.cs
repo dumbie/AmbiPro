@@ -2,6 +2,7 @@
 using ScreenCapture;
 using System.Configuration;
 using System.Globalization;
+using System.IO.Ports;
 using static AmbiPro.AppClasses;
 
 namespace AmbiPro
@@ -11,6 +12,12 @@ namespace AmbiPro
         //Application Variables
         public static Configuration vConfiguration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
         public static CultureInfo vAppCultureInfo = CultureInfo.InvariantCulture;
+
+        //Led variables
+        public static bool vLedSwitching = false;
+
+        //Serial port
+        public static SerialPort vSerialComPort = null;
 
         //Setting Variables
         public static string vCurrentVisibleMenu = string.Empty;

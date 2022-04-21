@@ -1,7 +1,6 @@
 ﻿using ArnoldVinkCode;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO.Ports;
@@ -13,138 +12,24 @@ using System.Windows.Media.Imaging;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
+using static AmbiPro.PreloadSettings;
 using static ArnoldVinkCode.AVActions;
 
 namespace AmbiPro
 {
     partial class SerialMonitor
     {
-        //Application variables
-        private static bool vSwitching = false;
-
-        //Serial port
-        private static SerialPort vSerialComPort = null;
-
-        //Device settings
-        private static string setSerialPortName = string.Empty;
-        private static int setSerialBaudRate = 0;
-
-        //Led settings
-        private static bool setAdjustBlackBars = true;
-        private static int setAdjustBlackbarRate = 0;
-        private static int setAdjustBlackbarRange = 0;
-        private static int setAdjustBlackBarBrightness = 0;
-        private static int setUpdateRate = 0;
-        private static int setLedSmoothing = 0;
-        private static int setLedBottomGap = 0;
-        private static double setLedContrast = 0;
-        private static double setLedBrightness = 0;
-        private static byte setLedMinBrightness = 0;
-        private static double setLedGamma = 0;
-        private static double setLedVibrance = 0;
-        private static double setLedSaturation = 0;
-        private static int setColorLoopSpeed = 0;
-        private static int setSpectrumRotationSpeed = 0;
-        private static string setSolidLedColor = string.Empty;
-        private static int setLedMinColor = 0;
-        private static double setLedColorRed = 0;
-        private static double setLedColorGreen = 0;
-        private static double setLedColorBlue = 0;
-        private static LedOutputTypes setLedOutput = 0;
-        private static int setLedCaptureRange = 0;
-        private static int setLedRotate = 0;
-        private static int setLedMode = 0;
-        private static LedSideTypes setLedSideFirst = 0;
-        private static LedSideTypes setLedSideSecond = 0;
-        private static LedSideTypes setLedSideThird = 0;
-        private static LedSideTypes setLedSideFourth = 0;
-        private static int setLedCountFirst = 0;
-        private static int setLedCountSecond = 0;
-        private static int setLedCountThird = 0;
-        private static int setLedCountFourth = 0;
-        private static int setLedCountTotal = 0;
-        private static bool setDebugBlackBar = false;
-        private static bool setDebugColor = true;
-        private static bool setDebugSave = false;
-
-        //Update led setting variables
-        public static void UpdateSettingVariables()
-        {
-            try
-            {
-                //Device settings
-                setSerialPortName = "COM" + ConfigurationManager.AppSettings["ComPort"].ToString();
-                setSerialBaudRate = Convert.ToInt32(ConfigurationManager.AppSettings["BaudRate"]);
-
-                //Led settings
-                setAdjustBlackBars = Convert.ToBoolean(ConfigurationManager.AppSettings["AdjustBlackBars"]);
-                setAdjustBlackbarRate = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRate"]);
-                setAdjustBlackbarRange = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRange"]);
-                setAdjustBlackBarBrightness = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarBrightness"]);
-                setUpdateRate = Convert.ToInt32(ConfigurationManager.AppSettings["UpdateRate"]);
-                setLedSmoothing = Convert.ToInt32(ConfigurationManager.AppSettings["LedSmoothing"]);
-                setLedBottomGap = Convert.ToInt32(ConfigurationManager.AppSettings["LedBottomGap"]);
-                setLedContrast = Convert.ToDouble(ConfigurationManager.AppSettings["LedContrast"]) / 100;
-                setLedBrightness = Convert.ToDouble(ConfigurationManager.AppSettings["LedBrightness"]) / 100;
-                setLedMinBrightness = Convert.ToByte(ConfigurationManager.AppSettings["LedMinBrightness"]);
-                setLedGamma = AVSettings.Load(vConfiguration, "LedGamma3", typeof(double));
-                setLedVibrance = Convert.ToDouble(ConfigurationManager.AppSettings["LedVibrance"]) / 100;
-                setLedSaturation = Convert.ToDouble(ConfigurationManager.AppSettings["LedSaturation"]) / 100;
-                setColorLoopSpeed = Convert.ToInt32(ConfigurationManager.AppSettings["ColorLoopSpeed"]);
-                setSpectrumRotationSpeed = Convert.ToInt32(ConfigurationManager.AppSettings["SpectrumRotationSpeed"]);
-                setSolidLedColor = ConfigurationManager.AppSettings["SolidLedColor"].ToString();
-                setLedMinColor = Convert.ToInt32(ConfigurationManager.AppSettings["LedMinColor"]);
-                setLedColorRed = Convert.ToDouble(ConfigurationManager.AppSettings["LedColorRed"]) / 100;
-                setLedColorGreen = Convert.ToDouble(ConfigurationManager.AppSettings["LedColorGreen"]) / 100;
-                setLedColorBlue = Convert.ToDouble(ConfigurationManager.AppSettings["LedColorBlue"]) / 100;
-                setLedCaptureRange = Convert.ToInt32(ConfigurationManager.AppSettings["LedCaptureRange"]);
-                setLedOutput = (LedOutputTypes)Convert.ToInt32(ConfigurationManager.AppSettings["LedOutput"]);
-                setLedMode = Convert.ToInt32(ConfigurationManager.AppSettings["LedMode"]);
-                setLedSideFirst = (LedSideTypes)Convert.ToInt32(ConfigurationManager.AppSettings["LedSideFirst"]);
-                setLedSideSecond = (LedSideTypes)Convert.ToInt32(ConfigurationManager.AppSettings["LedSideSecond"]);
-                setLedSideThird = (LedSideTypes)Convert.ToInt32(ConfigurationManager.AppSettings["LedSideThird"]);
-                setLedSideFourth = (LedSideTypes)Convert.ToInt32(ConfigurationManager.AppSettings["LedSideFourth"]);
-                setLedCountFirst = Convert.ToInt32(ConfigurationManager.AppSettings["LedCountFirst"]);
-                setLedCountSecond = Convert.ToInt32(ConfigurationManager.AppSettings["LedCountSecond"]);
-                setLedCountThird = Convert.ToInt32(ConfigurationManager.AppSettings["LedCountThird"]);
-                setLedCountFourth = Convert.ToInt32(ConfigurationManager.AppSettings["LedCountFourth"]);
-                setLedCountTotal = setLedCountFirst + setLedCountSecond + setLedCountThird + setLedCountFourth;
-
-                //Debug settings
-                setDebugBlackBar = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugBlackBar"]);
-                setDebugColor = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugColor"]);
-                setDebugSave = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugSave"]);
-
-                //Update capture variables
-                UpdateCaptureVariables();
-
-                //Update the rotation based on ratio
-                if (AVSettings.Check(vConfiguration, "LedRotate" + vCurrentRatio))
-                {
-                    setLedRotate = Convert.ToInt32(ConfigurationManager.AppSettings["LedRotate" + vCurrentRatio]);
-                }
-                else
-                {
-                    setLedRotate = 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Failed updating the settings: " + ex.Message);
-            }
-        }
-
         //Turn the leds on or off
         public static async Task LedSwitch(LedSwitches ledSwitch)
         {
             try
             {
-                if (!vSwitching)
+                if (!vLedSwitching)
                 {
-                    vSwitching = true;
+                    vLedSwitching = true;
 
-                    //Update led setting variables
-                    UpdateSettingVariables();
+                    //Update settings preload
+                    UpdateSettingsPreload();
 
                     //Restart the leds
                     if (ledSwitch == LedSwitches.Restart)
@@ -180,7 +65,7 @@ namespace AmbiPro
             }
             finally
             {
-                vSwitching = false;
+                vLedSwitching = false;
             }
         }
 

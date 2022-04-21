@@ -147,13 +147,6 @@ namespace AmbiPro.Settings
                     tb_LedGamma.Text = "Gamma curve: " + sldr_LedGamma.Value.ToString("0.00");
                 };
 
-                //Save - Led Vibrance
-                sldr_LedVibrance.ValueChanged += (sender, e) =>
-                {
-                    AVSettings.Save(vConfiguration, "LedVibrance", sldr_LedVibrance.Value.ToString("0"));
-                    tb_LedVibrance.Text = "Color vibrance: " + sldr_LedVibrance.Value.ToString("0") + "%";
-                };
-
                 //Save - Led Saturation
                 sldr_LedSaturation.ValueChanged += (sender, e) =>
                 {
@@ -190,7 +183,7 @@ namespace AmbiPro.Settings
                 //Save - Led Minimum Color
                 sldr_LedMinColor.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "LedMinColor", sldr_LedMinColor.Value.ToString("0"));
+                    AVSettings.Save(vConfiguration, "LedMinColor2", sldr_LedMinColor.Value.ToString("0"));
                     tb_LedMinColor.Text = "Minimum color brightness: " + sldr_LedMinColor.Value.ToString("0") + "%";
                 };
 
@@ -213,6 +206,12 @@ namespace AmbiPro.Settings
                 {
                     AVSettings.Save(vConfiguration, "LedColorBlue", sldr_LedColorBlue.Value.ToString("0"));
                     tb_LedColorBlue.Text = "Blue: " + sldr_LedColorBlue.Value.ToString("0") + "%";
+                };
+
+                //Save - Led Strip Correction
+                cb_LedStripCorrection.Click += (sender, e) =>
+                {
+                    AVSettings.Save(vConfiguration, "LedStripCorrection", cb_LedStripCorrection.IsChecked.ToString());
                 };
 
                 //Save - Led Capture Range

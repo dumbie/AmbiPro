@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
+using static AmbiPro.PreloadSettings;
 using static ArnoldVinkCode.AVActions;
 using static ArnoldVinkCode.AVClassConverters;
 
@@ -53,7 +54,7 @@ namespace AmbiPro
             }
         }
 
-        private static void UpdateCaptureVariables()
+        public static void UpdateCaptureVariables()
         {
             try
             {
@@ -94,7 +95,7 @@ namespace AmbiPro
         }
 
         //Loop cature the screen
-        private static async Task ModeScreenCapture(int InitByteSize, byte[] SerialBytes)
+        private static async Task ModeScreenCapture(int initByteSize, byte[] serialBytes)
         {
             try
             {
@@ -115,7 +116,7 @@ namespace AmbiPro
                 //Start updating the leds
                 while (!vTask_UpdateLed.TaskStopRequest)
                 {
-                    int currentSerialByte = InitByteSize;
+                    int currentSerialByte = initByteSize;
                     IntPtr bitmapIntPtr = IntPtr.Zero;
                     try
                     {
@@ -152,23 +153,23 @@ namespace AmbiPro
                         }
 
                         //Check led capture sides color
-                        ScreenColors(setLedSideFirst, setLedCountFirst, SerialBytes, bitmapByteArray, ref currentSerialByte);
-                        ScreenColors(setLedSideSecond, setLedCountSecond, SerialBytes, bitmapByteArray, ref currentSerialByte);
-                        ScreenColors(setLedSideThird, setLedCountThird, SerialBytes, bitmapByteArray, ref currentSerialByte);
-                        ScreenColors(setLedSideFourth, setLedCountFourth, SerialBytes, bitmapByteArray, ref currentSerialByte);
+                        ScreenColors(setLedSideFirst, setLedCountFirst, serialBytes, bitmapByteArray, ref currentSerialByte);
+                        ScreenColors(setLedSideSecond, setLedCountSecond, serialBytes, bitmapByteArray, ref currentSerialByte);
+                        ScreenColors(setLedSideThird, setLedCountThird, serialBytes, bitmapByteArray, ref currentSerialByte);
+                        ScreenColors(setLedSideFourth, setLedCountFourth, serialBytes, bitmapByteArray, ref currentSerialByte);
 
                         //Check if debug mode is enabled
                         if (vDebugCaptureAllowed)
                         {
                             //Update debug screen capture preview
                             ActionDispatcherInvoke(delegate
+                            {
+                                try
                                 {
-                                    try
-                                    {
-                                        App.vFormSettings.image_DebugPreview.Source = CaptureBitmap.BitmapIntPtrToBitmapSource(bitmapIntPtr, vCaptureDetails, vCaptureSettings);
-                                    }
-                                    catch { }
-                                });
+                                    App.vFormSettings.image_DebugPreview.Source = CaptureBitmap.BitmapByteArrayToBitmapSource(bitmapByteArray, vCaptureDetails, vCaptureSettings);
+                                }
+                                catch { }
+                            });
 
                             //Debug save screen capture as image
                             if (setDebugSave)
@@ -181,15 +182,15 @@ namespace AmbiPro
                         if (setLedSmoothing > 0)
                         {
                             //Make copy of current color bytes
-                            byte[] CaptureByteCurrent = CloneByteArray(SerialBytes);
+                            byte[] CaptureByteCurrent = CloneByteArray(serialBytes);
 
                             //Merge current colors with history
-                            for (int ledCount = InitByteSize; ledCount < (SerialBytes.Length - InitByteSize); ledCount++)
+                            for (int ledCount = initByteSize; ledCount < (serialBytes.Length - initByteSize); ledCount++)
                             {
                                 //Debug.WriteLine("Led smoothing old: " + SerialBytes[ledCount]);
 
                                 int ColorCount = 1;
-                                int ColorAverage = SerialBytes[ledCount];
+                                int ColorAverage = serialBytes[ledCount];
                                 for (int smoothCount = 0; smoothCount < setLedSmoothing; smoothCount++)
                                 {
                                     if (vCaptureByteHistoryArray[smoothCount] != null)
@@ -203,7 +204,7 @@ namespace AmbiPro
                                     }
                                 }
 
-                                SerialBytes[ledCount] = (byte)(ColorAverage / ColorCount);
+                                serialBytes[ledCount] = (byte)(ColorAverage / ColorCount);
                                 //Debug.WriteLine("Led smoothing new: " + SerialBytes[ledCount]);
                             }
 
@@ -217,23 +218,23 @@ namespace AmbiPro
                         {
                             for (int RotateCount = 0; RotateCount < setLedRotate; RotateCount++)
                             {
-                                AVFunctions.MoveByteInArrayLeft(SerialBytes, 3, SerialBytes.Length - 1);
-                                AVFunctions.MoveByteInArrayLeft(SerialBytes, 3, SerialBytes.Length - 1);
-                                AVFunctions.MoveByteInArrayLeft(SerialBytes, 3, SerialBytes.Length - 1);
+                                AVFunctions.MoveByteInArrayLeft(serialBytes, 3, serialBytes.Length - 1);
+                                AVFunctions.MoveByteInArrayLeft(serialBytes, 3, serialBytes.Length - 1);
+                                AVFunctions.MoveByteInArrayLeft(serialBytes, 3, serialBytes.Length - 1);
                             }
                         }
                         else if (setLedRotate < 0)
                         {
                             for (int RotateCount = 0; RotateCount < Math.Abs(setLedRotate); RotateCount++)
                             {
-                                AVFunctions.MoveByteInArrayRight(SerialBytes, SerialBytes.Length - 1, 3);
-                                AVFunctions.MoveByteInArrayRight(SerialBytes, SerialBytes.Length - 1, 3);
-                                AVFunctions.MoveByteInArrayRight(SerialBytes, SerialBytes.Length - 1, 3);
+                                AVFunctions.MoveByteInArrayRight(serialBytes, serialBytes.Length - 1, 3);
+                                AVFunctions.MoveByteInArrayRight(serialBytes, serialBytes.Length - 1, 3);
+                                AVFunctions.MoveByteInArrayRight(serialBytes, serialBytes.Length - 1, 3);
                             }
                         }
 
                         //Send the serial bytes to device
-                        if (!SerialComPortWrite(SerialBytes))
+                        if (!SerialComPortWrite(serialBytes))
                         {
                             ConnectionFailed = true;
                             break;
@@ -271,5 +272,35 @@ namespace AmbiPro
                 ResetScreenCapture();
             }
         }
+
+        //private static void UpdateDebugLedColorsPreview(LedSideTypes ledSide, ColorRGBA colorRGBA)
+        //{
+        //    try
+        //    {
+        //        if (!vDebugCaptureAllowed) { return; }
+        //        ActionDispatcherInvoke(delegate
+        //        {
+        //            if (ledSide == LedSideTypes.LeftTopToBottom || ledSide == LedSideTypes.LeftBottomToTop)
+        //            {
+        //                Border borderLed = new Border();
+        //                borderLed.Width = 6;
+        //                borderLed.Height = 6;
+        //                borderLed.Background = new SolidColorBrush(Color.FromRgb(colorRGBA.R, colorRGBA.G, colorRGBA.B));
+        //                borderLed.CornerRadius = new CornerRadius(6, 6, 6, 6);
+        //                App.vFormSettings.grid_LedDebugLeft.Children.Add(borderLed);
+        //            }
+        //            else if (ledSide == LedSideTypes.TopLeftToRight || ledSide == LedSideTypes.TopRightToLeft)
+        //            {
+        //                Border borderLed = new Border();
+        //                borderLed.Width = 6;
+        //                borderLed.Height = 6;
+        //                borderLed.Background = new SolidColorBrush(Color.FromRgb(colorRGBA.R, colorRGBA.G, colorRGBA.B));
+        //                borderLed.CornerRadius = new CornerRadius(6, 6, 6, 6);
+        //                App.vFormSettings.grid_LedDebugTop.Children.Add(borderLed);
+        //            }
+        //        });
+        //    }
+        //    catch { }
+        //}
     }
 }

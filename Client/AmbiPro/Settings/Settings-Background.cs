@@ -93,6 +93,22 @@ namespace AmbiPro.Settings
             catch { }
         }
 
+        private void button_BackgroundColorShowHide_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (grid_BackgroundSolid.Visibility == Visibility.Visible)
+                {
+                    grid_BackgroundSolid.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    grid_BackgroundSolid.Visibility = Visibility.Visible;
+                }
+            }
+            catch { }
+        }
+
         private async void button_BackgroundColorChange_Click(object sender, RoutedEventArgs e)
         {
             try

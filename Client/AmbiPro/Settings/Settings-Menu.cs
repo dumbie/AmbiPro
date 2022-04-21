@@ -55,6 +55,7 @@ namespace AmbiPro.Settings
                         sp_Remote.Visibility = Visibility.Collapsed;
                         sp_Debug.Visibility = Visibility.Collapsed;
                         sp_Help.Visibility = Visibility.Collapsed;
+                        grid_BackgroundLedDebug.Visibility = Visibility.Collapsed;
                     }
 
                     if (selectedStackPanel.Name == "menuButtonBasics")
@@ -100,6 +101,7 @@ namespace AmbiPro.Settings
                     {
                         SwitchBackground(false, false, false, true);
                         sp_Debug.Visibility = Visibility.Visible;
+                        grid_BackgroundLedDebug.Visibility = Visibility.Visible;
                         vDebugCaptureAllowed = true;
                     }
                     else if (selectedStackPanel.Name == "menuButtonBlackbars")

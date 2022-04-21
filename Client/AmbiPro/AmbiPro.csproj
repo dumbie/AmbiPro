@@ -236,6 +236,7 @@
     <Compile Include="AppTasks.cs" />
     <Compile Include="AppTimers.cs" />
     <Compile Include="AppUpdate.cs" />
+    <Compile Include="Settings\Settings-Preload.cs" />
     <Compile Include="Settings\Settings-Rotate.cs" />
     <Compile Include="ModeColorSpectrum.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
@@ -406,7 +407,7 @@
     <Resource Include="Assets\Icons\Brightness.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Assets\VibranceSpectrum.png">
+    <Resource Include="Assets\Icons\Transparent.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Content Include="Script\Script.ino">

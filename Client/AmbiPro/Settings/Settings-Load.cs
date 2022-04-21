@@ -105,12 +105,8 @@ namespace AmbiPro.Settings
                 sldr_LedMinBrightness.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedMinBrightness"]);
 
                 //Load - Led Gamma
-                tb_LedGamma.Text = "Gamma curve: " + AVSettings.Load(vConfiguration, "LedGamma3", typeof(double)).ToString("0.00");
-                sldr_LedGamma.Value = AVSettings.Load(vConfiguration, "LedGamma3", typeof(double));
-
-                //Load - Led Vibrance
-                tb_LedVibrance.Text = "Color vibrance: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedVibrance"]) + "%";
-                sldr_LedVibrance.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedVibrance"]);
+                tb_LedGamma.Text = "Gamma curve: " + AVSettings.Load(vConfiguration, "LedGamma3", typeof(float)).ToString("0.00");
+                sldr_LedGamma.Value = AVSettings.Load(vConfiguration, "LedGamma3", typeof(float));
 
                 //Load - Led Saturation
                 tb_LedSaturation.Text = "Color saturation: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedSaturation"]) + "%";
@@ -129,8 +125,8 @@ namespace AmbiPro.Settings
                 button_ColorPickerSolid.Background = new BrushConverter().ConvertFrom(SolidLedColor) as SolidColorBrush;
 
                 //Load - Led Minimum Color
-                tb_LedMinColor.Text = "Minimum color brightness: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedMinColor"]) + "%";
-                sldr_LedMinColor.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedMinColor"]);
+                tb_LedMinColor.Text = "Minimum color brightness: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedMinColor2"]) + "%";
+                sldr_LedMinColor.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedMinColor2"]);
 
                 //Load - Led Color Red
                 tb_LedColorRed.Text = "Red: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedColorRed"]) + "%";
@@ -143,6 +139,9 @@ namespace AmbiPro.Settings
                 //Load - Led Color Blue
                 tb_LedColorBlue.Text = "Blue: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedColorBlue"]) + "%";
                 sldr_LedColorBlue.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedColorBlue"]);
+
+                //Load - Led Strip Correction
+                cb_LedStripCorrection.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["LedStripCorrection"]);
 
                 //Load - Led Capture Range
                 tb_LedCaptureRange.Text = "Led capture range: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedCaptureRange"]) + "%";

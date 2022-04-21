@@ -4,6 +4,7 @@ using System.Diagnostics;
 using static AmbiPro.AppClasses;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
+using static AmbiPro.PreloadSettings;
 
 namespace AmbiPro
 {

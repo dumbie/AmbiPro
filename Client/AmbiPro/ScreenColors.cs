@@ -5,6 +5,7 @@ using System.Diagnostics;
 using static AmbiPro.AppClasses;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
+using static AmbiPro.PreloadSettings;
 
 namespace AmbiPro
 {
@@ -132,6 +133,9 @@ namespace AmbiPro
                         //Capture the average color from the bitmap screen capture
                         CaptureColorAlgorithm(bitmapByteArray, out ColorRGBA captureColor, captureZoneHor, captureZoneVer, captureZoneSize, sideType);
                         //Debug.WriteLine("Captured average color R" + CaptureColor.R + "G" + CaptureColor.G + "B" + CaptureColor.B + " from the bitmap data.");
+
+                        //Update debug led colors preview
+                        //UpdateDebugLedColorsPreview(sideType, captureColor);
 
                         //Check if average color is black
                         if (captureColor != null && (captureColor.R > 0 || captureColor.G > 0 || captureColor.B > 0))

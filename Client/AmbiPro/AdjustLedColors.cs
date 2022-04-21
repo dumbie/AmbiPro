@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using static AmbiPro.AppClasses;
 using static AmbiPro.AppEnums;
+using static AmbiPro.PreloadSettings;
 
 namespace AmbiPro
 {
@@ -12,11 +13,8 @@ namespace AmbiPro
         {
             try
             {
-                //Adjust the screen capture vibrance
-                adjustColor.AdjustVibrance(setLedVibrance);
-
                 //Adjust the screen capture saturation
-                adjustColor.AdjustSaturate(setLedSaturation);
+                adjustColor.AdjustSaturation(setLedSaturation);
 
                 //Adjust specific color values
                 adjustColor.AdjustColorChannels(setLedColorRed, setLedColorGreen, setLedColorBlue);
@@ -29,6 +27,9 @@ namespace AmbiPro
 
                 //Adjust the screen capture gamma
                 adjustColor.AdjustGamma(setLedGamma);
+
+                //Adjust led color correction
+                adjustColor.AdjustLedColorCorrection(setLedStripCorrection);
 
                 //Check current led mode
                 if (setLedMode == 0)
