@@ -16,9 +16,6 @@ namespace AmbiPro
                 //Loop mode variables
                 bool ConnectionFailed = false;
 
-                //Update led status icons
-                UpdateLedStatusIcons(true);
-
                 //Current byte information
                 while (!vTask_UpdateLed.TaskStopRequest)
                 {

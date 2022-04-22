@@ -18,9 +18,6 @@ namespace AmbiPro
                 bool ConnectionFailed = false;
                 int CurrentLedRotate = 0;
 
-                //Update led status icons
-                UpdateLedStatusIcons(true);
-
                 //Current byte information
                 while (!vTask_UpdateLed.TaskStopRequest)
                 {

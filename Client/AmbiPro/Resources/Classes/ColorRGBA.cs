@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Globalization;
+using System.Windows.Media;
 
 namespace AmbiPro
 {
@@ -54,6 +55,18 @@ namespace AmbiPro
                 try
                 {
                     return new ColorRGBA() { R = cloneSource.R, G = cloneSource.G, B = cloneSource.B, A = cloneSource.A };
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+
+            public SolidColorBrush AsSolidColorBrush()
+            {
+                try
+                {
+                    return new SolidColorBrush(Color.FromRgb(R, G, B));
                 }
                 catch
                 {

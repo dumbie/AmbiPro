@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppTasks;
@@ -69,6 +70,86 @@ namespace AmbiPro
             }
         }
 
+        //Update led preview
+        public static void UpdateLedPreview(bool ledsOn)
+        {
+            try
+            {
+                if (ledsOn && setLedMode == 0)
+                {
+                    ActionDispatcherInvoke(delegate
+                    {
+                        App.vFormSettings.listbox_LedPreviewLeft.Items.Clear();
+                        App.vFormSettings.listbox_LedPreviewTop.Items.Clear();
+                        App.vFormSettings.listbox_LedPreviewRight.Items.Clear();
+                        App.vFormSettings.listbox_LedPreviewBottom.Items.Clear();
+
+                        LedPreviewAddDefaultLeds(setLedSideFirst, setLedCountFirst);
+                        LedPreviewAddDefaultLeds(setLedSideSecond, setLedCountSecond);
+                        LedPreviewAddDefaultLeds(setLedSideThird, setLedCountThird);
+                        LedPreviewAddDefaultLeds(setLedSideFourth, setLedCountFourth);
+
+                        App.vFormSettings.border_LedPreviewLeft.Visibility = System.Windows.Visibility.Visible;
+                        App.vFormSettings.border_LedPreviewTop.Visibility = System.Windows.Visibility.Visible;
+                        App.vFormSettings.border_LedPreviewRight.Visibility = System.Windows.Visibility.Visible;
+                        App.vFormSettings.border_LedPreviewBottom.Visibility = System.Windows.Visibility.Visible;
+                    });
+                }
+                else
+                {
+                    ActionDispatcherInvoke(delegate
+                    {
+                        App.vFormSettings.border_LedPreviewLeft.Visibility = System.Windows.Visibility.Collapsed;
+                        App.vFormSettings.border_LedPreviewTop.Visibility = System.Windows.Visibility.Collapsed;
+                        App.vFormSettings.border_LedPreviewRight.Visibility = System.Windows.Visibility.Collapsed;
+                        App.vFormSettings.border_LedPreviewBottom.Visibility = System.Windows.Visibility.Collapsed;
+
+                        App.vFormSettings.listbox_LedPreviewLeft.Items.Clear();
+                        App.vFormSettings.listbox_LedPreviewTop.Items.Clear();
+                        App.vFormSettings.listbox_LedPreviewRight.Items.Clear();
+                        App.vFormSettings.listbox_LedPreviewBottom.Items.Clear();
+                    });
+                }
+            }
+            catch { }
+        }
+
+        private static void LedPreviewAddDefaultLeds(LedSideTypes ledSideTypes, int ledSideCount)
+        {
+            try
+            {
+                if (ledSideTypes == LedSideTypes.LeftTopToBottom || ledSideTypes == LedSideTypes.LeftBottomToTop)
+                {
+                    for (int ledsAdded = 0; ledsAdded < ledSideCount; ledsAdded++)
+                    {
+                        App.vFormSettings.listbox_LedPreviewLeft.Items.Add(new SolidColorBrush(Colors.Black));
+                    }
+                }
+                else if (ledSideTypes == LedSideTypes.TopLeftToRight || ledSideTypes == LedSideTypes.TopRightToLeft)
+                {
+                    for (int ledsAdded = 0; ledsAdded < ledSideCount; ledsAdded++)
+                    {
+                        App.vFormSettings.listbox_LedPreviewTop.Items.Add(new SolidColorBrush(Colors.Black));
+                    }
+                }
+                else if (ledSideTypes == LedSideTypes.RightTopToBottom || ledSideTypes == LedSideTypes.RightBottomToTop)
+                {
+                    for (int ledsAdded = 0; ledsAdded < ledSideCount; ledsAdded++)
+                    {
+                        App.vFormSettings.listbox_LedPreviewRight.Items.Add(new SolidColorBrush(Colors.Black));
+                    }
+                }
+                else if (ledSideTypes == LedSideTypes.BottomLeftToRight || ledSideTypes == LedSideTypes.BottomRightToLeft)
+                {
+                    for (int ledsAdded = 0; ledsAdded < ledSideCount; ledsAdded++)
+                    {
+                        App.vFormSettings.listbox_LedPreviewBottom.Items.Add(new SolidColorBrush(Colors.Black));
+                    }
+                }
+            }
+            catch { }
+        }
+
         //Update led status icons
         public static void UpdateLedStatusIcons(bool ledsOn)
         {
@@ -108,6 +189,12 @@ namespace AmbiPro
                     return;
                 }
 
+                //Update led status icons
+                UpdateLedStatusIcons(true);
+
+                //Update led preview
+                UpdateLedPreview(true);
+
                 //Start led update loop
                 AVActions.TaskStartLoop(LoopUpdateLeds, vTask_UpdateLed);
             }
@@ -125,10 +212,10 @@ namespace AmbiPro
                 Debug.WriteLine("Disabling the led updates.");
 
                 //Update led status icons
-                if (!restartLeds)
-                {
-                    UpdateLedStatusIcons(false);
-                }
+                UpdateLedStatusIcons(false);
+
+                //Update led preview
+                UpdateLedPreview(false);
 
                 //Cancel the led task
                 await AVActions.TaskStopLoop(vTask_UpdateLed);

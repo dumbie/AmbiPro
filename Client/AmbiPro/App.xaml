@@ -15,6 +15,7 @@
                 <ResourceDictionary Source="ArnoldVinkCode/Styles/ControlTemplates/Slider.xaml"/>
                 <ResourceDictionary Source="ArnoldVinkCode/Styles/ControlTemplates/TextBox.xaml"/>
                 <ResourceDictionary Source="ArnoldVinkCode/Styles/MainStyles.xaml"/>
+                <ResourceDictionary Source="Styles/DataTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

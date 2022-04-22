@@ -243,6 +243,22 @@ namespace AmbiPro.Settings
             catch { }
         }
 
+        protected override void OnStateChanged(EventArgs e)
+        {
+            try
+            {
+                Debug.WriteLine("Settings window state changed.");
+
+                if (WindowState != WindowState.Maximized)
+                {
+                    //Disable debug capture
+                    vDebugCaptureAllowed = false;
+                    image_DebugPreview.Source = null;
+                }
+            }
+            catch { }
+        }
+
         //Handle window closing event
         protected override void OnClosing(CancelEventArgs e)
         {

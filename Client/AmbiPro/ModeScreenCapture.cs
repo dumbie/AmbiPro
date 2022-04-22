@@ -3,7 +3,11 @@ using ScreenCapture;
 using System;
 using System.Configuration;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using static AmbiPro.AppClasses;
+using static AmbiPro.AppEnums;
 using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
 using static AmbiPro.PreloadSettings;
@@ -110,9 +114,6 @@ namespace AmbiPro
                     return;
                 }
 
-                //Update led status icons
-                UpdateLedStatusIcons(true);
-
                 //Start updating the leds
                 while (!vTask_UpdateLed.TaskStopRequest)
                 {
@@ -158,24 +159,10 @@ namespace AmbiPro
                         ScreenColors(setLedSideThird, setLedCountThird, serialBytes, bitmapByteArray, ref currentSerialByte);
                         ScreenColors(setLedSideFourth, setLedCountFourth, serialBytes, bitmapByteArray, ref currentSerialByte);
 
-                        //Check if debug mode is enabled
+                        //Update debug capture preview
                         if (vDebugCaptureAllowed)
                         {
-                            //Update debug screen capture preview
-                            ActionDispatcherInvoke(delegate
-                            {
-                                try
-                                {
-                                    App.vFormSettings.image_DebugPreview.Source = CaptureBitmap.BitmapByteArrayToBitmapSource(bitmapByteArray, vCaptureDetails, vCaptureSettings);
-                                }
-                                catch { }
-                            });
-
-                            //Debug save screen capture as image
-                            if (setDebugSave)
-                            {
-                                CaptureImport.CaptureSaveFilePng(bitmapIntPtr, "Debug\\" + Environment.TickCount + ".png");
-                            }
+                            UpdateCaptureDebugPreview(bitmapIntPtr, bitmapByteArray);
                         }
 
                         //Smooth led frame transition
@@ -273,34 +260,78 @@ namespace AmbiPro
             }
         }
 
-        //private static void UpdateDebugLedColorsPreview(LedSideTypes ledSide, ColorRGBA colorRGBA)
-        //{
-        //    try
-        //    {
-        //        if (!vDebugCaptureAllowed) { return; }
-        //        ActionDispatcherInvoke(delegate
-        //        {
-        //            if (ledSide == LedSideTypes.LeftTopToBottom || ledSide == LedSideTypes.LeftBottomToTop)
-        //            {
-        //                Border borderLed = new Border();
-        //                borderLed.Width = 6;
-        //                borderLed.Height = 6;
-        //                borderLed.Background = new SolidColorBrush(Color.FromRgb(colorRGBA.R, colorRGBA.G, colorRGBA.B));
-        //                borderLed.CornerRadius = new CornerRadius(6, 6, 6, 6);
-        //                App.vFormSettings.grid_LedDebugLeft.Children.Add(borderLed);
-        //            }
-        //            else if (ledSide == LedSideTypes.TopLeftToRight || ledSide == LedSideTypes.TopRightToLeft)
-        //            {
-        //                Border borderLed = new Border();
-        //                borderLed.Width = 6;
-        //                borderLed.Height = 6;
-        //                borderLed.Background = new SolidColorBrush(Color.FromRgb(colorRGBA.R, colorRGBA.G, colorRGBA.B));
-        //                borderLed.CornerRadius = new CornerRadius(6, 6, 6, 6);
-        //                App.vFormSettings.grid_LedDebugTop.Children.Add(borderLed);
-        //            }
-        //        });
-        //    }
-        //    catch { }
-        //}
+        private static void UpdateCaptureDebugPreview(IntPtr bitmapIntPtr, byte[] bitmapByteArray)
+        {
+            try
+            {
+                //Update debug screen capture preview
+                ActionDispatcherInvoke(delegate
+                {
+                    try
+                    {
+                        App.vFormSettings.image_DebugPreview.Source = CaptureBitmap.BitmapByteArrayToBitmapSource(bitmapByteArray, vCaptureDetails, vCaptureSettings);
+                    }
+                    catch { }
+                });
+
+                //Debug save screen capture as image
+                if (setDebugSave)
+                {
+                    CaptureImport.CaptureSaveFilePng(bitmapIntPtr, "Debug\\" + Environment.TickCount + ".png");
+                }
+            }
+            catch { }
+        }
+
+        private static void UpdateLedColorsPreview(LedSideTypes ledSide, int currentLed, ColorRGBA colorRGBA)
+        {
+            try
+            {
+                ActionDispatcherInvoke(delegate
+                {
+                    if (ledSide == LedSideTypes.LeftBottomToTop)
+                    {
+                        int countLed = App.vFormSettings.listbox_LedPreviewLeft.Items.Count - 1;
+                        App.vFormSettings.listbox_LedPreviewLeft.Items[countLed - currentLed] = colorRGBA.AsSolidColorBrush();
+                    }
+                    else if (ledSide == LedSideTypes.LeftTopToBottom)
+                    {
+                        int countLed = App.vFormSettings.listbox_LedPreviewLeft.Items.Count - 1;
+                        App.vFormSettings.listbox_LedPreviewLeft.Items[currentLed] = colorRGBA.AsSolidColorBrush();
+                    }
+                    else if (ledSide == LedSideTypes.TopRightToLeft)
+                    {
+                        int countLed = App.vFormSettings.listbox_LedPreviewTop.Items.Count - 1;
+                        App.vFormSettings.listbox_LedPreviewTop.Items[countLed - currentLed] = colorRGBA.AsSolidColorBrush();
+                    }
+                    else if (ledSide == LedSideTypes.TopLeftToRight)
+                    {
+                        int countLed = App.vFormSettings.listbox_LedPreviewTop.Items.Count - 1;
+                        App.vFormSettings.listbox_LedPreviewTop.Items[currentLed] = colorRGBA.AsSolidColorBrush();
+                    }
+                    else if (ledSide == LedSideTypes.RightBottomToTop)
+                    {
+                        int countLed = App.vFormSettings.listbox_LedPreviewRight.Items.Count - 1;
+                        App.vFormSettings.listbox_LedPreviewRight.Items[countLed - currentLed] = colorRGBA.AsSolidColorBrush();
+                    }
+                    else if (ledSide == LedSideTypes.RightTopToBottom)
+                    {
+                        int countLed = App.vFormSettings.listbox_LedPreviewRight.Items.Count - 1;
+                        App.vFormSettings.listbox_LedPreviewRight.Items[currentLed] = colorRGBA.AsSolidColorBrush();
+                    }
+                    else if (ledSide == LedSideTypes.BottomRightToLeft)
+                    {
+                        int countLed = App.vFormSettings.listbox_LedPreviewBottom.Items.Count - 1;
+                        App.vFormSettings.listbox_LedPreviewBottom.Items[countLed - currentLed] = colorRGBA.AsSolidColorBrush();
+                    }
+                    else if (ledSide == LedSideTypes.BottomLeftToRight)
+                    {
+                        int countLed = App.vFormSettings.listbox_LedPreviewBottom.Items.Count - 1;
+                        App.vFormSettings.listbox_LedPreviewBottom.Items[currentLed] = colorRGBA.AsSolidColorBrush();
+                    }
+                });
+            }
+            catch { }
+        }
     }
 }

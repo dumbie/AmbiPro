@@ -44,6 +44,9 @@ namespace AmbiPro.Settings
                         vDebugCaptureAllowed = false;
                         image_DebugPreview.Source = null;
 
+                        //Hide debug led preview
+                        grid_LedPreview.Visibility = Visibility.Collapsed;
+
                         //Hide all setting tabs
                         sp_Basics.Visibility = Visibility.Collapsed;
                         sp_Modes.Visibility = Visibility.Collapsed;
@@ -55,7 +58,6 @@ namespace AmbiPro.Settings
                         sp_Remote.Visibility = Visibility.Collapsed;
                         sp_Debug.Visibility = Visibility.Collapsed;
                         sp_Help.Visibility = Visibility.Collapsed;
-                        grid_BackgroundLedDebug.Visibility = Visibility.Collapsed;
                     }
 
                     if (selectedStackPanel.Name == "menuButtonBasics")
@@ -101,8 +103,12 @@ namespace AmbiPro.Settings
                     {
                         SwitchBackground(false, false, false, true);
                         sp_Debug.Visibility = Visibility.Visible;
-                        grid_BackgroundLedDebug.Visibility = Visibility.Visible;
+
+                        //Enable debug capture
                         vDebugCaptureAllowed = true;
+
+                        //Show debug led preview
+                        grid_LedPreview.Visibility = Visibility.Visible;
                     }
                     else if (selectedStackPanel.Name == "menuButtonBlackbars")
                     {
