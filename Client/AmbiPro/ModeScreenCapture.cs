@@ -30,7 +30,7 @@ namespace AmbiPro
                 vCaptureSettings = new CaptureSettings
                 {
                     MonitorId = 0,
-                    MaxPixelDimension = 500
+                    MaxPixelDimension = 480
                 };
 
                 //Initialize screen capture

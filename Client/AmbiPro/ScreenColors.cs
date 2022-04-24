@@ -135,7 +135,7 @@ namespace AmbiPro
                         //Debug.WriteLine("Captured average color R" + CaptureColor.R + "G" + CaptureColor.G + "B" + CaptureColor.B + " from the bitmap data.");
 
                         //Update debug led colors preview
-                        if (vDebugCaptureAllowed)
+                        if (vDebugCaptureAllowed && setDebugLedPreview)
                         {
                             UpdateLedColorsPreview(sideType, currentLed, captureColor);
                         }

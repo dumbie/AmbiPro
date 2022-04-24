@@ -189,6 +189,7 @@ namespace AmbiPro.Settings
 
                 //Load - Debug Mode
                 checkbox_DebugBlackBar.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugBlackBar"]);
+                checkbox_DebugLedPreview.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugLedPreview"]);
                 checkbox_DebugColor.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugColor"]);
                 checkbox_DebugSave.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugSave"]);
 

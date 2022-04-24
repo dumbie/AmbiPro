@@ -189,11 +189,13 @@ namespace AmbiPro
                     if (!ledCorrection) { return; }
 
                     //Check color difference
-                    if ((B - G) >= 5 && R <= 5)
+                    int differenceBlueGreen = B - G;
+                    if (differenceBlueGreen > 0 && R <= 10)
                     {
-                        float adjustRed = 1.0F - 0.3086F;
-                        float adjustGreen = 1.0F - 0.6094F;
-                        float adjustBlue = 1.0F - 0.0820F;
+                        float adjustDifference = differenceBlueGreen / 255.0F;
+                        float adjustRed = 1.0F - (0.3086F - adjustDifference);
+                        float adjustGreen = 1.0F - (0.6094F - adjustDifference);
+                        float adjustBlue = 1.0F - (0.0820F - adjustDifference);
                         AdjustColorChannels(adjustRed, adjustGreen, adjustBlue);
                     }
                 }

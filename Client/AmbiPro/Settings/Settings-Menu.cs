@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using ArnoldVinkCode;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -108,7 +109,10 @@ namespace AmbiPro.Settings
                         vDebugCaptureAllowed = true;
 
                         //Show debug led preview
-                        grid_LedPreview.Visibility = Visibility.Visible;
+                        if (AVSettings.Load(vConfiguration, "DebugLedPreview", typeof(bool)))
+                        {
+                            grid_LedPreview.Visibility = Visibility.Visible;
+                        }
                     }
                     else if (selectedStackPanel.Name == "menuButtonBlackbars")
                     {

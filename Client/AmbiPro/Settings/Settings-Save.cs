@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppTimers;
@@ -318,6 +319,21 @@ namespace AmbiPro.Settings
                     else
                     {
                         AVSettings.Save(vConfiguration, "DebugBlackBar", "False");
+                    }
+                };
+
+                //Save - Debug LedPreview
+                checkbox_DebugLedPreview.Click += (sender, e) =>
+                {
+                    if ((bool)checkbox_DebugLedPreview.IsChecked)
+                    {
+                        AVSettings.Save(vConfiguration, "DebugLedPreview", "True");
+                        grid_LedPreview.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        AVSettings.Save(vConfiguration, "DebugLedPreview", "False");
+                        grid_LedPreview.Visibility = Visibility.Collapsed;
                     }
                 };
 

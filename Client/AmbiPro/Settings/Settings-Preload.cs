@@ -50,7 +50,10 @@ namespace AmbiPro
         public static int setLedCountThird = 0;
         public static int setLedCountFourth = 0;
         public static int setLedCountTotal = 0;
+
+        //Debug settings
         public static bool setDebugBlackBar = false;
+        public static bool setDebugLedPreview = false;
         public static bool setDebugColor = true;
         public static bool setDebugSave = false;
 
@@ -101,6 +104,7 @@ namespace AmbiPro
 
                 //Debug settings
                 setDebugBlackBar = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugBlackBar"]);
+                setDebugLedPreview = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugLedPreview"]);
                 setDebugColor = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugColor"]);
                 setDebugSave = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugSave"]);
 

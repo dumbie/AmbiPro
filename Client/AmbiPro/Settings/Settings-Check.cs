@@ -241,6 +241,10 @@ namespace AmbiPro.Settings
                 {
                     AVSettings.Save(vConfiguration, "DebugBlackBar", "False");
                 }
+                if (ConfigurationManager.AppSettings["DebugLedPreview"] == null)
+                {
+                    AVSettings.Save(vConfiguration, "DebugLedPreview", "True");
+                }
                 if (ConfigurationManager.AppSettings["DebugColor"] == null)
                 {
                     AVSettings.Save(vConfiguration, "DebugColor", "True");

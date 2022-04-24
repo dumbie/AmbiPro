@@ -234,7 +234,7 @@
                 </Border>
 
                 <!-- Grid Settings -->
-                <Border Grid.Row="1" Grid.Column="1" Name="grid_Settings" BorderBrush="#F01D1D1D" BorderThickness="2" CornerRadius="0,0,5,0" Padding="5,0,5,0" Width="500" Height="600">
+                <Border Grid.Row="1" Grid.Column="1" Name="grid_Settings" BorderBrush="#F01D1D1D" BorderThickness="2" CornerRadius="0,5,5,0" Padding="5,0,5,0" Width="500" Height="600">
                     <Border.Background>
                         <SolidColorBrush Color="#F1F1F1" Opacity="0.95"/>
                     </Border.Background>
@@ -599,6 +599,9 @@
 
                                 <CheckBox Name="checkbox_DebugBlackBar" Content="Enable or disable black bar debug" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
                                 <TextBlock Text="Enable or disable the black bar detection in the preview." Style="{StaticResource TextBlockGrayLight}"/>
+
+                                <CheckBox Name="checkbox_DebugLedPreview" Content="Enable or disable led strip preview" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
+                                <TextBlock Text="Enable or disable the led strip preview showing the colors." Style="{StaticResource TextBlockGrayLight}"/>
 
                                 <CheckBox Name="checkbox_DebugSave" Content="Enable or disable preview image saving" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
                                 <TextBlock Text="Enable or disable preview image saving to root directory." Style="{StaticResource TextBlockGrayLight}"/>
