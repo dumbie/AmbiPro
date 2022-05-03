@@ -74,16 +74,10 @@ namespace AmbiPro.Settings
                     AVSettings.Save(vConfiguration, "AdjustBlackBars", "True");
                 }
 
-                //Check - Blackbar Update Rate
-                if (ConfigurationManager.AppSettings["AdjustBlackbarRate"] == null)
-                {
-                    AVSettings.Save(vConfiguration, "AdjustBlackbarRate", "2000");
-                }
-
                 //Check - Blackbar Update Range
                 if (ConfigurationManager.AppSettings["AdjustBlackbarRange"] == null)
                 {
-                    AVSettings.Save(vConfiguration, "AdjustBlackbarRange", "25");
+                    AVSettings.Save(vConfiguration, "AdjustBlackbarRange", "30");
                 }
 
                 //Check - Adjust Blackbar Brightness
@@ -227,7 +221,7 @@ namespace AmbiPro.Settings
                 //Check - Update Rate
                 if (ConfigurationManager.AppSettings["UpdateRate"] == null)
                 {
-                    AVSettings.Save(vConfiguration, "UpdateRate", "25");
+                    AVSettings.Save(vConfiguration, "UpdateRate", "20");
                 }
 
                 //Check - Led Smoothing

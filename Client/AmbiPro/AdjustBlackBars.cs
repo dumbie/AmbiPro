@@ -10,31 +10,80 @@ namespace AmbiPro
 {
     public partial class SerialMonitor
     {
-        //Detect black bars around screen and adjust the margin accordingly
+        //Detect and adjust blackbars
         private static void AdjustBlackBars(LedSideTypes sideType, byte[] bitmapByteArray)
         {
             try
             {
-                if (sideType == LedSideTypes.BottomLeftToRight || sideType == LedSideTypes.BottomRightToLeft) { AdjustBlackbarBottom(bitmapByteArray, ref vMarginBottom); }
-                else if (sideType == LedSideTypes.TopLeftToRight || sideType == LedSideTypes.TopRightToLeft) { AdjustBlackbarTop(bitmapByteArray, ref vMarginTop); }
-                else if (sideType == LedSideTypes.LeftTopToBottom || sideType == LedSideTypes.LeftBottomToTop) { AdjustBlackbarLeft(bitmapByteArray, ref vMarginLeft); }
-                else if (sideType == LedSideTypes.RightTopToBottom || sideType == LedSideTypes.RightBottomToTop) { AdjustBlackbarRight(bitmapByteArray, ref vMarginRight); }
+                if (sideType == LedSideTypes.BottomLeftToRight || sideType == LedSideTypes.BottomRightToLeft)
+                {
+                    UpdateBlackBarMargin(DetectBlackbarBottom(bitmapByteArray), ref vMarginBottom);
+                }
+                else if (sideType == LedSideTypes.TopLeftToRight || sideType == LedSideTypes.TopRightToLeft)
+                {
+                    UpdateBlackBarMargin(DetectBlackbarTop(bitmapByteArray), ref vMarginTop);
+                }
+                else if (sideType == LedSideTypes.LeftTopToBottom || sideType == LedSideTypes.LeftBottomToTop)
+                {
+                    UpdateBlackBarMargin(DetectBlackbarLeft(bitmapByteArray), ref vMarginLeft);
+                }
+                else if (sideType == LedSideTypes.RightTopToBottom || sideType == LedSideTypes.RightBottomToTop)
+                {
+                    UpdateBlackBarMargin(DetectBlackbarRight(bitmapByteArray), ref vMarginRight);
+                }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Failed to adjust the black bars: " + ex.Message);
+                Debug.WriteLine("Failed to adjust black bars: " + ex.Message);
             }
         }
 
-        //Adjust black bars to horizontal top
-        private static void AdjustBlackbarTop(byte[] bitmapByteArray, ref int targetMargin)
+        //Update blackbar margin
+        private static void UpdateBlackBarMargin(int colorMargin, ref int captureMargin)
         {
             try
             {
-                for (int captureStep = vMarginMinimumOffset; captureStep < vBlackBarStepVertical; captureStep += vMarginBlackAccuracy)
+                //Debug.WriteLine("Color detected at: " + colorMargin);
+                //Debug.WriteLine("Current margin at: " + targetMargin);
+                if (captureMargin < colorMargin)
                 {
+                    int newMargin = captureMargin + vBlackBarAdjustStep;
+                    if (newMargin < colorMargin)
+                    {
+                        captureMargin = newMargin;
+                    }
+                    else
+                    {
+                        captureMargin = colorMargin;
+                    }
+                }
+                else if (captureMargin > colorMargin)
+                {
+                    int newMargin = captureMargin - vBlackBarAdjustStep;
+                    if (newMargin > colorMargin)
+                    {
+                        captureMargin = newMargin;
+                    }
+                    else
+                    {
+                        captureMargin = colorMargin;
+                    }
+                }
+            }
+            catch { }
+        }
+
+        //Detect blackbar top
+        private static int DetectBlackbarTop(byte[] bitmapByteArray)
+        {
+            int captureStep = vBlackBarMinimumMargin;
+            try
+            {
+                while (captureStep < vBlackBarVerticalMaximumMargin)
+                {
+                    captureStep += vBlackBarDetectStep;
                     int CaptureZoneVer = vCaptureDetails.Height - captureStep;
-                    for (int captureRange = vMarginMinimumOffset; captureRange < vBlackBarRangeVertical; captureRange += vMarginBlackAccuracy)
+                    for (int captureRange = vBlackBarMinimumMargin; captureRange < vBlackBarVerticalDetectRange; captureRange += vBlackBarDetectStep)
                     {
                         int CaptureZoneHor = captureRange;
                         ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, CaptureZoneHor, CaptureZoneVer);
@@ -48,30 +97,30 @@ namespace AmbiPro
                             //Calculate color luminance
                             int colorLuminance = (ColorPixel.R + ColorPixel.G + ColorPixel.B) / 3;
 
-                            //Check color for black bar
+                            //Check if color is detected
                             if (colorLuminance > setAdjustBlackBarBrightness)
                             {
-                                targetMargin = captureStep;
-                                //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
-                                return;
+                                return captureStep;
                             }
                         }
                     }
                 }
-                targetMargin = vBlackBarStepVertical;
             }
             catch { }
+            return captureStep;
         }
 
-        //Adjust black bars to horizontal bottom
-        private static void AdjustBlackbarBottom(byte[] bitmapByteArray, ref int targetMargin)
+        //Detect blackbar bottom
+        private static int DetectBlackbarBottom(byte[] bitmapByteArray)
         {
+            int captureStep = vBlackBarMinimumMargin;
             try
             {
-                for (int captureStep = vMarginMinimumOffset; captureStep < vBlackBarStepVertical; captureStep += vMarginBlackAccuracy)
+                while (captureStep < vBlackBarVerticalMaximumMargin)
                 {
+                    captureStep += vBlackBarDetectStep;
                     int CaptureZoneVer = captureStep;
-                    for (int captureRange = vMarginMinimumOffset; captureRange < vBlackBarRangeVertical; captureRange += vMarginBlackAccuracy)
+                    for (int captureRange = vBlackBarMinimumMargin; captureRange < vBlackBarVerticalDetectRange; captureRange += vBlackBarDetectStep)
                     {
                         int CaptureZoneHor = captureRange;
                         ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, CaptureZoneHor, CaptureZoneVer);
@@ -85,30 +134,30 @@ namespace AmbiPro
                             //Calculate color luminance
                             int colorLuminance = (ColorPixel.R + ColorPixel.G + ColorPixel.B) / 3;
 
-                            //Check color for black bar
+                            //Check if color is detected
                             if (colorLuminance > setAdjustBlackBarBrightness)
                             {
-                                targetMargin = captureStep;
-                                //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
-                                return;
+                                return captureStep;
                             }
                         }
                     }
                 }
-                targetMargin = vBlackBarStepVertical;
             }
             catch { }
+            return captureStep;
         }
 
-        //Adjust black bars to vertical right
-        private static void AdjustBlackbarRight(byte[] bitmapByteArray, ref int targetMargin)
+        //Detect blackbar right
+        private static int DetectBlackbarRight(byte[] bitmapByteArray)
         {
+            int captureStep = vBlackBarMinimumMargin;
             try
             {
-                for (int captureStep = vMarginMinimumOffset; captureStep < vBlackBarStepHorizontal; captureStep += vMarginBlackAccuracy)
+                while (captureStep < vBlackBarHorizontalMaximumMargin)
                 {
+                    captureStep += vBlackBarDetectStep;
                     int CaptureZoneHor = vCaptureDetails.Width - captureStep;
-                    for (int captureRange = vMarginMinimumOffset; captureRange < vBlackBarRangeHorizontal; captureRange += vMarginBlackAccuracy)
+                    for (int captureRange = vBlackBarMinimumMargin; captureRange < vBlackBarHorizontalDetectRange; captureRange += vBlackBarDetectStep)
                     {
                         int CaptureZoneVer = captureRange;
                         ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, CaptureZoneHor, CaptureZoneVer);
@@ -122,30 +171,30 @@ namespace AmbiPro
                             //Calculate color luminance
                             int colorLuminance = (ColorPixel.R + ColorPixel.G + ColorPixel.B) / 3;
 
-                            //Check color for black bar
+                            //Check if color is detected
                             if (colorLuminance > setAdjustBlackBarBrightness)
                             {
-                                targetMargin = captureStep;
-                                //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
-                                return;
+                                return captureStep;
                             }
                         }
                     }
                 }
-                targetMargin = vBlackBarStepHorizontal;
             }
             catch { }
+            return captureStep;
         }
 
-        //Adjust black bars to vertical left
-        private static void AdjustBlackbarLeft(byte[] bitmapByteArray, ref int targetMargin)
+        //Detect blackbar left
+        private static int DetectBlackbarLeft(byte[] bitmapByteArray)
         {
+            int captureStep = vBlackBarMinimumMargin;
             try
             {
-                for (int captureStep = vMarginMinimumOffset; captureStep < vBlackBarStepHorizontal; captureStep += vMarginBlackAccuracy)
+                while (captureStep < vBlackBarHorizontalMaximumMargin)
                 {
+                    captureStep += vBlackBarDetectStep;
                     int CaptureZoneHor = captureStep;
-                    for (int captureRange = vMarginMinimumOffset; captureRange < vBlackBarRangeHorizontal; captureRange += vMarginBlackAccuracy)
+                    for (int captureRange = vBlackBarMinimumMargin; captureRange < vBlackBarHorizontalDetectRange; captureRange += vBlackBarDetectStep)
                     {
                         int CaptureZoneVer = captureRange;
                         ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, CaptureZoneHor, CaptureZoneVer);
@@ -159,19 +208,17 @@ namespace AmbiPro
                             //Calculate color luminance
                             int colorLuminance = (ColorPixel.R + ColorPixel.G + ColorPixel.B) / 3;
 
-                            //Check color for black bar
+                            //Check if color is detected
                             if (colorLuminance > setAdjustBlackBarBrightness)
                             {
-                                targetMargin = captureStep;
-                                //Debug.WriteLine("Adjusting black bar margin to: " + captureStep);
-                                return;
+                                return captureStep;
                             }
                         }
                     }
                 }
-                targetMargin = vBlackBarStepHorizontal;
             }
             catch { }
+            return captureStep;
         }
     }
 }

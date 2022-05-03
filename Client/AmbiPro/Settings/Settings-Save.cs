@@ -222,13 +222,6 @@ namespace AmbiPro.Settings
                     tb_LedCaptureRange.Text = "Led capture range: " + sldr_LedCaptureRange.Value.ToString("0") + "%";
                 };
 
-                //Save - Blackbar detect rate
-                sldr_AdjustBlackbarRate.ValueChanged += (sender, e) =>
-                {
-                    AVSettings.Save(vConfiguration, "AdjustBlackbarRate", sldr_AdjustBlackbarRate.Value.ToString("0"));
-                    tb_AdjustBlackbarRate.Text = "Blackbar detection rate: " + Convert.ToInt32(sldr_AdjustBlackbarRate.Value) + " ms";
-                };
-
                 //Save - Blackbar detect range
                 sldr_AdjustBlackbarRange.ValueChanged += (sender, e) =>
                 {

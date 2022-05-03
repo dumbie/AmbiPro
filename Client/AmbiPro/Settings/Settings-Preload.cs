@@ -16,7 +16,6 @@ namespace AmbiPro
 
         //Led settings
         public static bool setAdjustBlackBars = true;
-        public static int setAdjustBlackbarRate = 0;
         public static int setAdjustBlackbarRange = 0;
         public static int setAdjustBlackBarBrightness = 0;
         public static int setUpdateRate = 0;
@@ -68,7 +67,6 @@ namespace AmbiPro
 
                 //Led settings
                 setAdjustBlackBars = Convert.ToBoolean(ConfigurationManager.AppSettings["AdjustBlackBars"]);
-                setAdjustBlackbarRate = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRate"]);
                 setAdjustBlackbarRange = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRange"]);
                 setAdjustBlackBarBrightness = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarBrightness"]);
                 setUpdateRate = Convert.ToInt32(ConfigurationManager.AppSettings["UpdateRate"]);

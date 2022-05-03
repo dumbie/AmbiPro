@@ -31,17 +31,18 @@ namespace AmbiPro
         public static ColorRGBA vCurrentLoopColor = new ColorRGBA() { R = 20 };
 
         //Blackbar Variables
-        public const int vMarginBlackAccuracy = 4;
-        public const int vMarginMinimumOffset = 2;
+        public const int vBlackBarAdjustStep = 12;
+        public const int vBlackBarDetectStep = 6;
+        public const int vBlackBarMinimumMargin = 2;
+        public static int vBlackBarHorizontalMaximumMargin = 0;
+        public static int vBlackBarVerticalMaximumMargin = 0;
+        public static int vBlackBarHorizontalDetectRange = 0;
+        public static int vBlackBarVerticalDetectRange = 0;
+        public static int vMarginTop = vBlackBarMinimumMargin;
+        public static int vMarginBottom = vBlackBarMinimumMargin;
+        public static int vMarginLeft = vBlackBarMinimumMargin;
+        public static int vMarginRight = vBlackBarMinimumMargin;
         public static int vMarginBlackLastUpdate = 0;
-        public static int vMarginTop = vMarginMinimumOffset;
-        public static int vMarginBottom = vMarginMinimumOffset;
-        public static int vMarginLeft = vMarginMinimumOffset;
-        public static int vMarginRight = vMarginMinimumOffset;
-        public static int vBlackBarStepHorizontal = 0;
-        public static int vBlackBarStepVertical = 0;
-        public static int vBlackBarRangeHorizontal = 0;
-        public static int vBlackBarRangeVertical = 0;
 
         //Screen capture Variables
         public static int vCaptureRange = 0;
@@ -62,15 +63,15 @@ namespace AmbiPro
             try
             {
                 //Blackbar Variables
+                vBlackBarHorizontalMaximumMargin = 0;
+                vBlackBarVerticalMaximumMargin = 0;
+                vBlackBarHorizontalDetectRange = 0;
+                vBlackBarVerticalDetectRange = 0;
+                vMarginTop = vBlackBarMinimumMargin;
+                vMarginBottom = vBlackBarMinimumMargin;
+                vMarginLeft = vBlackBarMinimumMargin;
+                vMarginRight = vBlackBarMinimumMargin;
                 vMarginBlackLastUpdate = 0;
-                vMarginTop = vMarginMinimumOffset;
-                vMarginBottom = vMarginMinimumOffset;
-                vMarginLeft = vMarginMinimumOffset;
-                vMarginRight = vMarginMinimumOffset;
-                vBlackBarStepHorizontal = 0;
-                vBlackBarStepVertical = 0;
-                vBlackBarRangeHorizontal = 0;
-                vBlackBarRangeVertical = 0;
 
                 //Screen capture Variables
                 vCaptureRange = 0;

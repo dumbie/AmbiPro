@@ -74,10 +74,10 @@ namespace AmbiPro
                 //Debug.WriteLine("Capture range set to: " + vCaptureRange);
 
                 //Set blackbar range
-                vBlackBarStepVertical = (setAdjustBlackbarRange * vCaptureDetails.Height) / 100;
-                vBlackBarRangeVertical = vCaptureDetails.Width - vMarginMinimumOffset;
-                vBlackBarStepHorizontal = (setAdjustBlackbarRange * vCaptureDetails.Width) / 100;
-                vBlackBarRangeHorizontal = vCaptureDetails.Height - vMarginMinimumOffset;
+                vBlackBarVerticalMaximumMargin = (setAdjustBlackbarRange * vCaptureDetails.Height) / 100;
+                vBlackBarVerticalDetectRange = vCaptureDetails.Width - vBlackBarMinimumMargin;
+                vBlackBarHorizontalMaximumMargin = (setAdjustBlackbarRange * vCaptureDetails.Width) / 100;
+                vBlackBarHorizontalDetectRange = vCaptureDetails.Height - vBlackBarMinimumMargin;
                 //Debug.WriteLine("Blackbar range set to: V" + vBlackBarRangeVertical + "/H" + vBlackBarRangeHorizontal);
             }
             catch { }
@@ -139,18 +139,14 @@ namespace AmbiPro
                         //Convert BitmapIntPtr to BitmapByteArray
                         byte[] bitmapByteArray = CaptureBitmap.BitmapIntPtrToBitmapByteArray(bitmapIntPtr, vCaptureDetails);
 
-                        //Adjust the black bars margin
-                        if (setAdjustBlackBars)
+                        //Adjust the black bars range
+                        if (setAdjustBlackBars && (Environment.TickCount - vMarginBlackLastUpdate) > 100)
                         {
-                            if (setAdjustBlackbarRate == 0 || (Environment.TickCount - vMarginBlackLastUpdate) > setAdjustBlackbarRate)
-                            {
-                                //Set blackbar range
-                                AdjustBlackBars(setLedSideFirst, bitmapByteArray);
-                                AdjustBlackBars(setLedSideSecond, bitmapByteArray);
-                                AdjustBlackBars(setLedSideThird, bitmapByteArray);
-                                AdjustBlackBars(setLedSideFourth, bitmapByteArray);
-                                vMarginBlackLastUpdate = Environment.TickCount;
-                            }
+                            AdjustBlackBars(setLedSideFirst, bitmapByteArray);
+                            AdjustBlackBars(setLedSideSecond, bitmapByteArray);
+                            AdjustBlackBars(setLedSideThird, bitmapByteArray);
+                            AdjustBlackBars(setLedSideFourth, bitmapByteArray);
+                            vMarginBlackLastUpdate = Environment.TickCount;
                         }
 
                         //Check led capture sides color
