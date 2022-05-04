@@ -132,7 +132,16 @@ namespace AmbiPro.Settings
             try
             {
                 Slider senderSlider = (Slider)sender;
-                grid_BackgroundSolidColor.Opacity = senderSlider.Value;
+                if (senderSlider.Value > 1.0)
+                {
+                    grid_BackgroundSolid.Background = new SolidColorBrush(Colors.White);
+                    grid_BackgroundSolidColor.Opacity = 2.0 - senderSlider.Value;
+                }
+                else if (senderSlider.Value < 1.0)
+                {
+                    grid_BackgroundSolid.Background = new SolidColorBrush(Colors.Black);
+                    grid_BackgroundSolidColor.Opacity = senderSlider.Value;
+                }
             }
             catch { }
         }

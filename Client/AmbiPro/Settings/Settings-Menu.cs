@@ -36,7 +36,7 @@ namespace AmbiPro.Settings
                 {
                     StackPanel selectedStackPanel = (StackPanel)lb_Menu.SelectedItem;
 
-                    if (selectedStackPanel.Name != "menuButtonUpdate" && selectedStackPanel.Name != "menuButtonClose")
+                    if (selectedStackPanel.Name != "menuButtonUpdate" && selectedStackPanel.Name != "menuButtonClose" && selectedStackPanel.Name != "menuButtonExit")
                     {
                         //Update current visible menu
                         vCurrentVisibleMenu = selectedStackPanel.Name;
@@ -127,6 +127,10 @@ namespace AmbiPro.Settings
                     else if (selectedStackPanel.Name == "menuButtonClose")
                     {
                         this.Close();
+                    }
+                    else if (selectedStackPanel.Name == "menuButtonExit")
+                    {
+                        await AppStartup.Application_Exit();
                     }
                 }
             }

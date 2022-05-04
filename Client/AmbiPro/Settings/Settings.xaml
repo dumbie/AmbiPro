@@ -155,7 +155,6 @@
                         </StackPanel>
 
                         <StackPanel Name="grid_ColorMenu_SolidColor" Orientation="Horizontal" Visibility="Collapsed">
-
                             <Button Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Change test color" Click="button_BackgroundSolidChange_Click">
                                 <Image Height="30" Source="/Assets/Icons/ColorSwitch.png"/>
                             </Button>
@@ -163,7 +162,7 @@
                                 <Image Height="30" Source="/Assets/Icons/Transparent.png"/>
                             </Button>
                             <Image Height="30" Margin="5" Source="/Assets/Icons/Brightness.png"/>
-                            <Slider Width="300" Margin="5" Value="1.0" Minimum="0.05" Maximum="1.0" ValueChanged="slider_BackgroundSolidBrightness_ValueChanged"/>
+                            <Slider Width="335" Margin="5" Value="1.0" Minimum="0.05" Maximum="1.50" ValueChanged="slider_BackgroundSolidBrightness_ValueChanged"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -229,6 +228,10 @@
                         <StackPanel Name="menuButtonClose" Style="{StaticResource ListBoxMenuStackPanel}">
                             <Image Source="/Assets/Icons/Close.png" Width="55" HorizontalAlignment="Center"/>
                             <TextBlock Text="Close" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Name="menuButtonExit" Style="{StaticResource ListBoxMenuStackPanel}">
+                            <Image Source="/Assets/Icons/Exit.png" Width="55" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Exit" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </ListBox>
                 </Border>

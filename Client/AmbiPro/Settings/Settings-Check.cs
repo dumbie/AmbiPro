@@ -113,7 +113,7 @@ namespace AmbiPro.Settings
                 //Check - Led Saturation
                 if (ConfigurationManager.AppSettings["LedSaturation"] == null)
                 {
-                    AVSettings.Save(vConfiguration, "LedSaturation", "110");
+                    AVSettings.Save(vConfiguration, "LedSaturation", "120");
                 }
 
                 //Check - Color Loop Speed
