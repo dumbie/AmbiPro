@@ -209,12 +209,6 @@ namespace AmbiPro.Settings
                     tb_LedColorBlue.Text = "Blue: " + sldr_LedColorBlue.Value.ToString("0") + "%";
                 };
 
-                //Save - Led Strip Correction
-                cb_LedStripCorrection.Click += (sender, e) =>
-                {
-                    AVSettings.Save(vConfiguration, "LedStripCorrection", cb_LedStripCorrection.IsChecked.ToString());
-                };
-
                 //Save - Led Capture Range
                 sldr_LedCaptureRange.ValueChanged += (sender, e) =>
                 {

@@ -140,9 +140,6 @@ namespace AmbiPro.Settings
                 tb_LedColorBlue.Text = "Blue: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedColorBlue"]) + "%";
                 sldr_LedColorBlue.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedColorBlue"]);
 
-                //Load - Led Strip Correction
-                cb_LedStripCorrection.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["LedStripCorrection"]);
-
                 //Load - Led Capture Range
                 tb_LedCaptureRange.Text = "Led capture range: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedCaptureRange"]) + "%";
                 sldr_LedCaptureRange.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedCaptureRange"]);

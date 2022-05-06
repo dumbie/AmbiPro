@@ -220,12 +220,18 @@
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Styles\MainStyles.xaml.cs">
       <Link>ArnoldVinkCode\Styles\MainStyles.xaml.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\ScreenCaptureDLL\ScreenCaptureShared\CaptureBitmap.cs">
+      <Link>ScreenCapture\CaptureBitmap.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ScreenCaptureDLL\ScreenCaptureShared\CaptureClasses.cs">
+      <Link>ScreenCapture\CaptureClasses.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ScreenCaptureDLL\ScreenCaptureShared\CaptureImport.cs">
+      <Link>ScreenCapture\CaptureImport.cs</Link>
+    </Compile>
     <Compile Include="AdjustBlackBars.cs" />
     <Compile Include="AdjustLedColors.cs" />
     <Compile Include="AppLaunchCheck.cs" />
-    <Compile Include="ScreenCapture\CaptureBitmap.cs" />
-    <Compile Include="ScreenCapture\CaptureClasses.cs" />
-    <Compile Include="ScreenCapture\CaptureImport.cs" />
     <Compile Include="AppStartup.cs" />
     <Compile Include="AppEvents.cs" />
     <Compile Include="Resources\Classes\ColorRGBA.cs" />

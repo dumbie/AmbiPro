@@ -181,27 +181,6 @@ namespace AmbiPro
                 catch { }
             }
 
-            public void AdjustLedColorCorrection(bool ledCorrection)
-            {
-                try
-                {
-                    //Check if led correction is enabled
-                    if (!ledCorrection) { return; }
-
-                    //Check color difference
-                    int differenceBlueGreen = B - G;
-                    if (differenceBlueGreen > 0 && R <= 10)
-                    {
-                        float adjustDifference = differenceBlueGreen / 255.0F;
-                        float adjustRed = 1.0F - (0.3086F - adjustDifference);
-                        float adjustGreen = 1.0F - (0.6094F - adjustDifference);
-                        float adjustBlue = 1.0F - (0.0820F - adjustDifference);
-                        AdjustColorChannels(adjustRed, adjustGreen, adjustBlue);
-                    }
-                }
-                catch { }
-            }
-
             public void ApplyColorMatrix(ColorMatrix colorMatrix)
             {
                 try

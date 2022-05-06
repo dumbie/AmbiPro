@@ -72,10 +72,8 @@ namespace AmbiPro
                 //Debug.WriteLine("Capture range set to: " + vCaptureRange);
 
                 //Set blackbar range
-                vBlackBarVerticalMaximumMargin = (setAdjustBlackbarRange * vCaptureDetails.Height) / 100;
-                vBlackBarVerticalDetectRange = vCaptureDetails.Width - vBlackBarMinimumMargin;
-                vBlackBarHorizontalMaximumMargin = (setAdjustBlackbarRange * vCaptureDetails.Width) / 100;
-                vBlackBarHorizontalDetectRange = vCaptureDetails.Height - vBlackBarMinimumMargin;
+                vBlackbarRangeVertical = (setAdjustBlackbarRange * vCaptureDetails.Height) / 100;
+                vBlackbarRangeHorizontal = (setAdjustBlackbarRange * vCaptureDetails.Width) / 100;
                 //Debug.WriteLine("Blackbar range set to: V" + vBlackBarRangeVertical + "/H" + vBlackBarRangeHorizontal);
             }
             catch { }
@@ -138,13 +136,13 @@ namespace AmbiPro
                         byte[] bitmapByteArray = CaptureBitmap.BitmapIntPtrToBitmapByteArray(bitmapIntPtr, vCaptureDetails);
 
                         //Adjust the black bars range
-                        if (setAdjustBlackBars && (Environment.TickCount - vMarginBlackLastUpdate) > 100)
+                        if (setAdjustBlackBars && (Environment.TickCount - vBlackbarLastUpdate) > 100)
                         {
                             AdjustBlackBars(setLedSideFirst, bitmapByteArray);
                             AdjustBlackBars(setLedSideSecond, bitmapByteArray);
                             AdjustBlackBars(setLedSideThird, bitmapByteArray);
                             AdjustBlackBars(setLedSideFourth, bitmapByteArray);
-                            vMarginBlackLastUpdate = Environment.TickCount;
+                            vBlackbarLastUpdate = Environment.TickCount;
                         }
 
                         //Check led capture sides color

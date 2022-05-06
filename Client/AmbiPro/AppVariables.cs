@@ -31,21 +31,18 @@ namespace AmbiPro
         public static ColorRGBA vCurrentLoopColor = new ColorRGBA() { R = 20 };
 
         //Blackbar Variables
-        public const int vBlackBarAdjustStep = 12;
-        public const int vBlackBarDetectStep = 6;
-        public const int vBlackBarMinimumMargin = 2;
-        public static int vBlackBarHorizontalMaximumMargin = 0;
-        public static int vBlackBarVerticalMaximumMargin = 0;
-        public static int vBlackBarHorizontalDetectRange = 0;
-        public static int vBlackBarVerticalDetectRange = 0;
-        public static int vMarginTop = vBlackBarMinimumMargin;
-        public static int vMarginBottom = vBlackBarMinimumMargin;
-        public static int vMarginLeft = vBlackBarMinimumMargin;
-        public static int vMarginRight = vBlackBarMinimumMargin;
-        public static int vMarginBlackLastUpdate = 0;
+        public const int vBlackbarAdjustStep = 8;
+        public const int vBlackbarDetectStep = 4;
+        public static int vBlackbarRangeHorizontal = 0;
+        public static int vBlackbarRangeVertical = 0;
+        public static int vBlackbarLastUpdate = 0;
 
         //Screen capture Variables
         public static int vCaptureRange = 0;
+        public static int vCaptureMarginTop = 0;
+        public static int vCaptureMarginBottom = 0;
+        public static int vCaptureMarginLeft = 0;
+        public static int vCaptureMarginRight = 0;
         public static CaptureDetails vCaptureDetails;
         public static CaptureSettings vCaptureSettings;
         public static byte[][] vCaptureByteHistoryArray = new byte[20][];
@@ -63,18 +60,16 @@ namespace AmbiPro
             try
             {
                 //Blackbar Variables
-                vBlackBarHorizontalMaximumMargin = 0;
-                vBlackBarVerticalMaximumMargin = 0;
-                vBlackBarHorizontalDetectRange = 0;
-                vBlackBarVerticalDetectRange = 0;
-                vMarginTop = vBlackBarMinimumMargin;
-                vMarginBottom = vBlackBarMinimumMargin;
-                vMarginLeft = vBlackBarMinimumMargin;
-                vMarginRight = vBlackBarMinimumMargin;
-                vMarginBlackLastUpdate = 0;
+                vBlackbarRangeHorizontal = 0;
+                vBlackbarRangeVertical = 0;
+                vBlackbarLastUpdate = 0;
 
                 //Screen capture Variables
                 vCaptureRange = 0;
+                vCaptureMarginTop = 0;
+                vCaptureMarginBottom = 0;
+                vCaptureMarginLeft = 0;
+                vCaptureMarginRight = 0;
                 vCaptureDetails = new CaptureDetails();
                 vCaptureSettings = new CaptureSettings();
                 vCaptureByteHistoryArray = new byte[20][];

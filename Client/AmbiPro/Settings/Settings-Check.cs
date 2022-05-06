@@ -107,13 +107,13 @@ namespace AmbiPro.Settings
                 //Check - Led Gamma
                 if (ConfigurationManager.AppSettings["LedGamma3"] == null)
                 {
-                    AVSettings.Save(vConfiguration, "LedGamma3", "1.50");
+                    AVSettings.Save(vConfiguration, "LedGamma3", "1.60");
                 }
 
                 //Check - Led Saturation
                 if (ConfigurationManager.AppSettings["LedSaturation"] == null)
                 {
-                    AVSettings.Save(vConfiguration, "LedSaturation", "120");
+                    AVSettings.Save(vConfiguration, "LedSaturation", "110");
                 }
 
                 //Check - Color Loop Speed
@@ -162,12 +162,6 @@ namespace AmbiPro.Settings
                 if (ConfigurationManager.AppSettings["LedColorBlue"] == null)
                 {
                     AVSettings.Save(vConfiguration, "LedColorBlue", "100");
-                }
-
-                //Check - Led Strip Correction
-                if (!AVSettings.Check(vConfiguration, "LedStripCorrection"))
-                {
-                    AVSettings.Save(vConfiguration, "LedStripCorrection", "True");
                 }
 
                 //Check - Led Capture Range

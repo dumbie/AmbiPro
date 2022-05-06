@@ -35,7 +35,6 @@ namespace AmbiPro
         public static string setSolidLedColor = string.Empty;
         public static int setLedMinColor = 0;
         public static byte setLedMinBrightness = 0;
-        public static bool setLedStripCorrection = true;
         public static LedOutputTypes setLedOutput = 0;
         public static int setLedCaptureRange = 0;
         public static int setLedRotate = 0;
@@ -86,7 +85,6 @@ namespace AmbiPro
                 setColorLoopSpeed = Convert.ToInt32(ConfigurationManager.AppSettings["ColorLoopSpeed"]);
                 setSpectrumRotationSpeed = Convert.ToInt32(ConfigurationManager.AppSettings["SpectrumRotationSpeed"]);
                 setSolidLedColor = ConfigurationManager.AppSettings["SolidLedColor"].ToString();
-                setLedStripCorrection = AVSettings.Load(vConfiguration, "LedStripCorrection", typeof(bool));
                 setLedCaptureRange = Convert.ToInt32(ConfigurationManager.AppSettings["LedCaptureRange"]);
                 setLedOutput = (LedOutputTypes)Convert.ToInt32(ConfigurationManager.AppSettings["LedOutput"]);
                 setLedMode = Convert.ToInt32(ConfigurationManager.AppSettings["LedMode"]);
