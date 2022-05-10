@@ -23,6 +23,8 @@ namespace AmbiPro
                 }
 
                 //Calculate led color direction and bottom gap
+                int blackbarZoneHor = 0;
+                int blackbarZoneVer = 0;
                 int captureZoneHor = 0;
                 int captureZoneVer = 0;
                 int captureZoneSize = 0;
@@ -33,15 +35,15 @@ namespace AmbiPro
                 if (sideType == LedSideTypes.TopLeftToRight)
                 {
                     captureZoneHor = 0;
-                    captureZoneVer = vCaptureDetails.Height - vCaptureMarginTop;
+                    captureZoneVer = vCaptureDetails.Height;
                     captureZoneSize = vCaptureDetails.Width / directionLedCount;
                     captureDiffMax = (vCaptureDetails.Width - (captureZoneSize * directionLedCount)) / 2;
                     captureDiffMin = directionLedCount - captureDiffMax;
                 }
                 else if (sideType == LedSideTypes.TopRightToLeft)
                 {
-                    captureZoneHor = vCaptureDetails.Width - 1;
-                    captureZoneVer = vCaptureDetails.Height - vCaptureMarginTop;
+                    captureZoneHor = vCaptureDetails.Width;
+                    captureZoneVer = vCaptureDetails.Height;
                     captureZoneSize = vCaptureDetails.Width / directionLedCount;
                     captureDiffMax = (vCaptureDetails.Width - (captureZoneSize * directionLedCount)) / 2;
                     captureDiffMin = directionLedCount - captureDiffMax;
@@ -50,7 +52,7 @@ namespace AmbiPro
                 {
                     directionLedCount += setLedBottomGap;
                     captureZoneHor = 0;
-                    captureZoneVer = vCaptureMarginBottom;
+                    captureZoneVer = 0;
                     captureZoneSize = vCaptureDetails.Width / directionLedCount;
                     captureDiffMax = (vCaptureDetails.Width - (captureZoneSize * directionLedCount)) / 2;
                     captureDiffMin = directionLedCount - captureDiffMax;
@@ -62,8 +64,8 @@ namespace AmbiPro
                 else if (sideType == LedSideTypes.BottomRightToLeft)
                 {
                     directionLedCount += setLedBottomGap;
-                    captureZoneHor = vCaptureDetails.Width - 1;
-                    captureZoneVer = vCaptureMarginBottom;
+                    captureZoneHor = vCaptureDetails.Width;
+                    captureZoneVer = 0;
                     captureZoneSize = vCaptureDetails.Width / directionLedCount;
                     captureDiffMax = (vCaptureDetails.Width - (captureZoneSize * directionLedCount)) / 2;
                     captureDiffMin = directionLedCount - captureDiffMax;
@@ -74,15 +76,15 @@ namespace AmbiPro
                 }
                 else if (sideType == LedSideTypes.LeftBottomToTop)
                 {
-                    captureZoneHor = vCaptureMarginLeft;
-                    captureZoneVer = 1;
+                    captureZoneHor = 0;
+                    captureZoneVer = 0;
                     captureZoneSize = vCaptureDetails.Height / directionLedCount;
                     captureDiffMax = (vCaptureDetails.Height - (captureZoneSize * directionLedCount)) / 2;
                     captureDiffMin = directionLedCount - captureDiffMax;
                 }
                 else if (sideType == LedSideTypes.LeftTopToBottom)
                 {
-                    captureZoneHor = vCaptureMarginLeft;
+                    captureZoneHor = 0;
                     captureZoneVer = vCaptureDetails.Height;
                     captureZoneSize = vCaptureDetails.Height / directionLedCount;
                     captureDiffMax = (vCaptureDetails.Height - (captureZoneSize * directionLedCount)) / 2;
@@ -90,15 +92,15 @@ namespace AmbiPro
                 }
                 else if (sideType == LedSideTypes.RightBottomToTop)
                 {
-                    captureZoneHor = vCaptureDetails.Width - vCaptureMarginRight;
-                    captureZoneVer = 1;
+                    captureZoneHor = vCaptureDetails.Width;
+                    captureZoneVer = 0;
                     captureZoneSize = vCaptureDetails.Height / directionLedCount;
                     captureDiffMax = (vCaptureDetails.Height - (captureZoneSize * directionLedCount)) / 2;
                     captureDiffMin = directionLedCount - captureDiffMax;
                 }
                 else if (sideType == LedSideTypes.RightTopToBottom)
                 {
-                    captureZoneHor = vCaptureDetails.Width - vCaptureMarginRight;
+                    captureZoneHor = vCaptureDetails.Width;
                     captureZoneVer = vCaptureDetails.Height;
                     captureZoneSize = vCaptureDetails.Height / directionLedCount;
                     captureDiffMax = (vCaptureDetails.Height - (captureZoneSize * directionLedCount)) / 2;
@@ -130,9 +132,47 @@ namespace AmbiPro
                     }
                     else
                     {
-                        //Capture the average color from the bitmap screen capture
-                        CaptureColorAlgorithm(bitmapByteArray, out ColorRGBA captureColor, captureZoneHor, captureZoneVer, captureZoneSize, sideType);
-                        //Debug.WriteLine("Captured average color R" + CaptureColor.R + "G" + CaptureColor.G + "B" + CaptureColor.B + " from the bitmap data.");
+                        //Detect led blackbar margin
+                        if (sideType == LedSideTypes.LeftBottomToTop || sideType == LedSideTypes.LeftTopToBottom)
+                        {
+                            if (vBlackbarRunUpdate)
+                            {
+                                int colorMargin = BlackbarColorAlgorithm(bitmapByteArray, captureZoneHor, captureZoneVer, captureZoneSize, vBlackbarRangeHorizontal, sideType);
+                                UpdateBlackBarMargin(colorMargin, ref vBlackbarLedMarginLeft[currentLed]);
+                            }
+                            blackbarZoneHor = vBlackbarLedMarginLeft[currentLed];
+                        }
+                        else if (sideType == LedSideTypes.RightBottomToTop || sideType == LedSideTypes.RightTopToBottom)
+                        {
+                            if (vBlackbarRunUpdate)
+                            {
+                                int colorMargin = BlackbarColorAlgorithm(bitmapByteArray, captureZoneHor, captureZoneVer, captureZoneSize, vBlackbarRangeHorizontal, sideType);
+                                UpdateBlackBarMargin(colorMargin, ref vBlackbarLedMarginRight[currentLed]);
+                            }
+                            blackbarZoneHor = -vBlackbarLedMarginRight[currentLed];
+                        }
+                        else if (sideType == LedSideTypes.TopLeftToRight || sideType == LedSideTypes.TopRightToLeft)
+                        {
+                            if (vBlackbarRunUpdate)
+                            {
+                                int colorMargin = BlackbarColorAlgorithm(bitmapByteArray, captureZoneHor, captureZoneVer, captureZoneSize, vBlackbarRangeVertical, sideType);
+                                UpdateBlackBarMargin(colorMargin, ref vBlackbarLedMarginTop[currentLed]);
+                            }
+                            blackbarZoneVer = -vBlackbarLedMarginTop[currentLed];
+                        }
+                        else if (sideType == LedSideTypes.BottomLeftToRight || sideType == LedSideTypes.BottomRightToLeft)
+                        {
+                            if (vBlackbarRunUpdate)
+                            {
+                                int colorMargin = BlackbarColorAlgorithm(bitmapByteArray, captureZoneHor, captureZoneVer, captureZoneSize, vBlackbarRangeVertical, sideType);
+                                UpdateBlackBarMargin(colorMargin, ref vBlackbarLedMarginBottom[currentLed]);
+                            }
+                            blackbarZoneVer = vBlackbarLedMarginBottom[currentLed];
+                        }
+
+                        //Capture the average color
+                        CaptureColorAlgorithm(bitmapByteArray, out ColorRGBA captureColor, captureZoneHor + blackbarZoneHor, captureZoneVer + blackbarZoneVer, captureZoneSize, vCaptureRange, sideType);
+                        //Debug.WriteLine("Captured average color R" + captureColor.R + "G" + captureColor.G + "B" + captureColor.B + " from the bitmap data.");
 
                         //Check if color is captured
                         if (captureColor == null)
@@ -190,8 +230,125 @@ namespace AmbiPro
             }
         }
 
-        //Capture the color pixels
-        private static void CaptureColorAlgorithm(byte[] bitmapByteArray, out ColorRGBA averageColor, int captureZoneHor, int captureZoneVer, int captureZoneSize, LedSideTypes sideType)
+        //Update blackbar margin
+        private static void UpdateBlackBarMargin(int colorMargin, ref int captureMargin)
+        {
+            try
+            {
+                //Debug.WriteLine("Color detected at: " + colorMargin);
+                //Debug.WriteLine("Current margin at: " + captureMargin);
+                if (captureMargin < colorMargin)
+                {
+                    int newMargin = captureMargin + vBlackbarAdjustStep;
+                    if (newMargin < colorMargin)
+                    {
+                        captureMargin = newMargin;
+                    }
+                    else
+                    {
+                        captureMargin = colorMargin;
+                    }
+                }
+                else if (captureMargin > colorMargin)
+                {
+                    int newMargin = captureMargin - vBlackbarAdjustStep;
+                    if (newMargin > colorMargin)
+                    {
+                        captureMargin = newMargin;
+                    }
+                    else
+                    {
+                        captureMargin = colorMargin;
+                    }
+                }
+            }
+            catch { }
+        }
+
+        //Check color for blackbars
+        private static int BlackbarColorAlgorithm(byte[] bitmapByteArray, int captureZoneHor, int captureZoneVer, int captureZoneSize, int captureZoneRange, LedSideTypes sideType)
+        {
+            int captureRangeStep = 0;
+            try
+            {
+                int CaptureZoneHorRange = 0;
+                int CaptureZoneVerRange = 0;
+                for (captureRangeStep = 0; captureRangeStep < captureZoneRange; captureRangeStep += vBlackbarDetectAccuracy)
+                {
+                    for (int captureSizeStep = 0; captureSizeStep < captureZoneSize; captureSizeStep += vBlackbarDetectAccuracy)
+                    {
+                        if (sideType == LedSideTypes.TopLeftToRight)
+                        {
+                            CaptureZoneHorRange = captureSizeStep;
+                            CaptureZoneVerRange = -captureRangeStep;
+                        }
+                        else if (sideType == LedSideTypes.TopRightToLeft)
+                        {
+                            CaptureZoneHorRange = -captureSizeStep;
+                            CaptureZoneVerRange = -captureRangeStep;
+                        }
+                        else if (sideType == LedSideTypes.BottomLeftToRight)
+                        {
+                            CaptureZoneHorRange = captureSizeStep;
+                            CaptureZoneVerRange = captureRangeStep;
+                        }
+                        else if (sideType == LedSideTypes.BottomRightToLeft)
+                        {
+                            CaptureZoneHorRange = -captureSizeStep;
+                            CaptureZoneVerRange = captureRangeStep;
+                        }
+                        else if (sideType == LedSideTypes.LeftBottomToTop)
+                        {
+                            CaptureZoneHorRange = captureRangeStep;
+                            CaptureZoneVerRange = captureSizeStep;
+                        }
+                        else if (sideType == LedSideTypes.LeftTopToBottom)
+                        {
+                            CaptureZoneHorRange = captureRangeStep;
+                            CaptureZoneVerRange = -captureSizeStep;
+                        }
+                        else if (sideType == LedSideTypes.RightBottomToTop)
+                        {
+                            CaptureZoneHorRange = -captureRangeStep;
+                            CaptureZoneVerRange = captureSizeStep;
+                        }
+                        else if (sideType == LedSideTypes.RightTopToBottom)
+                        {
+                            CaptureZoneHorRange = -captureRangeStep;
+                            CaptureZoneVerRange = -captureSizeStep;
+                        }
+
+                        ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange);
+                        if (ColorPixel != null)
+                        {
+                            if (vDebugCaptureAllowed && setDebugBlackBar)
+                            {
+                                ColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange, ColorRGBA.Orange);
+                            }
+
+                            //Calculate color luminance
+                            int colorLuminance = (ColorPixel.R + ColorPixel.G + ColorPixel.B) / 3;
+
+                            //Check if color is detected
+                            if (colorLuminance > setAdjustBlackBarBrightness)
+                            {
+                                //Debug.WriteLine("Color detected at: " + captureRangeStep);
+                                return captureRangeStep;
+                            }
+                        }
+                    }
+                }
+                return captureRangeStep;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed to check colors for blackbar: " + ex.Message);
+                return captureRangeStep;
+            }
+        }
+
+        //Capture color
+        private static void CaptureColorAlgorithm(byte[] bitmapByteArray, out ColorRGBA averageColor, int captureZoneHor, int captureZoneVer, int captureZoneSize, int captureRangeSize, LedSideTypes sideType)
         {
             try
             {
@@ -202,50 +359,50 @@ namespace AmbiPro
                 int CaptureEvenStep = 1;
                 int CaptureZoneHorRange = 0;
                 int CaptureZoneVerRange = 0;
-                for (int captureStep = 0; captureStep < captureZoneSize; captureStep++)
+                for (int captureSizeStep = 0; captureSizeStep < captureZoneSize; captureSizeStep += 1)
                 {
                     if (CaptureEvenStep == 1) { CaptureEvenStep = 0; } else { CaptureEvenStep = 1; }
-                    for (int captureRange = 0; captureRange < vCaptureRange; captureRange += 2)
+                    for (int captureRangeStep = 0; captureRangeStep < captureRangeSize; captureRangeStep += 2)
                     {
                         if (sideType == LedSideTypes.TopLeftToRight)
                         {
-                            CaptureZoneHorRange = captureStep;
-                            CaptureZoneVerRange = -captureRange - CaptureEvenStep;
+                            CaptureZoneHorRange = captureSizeStep;
+                            CaptureZoneVerRange = -captureRangeStep - CaptureEvenStep;
                         }
                         else if (sideType == LedSideTypes.TopRightToLeft)
                         {
-                            CaptureZoneHorRange = -captureStep;
-                            CaptureZoneVerRange = -captureRange - CaptureEvenStep;
+                            CaptureZoneHorRange = -captureSizeStep;
+                            CaptureZoneVerRange = -captureRangeStep - CaptureEvenStep;
                         }
                         else if (sideType == LedSideTypes.BottomLeftToRight)
                         {
-                            CaptureZoneHorRange = captureStep;
-                            CaptureZoneVerRange = captureRange + CaptureEvenStep;
+                            CaptureZoneHorRange = captureSizeStep;
+                            CaptureZoneVerRange = captureRangeStep + CaptureEvenStep;
                         }
                         else if (sideType == LedSideTypes.BottomRightToLeft)
                         {
-                            CaptureZoneHorRange = -captureStep;
-                            CaptureZoneVerRange = captureRange + CaptureEvenStep;
+                            CaptureZoneHorRange = -captureSizeStep;
+                            CaptureZoneVerRange = captureRangeStep + CaptureEvenStep;
                         }
                         else if (sideType == LedSideTypes.LeftBottomToTop)
                         {
-                            CaptureZoneHorRange = captureRange + CaptureEvenStep;
-                            CaptureZoneVerRange = captureStep;
+                            CaptureZoneHorRange = captureRangeStep + CaptureEvenStep;
+                            CaptureZoneVerRange = captureSizeStep;
                         }
                         else if (sideType == LedSideTypes.LeftTopToBottom)
                         {
-                            CaptureZoneHorRange = captureRange + CaptureEvenStep;
-                            CaptureZoneVerRange = -captureStep;
+                            CaptureZoneHorRange = captureRangeStep + CaptureEvenStep;
+                            CaptureZoneVerRange = -captureSizeStep;
                         }
                         else if (sideType == LedSideTypes.RightBottomToTop)
                         {
-                            CaptureZoneHorRange = -captureRange - CaptureEvenStep;
-                            CaptureZoneVerRange = captureStep;
+                            CaptureZoneHorRange = -captureRangeStep - CaptureEvenStep;
+                            CaptureZoneVerRange = captureSizeStep;
                         }
                         else if (sideType == LedSideTypes.RightTopToBottom)
                         {
-                            CaptureZoneHorRange = -captureRange - CaptureEvenStep;
-                            CaptureZoneVerRange = -captureStep;
+                            CaptureZoneHorRange = -captureRangeStep - CaptureEvenStep;
+                            CaptureZoneVerRange = -captureSizeStep;
                         }
 
                         ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange);
@@ -275,7 +432,7 @@ namespace AmbiPro
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Failed to capture pixel colors: " + ex.Message);
+                Debug.WriteLine("Failed to capture colors: " + ex.Message);
                 averageColor = null;
             }
         }

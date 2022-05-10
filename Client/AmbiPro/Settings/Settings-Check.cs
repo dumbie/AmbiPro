@@ -77,13 +77,13 @@ namespace AmbiPro.Settings
                 //Check - Blackbar Update Range
                 if (ConfigurationManager.AppSettings["AdjustBlackbarRange"] == null)
                 {
-                    AVSettings.Save(vConfiguration, "AdjustBlackbarRange", "30");
+                    AVSettings.Save(vConfiguration, "AdjustBlackbarRange", "25");
                 }
 
                 //Check - Adjust Blackbar Brightness
                 if (ConfigurationManager.AppSettings["AdjustBlackBarBrightness"] == null)
                 {
-                    AVSettings.Save(vConfiguration, "AdjustBlackBarBrightness", "2");
+                    AVSettings.Save(vConfiguration, "AdjustBlackBarBrightness", "1");
                 }
 
                 //Check - Led Bottom Gap

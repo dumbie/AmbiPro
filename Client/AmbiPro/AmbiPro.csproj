@@ -229,7 +229,6 @@
     <Compile Include="..\..\..\ScreenCaptureDLL\ScreenCaptureShared\CaptureImport.cs">
       <Link>ScreenCapture\CaptureImport.cs</Link>
     </Compile>
-    <Compile Include="AdjustBlackBars.cs" />
     <Compile Include="AdjustLedColors.cs" />
     <Compile Include="AppLaunchCheck.cs" />
     <Compile Include="AppStartup.cs" />

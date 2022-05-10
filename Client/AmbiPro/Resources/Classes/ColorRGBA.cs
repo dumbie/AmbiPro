@@ -14,14 +14,14 @@ namespace AmbiPro
             public byte G = 0;
             public byte B = 0;
             public byte A = 0;
-            public static ColorRGBA Red = new ColorRGBA() { R = 255 };
-            public static ColorRGBA Green = new ColorRGBA() { G = 255 };
-            public static ColorRGBA Blue = new ColorRGBA() { B = 255 };
-            public static ColorRGBA Purple = new ColorRGBA() { R = 128, B = 128 };
-            public static ColorRGBA Yellow = new ColorRGBA() { R = 255, G = 255 };
-            public static ColorRGBA Orange = new ColorRGBA() { R = 255, G = 165 };
-            public static ColorRGBA Black = new ColorRGBA() { R = 0, G = 0, B = 0 };
-            public static ColorRGBA White = new ColorRGBA() { R = 255, G = 255, B = 255 };
+            public static ColorRGBA Red = new ColorRGBA() { R = 255, A = 255 };
+            public static ColorRGBA Green = new ColorRGBA() { G = 255, A = 255 };
+            public static ColorRGBA Blue = new ColorRGBA() { B = 255, A = 255 };
+            public static ColorRGBA Purple = new ColorRGBA() { R = 128, B = 128, A = 255 };
+            public static ColorRGBA Yellow = new ColorRGBA() { R = 255, G = 255, A = 255 };
+            public static ColorRGBA Orange = new ColorRGBA() { R = 255, G = 165, A = 255 };
+            public static ColorRGBA Black = new ColorRGBA() { R = 0, G = 0, B = 0, A = 255 };
+            public static ColorRGBA White = new ColorRGBA() { R = 255, G = 255, B = 255, A = 255 };
 
             public static ColorRGBA HexToRGBA(string hexString)
             {

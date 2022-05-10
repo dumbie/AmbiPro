@@ -28,7 +28,7 @@ namespace AmbiPro
                 vCaptureSettings = new CaptureSettings
                 {
                     MonitorId = 0,
-                    MaxPixelDimension = 480
+                    MaxPixelDimension = 300
                 };
 
                 //Initialize screen capture
@@ -135,14 +135,15 @@ namespace AmbiPro
                         //Convert BitmapIntPtr to BitmapByteArray
                         byte[] bitmapByteArray = CaptureBitmap.BitmapIntPtrToBitmapByteArray(bitmapIntPtr, vCaptureDetails);
 
-                        //Adjust the black bars range
+                        //Check if blackbar update is needed
                         if (setAdjustBlackBars && (Environment.TickCount - vBlackbarLastUpdate) > 100)
                         {
-                            AdjustBlackBars(setLedSideFirst, bitmapByteArray);
-                            AdjustBlackBars(setLedSideSecond, bitmapByteArray);
-                            AdjustBlackBars(setLedSideThird, bitmapByteArray);
-                            AdjustBlackBars(setLedSideFourth, bitmapByteArray);
+                            vBlackbarRunUpdate = true;
                             vBlackbarLastUpdate = Environment.TickCount;
+                        }
+                        else
+                        {
+                            vBlackbarRunUpdate = false;
                         }
 
                         //Check led capture sides color
