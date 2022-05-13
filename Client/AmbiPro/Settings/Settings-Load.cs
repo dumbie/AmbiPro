@@ -184,7 +184,6 @@ namespace AmbiPro.Settings
                 checkbox_DebugBlackBar.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugBlackBar"]);
                 checkbox_DebugLedPreview.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugLedPreview"]);
                 checkbox_DebugColor.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugColor"]);
-                checkbox_DebugSave.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugSave"]);
 
                 //Check if application is set to launch on Windows startup
                 string targetName = Assembly.GetEntryAssembly().GetName().Name;

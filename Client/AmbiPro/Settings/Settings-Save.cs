@@ -336,19 +336,6 @@ namespace AmbiPro.Settings
                         AVSettings.Save(vConfiguration, "DebugColor", "False");
                     }
                 };
-
-                //Save - Debug Save
-                checkbox_DebugSave.Click += (sender, e) =>
-                {
-                    if ((bool)checkbox_DebugSave.IsChecked)
-                    {
-                        AVSettings.Save(vConfiguration, "DebugSave", "True");
-                    }
-                    else
-                    {
-                        AVSettings.Save(vConfiguration, "DebugSave", "False");
-                    }
-                };
             }
             catch (Exception ex)
             {

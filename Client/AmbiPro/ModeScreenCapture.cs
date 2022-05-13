@@ -155,7 +155,7 @@ namespace AmbiPro
                         //Update debug capture preview
                         if (vDebugCaptureAllowed)
                         {
-                            UpdateCaptureDebugPreview(bitmapIntPtr, bitmapByteArray);
+                            UpdateCaptureDebugPreview(bitmapByteArray);
                         }
 
                         //Smooth led frame transition
@@ -253,7 +253,7 @@ namespace AmbiPro
             }
         }
 
-        private static void UpdateCaptureDebugPreview(IntPtr bitmapIntPtr, byte[] bitmapByteArray)
+        private static void UpdateCaptureDebugPreview(byte[] bitmapByteArray)
         {
             try
             {
@@ -266,12 +266,6 @@ namespace AmbiPro
                     }
                     catch { }
                 });
-
-                //Debug save screen capture as image
-                if (setDebugSave)
-                {
-                    CaptureImport.CaptureSaveFilePng(bitmapIntPtr, "Debug\\" + Environment.TickCount + ".png");
-                }
             }
             catch { }
         }

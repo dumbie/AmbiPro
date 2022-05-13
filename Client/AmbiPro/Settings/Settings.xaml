@@ -599,12 +599,6 @@
                                 <CheckBox Name="checkbox_DebugLedPreview" Content="Enable or disable led strip preview" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
                                 <TextBlock Text="Enable or disable the led strip preview showing the colors." Style="{StaticResource TextBlockGrayLight}"/>
 
-                                <CheckBox Name="checkbox_DebugSave" Content="Enable or disable preview image saving" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
-                                <TextBlock Text="Enable or disable preview image saving to root directory." Style="{StaticResource TextBlockGrayLight}"/>
-
-                                <Button Name="btn_BrowseDebugImages" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Browse debug image files" Click="btn_BrowseDebugImages_Click"/>
-                                <Button Name="btn_DeleteDebugImages" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Delete debug image files" Click="btn_DeleteDebugImages_Click"/>
-
                                 <TextBlock Name="textblock_DebugPreview" Margin="0,10,0,0" Text="Screen capture preview:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                                 <Image Name="image_DebugPreview"/>
                             </StackPanel>

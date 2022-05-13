@@ -35,7 +35,7 @@ namespace AmbiPro
                     int colorLuminance = (adjustColor.R + adjustColor.G + adjustColor.B) / 3;
 
                     //Adjust color to the minimum color setting
-                    if (colorLuminance < setLedMinColor)
+                    if (colorLuminance != 0 && colorLuminance < setLedMinColor)
                     {
                         adjustColor.R = 0;
                         adjustColor.G = 0;

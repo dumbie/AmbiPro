@@ -1,11 +1,9 @@
 ﻿using ArnoldVinkCode;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -32,49 +30,6 @@ namespace AmbiPro.Settings
                 Process.Start("http://ambipro.arnoldvink.com?ip=" + tb_RemoteIp.Text + "&port=" + tb_ServerPort.Text);
             }
             catch { }
-        }
-
-        //Browse debug image files
-        private async void btn_BrowseDebugImages_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Process.Start("Debug");
-            }
-            catch (Exception ex)
-            {
-                List<string> MsgBoxAnswers = new List<string>();
-                MsgBoxAnswers.Add("Ok");
-
-                await new AVMessageBox().Popup(null, "Debug image folder not found.", "", MsgBoxAnswers);
-                Debug.WriteLine("Failed to open debug bitmap images: " + ex.Message);
-            }
-        }
-
-        //Delete debug image files
-        private async void btn_DeleteDebugImages_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                DirectoryInfo dirInfo = new DirectoryInfo("Debug");
-                foreach (FileInfo fileInfo in dirInfo.GetFiles())
-                {
-                    fileInfo.Delete();
-                }
-
-                List<string> MsgBoxAnswers = new List<string>();
-                MsgBoxAnswers.Add("Ok");
-
-                await new AVMessageBox().Popup(null, "Debug image files have been deleted.", "", MsgBoxAnswers);
-            }
-            catch (Exception ex)
-            {
-                List<string> MsgBoxAnswers = new List<string>();
-                MsgBoxAnswers.Add("Ok");
-
-                await new AVMessageBox().Popup(null, "Failed to delete debug image files.", "", MsgBoxAnswers);
-                Debug.WriteLine("Failed to delete debug bitmap images: " + ex.Message);
-            }
         }
 
         //Handle move window

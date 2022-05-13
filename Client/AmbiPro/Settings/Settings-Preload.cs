@@ -53,7 +53,6 @@ namespace AmbiPro
         public static bool setDebugBlackBar = false;
         public static bool setDebugLedPreview = false;
         public static bool setDebugColor = true;
-        public static bool setDebugSave = false;
 
         //Update led setting variables
         public static void UpdateSettingsPreload()
@@ -102,7 +101,6 @@ namespace AmbiPro
                 setDebugBlackBar = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugBlackBar"]);
                 setDebugLedPreview = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugLedPreview"]);
                 setDebugColor = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugColor"]);
-                setDebugSave = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugSave"]);
 
                 //Update capture variables
                 UpdateCaptureVariables();
