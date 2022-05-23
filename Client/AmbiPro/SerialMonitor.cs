@@ -218,7 +218,7 @@ namespace AmbiPro
                 UpdateLedPreview(false);
 
                 //Cancel the led task
-                await AVActions.TaskStopLoop(vTask_UpdateLed);
+                await AVActions.TaskStopLoop(vTask_UpdateLed, 3000);
 
                 //Disable the serial port
                 if (vSerialComPort.IsOpen)
