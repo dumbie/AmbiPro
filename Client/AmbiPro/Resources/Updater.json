@@ -1,0 +1,24 @@
+{
+  "RepoName": "Dumbie",
+  "AppName": "AmbiPro",
+  "ExtractName": "AmbiPro",
+  "FileName": "AmbiPro.zip",
+  "ProcessLaunch": [
+    "Launcher"
+  ],
+  "ProcessClose": [
+    "AmbiPro",
+    "AmbiPro-Admin",
+    "AmbiPro-Launcher",
+    "Launcher"
+  ],
+  "FilesIgnore": [
+    ".exe.config",
+    ".csettings"
+  ],
+  "FilesDelete": [
+    "AmbiPro-Admin.exe",
+    "AmbiPro-Admin.exe.config",
+    "Updater.exe.config"
+  ]
+}

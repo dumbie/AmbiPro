@@ -38,7 +38,7 @@ namespace AmbiPro
                 //Check for missing application files
                 if (!skipFileCheck)
                 {
-                    string[] ApplicationFiles = { "Resources/ScreenCapture.dll", "Resources/Microsoft.Win32.TaskScheduler.dll", "Resources/Newtonsoft.Json.dll", "AmbiPro.exe", "AmbiPro.exe.Config", "Updater.exe", "Updater.exe.Config" };
+                    string[] ApplicationFiles = { "Resources/ScreenCapture.dll", "Resources/Microsoft.Win32.TaskScheduler.dll", "Resources/Newtonsoft.Json.dll", "AmbiPro.exe", "AmbiPro.exe.Config", "Updater.exe" };
                     foreach (string checkFile in ApplicationFiles)
                     {
                         if (!File.Exists(checkFile))

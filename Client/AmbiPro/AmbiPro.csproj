@@ -349,6 +349,9 @@
     <None Include="packages.config" />
     <None Include="Properties\App.config" />
     <None Include="Properties\App.manifest" />
+    <Content Include="Resources\Updater.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Assets\Icons\Close-Dark.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

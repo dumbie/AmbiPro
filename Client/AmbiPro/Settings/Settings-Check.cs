@@ -149,19 +149,19 @@ namespace AmbiPro.Settings
                 //Check - Led Color Red
                 if (ConfigurationManager.AppSettings["LedColorRed"] == null)
                 {
-                    AVSettings.Save(vConfiguration, "LedColorRed", "115");
+                    AVSettings.Save(vConfiguration, "LedColorRed", "100");
                 }
 
                 //Check - Led Color Green
                 if (ConfigurationManager.AppSettings["LedColorGreen"] == null)
                 {
-                    AVSettings.Save(vConfiguration, "LedColorGreen", "115");
+                    AVSettings.Save(vConfiguration, "LedColorGreen", "100");
                 }
 
                 //Check - Led Color Blue
                 if (ConfigurationManager.AppSettings["LedColorBlue"] == null)
                 {
-                    AVSettings.Save(vConfiguration, "LedColorBlue", "115");
+                    AVSettings.Save(vConfiguration, "LedColorBlue", "100");
                 }
 
                 //Check - Led Capture Range
@@ -221,7 +221,7 @@ namespace AmbiPro.Settings
                 //Check - Led Smoothing
                 if (ConfigurationManager.AppSettings["LedSmoothing"] == null)
                 {
-                    AVSettings.Save(vConfiguration, "LedSmoothing", "6");
+                    AVSettings.Save(vConfiguration, "LedSmoothing", "5");
                 }
 
                 //Check - Debug Mode

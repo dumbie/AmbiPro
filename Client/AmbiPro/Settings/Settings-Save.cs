@@ -294,7 +294,10 @@ namespace AmbiPro.Settings
                 };
 
                 //Save - Windows Startup
-                cb_WindowsStartup.Click += (sender, e) => { ManageShortcutStartup(); };
+                cb_WindowsStartup.Click += (sender, e) =>
+                {
+                    AVSettings.ManageStartupShortcut("Launcher.exe");
+                };
 
                 //Save - Debug BlackBar
                 checkbox_DebugBlackBar.Click += (sender, e) =>
@@ -509,45 +512,6 @@ namespace AmbiPro.Settings
             catch (Exception ex)
             {
                 Debug.WriteLine("Failed saving serverport: " + ex.Message);
-            }
-        }
-
-        //Create startup shortcut
-        void ManageShortcutStartup()
-        {
-            try
-            {
-                //Set application shortcut paths
-                string TargetIconPath = Assembly.GetEntryAssembly().CodeBase.Replace("file:///", string.Empty);
-                string TargetFilePath = Assembly.GetEntryAssembly().CodeBase.Replace(".exe", "-Admin.exe").Replace("file:///", string.Empty);
-                string TargetName = Assembly.GetEntryAssembly().GetName().Name;
-                string TargetFileShortcut = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), TargetName + ".url");
-
-                //Check if the shortcut already exists
-                if (!File.Exists(TargetFileShortcut))
-                {
-                    Debug.WriteLine("Adding application to Windows startup.");
-                    using (StreamWriter StreamWriter = new StreamWriter(TargetFileShortcut))
-                    {
-                        StreamWriter.WriteLine("[InternetShortcut]");
-                        StreamWriter.WriteLine("URL=" + TargetFilePath);
-                        StreamWriter.WriteLine("IconFile=" + TargetIconPath);
-                        StreamWriter.WriteLine("IconIndex=0");
-                        StreamWriter.Flush();
-                    }
-                }
-                else
-                {
-                    Debug.WriteLine("Removing application from Windows startup.");
-                    if (File.Exists(TargetFileShortcut))
-                    {
-                        File.Delete(TargetFileShortcut);
-                    }
-                }
-            }
-            catch
-            {
-                Debug.WriteLine("Failed creating startup shortcut.");
             }
         }
     }
