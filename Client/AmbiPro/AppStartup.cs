@@ -3,25 +3,32 @@ using ArnoldVinkCode;
 using System;
 using System.Configuration;
 using System.Diagnostics;
+using System.Reflection;
 using System.Threading.Tasks;
 using static AmbiPro.AppEnums;
-using static AmbiPro.AppLaunchCheck;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
+using static ArnoldVinkCode.AVFirewall;
 
 namespace AmbiPro
 {
     class AppStartup
     {
-        //Application Startup
-        public async Task Application_Startup()
+        public async static Task Startup()
         {
             try
             {
                 Debug.WriteLine("Welcome to AmbiPro.");
 
-                //Check the application status
-                await Application_LaunchCheck("AmbiPro", "AmbiPro", ProcessPriorityClass.High, false);
+                //Application startup checks
+                AppCheck.StartupCheck("AmbiPro", ProcessPriorityClass.High);
+
+                //Application update checks
+                await AppUpdate.UpdateCheck(true);
+
+                //Allow application in firewall
+                string appFilePath = Assembly.GetEntryAssembly().Location;
+                Firewall_ExecutableAllow("AmbiPro", appFilePath, true);
 
                 //Check application settings
                 SettingsFunction.SettingsCheck();
@@ -36,7 +43,7 @@ namespace AmbiPro
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                 {
                     Debug.WriteLine("First launch, showing the settings screen.");
-                    App.vFormSettings.Show();
+                    vFormSettings.Show();
                 }
                 else
                 {
@@ -68,15 +75,12 @@ namespace AmbiPro
 
                 //Enable the socket server
                 await EnableSocketServer();
-
-                //Check for available application update
-                await AppUpdate.CheckForAppUpdate(true);
             }
             catch { }
         }
 
         //Enable the socket server
-        private async Task EnableSocketServer()
+        private static async Task EnableSocketServer()
         {
             try
             {
@@ -91,7 +95,7 @@ namespace AmbiPro
         }
 
         //Application Exit
-        public static async Task Application_Exit()
+        public static async Task Exit()
         {
             try
             {

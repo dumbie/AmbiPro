@@ -1,8 +1,8 @@
 {
-  "RepoName": "Dumbie",
-  "AppName": "AmbiPro",
-  "ExtractName": "AmbiPro",
+  "UserName": "Dumbie",
+  "RepoName": "AmbiPro",
   "FileName": "AmbiPro.zip",
+  "ExtractName": "AmbiPro",
   "ProcessLaunch": [
     "Launcher"
   ],

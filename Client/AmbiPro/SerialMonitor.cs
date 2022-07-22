@@ -50,7 +50,7 @@ namespace AmbiPro
                         //Update screen information
                         ActionDispatcherInvoke(delegate
                         {
-                            App.vFormSettings.UpdateScreenInformation();
+                            vFormSettings.UpdateScreenInformation();
                         });
                     }
                     else
@@ -79,35 +79,35 @@ namespace AmbiPro
                 {
                     ActionDispatcherInvoke(delegate
                     {
-                        App.vFormSettings.listbox_LedPreviewLeft.Items.Clear();
-                        App.vFormSettings.listbox_LedPreviewTop.Items.Clear();
-                        App.vFormSettings.listbox_LedPreviewRight.Items.Clear();
-                        App.vFormSettings.listbox_LedPreviewBottom.Items.Clear();
+                        vFormSettings.listbox_LedPreviewLeft.Items.Clear();
+                        vFormSettings.listbox_LedPreviewTop.Items.Clear();
+                        vFormSettings.listbox_LedPreviewRight.Items.Clear();
+                        vFormSettings.listbox_LedPreviewBottom.Items.Clear();
 
                         LedPreviewAddDefaultLeds(setLedSideFirst, setLedCountFirst);
                         LedPreviewAddDefaultLeds(setLedSideSecond, setLedCountSecond);
                         LedPreviewAddDefaultLeds(setLedSideThird, setLedCountThird);
                         LedPreviewAddDefaultLeds(setLedSideFourth, setLedCountFourth);
 
-                        App.vFormSettings.border_LedPreviewLeft.Visibility = System.Windows.Visibility.Visible;
-                        App.vFormSettings.border_LedPreviewTop.Visibility = System.Windows.Visibility.Visible;
-                        App.vFormSettings.border_LedPreviewRight.Visibility = System.Windows.Visibility.Visible;
-                        App.vFormSettings.border_LedPreviewBottom.Visibility = System.Windows.Visibility.Visible;
+                        vFormSettings.border_LedPreviewLeft.Visibility = System.Windows.Visibility.Visible;
+                        vFormSettings.border_LedPreviewTop.Visibility = System.Windows.Visibility.Visible;
+                        vFormSettings.border_LedPreviewRight.Visibility = System.Windows.Visibility.Visible;
+                        vFormSettings.border_LedPreviewBottom.Visibility = System.Windows.Visibility.Visible;
                     });
                 }
                 else
                 {
                     ActionDispatcherInvoke(delegate
                     {
-                        App.vFormSettings.border_LedPreviewLeft.Visibility = System.Windows.Visibility.Collapsed;
-                        App.vFormSettings.border_LedPreviewTop.Visibility = System.Windows.Visibility.Collapsed;
-                        App.vFormSettings.border_LedPreviewRight.Visibility = System.Windows.Visibility.Collapsed;
-                        App.vFormSettings.border_LedPreviewBottom.Visibility = System.Windows.Visibility.Collapsed;
+                        vFormSettings.border_LedPreviewLeft.Visibility = System.Windows.Visibility.Collapsed;
+                        vFormSettings.border_LedPreviewTop.Visibility = System.Windows.Visibility.Collapsed;
+                        vFormSettings.border_LedPreviewRight.Visibility = System.Windows.Visibility.Collapsed;
+                        vFormSettings.border_LedPreviewBottom.Visibility = System.Windows.Visibility.Collapsed;
 
-                        App.vFormSettings.listbox_LedPreviewLeft.Items.Clear();
-                        App.vFormSettings.listbox_LedPreviewTop.Items.Clear();
-                        App.vFormSettings.listbox_LedPreviewRight.Items.Clear();
-                        App.vFormSettings.listbox_LedPreviewBottom.Items.Clear();
+                        vFormSettings.listbox_LedPreviewLeft.Items.Clear();
+                        vFormSettings.listbox_LedPreviewTop.Items.Clear();
+                        vFormSettings.listbox_LedPreviewRight.Items.Clear();
+                        vFormSettings.listbox_LedPreviewBottom.Items.Clear();
                     });
                 }
             }
@@ -122,28 +122,28 @@ namespace AmbiPro
                 {
                     for (int ledsAdded = 0; ledsAdded < ledSideCount; ledsAdded++)
                     {
-                        App.vFormSettings.listbox_LedPreviewLeft.Items.Add(new SolidColorBrush(Colors.Black));
+                        vFormSettings.listbox_LedPreviewLeft.Items.Add(new SolidColorBrush(Colors.Black));
                     }
                 }
                 else if (ledSideTypes == LedSideTypes.TopLeftToRight || ledSideTypes == LedSideTypes.TopRightToLeft)
                 {
                     for (int ledsAdded = 0; ledsAdded < ledSideCount; ledsAdded++)
                     {
-                        App.vFormSettings.listbox_LedPreviewTop.Items.Add(new SolidColorBrush(Colors.Black));
+                        vFormSettings.listbox_LedPreviewTop.Items.Add(new SolidColorBrush(Colors.Black));
                     }
                 }
                 else if (ledSideTypes == LedSideTypes.RightTopToBottom || ledSideTypes == LedSideTypes.RightBottomToTop)
                 {
                     for (int ledsAdded = 0; ledsAdded < ledSideCount; ledsAdded++)
                     {
-                        App.vFormSettings.listbox_LedPreviewRight.Items.Add(new SolidColorBrush(Colors.Black));
+                        vFormSettings.listbox_LedPreviewRight.Items.Add(new SolidColorBrush(Colors.Black));
                     }
                 }
                 else if (ledSideTypes == LedSideTypes.BottomLeftToRight || ledSideTypes == LedSideTypes.BottomRightToLeft)
                 {
                     for (int ledsAdded = 0; ledsAdded < ledSideCount; ledsAdded++)
                     {
-                        App.vFormSettings.listbox_LedPreviewBottom.Items.Add(new SolidColorBrush(Colors.Black));
+                        vFormSettings.listbox_LedPreviewBottom.Items.Add(new SolidColorBrush(Colors.Black));
                     }
                 }
             }
@@ -159,7 +159,7 @@ namespace AmbiPro
                 {
                     ActionDispatcherInvoke(delegate
                     {
-                        App.vFormSettings.image_SwitchLedsOnOrOff.Source = new BitmapImage(new Uri("/Assets/Icons/Leds.png", UriKind.RelativeOrAbsolute));
+                        vFormSettings.image_SwitchLedsOnOrOff.Source = new BitmapImage(new Uri("/Assets/Icons/Leds.png", UriKind.RelativeOrAbsolute));
                     });
                     AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
                 }
@@ -167,7 +167,7 @@ namespace AmbiPro
                 {
                     ActionDispatcherInvoke(delegate
                     {
-                        App.vFormSettings.image_SwitchLedsOnOrOff.Source = new BitmapImage(new Uri("/Assets/Icons/LedsOff.png", UriKind.RelativeOrAbsolute));
+                        vFormSettings.image_SwitchLedsOnOrOff.Source = new BitmapImage(new Uri("/Assets/Icons/LedsOff.png", UriKind.RelativeOrAbsolute));
                     });
                     AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon-Disabled.ico"));
                 }
@@ -274,7 +274,7 @@ namespace AmbiPro
             {
                 AVActions.ActionDispatcherInvoke(delegate
                 {
-                    App.vFormSettings.Show();
+                    vFormSettings.Show();
                 });
             }
             catch { }
@@ -321,7 +321,7 @@ namespace AmbiPro
                     }
                     else if (MsgBoxResult == "Close application")
                     {
-                        await AppStartup.Application_Exit();
+                        await AppStartup.Exit();
                     }
                 });
             }
@@ -358,7 +358,7 @@ namespace AmbiPro
                     }
                     else if (MsgBoxResult == "Close application")
                     {
-                        await AppStartup.Application_Exit();
+                        await AppStartup.Exit();
                     }
                 });
             }

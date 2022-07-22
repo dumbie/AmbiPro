@@ -93,7 +93,7 @@ namespace AmbiPro.Settings
                     }
                     else if (selectedStackPanel.Name == "menuButtonUpdate")
                     {
-                        await AppUpdate.CheckForAppUpdate(false);
+                        await AppUpdate.CheckAppUpdate(false);
                     }
                     else if (selectedStackPanel.Name == "menuButtonHelp")
                     {
@@ -130,7 +130,7 @@ namespace AmbiPro.Settings
                     }
                     else if (selectedStackPanel.Name == "menuButtonExit")
                     {
-                        await AppStartup.Application_Exit();
+                        await AppStartup.Exit();
                     }
                 }
             }

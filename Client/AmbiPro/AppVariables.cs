@@ -1,4 +1,5 @@
-﻿using ArnoldVinkCode;
+﻿using AmbiPro.Settings;
+using ArnoldVinkCode;
 using ScreenCapture;
 using System.Configuration;
 using System.Globalization;
@@ -12,6 +13,9 @@ namespace AmbiPro
         //Application Variables
         public static Configuration vConfiguration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
         public static CultureInfo vAppCultureInfo = CultureInfo.InvariantCulture;
+
+        //Application Windows
+        public static FormSettings vFormSettings = new FormSettings();
 
         //Led variables
         public static bool vLedSwitching = false;
@@ -48,8 +52,7 @@ namespace AmbiPro
         public static CaptureSettings vCaptureSettings;
         public static byte[][] vCaptureByteHistoryArray = new byte[20][];
 
-        //Update Variables
-        public static bool vCheckingForUpdate = false;
+        //Debug Variables
         public static bool vDebugCaptureAllowed = false;
 
         //Sockets Variables

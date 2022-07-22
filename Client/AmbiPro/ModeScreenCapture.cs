@@ -40,7 +40,7 @@ namespace AmbiPro
                 //Update screen information
                 ActionDispatcherInvoke(delegate
                 {
-                    App.vFormSettings.UpdateScreenInformation();
+                    vFormSettings.UpdateScreenInformation();
                 });
 
                 return captureInitialized;
@@ -262,7 +262,7 @@ namespace AmbiPro
                 {
                     try
                     {
-                        App.vFormSettings.image_DebugPreview.Source = CaptureBitmap.BitmapByteArrayToBitmapSource(bitmapByteArray, vCaptureDetails, vCaptureSettings);
+                        vFormSettings.image_DebugPreview.Source = CaptureBitmap.BitmapByteArrayToBitmapSource(bitmapByteArray, vCaptureDetails, vCaptureSettings);
                     }
                     catch { }
                 });
@@ -278,43 +278,43 @@ namespace AmbiPro
                 {
                     if (ledSide == LedSideTypes.LeftBottomToTop)
                     {
-                        int countLed = App.vFormSettings.listbox_LedPreviewLeft.Items.Count - 1;
-                        App.vFormSettings.listbox_LedPreviewLeft.Items[countLed - currentLed] = colorRGBA.AsSolidColorBrush();
+                        int countLed = vFormSettings.listbox_LedPreviewLeft.Items.Count - 1;
+                        vFormSettings.listbox_LedPreviewLeft.Items[countLed - currentLed] = colorRGBA.AsSolidColorBrush();
                     }
                     else if (ledSide == LedSideTypes.LeftTopToBottom)
                     {
-                        int countLed = App.vFormSettings.listbox_LedPreviewLeft.Items.Count - 1;
-                        App.vFormSettings.listbox_LedPreviewLeft.Items[currentLed] = colorRGBA.AsSolidColorBrush();
+                        int countLed = vFormSettings.listbox_LedPreviewLeft.Items.Count - 1;
+                        vFormSettings.listbox_LedPreviewLeft.Items[currentLed] = colorRGBA.AsSolidColorBrush();
                     }
                     else if (ledSide == LedSideTypes.TopRightToLeft)
                     {
-                        int countLed = App.vFormSettings.listbox_LedPreviewTop.Items.Count - 1;
-                        App.vFormSettings.listbox_LedPreviewTop.Items[countLed - currentLed] = colorRGBA.AsSolidColorBrush();
+                        int countLed = vFormSettings.listbox_LedPreviewTop.Items.Count - 1;
+                        vFormSettings.listbox_LedPreviewTop.Items[countLed - currentLed] = colorRGBA.AsSolidColorBrush();
                     }
                     else if (ledSide == LedSideTypes.TopLeftToRight)
                     {
-                        int countLed = App.vFormSettings.listbox_LedPreviewTop.Items.Count - 1;
-                        App.vFormSettings.listbox_LedPreviewTop.Items[currentLed] = colorRGBA.AsSolidColorBrush();
+                        int countLed = vFormSettings.listbox_LedPreviewTop.Items.Count - 1;
+                        vFormSettings.listbox_LedPreviewTop.Items[currentLed] = colorRGBA.AsSolidColorBrush();
                     }
                     else if (ledSide == LedSideTypes.RightBottomToTop)
                     {
-                        int countLed = App.vFormSettings.listbox_LedPreviewRight.Items.Count - 1;
-                        App.vFormSettings.listbox_LedPreviewRight.Items[countLed - currentLed] = colorRGBA.AsSolidColorBrush();
+                        int countLed = vFormSettings.listbox_LedPreviewRight.Items.Count - 1;
+                        vFormSettings.listbox_LedPreviewRight.Items[countLed - currentLed] = colorRGBA.AsSolidColorBrush();
                     }
                     else if (ledSide == LedSideTypes.RightTopToBottom)
                     {
-                        int countLed = App.vFormSettings.listbox_LedPreviewRight.Items.Count - 1;
-                        App.vFormSettings.listbox_LedPreviewRight.Items[currentLed] = colorRGBA.AsSolidColorBrush();
+                        int countLed = vFormSettings.listbox_LedPreviewRight.Items.Count - 1;
+                        vFormSettings.listbox_LedPreviewRight.Items[currentLed] = colorRGBA.AsSolidColorBrush();
                     }
                     else if (ledSide == LedSideTypes.BottomRightToLeft)
                     {
-                        int countLed = App.vFormSettings.listbox_LedPreviewBottom.Items.Count - 1;
-                        App.vFormSettings.listbox_LedPreviewBottom.Items[countLed - currentLed] = colorRGBA.AsSolidColorBrush();
+                        int countLed = vFormSettings.listbox_LedPreviewBottom.Items.Count - 1;
+                        vFormSettings.listbox_LedPreviewBottom.Items[countLed - currentLed] = colorRGBA.AsSolidColorBrush();
                     }
                     else if (ledSide == LedSideTypes.BottomLeftToRight)
                     {
-                        int countLed = App.vFormSettings.listbox_LedPreviewBottom.Items.Count - 1;
-                        App.vFormSettings.listbox_LedPreviewBottom.Items[currentLed] = colorRGBA.AsSolidColorBrush();
+                        int countLed = vFormSettings.listbox_LedPreviewBottom.Items.Count - 1;
+                        vFormSettings.listbox_LedPreviewBottom.Items[currentLed] = colorRGBA.AsSolidColorBrush();
                     }
                 });
             }

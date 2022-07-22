@@ -233,7 +233,7 @@
       <Link>ScreenCapture\CaptureImport.cs</Link>
     </Compile>
     <Compile Include="AdjustLedColors.cs" />
-    <Compile Include="AppLaunchCheck.cs" />
+    <Compile Include="AppCheck.cs" />
     <Compile Include="AppStartup.cs" />
     <Compile Include="AppEvents.cs" />
     <Compile Include="Resources\Classes\ColorRGBA.cs" />

@@ -58,7 +58,7 @@ namespace AmbiPro
         {
             try
             {
-                App.vFormSettings.Show();
+                vFormSettings.Show();
             }
             catch { }
         }
@@ -88,7 +88,7 @@ namespace AmbiPro
         {
             try
             {
-                App.vFormSettings.Show();
+                vFormSettings.Show();
             }
             catch { }
         }
@@ -120,7 +120,7 @@ namespace AmbiPro
         {
             try
             {
-                await AppStartup.Application_Exit();
+                await AppStartup.Exit();
             }
             catch { }
         }
