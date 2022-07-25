@@ -18,7 +18,7 @@ this application will capture your screen and sync the colors to your led strip.
 ## Installation Instructions
 1) Extract the AmbiPro folder to any directory you want on your device.
 2) Make sure that you have installed all the requirements listed below.
-3) Launch AmbiPro executable and setup your Arduino in the settings to get started.
+3) Run the Launcher executable file and setup your Arduino in the settings.
 4) Enjoy using your Arduino ambilight setup with AmbiPro.
 
 ## Uninstallation Instructions
