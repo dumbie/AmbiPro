@@ -19,7 +19,7 @@ namespace AmbiPro
                 Debug.WriteLine("Checking application update.");
 
                 //Close running application updater
-                if (CloseProcessesByNameOrTitle("Updater.exe", false))
+                if (CloseProcessesByNameOrTitle("Updater.exe", false, true))
                 {
                     await Task.Delay(1000);
                 }
