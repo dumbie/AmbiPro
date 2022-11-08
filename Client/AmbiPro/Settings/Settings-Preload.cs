@@ -18,9 +18,11 @@ namespace AmbiPro
         public static bool setAdjustBlackBars = true;
         public static int setAdjustBlackbarRange = 0;
         public static int setAdjustBlackBarBrightness = 0;
+        public static int setAdjustBlackBarUpdateRate = 0;
         public static int setUpdateRate = 0;
         public static int setLedSmoothing = 0;
         public static int setLedBottomGap = 0;
+        public static bool setLedEnergyMode = true;
 
         public static float setLedSaturation = 0;
         public static float setLedColorRed = 0;
@@ -67,9 +69,11 @@ namespace AmbiPro
                 setAdjustBlackBars = Convert.ToBoolean(ConfigurationManager.AppSettings["AdjustBlackBars"]);
                 setAdjustBlackbarRange = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRange"]);
                 setAdjustBlackBarBrightness = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarBrightness"]);
+                setAdjustBlackBarUpdateRate = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarUpdateRate"]);
                 setUpdateRate = Convert.ToInt32(ConfigurationManager.AppSettings["UpdateRate"]);
                 setLedSmoothing = Convert.ToInt32(ConfigurationManager.AppSettings["LedSmoothing"]);
                 setLedBottomGap = Convert.ToInt32(ConfigurationManager.AppSettings["LedBottomGap"]);
+                setLedEnergyMode = Convert.ToBoolean(ConfigurationManager.AppSettings["LedEnergyMode"]);
 
                 setLedSaturation = AVSettings.Load(vConfiguration, "LedSaturation", typeof(float)) / 100;
                 setLedColorRed = AVSettings.Load(vConfiguration, "LedColorRed", typeof(float)) / 100;

@@ -80,10 +80,16 @@ namespace AmbiPro.Settings
                     AVSettings.Save(vConfiguration, "AdjustBlackbarRange", "20");
                 }
 
-                //Check - Adjust Blackbar Brightness
+                //Check - Blackbar Brightness
                 if (ConfigurationManager.AppSettings["AdjustBlackBarBrightness"] == null)
                 {
                     AVSettings.Save(vConfiguration, "AdjustBlackBarBrightness", "1");
+                }
+
+                //Check - Blackbar Update Rate
+                if (ConfigurationManager.AppSettings["AdjustBlackbarUpdateRate"] == null)
+                {
+                    AVSettings.Save(vConfiguration, "AdjustBlackbarUpdateRate", "200");
                 }
 
                 //Check - Led Bottom Gap
@@ -132,6 +138,12 @@ namespace AmbiPro.Settings
                 if (ConfigurationManager.AppSettings["SolidLedColor"] == null)
                 {
                     AVSettings.Save(vConfiguration, "SolidLedColor", "#FFA500");
+                }
+
+                //Check - Led Energy Saving Mode
+                if (ConfigurationManager.AppSettings["LedEnergyMode"] == null)
+                {
+                    AVSettings.Save(vConfiguration, "LedEnergyMode", "False");
                 }
 
                 //Check - Led Minimum Brightness

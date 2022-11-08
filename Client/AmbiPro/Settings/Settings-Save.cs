@@ -132,6 +132,13 @@ namespace AmbiPro.Settings
                     tb_LedBrightness.Text = "Brightness level: " + sldr_LedBrightness.Value.ToString("0") + "%";
                 };
 
+                //Save - Led Energy Saving Mode
+                cb_LedEnergyMode.Click += (sender, e) =>
+                {
+                    if ((bool)cb_LedEnergyMode.IsChecked) { AVSettings.Save(vConfiguration, "LedEnergyMode", "True"); }
+                    else { AVSettings.Save(vConfiguration, "LedEnergyMode", "False"); }
+                };
+
                 //Save - Led Minimum Brightness
                 sldr_LedMinBrightness.ValueChanged += (sender, e) =>
                 {
@@ -221,11 +228,18 @@ namespace AmbiPro.Settings
                     tb_AdjustBlackbarRange.Text = "Blackbar detection range: " + Convert.ToInt32(sldr_AdjustBlackbarRange.Value) + "%";
                 };
 
-                //Save - Adjust Black Bar Level
+                //Save - Blackbar Brightness
                 sldr_AdjustBlackBarBrightness.ValueChanged += (sender, e) =>
                 {
                     AVSettings.Save(vConfiguration, "AdjustBlackBarBrightness", sldr_AdjustBlackBarBrightness.Value.ToString("0"));
                     tb_AdjustBlackBarBrightness.Text = "Blackbar minimum brightness: " + sldr_AdjustBlackBarBrightness.Value.ToString("0") + "%";
+                };
+
+                //Save - Blackbar Update Rate
+                sldr_AdjustBlackbarUpdateRate.ValueChanged += (sender, e) =>
+                {
+                    AVSettings.Save(vConfiguration, "AdjustBlackbarUpdateRate", sldr_AdjustBlackbarUpdateRate.Value.ToString("0"));
+                    tb_AdjustBlackbarUpdateRate.Text = "Blackbar update rate: " + sldr_AdjustBlackbarUpdateRate.Value.ToString("0") + "ms";
                 };
 
                 //Save - Led Side Types

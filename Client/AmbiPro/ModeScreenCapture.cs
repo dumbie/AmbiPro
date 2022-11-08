@@ -95,7 +95,7 @@ namespace AmbiPro
         }
 
         //Loop cature the screen
-        private static async Task ModeScreenCapture(int initByteSize, byte[] serialBytes)
+        private static async Task ModeScreenCapture(int initByteSize, int totalByteSize, byte[] serialBytes)
         {
             try
             {
@@ -136,7 +136,7 @@ namespace AmbiPro
                         byte[] bitmapByteArray = CaptureBitmap.BitmapIntPtrToBitmapByteArray(bitmapIntPtr, vCaptureDetails);
 
                         //Check if blackbar update is needed
-                        if (setAdjustBlackBars && (Environment.TickCount - vBlackbarLastUpdate) > 100)
+                        if (setAdjustBlackBars && (Environment.TickCount - vBlackbarLastUpdate) > setAdjustBlackBarUpdateRate)
                         {
                             vBlackbarRunUpdate = true;
                             vBlackbarLastUpdate = Environment.TickCount;
@@ -165,7 +165,7 @@ namespace AmbiPro
                             byte[] CaptureByteCurrent = CloneByteArray(serialBytes);
 
                             //Merge current colors with history
-                            for (int ledCount = initByteSize; ledCount < (serialBytes.Length - initByteSize); ledCount++)
+                            for (int ledCount = initByteSize; ledCount < (totalByteSize - initByteSize); ledCount++)
                             {
                                 //Debug.WriteLine("Led smoothing old: " + SerialBytes[ledCount]);
 
@@ -198,23 +198,23 @@ namespace AmbiPro
                         {
                             for (int RotateCount = 0; RotateCount < setLedRotate; RotateCount++)
                             {
-                                AVFunctions.MoveByteInArrayLeft(serialBytes, 3, serialBytes.Length - 1);
-                                AVFunctions.MoveByteInArrayLeft(serialBytes, 3, serialBytes.Length - 1);
-                                AVFunctions.MoveByteInArrayLeft(serialBytes, 3, serialBytes.Length - 1);
+                                AVFunctions.MoveByteInArrayLeft(totalByteSize, serialBytes, 3, totalByteSize - 1);
+                                AVFunctions.MoveByteInArrayLeft(totalByteSize, serialBytes, 3, totalByteSize - 1);
+                                AVFunctions.MoveByteInArrayLeft(totalByteSize, serialBytes, 3, totalByteSize - 1);
                             }
                         }
                         else if (setLedRotate < 0)
                         {
                             for (int RotateCount = 0; RotateCount < Math.Abs(setLedRotate); RotateCount++)
                             {
-                                AVFunctions.MoveByteInArrayRight(serialBytes, serialBytes.Length - 1, 3);
-                                AVFunctions.MoveByteInArrayRight(serialBytes, serialBytes.Length - 1, 3);
-                                AVFunctions.MoveByteInArrayRight(serialBytes, serialBytes.Length - 1, 3);
+                                AVFunctions.MoveByteInArrayRight(totalByteSize, serialBytes, totalByteSize - 1, 3);
+                                AVFunctions.MoveByteInArrayRight(totalByteSize, serialBytes, totalByteSize - 1, 3);
+                                AVFunctions.MoveByteInArrayRight(totalByteSize, serialBytes, totalByteSize - 1, 3);
                             }
                         }
 
                         //Send the serial bytes to device
-                        if (!SerialComPortWrite(serialBytes))
+                        if (!SerialComPortWrite(totalByteSize, serialBytes))
                         {
                             ConnectionFailed = true;
                             break;

@@ -10,7 +10,7 @@ namespace AmbiPro
     partial class SerialMonitor
     {
         //Rotating color spectrum
-        private static async Task ModeColorSpectrum(int InitByteSize, byte[] SerialBytes)
+        private static async Task ModeColorSpectrum(int initByteSize, int totalByteSize, byte[] serialBytes)
         {
             try
             {
@@ -55,8 +55,8 @@ namespace AmbiPro
                     int TotalLedRange = setLedCountTotal / 13;
 
                     //Set the current color to the bytes
-                    int CurrentSerialByte = InitByteSize;
-                    while (CurrentSerialByte < SerialBytes.Length)
+                    int CurrentSerialByte = initByteSize;
+                    while (CurrentSerialByte < totalByteSize)
                     {
                         //Check if the next color has been reached
                         if (CurrentLedRange == TotalLedRange)
@@ -77,13 +77,13 @@ namespace AmbiPro
                             CurrentColor++;
                         }
 
-                        SerialBytes[CurrentSerialByte] = Color0.R;
+                        serialBytes[CurrentSerialByte] = Color0.R;
                         CurrentSerialByte++;
 
-                        SerialBytes[CurrentSerialByte] = Color0.G;
+                        serialBytes[CurrentSerialByte] = Color0.G;
                         CurrentSerialByte++;
 
-                        SerialBytes[CurrentSerialByte] = Color0.B;
+                        serialBytes[CurrentSerialByte] = Color0.B;
                         CurrentSerialByte++;
 
                         CurrentLedRange++;
@@ -93,16 +93,16 @@ namespace AmbiPro
                     //Debug.WriteLine("Rotating the spectrum color bytes: " + CurrentLedRotate);
                     for (int rotateCount = 0; rotateCount < CurrentLedRotate; rotateCount++)
                     {
-                        AVFunctions.MoveByteInArrayLeft(SerialBytes, 3, SerialBytes.Length - 1);
-                        AVFunctions.MoveByteInArrayLeft(SerialBytes, 3, SerialBytes.Length - 1);
-                        AVFunctions.MoveByteInArrayLeft(SerialBytes, 3, SerialBytes.Length - 1);
+                        AVFunctions.MoveByteInArrayLeft(totalByteSize, serialBytes, 3, totalByteSize - 1);
+                        AVFunctions.MoveByteInArrayLeft(totalByteSize, serialBytes, 3, totalByteSize - 1);
+                        AVFunctions.MoveByteInArrayLeft(totalByteSize, serialBytes, 3, totalByteSize - 1);
                     }
 
                     //Update the rotate count
                     if (CurrentLedRotate == setLedCountTotal) { CurrentLedRotate = 0; } else { CurrentLedRotate++; }
 
                     //Send the serial bytes to device
-                    if (!SerialComPortWrite(SerialBytes))
+                    if (!SerialComPortWrite(totalByteSize, serialBytes))
                     {
                         ConnectionFailed = true;
                         break;

@@ -382,6 +382,10 @@
                                 <TextBlock Text="Change the minimum brightness before it is considered a blackbar." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
                                 <Slider Name="sldr_AdjustBlackBarBrightness" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="20"/>
 
+                                <TextBlock Margin="0,10,0,0" Name="tb_AdjustBlackbarUpdateRate" Text="Blackbar update rate:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Change the blackbar detection update rate.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                                <Slider Name="sldr_AdjustBlackbarUpdateRate" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="1000"/>
+
                                 <TextBlock Margin="0,10,0,0" Text="* This setting has impact on capture and your system performance." Style="{StaticResource TextBlockGrayLight}"/>
                             </StackPanel>
 
@@ -502,6 +506,9 @@
                                 <TextBlock Margin="0,10,0,0" Name="tb_LedBottomGap" Text="Led gap bottom stand:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                                 <TextBlock Text="Change the gap in the bottom side of led strip for display stand." Style="{StaticResource TextBlockGrayLight}"/>
                                 <Slider Name="sldr_LedBottomGap" Style="{StaticResource SliderWhite}" Minimum="0" Maximum="90" TickFrequency="2"/>
+
+                                <CheckBox Margin="0,15,0,0" Name="cb_LedEnergyMode" Content="Led strip energy saving mode" FontSize="20" FontWeight="Light" Foreground="#1D1D1D" Style="{StaticResource CheckBoxBlack}"/>
+                                <TextBlock Text="Save energy by turning off uneven leds on the led strip." Style="{StaticResource TextBlockGrayLight}"/>
                             </StackPanel>
 
                             <!-- Adjust -->

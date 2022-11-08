@@ -9,7 +9,7 @@ namespace AmbiPro
     partial class SerialMonitor
     {
         //Set the solid color to the leds
-        private static async Task ModeSolidColor(int InitByteSize, byte[] SerialBytes)
+        private static async Task ModeSolidColor(int initByteSize, int totalByteSize, byte[] serialBytes)
         {
             try
             {
@@ -24,21 +24,21 @@ namespace AmbiPro
                     AdjustLedColors(ref CurrentColor);
 
                     //Set the current color to the bytes
-                    int CurrentSerialByte = InitByteSize;
-                    while (CurrentSerialByte < SerialBytes.Length)
+                    int CurrentSerialByte = initByteSize;
+                    while (CurrentSerialByte < totalByteSize)
                     {
-                        SerialBytes[CurrentSerialByte] = CurrentColor.R;
+                        serialBytes[CurrentSerialByte] = CurrentColor.R;
                         CurrentSerialByte++;
 
-                        SerialBytes[CurrentSerialByte] = CurrentColor.G;
+                        serialBytes[CurrentSerialByte] = CurrentColor.G;
                         CurrentSerialByte++;
 
-                        SerialBytes[CurrentSerialByte] = CurrentColor.B;
+                        serialBytes[CurrentSerialByte] = CurrentColor.B;
                         CurrentSerialByte++;
                     }
 
                     //Send the serial bytes to device
-                    if (!SerialComPortWrite(SerialBytes))
+                    if (!SerialComPortWrite(totalByteSize, serialBytes))
                     {
                         ConnectionFailed = true;
                         break;

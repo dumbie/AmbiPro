@@ -100,6 +100,9 @@ namespace AmbiPro.Settings
                 tb_LedBrightness.Text = "Brightness level: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedBrightness"]) + "%";
                 sldr_LedBrightness.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedBrightness"]);
 
+                //Load - Led Energy Saving Mode
+                cb_LedEnergyMode.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["LedEnergyMode"]);
+
                 //Load - Led Minimum Brightness
                 tb_LedMinBrightness.Text = "Minimum brightness level: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedMinBrightness"]) + "%";
                 sldr_LedMinBrightness.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedMinBrightness"]);
@@ -148,9 +151,13 @@ namespace AmbiPro.Settings
                 tb_AdjustBlackbarRange.Text = "Blackbar detection range: " + Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRange"]) + "%";
                 sldr_AdjustBlackbarRange.Value = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRange"]);
 
-                //Load - Adjust Blackbar Brightness
+                //Load - Blackbar Brightness
                 tb_AdjustBlackBarBrightness.Text = "Blackbar minimum brightness: " + Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarBrightness"]) + "%";
                 sldr_AdjustBlackBarBrightness.Value = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarBrightness"]);
+
+                //Load - Blackbar Update Rate
+                tb_AdjustBlackbarUpdateRate.Text = "Blackbar update rate: " + Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarUpdateRate"]) + "ms";
+                sldr_AdjustBlackbarUpdateRate.Value = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarUpdateRate"]);
 
                 //Load - Led Side Types
                 combobox_LedSideFirst.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedSideFirst"]);

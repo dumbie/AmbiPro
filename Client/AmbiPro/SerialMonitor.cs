@@ -227,18 +227,18 @@ namespace AmbiPro
                     if (!restartLeds)
                     {
                         //Calculate bytes size
-                        int InitialByteSize = 3;
-                        int ByteLedSize = (setLedCountTotal * 3);
-                        int TotalBytes = InitialByteSize + ByteLedSize;
+                        int initByteSize = 3;
+                        int ledByteSize = setLedCountTotal * 3;
+                        int totalByteSize = initByteSize + ledByteSize;
 
                         //Create led byte array
-                        byte[] SerialBytes = new byte[TotalBytes];
-                        SerialBytes[0] = Encoding.Unicode.GetBytes("A").First();
-                        SerialBytes[1] = Encoding.Unicode.GetBytes("d").First();
-                        SerialBytes[2] = Encoding.Unicode.GetBytes("a").First();
+                        byte[] serialBytes = new byte[totalByteSize];
+                        serialBytes[0] = Encoding.Unicode.GetBytes("A").First();
+                        serialBytes[1] = Encoding.Unicode.GetBytes("d").First();
+                        serialBytes[2] = Encoding.Unicode.GetBytes("a").First();
 
                         //Send the serial bytes to device
-                        SerialComPortWrite(SerialBytes);
+                        SerialComPortWrite(totalByteSize, serialBytes);
                     }
 
                     vSerialComPort.Close();
@@ -252,12 +252,16 @@ namespace AmbiPro
         }
 
         //Write to serial com port
-        public static bool SerialComPortWrite(byte[] SerialBytes)
+        public static bool SerialComPortWrite(int totalByteSize, byte[] serialBytes)
         {
             try
             {
-                vSerialComPort.Write(SerialBytes, 0, SerialBytes.Length);
-                //Debug.WriteLine("Bytes written to com port: " + SerialBytes.Length);
+                //Adjust to led energy mode
+                AdjustLedEnergyMode(totalByteSize, serialBytes);
+
+                //Write bytes to serial com port
+                vSerialComPort.Write(serialBytes, 0, totalByteSize);
+                //Debug.WriteLine("Bytes written to com port: " + totalByteSize);
                 return true;
             }
             catch (Exception ex)
@@ -371,9 +375,9 @@ namespace AmbiPro
             try
             {
                 //Calculate bytes size
-                int InitByteSize = 3;
-                int LedByteSize = setLedCountTotal * 3;
-                int TotalByteSize = InitByteSize + LedByteSize;
+                int initByteSize = 3;
+                int ledByteSize = setLedCountTotal * 3;
+                int totalByteSize = initByteSize + ledByteSize;
 
                 //Connect to the device
                 vSerialComPort = new SerialPort(setSerialPortName, setSerialBaudRate);
@@ -381,10 +385,10 @@ namespace AmbiPro
                 Debug.WriteLine("Connected to the com port device: " + setSerialPortName + "/" + setSerialBaudRate);
 
                 //Create led byte array
-                byte[] SerialBytes = new byte[TotalByteSize];
-                SerialBytes[0] = Encoding.Unicode.GetBytes("A").First();
-                SerialBytes[1] = Encoding.Unicode.GetBytes("d").First();
-                SerialBytes[2] = Encoding.Unicode.GetBytes("a").First();
+                byte[] serialBytes = new byte[totalByteSize];
+                serialBytes[0] = Encoding.Unicode.GetBytes("A").First();
+                serialBytes[1] = Encoding.Unicode.GetBytes("d").First();
+                serialBytes[2] = Encoding.Unicode.GetBytes("a").First();
 
                 //Reset default variables
                 ResetVariables();
@@ -393,10 +397,10 @@ namespace AmbiPro
                 AVSettings.Save(vConfiguration, "FirstLaunch2", "False");
 
                 //Check led display mode
-                if (setLedMode == 0) { await ModeScreenCapture(InitByteSize, SerialBytes); }
-                else if (setLedMode == 1) { await ModeSolidColor(InitByteSize, SerialBytes); }
-                else if (setLedMode == 2) { await ModeColorLoop(InitByteSize, SerialBytes); }
-                else if (setLedMode == 3) { await ModeColorSpectrum(InitByteSize, SerialBytes); }
+                if (setLedMode == 0) { await ModeScreenCapture(initByteSize, totalByteSize, serialBytes); }
+                else if (setLedMode == 1) { await ModeSolidColor(initByteSize, totalByteSize, serialBytes); }
+                else if (setLedMode == 2) { await ModeColorLoop(initByteSize, totalByteSize, serialBytes); }
+                else if (setLedMode == 3) { await ModeColorSpectrum(initByteSize, totalByteSize, serialBytes); }
             }
             catch (Exception ex)
             {
