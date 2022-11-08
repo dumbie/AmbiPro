@@ -13,6 +13,7 @@ void setup()
   Serial.begin(SerialRate);
 
   //Startup RGB color test
+  delay(750);
   LEDS.showColor(CRGB(255, 0, 0));
   delay(750);
   LEDS.showColor(CRGB(0, 255, 0));
