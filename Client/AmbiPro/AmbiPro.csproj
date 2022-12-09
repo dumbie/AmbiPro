@@ -56,7 +56,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -112,12 +112,6 @@
     </Compile>
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkInputOutput\InputOutputMouse.cs">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkInputOutput\InputOutputMouse.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkProcesses\ClassAppxDetails.cs">
-      <Link>ArnoldVinkCode\Functions\ArnoldVinkProcesses\ClassAppxDetails.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkProcesses\ClassAppxFactory.cs">
-      <Link>ArnoldVinkCode\Functions\ArnoldVinkProcesses\ClassAppxFactory.cs</Link>
     </Compile>
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\ArnoldVinkProcesses\ProcessClasses.cs">
       <Link>ArnoldVinkCode\Functions\ArnoldVinkProcesses\ProcessClasses.cs</Link>
@@ -202,6 +196,15 @@
     </Compile>
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVSettings.cs">
       <Link>ArnoldVinkCode\Functions\AVSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVUwpAppx\AVUwpAppx.cs">
+      <Link>ArnoldVinkCode\Functions\AVUwpAppx\AVUwpAppx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVUwpAppx\ClassAppxDetails.cs">
+      <Link>ArnoldVinkCode\Functions\AVUwpAppx\ClassAppxDetails.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Functions\AVUwpAppx\ClassAppxManifest.cs">
+      <Link>ArnoldVinkCode\Functions\AVUwpAppx\ClassAppxManifest.cs</Link>
     </Compile>
     <Compile Include="..\..\..\ArnoldVinkCode\Desktop\Interop\AVInteropCom.cs">
       <Link>ArnoldVinkCode\Interop\AVInteropCom.cs</Link>
