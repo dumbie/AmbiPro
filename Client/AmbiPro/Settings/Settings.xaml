@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ArnoldVinkTimePicker="clr-namespace:ArnoldVinkTimePicker"
+        xmlns:AVTimePicker="clr-namespace:ArnoldVinkTimePicker;assembly=ArnoldVinkCode"
         xmlns:local="clr-namespace:AmbiPro"
         mc:Ignorable="d"
         RenderOptions.BitmapScalingMode="HighQuality"
@@ -304,12 +304,12 @@
                                 <TextBlock Text="Only automatically turn leds on startup before: *" Style="{StaticResource TextBlockGrayLight}"/>
                                 <StackPanel Orientation="Horizontal">
                                     <CheckBox Name="cb_LedAutoOnOffBefore" Style="{StaticResource CheckBoxBlack}"/>
-                                    <ArnoldVinkTimePicker:TimePicker x:Name="timepicker_LedAutoTimeBefore" IsEnabled="False" Margin="5,0,0,0" Width="120"/>
+                                    <AVTimePicker:TimePicker x:Name="timepicker_LedAutoTimeBefore" IsEnabled="False" Margin="5,0,0,0" Width="120"/>
                                 </StackPanel>
                                 <TextBlock Margin="0,10,0,0" Text="Only automatically turn leds on startup after: *" Style="{StaticResource TextBlockGrayLight}"/>
                                 <StackPanel Orientation="Horizontal">
                                     <CheckBox Name="cb_LedAutoOnOffAfter" Style="{StaticResource CheckBoxBlack}"/>
-                                    <ArnoldVinkTimePicker:TimePicker x:Name="timepicker_LedAutoTimeAfter" IsEnabled="False" Margin="5,0,0,0" Width="120"/>
+                                    <AVTimePicker:TimePicker x:Name="timepicker_LedAutoTimeAfter" IsEnabled="False" Margin="5,0,0,0" Width="120"/>
                                 </StackPanel>
 
                                 <TextBlock Margin="0,10,0,0" Text="* When both settings are turned off the leds will always turn on." Style="{StaticResource TextBlockGrayLight}"/>
@@ -336,7 +336,7 @@
 
                                 <TextBlock Margin="0,10,0,0" Text="Solid color led output:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                                 <TextBlock Text="Select the solid led color you want to be displayed." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
-                                <Button Name="button_ColorPickerSolid" Height="35" Margin="0,5,0,0" BorderBrush="{DynamicResource ApplicationGrayBrush}" Style="{StaticResource ButtonImageTransparentBlackBorder}" ToolTipService.ToolTip="Set solid led output color"/>
+                                <Button Name="button_ColorPickerSolid" Height="35" Margin="0,5,0,0" BorderBrush="{DynamicResource ApplicationDimGrayBrush}" Style="{StaticResource ButtonImageTransparentBlackBorder}" ToolTipService.ToolTip="Set solid led output color"/>
                             </StackPanel>
 
                             <!-- Screen -->

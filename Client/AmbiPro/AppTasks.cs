@@ -5,6 +5,6 @@ namespace AmbiPro
     public class AppTasks
     {
         //Application Tasks
-        public static AVTaskDetails vTask_UpdateLed = new AVTaskDetails();
+        public static AVTaskDetails vTask_UpdateLed = new AVTaskDetails("vTask_UpdateLed");
     }
 }
