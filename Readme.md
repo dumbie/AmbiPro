@@ -47,6 +47,9 @@ When you are walking into any problems or a bug you can go to my help page at ht
 If you appreciate my project and want to support me with my projects you can make a donation through https://donation.arnoldvink.com
 
 ## Changelog
+v0.23.0.0 (23-January-2023)
+- Added HDR capture brightness setting.
+
 v0.22.0.0 (8-November-2022)
 - Added led strip energy saving mode setting.
 
