@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using static AmbiPro.AppEnums;
-using static AmbiPro.AppTimers;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
 
@@ -33,10 +32,9 @@ namespace AmbiPro.Settings
                 };
 
                 //Save - Baud Rate
-                vDispatcherTimer_SettingBaudRate.Tick += SettingSaveBaudRate;
                 textbox_BaudRate.TextChanged += (sender, e) =>
                 {
-                    AVFunctions.TimerReset(vDispatcherTimer_SettingBaudRate);
+                    SettingSaveBaudRate();
                 };
 
                 //Save - Led Automatic Enable or Disable 
@@ -72,10 +70,9 @@ namespace AmbiPro.Settings
                 };
 
                 //Save - Server Port
-                vDispatcherTimer_SettingServerPort.Tick += SettingSaveServerPort;
                 tb_ServerPort.TextChanged += (sender, e) =>
                 {
-                    AVFunctions.TimerReset(vDispatcherTimer_SettingServerPort);
+                    SettingSaveServerPort();
                 };
 
                 //Save - Adjust Black Bars
@@ -261,22 +258,21 @@ namespace AmbiPro.Settings
                 };
 
                 //Save - Led Count
-                vDispatcherTimer_SettingLedCount.Tick += SettingSaveLedCount;
                 textbox_LedCountFirst.TextChanged += (sender, e) =>
                 {
-                    AVFunctions.TimerReset(vDispatcherTimer_SettingLedCount);
+                    SettingSaveLedCount();
                 };
                 textbox_LedCountSecond.TextChanged += (sender, e) =>
                 {
-                    AVFunctions.TimerReset(vDispatcherTimer_SettingLedCount);
+                    SettingSaveLedCount();
                 };
                 textbox_LedCountThird.TextChanged += (sender, e) =>
                 {
-                    AVFunctions.TimerReset(vDispatcherTimer_SettingLedCount);
+                    SettingSaveLedCount();
                 };
                 textbox_LedCountFourth.TextChanged += (sender, e) =>
                 {
-                    AVFunctions.TimerReset(vDispatcherTimer_SettingLedCount);
+                    SettingSaveLedCount();
                 };
 
                 //Save - Led Output
@@ -300,9 +296,18 @@ namespace AmbiPro.Settings
                     AVSettings.Save(vConfiguration, "LedSmoothing", sldr_LedSmoothing.Value.ToString("0"));
                     int smoothingFrames = Convert.ToInt32(sldr_LedSmoothing.Value);
                     tb_LedSmoothing.Text = "Led smoothing: " + smoothingFrames + " frames";
+                };
 
-                    //Reset smoothing byte history
-                    vCaptureByteHistoryArray = new byte[20][];
+                //Save - Capture HDR Brightness
+                sldr_CaptureHdrBrightness.ValueChanged += (sender, e) =>
+                {
+                    AVSettings.Save(vConfiguration, "CaptureHdrBrightness", sldr_CaptureHdrBrightness.Value.ToString("0"));
+                    int captureHdrBrightness = Convert.ToInt32(sldr_CaptureHdrBrightness.Value);
+                    tb_CaptureHdrBrightness.Text = "HDR capture brightness: " + captureHdrBrightness;
+                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
+                    {
+                        UpdateCaptureSettings();
+                    }
                 };
 
                 //Save - Windows Startup
@@ -396,13 +401,10 @@ namespace AmbiPro.Settings
         }
 
         //Save baud rate after delay
-        public async void SettingSaveBaudRate(object sender, EventArgs e)
+        public async void SettingSaveBaudRate()
         {
             try
             {
-                //Stop the timer
-                vDispatcherTimer_SettingBaudRate.Stop();
-
                 //Color brushes
                 BrushConverter BrushConvert = new BrushConverter();
                 Brush BrushInvalid = BrushConvert.ConvertFromString("#cd1a2b") as Brush;
@@ -435,13 +437,10 @@ namespace AmbiPro.Settings
         }
 
         //Save led count after delay
-        public async void SettingSaveLedCount(object sender, EventArgs e)
+        public async void SettingSaveLedCount()
         {
             try
             {
-                //Stop the timer
-                vDispatcherTimer_SettingLedCount.Stop();
-
                 //Color brushes
                 BrushConverter BrushConvert = new BrushConverter();
                 Brush BrushInvalid = BrushConvert.ConvertFromString("#cd1a2b") as Brush;
@@ -492,13 +491,10 @@ namespace AmbiPro.Settings
         }
 
         //Update server port after delay
-        private async void SettingSaveServerPort(object sender, EventArgs e)
+        private async void SettingSaveServerPort()
         {
             try
             {
-                //Stop the timer
-                vDispatcherTimer_SettingServerPort.Stop();
-
                 //Color brushes
                 BrushConverter BrushConvert = new BrushConverter();
                 Brush BrushInvalid = BrushConvert.ConvertFromString("#cd1a2b") as Brush;

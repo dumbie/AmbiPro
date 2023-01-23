@@ -71,12 +71,12 @@ namespace AmbiPro.Settings
         }
 
         //Handle window initialized event
-        protected override void OnSourceInitialized(EventArgs e)
+        protected override async void OnSourceInitialized(EventArgs e)
         {
             try
             {
                 //Load and save the settings
-                SettingsLoad();
+                await SettingsLoad();
                 SettingsSave();
 
                 //Load and set the help text
@@ -132,7 +132,7 @@ namespace AmbiPro.Settings
                 //Wait for resolution change
                 if (delayed)
                 {
-                    await Task.Delay(500);
+                    await Task.Delay(1000);
                 }
 
                 //Update screen information

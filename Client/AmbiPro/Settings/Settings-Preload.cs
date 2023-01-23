@@ -61,6 +61,8 @@ namespace AmbiPro
         {
             try
             {
+                //Debug.WriteLine("Updating preload settings.");
+
                 //Device settings
                 setSerialPortName = "COM" + ConfigurationManager.AppSettings["ComPort"].ToString();
                 setSerialBaudRate = Convert.ToInt32(ConfigurationManager.AppSettings["BaudRate"]);
@@ -121,7 +123,7 @@ namespace AmbiPro
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Failed updating the settings: " + ex.Message);
+                Debug.WriteLine("Failed updating preload settings: " + ex.Message);
             }
         }
     }

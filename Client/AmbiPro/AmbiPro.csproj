@@ -103,13 +103,13 @@
     <Compile Include="AppCheck.cs" />
     <Compile Include="AppStartup.cs" />
     <Compile Include="AppEvents.cs" />
+    <Compile Include="AppTasksFunctions.cs" />
     <Compile Include="Resources\Classes\ColorRGBA.cs" />
     <Compile Include="Resources\Enums\LedOutputTypes.cs" />
     <Compile Include="Resources\Enums\LedSwitches.cs" />
     <Compile Include="Resources\Enums\LedSideTypes.cs" />
     <Compile Include="AppVariables.cs" />
     <Compile Include="AppTasks.cs" />
-    <Compile Include="AppTimers.cs" />
     <Compile Include="AppUpdate.cs" />
     <Compile Include="Settings\Settings-Preload.cs" />
     <Compile Include="Settings\Settings-Rotate.cs" />

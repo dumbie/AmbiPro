@@ -22,13 +22,17 @@ namespace AmbiPro
             try
             {
                 Debug.WriteLine("Initializing screen capture: " + DateTime.Now);
+
+                //Load capture settings
                 int captureMonitor = Convert.ToInt32(ConfigurationManager.AppSettings["MonitorCapture"]);
+                float captureHdrBrightness = Convert.ToSingle(ConfigurationManager.AppSettings["CaptureHdrBrightness"]);
 
                 //Set capture settings
                 vCaptureSettings = new CaptureSettings
                 {
-                    MonitorId = 0,
-                    MaxPixelDimension = 300
+                    MonitorId = captureMonitor,
+                    MaxPixelDimension = 200,
+                    HDRBrightness = captureHdrBrightness
                 };
 
                 //Initialize screen capture
@@ -251,6 +255,29 @@ namespace AmbiPro
             {
                 ResetScreenCapture();
             }
+        }
+
+        public static void UpdateCaptureSettings()
+        {
+            try
+            {
+                //Load capture settings
+                int captureMonitor = Convert.ToInt32(ConfigurationManager.AppSettings["MonitorCapture"]);
+                float captureHdrBrightness = Convert.ToSingle(ConfigurationManager.AppSettings["CaptureHdrBrightness"]);
+
+                //Set capture settings
+                vCaptureSettings = new CaptureSettings
+                {
+                    MonitorId = captureMonitor,
+                    MaxPixelDimension = 200,
+                    HDRBrightness = captureHdrBrightness
+                };
+
+                //Update capture settings
+                bool settingsUpdated = CaptureImport.CaptureUpdateSettings(vCaptureSettings);
+                Debug.WriteLine("Capture settings updated: " + settingsUpdated);
+            }
+            catch { }
         }
 
         private static void UpdateCaptureDebugPreview(byte[] bitmapByteArray)

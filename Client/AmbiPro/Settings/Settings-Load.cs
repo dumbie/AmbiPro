@@ -6,6 +6,7 @@ using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using static AmbiPro.AppVariables;
 
@@ -40,7 +41,7 @@ namespace AmbiPro.Settings
         }
 
         //Load - Application Settings
-        public void SettingsLoad()
+        public async Task SettingsLoad()
         {
             try
             {
@@ -187,6 +188,11 @@ namespace AmbiPro.Settings
                 tb_LedSmoothing.Text = "Led smoothing: " + smoothingFrames + " frames";
                 sldr_LedSmoothing.Value = smoothingFrames;
 
+                //Load - Capture HDR Brightness
+                int captureHdrBrightness = Convert.ToInt32(ConfigurationManager.AppSettings["CaptureHdrBrightness"]);
+                tb_CaptureHdrBrightness.Text = "HDR capture brightness: " + captureHdrBrightness;
+                sldr_CaptureHdrBrightness.Value = captureHdrBrightness;
+
                 //Load - Debug Mode
                 checkbox_DebugBlackBar.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugBlackBar"]);
                 checkbox_DebugLedPreview.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugLedPreview"]);
@@ -196,10 +202,13 @@ namespace AmbiPro.Settings
                 string targetName = Assembly.GetEntryAssembly().GetName().Name;
                 string targetFileShortcut = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), targetName + ".url");
                 if (File.Exists(targetFileShortcut)) { cb_WindowsStartup.IsChecked = true; }
+
+                //Wait for settings to have loaded
+                await Task.Delay(1500);
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Failed to load the settings: " + ex.Message);
+                Debug.WriteLine("Failed to load application settings: " + ex.Message);
             }
         }
     }

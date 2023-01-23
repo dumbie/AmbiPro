@@ -236,6 +236,12 @@ namespace AmbiPro.Settings
                     AVSettings.Save(vConfiguration, "LedSmoothing", "4");
                 }
 
+                //Check - Capture HDR brightness
+                if (ConfigurationManager.AppSettings["CaptureHdrBrightness"] == null)
+                {
+                    AVSettings.Save(vConfiguration, "CaptureHdrBrightness", "60");
+                }
+
                 //Check - Debug Mode
                 if (ConfigurationManager.AppSettings["DebugBlackBar"] == null)
                 {

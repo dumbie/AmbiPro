@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
 using static AmbiPro.AppEnums;
+using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
 using static ArnoldVinkCode.AVFirewall;
@@ -36,8 +37,8 @@ namespace AmbiPro
                 //Create application tray menu
                 AppTray.CreateTrayMenu();
 
-                //Register application timers
-                AppTimers.ApplicationTimersRegister();
+                //Start all the background tasks
+                AppTasks.TasksBackgroundStart();
 
                 //Settings check if first launch
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
@@ -104,14 +105,14 @@ namespace AmbiPro
                 //Stop updating the leds
                 await LedSwitch(LedSwitches.Disable);
 
+                //Stop all the background tasks
+                await TasksBackgroundStop();
+
                 //Disable the socket server
                 if (vArnoldVinkSockets != null)
                 {
                     await vArnoldVinkSockets.SocketServerDisable();
                 }
-
-                //Disable application timers
-                AppTimers.ApplicationTimersDisable();
 
                 //Hide the tray icon
                 AppTray.NotifyIcon.Visible = false;
