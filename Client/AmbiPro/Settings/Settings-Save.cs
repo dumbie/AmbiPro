@@ -26,7 +26,7 @@ namespace AmbiPro.Settings
                 cb_ComPort.SelectionChanged += async (sender, e) =>
                 {
                     SettingSave(vConfiguration, "ComPort", (cb_ComPort.SelectedIndex + 1).ToString());
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
+                    if (!SettingLoad(vConfiguration, "FirstLaunch2", typeof(bool)))
                     {
                         await LedSwitch(LedSwitches.Restart);
                     }
@@ -81,7 +81,7 @@ namespace AmbiPro.Settings
                 {
                     if ((bool)cb_AdjustBlackBars.IsChecked) { SettingSave(vConfiguration, "AdjustBlackBars", "True"); }
                     else { SettingSave(vConfiguration, "AdjustBlackBars", "False"); }
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
+                    if (!SettingLoad(vConfiguration, "FirstLaunch2", typeof(bool)))
                     {
                         await LedSwitch(LedSwitches.Restart);
                     }
@@ -91,7 +91,7 @@ namespace AmbiPro.Settings
                 cb_MonitorCapture.SelectionChanged += async (sender, e) =>
                 {
                     SettingSave(vConfiguration, "MonitorCapture", cb_MonitorCapture.SelectedIndex.ToString());
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
+                    if (!SettingLoad(vConfiguration, "FirstLaunch2", typeof(bool)))
                     {
                         await LedSwitch(LedSwitches.Restart);
                         await UpdateSettingsInformation(true);
@@ -102,7 +102,7 @@ namespace AmbiPro.Settings
                 cb_LedMode.SelectionChanged += async (sender, e) =>
                 {
                     SettingSave(vConfiguration, "LedMode", cb_LedMode.SelectedIndex.ToString());
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
+                    if (!SettingLoad(vConfiguration, "FirstLaunch2", typeof(bool)))
                     {
                         await LedSwitch(LedSwitches.Restart);
                         await UpdateSettingsInformation(true);
@@ -305,7 +305,7 @@ namespace AmbiPro.Settings
                     SettingSave(vConfiguration, "CaptureHdrBrightness", sldr_CaptureHdrBrightness.Value.ToString("0"));
                     int captureHdrBrightness = Convert.ToInt32(sldr_CaptureHdrBrightness.Value);
                     tb_CaptureHdrBrightness.Text = "HDR capture brightness: " + captureHdrBrightness;
-                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
+                    if (!SettingLoad(vConfiguration, "FirstLaunch2", typeof(bool)))
                     {
                         UpdateCaptureSettings();
                     }
@@ -393,7 +393,7 @@ namespace AmbiPro.Settings
                 SettingResetLedRotate();
 
                 //Restart the leds
-                if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
+                if (!SettingLoad(vConfiguration, "FirstLaunch2", typeof(bool)))
                 {
                     await LedSwitch(LedSwitches.Restart);
                 }
@@ -426,7 +426,7 @@ namespace AmbiPro.Settings
                 textbox_BaudRate.BorderBrush = BrushValid;
 
                 //Restart the leds
-                if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
+                if (!SettingLoad(vConfiguration, "FirstLaunch2", typeof(bool)))
                 {
                     await LedSwitch(LedSwitches.Restart);
                 }
@@ -480,7 +480,7 @@ namespace AmbiPro.Settings
                 SettingResetLedRotate();
 
                 //Restart the leds
-                if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
+                if (!SettingLoad(vConfiguration, "FirstLaunch2", typeof(bool)))
                 {
                     await LedSwitch(LedSwitches.Restart);
                 }

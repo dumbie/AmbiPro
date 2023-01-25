@@ -2,7 +2,6 @@
 using Microsoft.Win32;
 using System;
 using System.ComponentModel;
-using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -14,6 +13,7 @@ using System.Windows.Media;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
+using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro.Settings
 {
@@ -101,7 +101,7 @@ namespace AmbiPro.Settings
                 Debug.WriteLine("Updating solid led color in interface.");
                 AVActions.ActionDispatcherInvoke(delegate
                 {
-                    string solidLedColor = ConfigurationManager.AppSettings["SolidLedColor"].ToString();
+                    string solidLedColor = SettingLoad(vConfiguration, "SolidLedColor", typeof(string));
                     button_ColorPickerSolid.Background = new BrushConverter().ConvertFrom(solidLedColor) as SolidColorBrush;
                 });
             }

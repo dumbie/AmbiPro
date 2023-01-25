@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Diagnostics;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
@@ -64,18 +63,18 @@ namespace AmbiPro
                 //Debug.WriteLine("Updating preload settings.");
 
                 //Device settings
-                setSerialPortName = "COM" + ConfigurationManager.AppSettings["ComPort"].ToString();
-                setSerialBaudRate = Convert.ToInt32(ConfigurationManager.AppSettings["BaudRate"]);
+                setSerialPortName = "COM" + SettingLoad(vConfiguration, "ComPort", typeof(string));
+                setSerialBaudRate = SettingLoad(vConfiguration, "BaudRate", typeof(int));
 
                 //Led settings
-                setAdjustBlackBars = Convert.ToBoolean(ConfigurationManager.AppSettings["AdjustBlackBars"]);
-                setAdjustBlackbarRange = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRange"]);
-                setAdjustBlackBarBrightness = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarBrightness"]);
-                setAdjustBlackBarUpdateRate = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarUpdateRate"]);
-                setUpdateRate = Convert.ToInt32(ConfigurationManager.AppSettings["UpdateRate"]);
-                setLedSmoothing = Convert.ToInt32(ConfigurationManager.AppSettings["LedSmoothing"]);
-                setLedBottomGap = Convert.ToInt32(ConfigurationManager.AppSettings["LedBottomGap"]);
-                setLedEnergyMode = Convert.ToBoolean(ConfigurationManager.AppSettings["LedEnergyMode"]);
+                setAdjustBlackBars = SettingLoad(vConfiguration, "AdjustBlackBars", typeof(bool));
+                setAdjustBlackbarRange = SettingLoad(vConfiguration, "AdjustBlackbarRange", typeof(int));
+                setAdjustBlackBarBrightness = SettingLoad(vConfiguration, "AdjustBlackBarBrightness", typeof(int));
+                setAdjustBlackBarUpdateRate = SettingLoad(vConfiguration, "AdjustBlackbarUpdateRate", typeof(int));
+                setUpdateRate = SettingLoad(vConfiguration, "UpdateRate", typeof(int));
+                setLedSmoothing = SettingLoad(vConfiguration, "LedSmoothing", typeof(int));
+                setLedBottomGap = SettingLoad(vConfiguration, "LedBottomGap", typeof(int));
+                setLedEnergyMode = SettingLoad(vConfiguration, "LedEnergyMode", typeof(bool));
 
                 setLedSaturation = SettingLoad(vConfiguration, "LedSaturation", typeof(float)) / 100;
                 setLedColorRed = SettingLoad(vConfiguration, "LedColorRed", typeof(float)) / 100;
@@ -85,28 +84,28 @@ namespace AmbiPro
                 setLedBrightness = SettingLoad(vConfiguration, "LedBrightness", typeof(float)) / 100;
                 setLedGamma = SettingLoad(vConfiguration, "LedGamma3", typeof(float));
 
-                setLedMinBrightness = Convert.ToByte(ConfigurationManager.AppSettings["LedMinBrightness"]);
-                setLedMinColor = Convert.ToInt32(ConfigurationManager.AppSettings["LedMinColor2"]);
-                setColorLoopSpeed = Convert.ToInt32(ConfigurationManager.AppSettings["ColorLoopSpeed"]);
-                setSpectrumRotationSpeed = Convert.ToInt32(ConfigurationManager.AppSettings["SpectrumRotationSpeed"]);
-                setSolidLedColor = ConfigurationManager.AppSettings["SolidLedColor"].ToString();
-                setLedCaptureRange = Convert.ToInt32(ConfigurationManager.AppSettings["LedCaptureRange"]);
-                setLedOutput = (LedOutputTypes)Convert.ToInt32(ConfigurationManager.AppSettings["LedOutput"]);
-                setLedMode = Convert.ToInt32(ConfigurationManager.AppSettings["LedMode"]);
-                setLedSideFirst = (LedSideTypes)Convert.ToInt32(ConfigurationManager.AppSettings["LedSideFirst"]);
-                setLedSideSecond = (LedSideTypes)Convert.ToInt32(ConfigurationManager.AppSettings["LedSideSecond"]);
-                setLedSideThird = (LedSideTypes)Convert.ToInt32(ConfigurationManager.AppSettings["LedSideThird"]);
-                setLedSideFourth = (LedSideTypes)Convert.ToInt32(ConfigurationManager.AppSettings["LedSideFourth"]);
-                setLedCountFirst = Convert.ToInt32(ConfigurationManager.AppSettings["LedCountFirst"]);
-                setLedCountSecond = Convert.ToInt32(ConfigurationManager.AppSettings["LedCountSecond"]);
-                setLedCountThird = Convert.ToInt32(ConfigurationManager.AppSettings["LedCountThird"]);
-                setLedCountFourth = Convert.ToInt32(ConfigurationManager.AppSettings["LedCountFourth"]);
+                setLedMinBrightness = SettingLoad(vConfiguration, "LedMinBrightness", typeof(byte));
+                setLedMinColor = SettingLoad(vConfiguration, "LedMinColor2", typeof(int));
+                setColorLoopSpeed = SettingLoad(vConfiguration, "ColorLoopSpeed", typeof(int));
+                setSpectrumRotationSpeed = SettingLoad(vConfiguration, "SpectrumRotationSpeed", typeof(int));
+                setSolidLedColor = SettingLoad(vConfiguration, "SolidLedColor", typeof(string));
+                setLedCaptureRange = SettingLoad(vConfiguration, "LedCaptureRange", typeof(int));
+                setLedMode = SettingLoad(vConfiguration, "LedMode", typeof(int));
+                setLedOutput = (LedOutputTypes)SettingLoad(vConfiguration, "LedOutput", typeof(int));
+                setLedSideFirst = (LedSideTypes)SettingLoad(vConfiguration, "LedSideFirst", typeof(int));
+                setLedSideSecond = (LedSideTypes)SettingLoad(vConfiguration, "LedSideSecond", typeof(int));
+                setLedSideThird = (LedSideTypes)SettingLoad(vConfiguration, "LedSideThird", typeof(int));
+                setLedSideFourth = (LedSideTypes)SettingLoad(vConfiguration, "LedSideFourth", typeof(int));
+                setLedCountFirst = SettingLoad(vConfiguration, "LedCountFirst", typeof(int));
+                setLedCountSecond = SettingLoad(vConfiguration, "LedCountSecond", typeof(int));
+                setLedCountThird = SettingLoad(vConfiguration, "LedCountThird", typeof(int));
+                setLedCountFourth = SettingLoad(vConfiguration, "LedCountFourth", typeof(int));
                 setLedCountTotal = setLedCountFirst + setLedCountSecond + setLedCountThird + setLedCountFourth;
 
                 //Debug settings
-                setDebugBlackBar = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugBlackBar"]);
-                setDebugLedPreview = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugLedPreview"]);
-                setDebugColor = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugColor"]);
+                setDebugBlackBar = SettingLoad(vConfiguration, "DebugBlackBar", typeof(bool));
+                setDebugLedPreview = SettingLoad(vConfiguration, "DebugLedPreview", typeof(bool));
+                setDebugColor = SettingLoad(vConfiguration, "DebugColor", typeof(bool));
 
                 //Update capture variables
                 UpdateCaptureVariables();
@@ -114,7 +113,7 @@ namespace AmbiPro
                 //Update the rotation based on ratio
                 if (SettingCheck(vConfiguration, "LedRotate" + vCurrentRatio))
                 {
-                    setLedRotate = Convert.ToInt32(ConfigurationManager.AppSettings["LedRotate" + vCurrentRatio]);
+                    setLedRotate = SettingLoad(vConfiguration, "LedRotate" + vCurrentRatio, typeof(int));
                 }
                 else
                 {

@@ -1,7 +1,6 @@
 ﻿using ArnoldVinkCode;
 using ScreenCapture;
 using System;
-using System.Configuration;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using static AmbiPro.AppClasses;
@@ -11,6 +10,7 @@ using static AmbiPro.AppVariables;
 using static AmbiPro.PreloadSettings;
 using static ArnoldVinkCode.AVActions;
 using static ArnoldVinkCode.AVClassConverters;
+using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro
 {
@@ -24,8 +24,8 @@ namespace AmbiPro
                 Debug.WriteLine("Initializing screen capture: " + DateTime.Now);
 
                 //Load capture settings
-                int captureMonitor = Convert.ToInt32(ConfigurationManager.AppSettings["MonitorCapture"]);
-                float captureHdrBrightness = Convert.ToSingle(ConfigurationManager.AppSettings["CaptureHdrBrightness"]);
+                int captureMonitor = SettingLoad(vConfiguration, "MonitorCapture", typeof(int));
+                float captureHdrBrightness = SettingLoad(vConfiguration, "CaptureHdrBrightness", typeof(float));
 
                 //Set capture settings
                 vCaptureSettings = new CaptureSettings
@@ -262,8 +262,8 @@ namespace AmbiPro
             try
             {
                 //Load capture settings
-                int captureMonitor = Convert.ToInt32(ConfigurationManager.AppSettings["MonitorCapture"]);
-                float captureHdrBrightness = Convert.ToSingle(ConfigurationManager.AppSettings["CaptureHdrBrightness"]);
+                int captureMonitor = SettingLoad(vConfiguration, "MonitorCapture", typeof(int));
+                float captureHdrBrightness = SettingLoad(vConfiguration, "CaptureHdrBrightness", typeof(float));
 
                 //Set capture settings
                 vCaptureSettings = new CaptureSettings

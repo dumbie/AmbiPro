@@ -1,6 +1,4 @@
 ﻿using ArnoldVinkCode;
-using System;
-using System.Configuration;
 using System.Diagnostics;
 using System.Windows;
 using static AmbiPro.AppTasks;
@@ -95,7 +93,7 @@ namespace AmbiPro.Settings
                 //Update rotation screen
                 if (SettingCheck(vConfiguration, "LedRotate" + vCurrentRatio))
                 {
-                    vCurrentRotation = Convert.ToInt32(ConfigurationManager.AppSettings["LedRotate" + vCurrentRatio]);
+                    vCurrentRotation = SettingLoad(vConfiguration, "LedRotate" + vCurrentRatio, typeof(int));
                 }
                 tb_RotateValue.Text = "Led rotation: " + vCurrentRotation;
                 tb_RotateResolution.Text = "Capture resolution: " + captureInfo;
@@ -116,7 +114,7 @@ namespace AmbiPro.Settings
                     return;
                 }
 
-                int maximumLedCount = Convert.ToInt32(ConfigurationManager.AppSettings["LedCountFirst"]) + Convert.ToInt32(ConfigurationManager.AppSettings["LedCountSecond"]) + Convert.ToInt32(ConfigurationManager.AppSettings["LedCountThird"]) + Convert.ToInt32(ConfigurationManager.AppSettings["LedCountFourth"]);
+                int maximumLedCount = SettingLoad(vConfiguration, "LedCountFirst", typeof(int)) + SettingLoad(vConfiguration, "LedCountSecond", typeof(int)) + SettingLoad(vConfiguration, "LedCountThird", typeof(int)) + SettingLoad(vConfiguration, "LedCountFourth", typeof(int));
                 if (vCurrentRotation > -maximumLedCount) { btn_RotateClockwise.IsEnabled = true; } else { btn_RotateClockwise.IsEnabled = false; }
                 if (vCurrentRotation < maximumLedCount) { btn_RotateCounterwise.IsEnabled = true; } else { btn_RotateCounterwise.IsEnabled = false; }
                 btn_RotateReset.IsEnabled = true;

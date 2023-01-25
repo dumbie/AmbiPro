@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Ports;
@@ -53,150 +52,150 @@ namespace AmbiPro.Settings
                     int PortNumberRaw = Convert.ToInt32(PortName.Replace("COM", string.Empty));
                     cb_ComPort.Items[PortNumberRaw - 1] = PortName + " (Connected)";
 
-                    if (Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
+                    if (SettingLoad(vConfiguration, "FirstLaunch2", typeof(bool)))
                     {
                         SettingSave(vConfiguration, "ComPort", PortNumberRaw.ToString());
                     }
                 }
 
                 //Load - Com Port
-                cb_ComPort.SelectedIndex = (Convert.ToInt32(ConfigurationManager.AppSettings["ComPort"]) - 1);
+                cb_ComPort.SelectedIndex = SettingLoad(vConfiguration, "ComPort", typeof(int)) - 1;
 
                 //Load - Baud Rate
-                textbox_BaudRate.Text = ConfigurationManager.AppSettings["BaudRate"].ToString();
+                textbox_BaudRate.Text = SettingLoad(vConfiguration, "BaudRate", typeof(string));
 
                 //Load - Led Automatic Before
-                bool LedAutoOnOffBefore = Convert.ToBoolean(ConfigurationManager.AppSettings["LedAutoOnOffBefore"]);
+                bool LedAutoOnOffBefore = SettingLoad(vConfiguration, "LedAutoOnOffBefore", typeof(bool));
                 cb_LedAutoOnOffBefore.IsChecked = LedAutoOnOffBefore;
                 timepicker_LedAutoTimeBefore.IsEnabled = LedAutoOnOffBefore;
-                timepicker_LedAutoTimeBefore.DateTimeValue = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTimeBefore"], vAppCultureInfo);
+                timepicker_LedAutoTimeBefore.DateTimeValue = SettingLoad(vConfiguration, "LedAutoTimeBefore", typeof(DateTime));
 
                 //Load - Led Automatic After
-                bool LedAutoOnOffAfter = Convert.ToBoolean(ConfigurationManager.AppSettings["LedAutoOnOffAfter"]);
+                bool LedAutoOnOffAfter = SettingLoad(vConfiguration, "LedAutoOnOffAfter", typeof(bool));
                 cb_LedAutoOnOffAfter.IsChecked = LedAutoOnOffAfter;
                 timepicker_LedAutoTimeAfter.IsEnabled = LedAutoOnOffAfter;
-                timepicker_LedAutoTimeAfter.DateTimeValue = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTimeAfter"], vAppCultureInfo);
+                timepicker_LedAutoTimeAfter.DateTimeValue = SettingLoad(vConfiguration, "LedAutoTimeAfter", typeof(DateTime));
 
                 //Load - Server Port
-                tb_ServerPort.Text = ConfigurationManager.AppSettings["ServerPort"].ToString();
+                tb_ServerPort.Text = SettingLoad(vConfiguration, "ServerPort", typeof(string));
 
                 //Load - Monitor Capture
-                cb_MonitorCapture.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["MonitorCapture"]);
+                cb_MonitorCapture.SelectedIndex = SettingLoad(vConfiguration, "MonitorCapture", typeof(int));
 
                 //Load - Led Mode
-                cb_LedMode.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedMode"]);
+                cb_LedMode.SelectedIndex = SettingLoad(vConfiguration, "LedMode", typeof(int));
 
                 //Load - Adjust Black Bars
-                cb_AdjustBlackBars.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["AdjustBlackBars"]);
+                cb_AdjustBlackBars.IsChecked = SettingLoad(vConfiguration, "AdjustBlackBars", typeof(bool));
 
                 //Load - Led Bottom Gap
-                tb_LedBottomGap.Text = "Led gap bottom stand: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedBottomGap"]) + " leds";
-                sldr_LedBottomGap.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedBottomGap"]);
+                tb_LedBottomGap.Text = "Led gap bottom stand: " + SettingLoad(vConfiguration, "LedBottomGap", typeof(int)) + " leds";
+                sldr_LedBottomGap.Value = SettingLoad(vConfiguration, "LedBottomGap", typeof(int));
 
                 //Load - Led contrast level
-                tb_LedContrast.Text = "Contrast level: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedContrast"]);
-                sldr_LedContrast.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedContrast"]);
+                tb_LedContrast.Text = "Contrast level: " + SettingLoad(vConfiguration, "LedContrast", typeof(int));
+                sldr_LedContrast.Value = SettingLoad(vConfiguration, "LedContrast", typeof(int));
 
                 //Load - Led brightness level
-                tb_LedBrightness.Text = "Brightness level: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedBrightness"]) + "%";
-                sldr_LedBrightness.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedBrightness"]);
+                tb_LedBrightness.Text = "Brightness level: " + SettingLoad(vConfiguration, "LedBrightness", typeof(int)) + "%";
+                sldr_LedBrightness.Value = SettingLoad(vConfiguration, "LedBrightness", typeof(int));
 
                 //Load - Led Energy Saving Mode
-                cb_LedEnergyMode.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["LedEnergyMode"]);
+                cb_LedEnergyMode.IsChecked = SettingLoad(vConfiguration, "LedEnergyMode", typeof(bool));
 
                 //Load - Led Minimum Brightness
-                tb_LedMinBrightness.Text = "Minimum brightness level: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedMinBrightness"]) + "%";
-                sldr_LedMinBrightness.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedMinBrightness"]);
+                tb_LedMinBrightness.Text = "Minimum brightness level: " + SettingLoad(vConfiguration, "LedMinBrightness", typeof(int)) + "%";
+                sldr_LedMinBrightness.Value = SettingLoad(vConfiguration, "LedMinBrightness", typeof(int));
 
                 //Load - Led Gamma
                 tb_LedGamma.Text = "Gamma curve: " + SettingLoad(vConfiguration, "LedGamma3", typeof(float)).ToString("0.00");
                 sldr_LedGamma.Value = SettingLoad(vConfiguration, "LedGamma3", typeof(float));
 
                 //Load - Led Saturation
-                tb_LedSaturation.Text = "Color saturation: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedSaturation"]) + "%";
-                sldr_LedSaturation.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedSaturation"]);
+                tb_LedSaturation.Text = "Color saturation: " + SettingLoad(vConfiguration, "LedSaturation", typeof(int)) + "%";
+                sldr_LedSaturation.Value = SettingLoad(vConfiguration, "LedSaturation", typeof(int));
 
                 //Load - Color Loop Speed
-                tb_ColorLoopSpeed.Text = "Color loop speed: " + Convert.ToInt32(ConfigurationManager.AppSettings["ColorLoopSpeed"]) + " ms";
-                sldr_ColorLoopSpeed.Value = Convert.ToInt32(ConfigurationManager.AppSettings["ColorLoopSpeed"]);
+                tb_ColorLoopSpeed.Text = "Color loop speed: " + SettingLoad(vConfiguration, "ColorLoopSpeed", typeof(int)) + " ms";
+                sldr_ColorLoopSpeed.Value = SettingLoad(vConfiguration, "ColorLoopSpeed", typeof(int));
 
                 //Load - Spectrum Rotation Speed
-                tb_SpectrumRotationSpeed.Text = "Spectrum rotation speed: " + Convert.ToInt32(ConfigurationManager.AppSettings["SpectrumRotationSpeed"]) + " sec";
-                sldr_SpectrumRotationSpeed.Value = Convert.ToInt32(ConfigurationManager.AppSettings["SpectrumRotationSpeed"]);
+                tb_SpectrumRotationSpeed.Text = "Spectrum rotation speed: " + SettingLoad(vConfiguration, "SpectrumRotationSpeed", typeof(int)) + " sec";
+                sldr_SpectrumRotationSpeed.Value = SettingLoad(vConfiguration, "SpectrumRotationSpeed", typeof(int));
 
                 //Load - Solid Led Color
-                string SolidLedColor = ConfigurationManager.AppSettings["SolidLedColor"].ToString();
-                button_ColorPickerSolid.Background = new BrushConverter().ConvertFrom(SolidLedColor) as SolidColorBrush;
+                string solidLedColor = SettingLoad(vConfiguration, "SolidLedColor", typeof(string));
+                button_ColorPickerSolid.Background = new BrushConverter().ConvertFrom(solidLedColor) as SolidColorBrush;
 
                 //Load - Led Minimum Color
-                tb_LedMinColor.Text = "Minimum color brightness: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedMinColor2"]) + "%";
-                sldr_LedMinColor.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedMinColor2"]);
+                tb_LedMinColor.Text = "Minimum color brightness: " + SettingLoad(vConfiguration, "LedMinColor2", typeof(int)) + "%";
+                sldr_LedMinColor.Value = SettingLoad(vConfiguration, "LedMinColor2", typeof(int));
 
                 //Load - Led Color Red
-                tb_LedColorRed.Text = "Red: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedColorRed"]) + "%";
-                sldr_LedColorRed.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedColorRed"]);
+                tb_LedColorRed.Text = "Red: " + SettingLoad(vConfiguration, "LedColorRed", typeof(int)) + "%";
+                sldr_LedColorRed.Value = SettingLoad(vConfiguration, "LedColorRed", typeof(int));
 
                 //Load - Led Color Green
-                tb_LedColorGreen.Text = "Green: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedColorGreen"]) + "%";
-                sldr_LedColorGreen.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedColorGreen"]);
+                tb_LedColorGreen.Text = "Green: " + SettingLoad(vConfiguration, "LedColorGreen", typeof(int)) + "%";
+                sldr_LedColorGreen.Value = SettingLoad(vConfiguration, "LedColorGreen", typeof(int));
 
                 //Load - Led Color Blue
-                tb_LedColorBlue.Text = "Blue: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedColorBlue"]) + "%";
-                sldr_LedColorBlue.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedColorBlue"]);
+                tb_LedColorBlue.Text = "Blue: " + SettingLoad(vConfiguration, "LedColorBlue", typeof(int)) + "%";
+                sldr_LedColorBlue.Value = SettingLoad(vConfiguration, "LedColorBlue", typeof(int));
 
                 //Load - Led Capture Range
-                tb_LedCaptureRange.Text = "Led capture range: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedCaptureRange"]) + "%";
-                sldr_LedCaptureRange.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedCaptureRange"]);
+                tb_LedCaptureRange.Text = "Led capture range: " + SettingLoad(vConfiguration, "LedCaptureRange", typeof(int)) + "%";
+                sldr_LedCaptureRange.Value = SettingLoad(vConfiguration, "LedCaptureRange", typeof(int));
 
                 //Load - Blackbar detect range
-                tb_AdjustBlackbarRange.Text = "Blackbar detection range: " + Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRange"]) + "%";
-                sldr_AdjustBlackbarRange.Value = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarRange"]);
+                tb_AdjustBlackbarRange.Text = "Blackbar detection range: " + SettingLoad(vConfiguration, "AdjustBlackbarRange", typeof(int)) + "%";
+                sldr_AdjustBlackbarRange.Value = SettingLoad(vConfiguration, "AdjustBlackbarRange", typeof(int));
 
                 //Load - Blackbar Brightness
-                tb_AdjustBlackBarBrightness.Text = "Blackbar minimum brightness: " + Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarBrightness"]) + "%";
-                sldr_AdjustBlackBarBrightness.Value = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackBarBrightness"]);
+                tb_AdjustBlackBarBrightness.Text = "Blackbar minimum brightness: " + SettingLoad(vConfiguration, "AdjustBlackBarBrightness", typeof(int)) + "%";
+                sldr_AdjustBlackBarBrightness.Value = SettingLoad(vConfiguration, "AdjustBlackBarBrightness", typeof(int));
 
                 //Load - Blackbar Update Rate
-                tb_AdjustBlackbarUpdateRate.Text = "Blackbar update rate: " + Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarUpdateRate"]) + "ms";
-                sldr_AdjustBlackbarUpdateRate.Value = Convert.ToInt32(ConfigurationManager.AppSettings["AdjustBlackbarUpdateRate"]);
+                tb_AdjustBlackbarUpdateRate.Text = "Blackbar update rate: " + SettingLoad(vConfiguration, "AdjustBlackbarUpdateRate", typeof(int)) + "ms";
+                sldr_AdjustBlackbarUpdateRate.Value = SettingLoad(vConfiguration, "AdjustBlackbarUpdateRate", typeof(int));
 
                 //Load - Led Side Types
-                combobox_LedSideFirst.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedSideFirst"]);
-                combobox_LedSideSecond.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedSideSecond"]);
-                combobox_LedSideThird.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedSideThird"]);
-                combobox_LedSideFourth.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedSideFourth"]);
+                combobox_LedSideFirst.SelectedIndex = SettingLoad(vConfiguration, "LedSideFirst", typeof(int));
+                combobox_LedSideSecond.SelectedIndex = SettingLoad(vConfiguration, "LedSideSecond", typeof(int));
+                combobox_LedSideThird.SelectedIndex = SettingLoad(vConfiguration, "LedSideThird", typeof(int));
+                combobox_LedSideFourth.SelectedIndex = SettingLoad(vConfiguration, "LedSideFourth", typeof(int));
 
                 //Load - Led Count
-                textbox_LedCountFirst.Text = Convert.ToString(ConfigurationManager.AppSettings["LedCountFirst"]);
-                textbox_LedCountSecond.Text = Convert.ToString(ConfigurationManager.AppSettings["LedCountSecond"]);
-                textbox_LedCountThird.Text = Convert.ToString(ConfigurationManager.AppSettings["LedCountThird"]);
-                textbox_LedCountFourth.Text = Convert.ToString(ConfigurationManager.AppSettings["LedCountFourth"]);
+                textbox_LedCountFirst.Text = SettingLoad(vConfiguration, "LedCountFirst", typeof(string));
+                textbox_LedCountSecond.Text = SettingLoad(vConfiguration, "LedCountSecond", typeof(string));
+                textbox_LedCountThird.Text = SettingLoad(vConfiguration, "LedCountThird", typeof(string));
+                textbox_LedCountFourth.Text = SettingLoad(vConfiguration, "LedCountFourth", typeof(string));
                 int totalCount = Convert.ToInt32(textbox_LedCountFirst.Text) + Convert.ToInt32(textbox_LedCountSecond.Text) + Convert.ToInt32(textbox_LedCountThird.Text) + Convert.ToInt32(textbox_LedCountFourth.Text);
                 textblock_LedCount.Text = "Total led count: " + totalCount + " (must be equal with arduino script)";
 
                 //Load - Led Output
-                cb_LedOutput.SelectedIndex = Convert.ToInt32(ConfigurationManager.AppSettings["LedOutput"]);
+                cb_LedOutput.SelectedIndex = SettingLoad(vConfiguration, "LedOutput", typeof(int));
 
                 //Load - Update Rate
-                int updateRateMs = Convert.ToInt32(ConfigurationManager.AppSettings["UpdateRate"]);
+                int updateRateMs = SettingLoad(vConfiguration, "UpdateRate", typeof(int));
                 string updateRateFps = Convert.ToInt32(1000 / updateRateMs).ToString();
                 tb_UpdateRate.Text = "Led update rate: " + updateRateMs + " ms (" + updateRateFps + " fps)";
                 sldr_UpdateRate.Value = updateRateMs;
 
                 //Load - Led Smoothing
-                int smoothingFrames = Convert.ToInt32(ConfigurationManager.AppSettings["LedSmoothing"]);
+                int smoothingFrames = SettingLoad(vConfiguration, "LedSmoothing", typeof(int));
                 tb_LedSmoothing.Text = "Led smoothing: " + smoothingFrames + " frames";
                 sldr_LedSmoothing.Value = smoothingFrames;
 
                 //Load - Capture HDR Brightness
-                int captureHdrBrightness = Convert.ToInt32(ConfigurationManager.AppSettings["CaptureHdrBrightness"]);
+                int captureHdrBrightness = SettingLoad(vConfiguration, "CaptureHdrBrightness", typeof(int));
                 tb_CaptureHdrBrightness.Text = "HDR capture brightness: " + captureHdrBrightness;
                 sldr_CaptureHdrBrightness.Value = captureHdrBrightness;
 
                 //Load - Debug Mode
-                checkbox_DebugBlackBar.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugBlackBar"]);
-                checkbox_DebugLedPreview.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugLedPreview"]);
-                checkbox_DebugColor.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["DebugColor"]);
+                checkbox_DebugBlackBar.IsChecked = SettingLoad(vConfiguration, "DebugBlackBar", typeof(bool));
+                checkbox_DebugLedPreview.IsChecked = SettingLoad(vConfiguration, "DebugLedPreview", typeof(bool));
+                checkbox_DebugColor.IsChecked = SettingLoad(vConfiguration, "DebugColor", typeof(bool));
 
                 //Check if application is set to launch on Windows startup
                 string targetName = Assembly.GetEntryAssembly().GetName().Name;

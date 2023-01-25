@@ -1,7 +1,6 @@
 ﻿using AmbiPro.Settings;
 using ArnoldVinkCode;
 using System;
-using System.Configuration;
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -10,6 +9,7 @@ using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
 using static ArnoldVinkCode.AVFirewall;
+using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro
 {
@@ -41,7 +41,7 @@ namespace AmbiPro
                 AppTasks.TasksBackgroundStart();
 
                 //Settings check if first launch
-                if (Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
+                if (SettingLoad(vConfiguration, "FirstLaunch2", typeof(bool)))
                 {
                     Debug.WriteLine("First launch, showing the settings screen.");
                     vFormSettings.Show();
@@ -50,15 +50,15 @@ namespace AmbiPro
                 {
                     //Start updating the leds
                     bool turnLedsOn = false;
-                    if (Convert.ToBoolean(ConfigurationManager.AppSettings["LedAutoOnOffBefore"]) || Convert.ToBoolean(ConfigurationManager.AppSettings["LedAutoOnOffAfter"]))
+                    if (SettingLoad(vConfiguration, "LedAutoOnOffBefore", typeof(bool)) || SettingLoad(vConfiguration, "LedAutoOnOffAfter", typeof(bool)))
                     {
-                        DateTime LedTimeBefore = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTimeBefore"], vAppCultureInfo);
-                        if (DateTime.Now.TimeOfDay < LedTimeBefore.TimeOfDay)
+                        DateTime ledTimeBefore = SettingLoad(vConfiguration, "LedAutoTimeBefore", typeof(DateTime));
+                        if (DateTime.Now.TimeOfDay < ledTimeBefore.TimeOfDay)
                         {
                             turnLedsOn = true;
                         }
-                        DateTime LedTimeAfter = DateTime.Parse(ConfigurationManager.AppSettings["LedAutoTimeAfter"], vAppCultureInfo);
-                        if (DateTime.Now.TimeOfDay >= LedTimeAfter.TimeOfDay)
+                        DateTime ledTimeAfter = SettingLoad(vConfiguration, "LedAutoTimeAfter", typeof(DateTime));
+                        if (DateTime.Now.TimeOfDay >= ledTimeAfter.TimeOfDay)
                         {
                             turnLedsOn = true;
                         }
@@ -85,7 +85,7 @@ namespace AmbiPro
         {
             try
             {
-                int SocketServerPort = Convert.ToInt32(ConfigurationManager.AppSettings["ServerPort"]);
+                int SocketServerPort = SettingLoad(vConfiguration, "ServerPort", typeof(int));
 
                 vArnoldVinkSockets = new ArnoldVinkSockets("127.0.0.1", SocketServerPort, true, false);
                 vArnoldVinkSockets.vSocketTimeout = 2000;
