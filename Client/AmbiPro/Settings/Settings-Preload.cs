@@ -1,10 +1,10 @@
-﻿using ArnoldVinkCode;
-using System;
+﻿using System;
 using System.Configuration;
 using System.Diagnostics;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
+using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro
 {
@@ -77,13 +77,13 @@ namespace AmbiPro
                 setLedBottomGap = Convert.ToInt32(ConfigurationManager.AppSettings["LedBottomGap"]);
                 setLedEnergyMode = Convert.ToBoolean(ConfigurationManager.AppSettings["LedEnergyMode"]);
 
-                setLedSaturation = AVSettings.Load(vConfiguration, "LedSaturation", typeof(float)) / 100;
-                setLedColorRed = AVSettings.Load(vConfiguration, "LedColorRed", typeof(float)) / 100;
-                setLedColorGreen = AVSettings.Load(vConfiguration, "LedColorGreen", typeof(float)) / 100;
-                setLedColorBlue = AVSettings.Load(vConfiguration, "LedColorBlue", typeof(float)) / 100;
-                setLedContrast = AVSettings.Load(vConfiguration, "LedContrast", typeof(float)) / 100;
-                setLedBrightness = AVSettings.Load(vConfiguration, "LedBrightness", typeof(float)) / 100;
-                setLedGamma = AVSettings.Load(vConfiguration, "LedGamma3", typeof(float));
+                setLedSaturation = SettingLoad(vConfiguration, "LedSaturation", typeof(float)) / 100;
+                setLedColorRed = SettingLoad(vConfiguration, "LedColorRed", typeof(float)) / 100;
+                setLedColorGreen = SettingLoad(vConfiguration, "LedColorGreen", typeof(float)) / 100;
+                setLedColorBlue = SettingLoad(vConfiguration, "LedColorBlue", typeof(float)) / 100;
+                setLedContrast = SettingLoad(vConfiguration, "LedContrast", typeof(float)) / 100;
+                setLedBrightness = SettingLoad(vConfiguration, "LedBrightness", typeof(float)) / 100;
+                setLedGamma = SettingLoad(vConfiguration, "LedGamma3", typeof(float));
 
                 setLedMinBrightness = Convert.ToByte(ConfigurationManager.AppSettings["LedMinBrightness"]);
                 setLedMinColor = Convert.ToInt32(ConfigurationManager.AppSettings["LedMinColor2"]);
@@ -112,7 +112,7 @@ namespace AmbiPro
                 UpdateCaptureVariables();
 
                 //Update the rotation based on ratio
-                if (AVSettings.Check(vConfiguration, "LedRotate" + vCurrentRatio))
+                if (SettingCheck(vConfiguration, "LedRotate" + vCurrentRatio))
                 {
                     setLedRotate = Convert.ToInt32(ConfigurationManager.AppSettings["LedRotate" + vCurrentRatio]);
                 }

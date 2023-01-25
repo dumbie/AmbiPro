@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Windows;
 using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
+using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro.Settings
 {
@@ -17,7 +18,7 @@ namespace AmbiPro.Settings
                 Debug.WriteLine("Rotating the leds clockwise.");
                 vCurrentRotation -= 1;
 
-                AVSettings.Save(vConfiguration, "LedRotate" + vCurrentRatio, vCurrentRotation.ToString());
+                SettingSave(vConfiguration, "LedRotate" + vCurrentRatio, vCurrentRotation.ToString());
                 tb_RotateValue.Text = "Led rotation: " + vCurrentRotation;
 
                 //Check the maximum rotation count
@@ -33,7 +34,7 @@ namespace AmbiPro.Settings
                 Debug.WriteLine("Rotating the leds counterwise.");
                 vCurrentRotation += 1;
 
-                AVSettings.Save(vConfiguration, "LedRotate" + vCurrentRatio, vCurrentRotation.ToString());
+                SettingSave(vConfiguration, "LedRotate" + vCurrentRatio, vCurrentRotation.ToString());
                 tb_RotateValue.Text = "Led rotation: " + vCurrentRotation;
 
                 //Check the maximum rotation count
@@ -49,7 +50,7 @@ namespace AmbiPro.Settings
                 Debug.WriteLine("Resetting the led rotation.");
                 vCurrentRotation = 0;
 
-                AVSettings.Save(vConfiguration, "LedRotate" + vCurrentRatio, "0");
+                SettingSave(vConfiguration, "LedRotate" + vCurrentRatio, "0");
                 tb_RotateValue.Text = "Led rotation: 0";
 
                 //Check the maximum rotation count
@@ -64,7 +65,7 @@ namespace AmbiPro.Settings
             try
             {
                 //Check if screen capture is enabled
-                bool captureEnabled = vTask_UpdateLed.TaskRunning && AVSettings.Load(vConfiguration, "LedMode", typeof(int)) == 0;
+                bool captureEnabled = vTask_UpdateLed.TaskRunning && SettingLoad(vConfiguration, "LedMode", typeof(int)) == 0;
                 if (!captureEnabled)
                 {
                     btn_RotateCounterwise.IsEnabled = false;
@@ -92,7 +93,7 @@ namespace AmbiPro.Settings
                 textblock_DebugPreview.Text = "Screen capture preview " + captureInfo + ":";
 
                 //Update rotation screen
-                if (AVSettings.Check(vConfiguration, "LedRotate" + vCurrentRatio))
+                if (SettingCheck(vConfiguration, "LedRotate" + vCurrentRatio))
                 {
                     vCurrentRotation = Convert.ToInt32(ConfigurationManager.AppSettings["LedRotate" + vCurrentRatio]);
                 }

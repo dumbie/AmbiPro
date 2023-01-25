@@ -1,7 +1,6 @@
-﻿using ArnoldVinkCode;
-using System.Configuration;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using static AmbiPro.AppVariables;
+using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro.Settings
 {
@@ -15,245 +14,245 @@ namespace AmbiPro.Settings
                 Debug.WriteLine("Checking application settings...");
 
                 //Check - First launch
-                if (ConfigurationManager.AppSettings["FirstLaunch2"] == null)
+                if (!SettingCheck(vConfiguration, "FirstLaunch2"))
                 {
-                    AVSettings.Save(vConfiguration, "FirstLaunch2", "True");
+                    SettingSave(vConfiguration, "FirstLaunch2", "True");
                 }
 
                 //Check - Com Port
-                if (ConfigurationManager.AppSettings["ComPort"] == null)
+                if (!SettingCheck(vConfiguration, "ComPort"))
                 {
-                    AVSettings.Save(vConfiguration, "ComPort", "1");
+                    SettingSave(vConfiguration, "ComPort", "1");
                 }
 
                 //Check - Baud Rate
-                if (ConfigurationManager.AppSettings["BaudRate"] == null)
+                if (!SettingCheck(vConfiguration, "BaudRate"))
                 {
-                    AVSettings.Save(vConfiguration, "BaudRate", "115200");
+                    SettingSave(vConfiguration, "BaudRate", "115200");
                 }
 
                 //Check - Enable or Disable Led Automatic
-                if (ConfigurationManager.AppSettings["LedAutoOnOffBefore"] == null)
+                if (!SettingCheck(vConfiguration, "LedAutoOnOffBefore"))
                 {
-                    AVSettings.Save(vConfiguration, "LedAutoOnOffBefore", "False");
+                    SettingSave(vConfiguration, "LedAutoOnOffBefore", "False");
                 }
-                if (ConfigurationManager.AppSettings["LedAutoTimeBefore"] == null)
+                if (!SettingCheck(vConfiguration, "LedAutoTimeBefore"))
                 {
-                    AVSettings.Save(vConfiguration, "LedAutoTimeBefore", "01/01/1970 9:00:00");
+                    SettingSave(vConfiguration, "LedAutoTimeBefore", "01/01/1970 9:00:00");
                 }
-                if (ConfigurationManager.AppSettings["LedAutoOnOffAfter"] == null)
+                if (!SettingCheck(vConfiguration, "LedAutoOnOffAfter"))
                 {
-                    AVSettings.Save(vConfiguration, "LedAutoOnOffAfter", "False");
+                    SettingSave(vConfiguration, "LedAutoOnOffAfter", "False");
                 }
-                if (ConfigurationManager.AppSettings["LedAutoTimeAfter"] == null)
+                if (!SettingCheck(vConfiguration, "LedAutoTimeAfter"))
                 {
-                    AVSettings.Save(vConfiguration, "LedAutoTimeAfter", "01/01/1970 17:00:00");
+                    SettingSave(vConfiguration, "LedAutoTimeAfter", "01/01/1970 17:00:00");
                 }
 
                 //Check - Server Port
-                if (ConfigurationManager.AppSettings["ServerPort"] == null)
+                if (!SettingCheck(vConfiguration, "ServerPort"))
                 {
-                    AVSettings.Save(vConfiguration, "ServerPort", "1020");
+                    SettingSave(vConfiguration, "ServerPort", "1020");
                 }
 
                 //Check - Monitor Capture
-                if (ConfigurationManager.AppSettings["MonitorCapture"] == null)
+                if (!SettingCheck(vConfiguration, "MonitorCapture"))
                 {
-                    AVSettings.Save(vConfiguration, "MonitorCapture", "0");
+                    SettingSave(vConfiguration, "MonitorCapture", "0");
                 }
 
                 //Check - Led Mode
-                if (ConfigurationManager.AppSettings["LedMode"] == null)
+                if (!SettingCheck(vConfiguration, "LedMode"))
                 {
-                    AVSettings.Save(vConfiguration, "LedMode", "0");
+                    SettingSave(vConfiguration, "LedMode", "0");
                 }
 
                 //Check - Adjust to Blackbars
-                if (ConfigurationManager.AppSettings["AdjustBlackBars"] == null)
+                if (!SettingCheck(vConfiguration, "AdjustBlackBars"))
                 {
-                    AVSettings.Save(vConfiguration, "AdjustBlackBars", "True");
+                    SettingSave(vConfiguration, "AdjustBlackBars", "True");
                 }
 
                 //Check - Blackbar Update Range
-                if (ConfigurationManager.AppSettings["AdjustBlackbarRange"] == null)
+                if (!SettingCheck(vConfiguration, "AdjustBlackbarRange"))
                 {
-                    AVSettings.Save(vConfiguration, "AdjustBlackbarRange", "20");
+                    SettingSave(vConfiguration, "AdjustBlackbarRange", "20");
                 }
 
                 //Check - Blackbar Brightness
-                if (ConfigurationManager.AppSettings["AdjustBlackBarBrightness"] == null)
+                if (!SettingCheck(vConfiguration, "AdjustBlackBarBrightness"))
                 {
-                    AVSettings.Save(vConfiguration, "AdjustBlackBarBrightness", "1");
+                    SettingSave(vConfiguration, "AdjustBlackBarBrightness", "1");
                 }
 
                 //Check - Blackbar Update Rate
-                if (ConfigurationManager.AppSettings["AdjustBlackbarUpdateRate"] == null)
+                if (!SettingCheck(vConfiguration, "AdjustBlackbarUpdateRate"))
                 {
-                    AVSettings.Save(vConfiguration, "AdjustBlackbarUpdateRate", "200");
+                    SettingSave(vConfiguration, "AdjustBlackbarUpdateRate", "200");
                 }
 
                 //Check - Led Bottom Gap
-                if (ConfigurationManager.AppSettings["LedBottomGap"] == null)
+                if (!SettingCheck(vConfiguration, "LedBottomGap"))
                 {
-                    AVSettings.Save(vConfiguration, "LedBottomGap", "0");
+                    SettingSave(vConfiguration, "LedBottomGap", "0");
                 }
 
                 //Check - Led Contrast Level
-                if (ConfigurationManager.AppSettings["LedContrast"] == null)
+                if (!SettingCheck(vConfiguration, "LedContrast"))
                 {
-                    AVSettings.Save(vConfiguration, "LedContrast", "0");
+                    SettingSave(vConfiguration, "LedContrast", "0");
                 }
 
                 //Check - Led Brightness Level
-                if (ConfigurationManager.AppSettings["LedBrightness"] == null)
+                if (!SettingCheck(vConfiguration, "LedBrightness"))
                 {
-                    AVSettings.Save(vConfiguration, "LedBrightness", "90");
+                    SettingSave(vConfiguration, "LedBrightness", "90");
                 }
 
                 //Check - Led Gamma
-                if (ConfigurationManager.AppSettings["LedGamma3"] == null)
+                if (!SettingCheck(vConfiguration, "LedGamma3"))
                 {
-                    AVSettings.Save(vConfiguration, "LedGamma3", "2.00");
+                    SettingSave(vConfiguration, "LedGamma3", "2.00");
                 }
 
                 //Check - Led Saturation
-                if (ConfigurationManager.AppSettings["LedSaturation"] == null)
+                if (!SettingCheck(vConfiguration, "LedSaturation"))
                 {
-                    AVSettings.Save(vConfiguration, "LedSaturation", "110");
+                    SettingSave(vConfiguration, "LedSaturation", "110");
                 }
 
                 //Check - Color Loop Speed
-                if (ConfigurationManager.AppSettings["ColorLoopSpeed"] == null)
+                if (!SettingCheck(vConfiguration, "ColorLoopSpeed"))
                 {
-                    AVSettings.Save(vConfiguration, "ColorLoopSpeed", "75");
+                    SettingSave(vConfiguration, "ColorLoopSpeed", "75");
                 }
 
                 //Check - Spectrum Rotation Speed
-                if (ConfigurationManager.AppSettings["SpectrumRotationSpeed"] == null)
+                if (!SettingCheck(vConfiguration, "SpectrumRotationSpeed"))
                 {
-                    AVSettings.Save(vConfiguration, "SpectrumRotationSpeed", "20");
+                    SettingSave(vConfiguration, "SpectrumRotationSpeed", "20");
                 }
 
                 //Check - Solid Led Color
-                if (ConfigurationManager.AppSettings["SolidLedColor"] == null)
+                if (!SettingCheck(vConfiguration, "SolidLedColor"))
                 {
-                    AVSettings.Save(vConfiguration, "SolidLedColor", "#FFA500");
+                    SettingSave(vConfiguration, "SolidLedColor", "#FFA500");
                 }
 
                 //Check - Led Energy Saving Mode
-                if (ConfigurationManager.AppSettings["LedEnergyMode"] == null)
+                if (!SettingCheck(vConfiguration, "LedEnergyMode"))
                 {
-                    AVSettings.Save(vConfiguration, "LedEnergyMode", "False");
+                    SettingSave(vConfiguration, "LedEnergyMode", "False");
                 }
 
                 //Check - Led Minimum Brightness
-                if (ConfigurationManager.AppSettings["LedMinBrightness"] == null)
+                if (!SettingCheck(vConfiguration, "LedMinBrightness"))
                 {
-                    AVSettings.Save(vConfiguration, "LedMinBrightness", "0");
+                    SettingSave(vConfiguration, "LedMinBrightness", "0");
                 }
 
                 //Check - Led Minimum Color
-                if (ConfigurationManager.AppSettings["LedMinColor2"] == null)
+                if (!SettingCheck(vConfiguration, "LedMinColor2"))
                 {
-                    AVSettings.Save(vConfiguration, "LedMinColor2", "2");
+                    SettingSave(vConfiguration, "LedMinColor2", "2");
                 }
 
                 //Check - Led Color Red
-                if (ConfigurationManager.AppSettings["LedColorRed"] == null)
+                if (!SettingCheck(vConfiguration, "LedColorRed"))
                 {
-                    AVSettings.Save(vConfiguration, "LedColorRed", "100");
+                    SettingSave(vConfiguration, "LedColorRed", "100");
                 }
 
                 //Check - Led Color Green
-                if (ConfigurationManager.AppSettings["LedColorGreen"] == null)
+                if (!SettingCheck(vConfiguration, "LedColorGreen"))
                 {
-                    AVSettings.Save(vConfiguration, "LedColorGreen", "100");
+                    SettingSave(vConfiguration, "LedColorGreen", "100");
                 }
 
                 //Check - Led Color Blue
-                if (ConfigurationManager.AppSettings["LedColorBlue"] == null)
+                if (!SettingCheck(vConfiguration, "LedColorBlue"))
                 {
-                    AVSettings.Save(vConfiguration, "LedColorBlue", "100");
+                    SettingSave(vConfiguration, "LedColorBlue", "100");
                 }
 
                 //Check - Led Capture Range
-                if (ConfigurationManager.AppSettings["LedCaptureRange"] == null)
+                if (!SettingCheck(vConfiguration, "LedCaptureRange"))
                 {
-                    AVSettings.Save(vConfiguration, "LedCaptureRange", "20");
+                    SettingSave(vConfiguration, "LedCaptureRange", "20");
                 }
 
                 //Check - Led Side Types
-                if (ConfigurationManager.AppSettings["LedSideFirst"] == null)
+                if (!SettingCheck(vConfiguration, "LedSideFirst"))
                 {
-                    AVSettings.Save(vConfiguration, "LedSideFirst", "0");
+                    SettingSave(vConfiguration, "LedSideFirst", "0");
                 }
-                if (ConfigurationManager.AppSettings["LedSideSecond"] == null)
+                if (!SettingCheck(vConfiguration, "LedSideSecond"))
                 {
-                    AVSettings.Save(vConfiguration, "LedSideSecond", "0");
+                    SettingSave(vConfiguration, "LedSideSecond", "0");
                 }
-                if (ConfigurationManager.AppSettings["LedSideThird"] == null)
+                if (!SettingCheck(vConfiguration, "LedSideThird"))
                 {
-                    AVSettings.Save(vConfiguration, "LedSideThird", "0");
+                    SettingSave(vConfiguration, "LedSideThird", "0");
                 }
-                if (ConfigurationManager.AppSettings["LedSideFourth"] == null)
+                if (!SettingCheck(vConfiguration, "LedSideFourth"))
                 {
-                    AVSettings.Save(vConfiguration, "LedSideFourth", "0");
+                    SettingSave(vConfiguration, "LedSideFourth", "0");
                 }
 
                 //Check - Led Count
-                if (ConfigurationManager.AppSettings["LedCountFirst"] == null)
+                if (!SettingCheck(vConfiguration, "LedCountFirst"))
                 {
-                    AVSettings.Save(vConfiguration, "LedCountFirst", "0");
+                    SettingSave(vConfiguration, "LedCountFirst", "0");
                 }
-                if (ConfigurationManager.AppSettings["LedCountSecond"] == null)
+                if (!SettingCheck(vConfiguration, "LedCountSecond"))
                 {
-                    AVSettings.Save(vConfiguration, "LedCountSecond", "0");
+                    SettingSave(vConfiguration, "LedCountSecond", "0");
                 }
-                if (ConfigurationManager.AppSettings["LedCountThird"] == null)
+                if (!SettingCheck(vConfiguration, "LedCountThird"))
                 {
-                    AVSettings.Save(vConfiguration, "LedCountThird", "0");
+                    SettingSave(vConfiguration, "LedCountThird", "0");
                 }
-                if (ConfigurationManager.AppSettings["LedCountFourth"] == null)
+                if (!SettingCheck(vConfiguration, "LedCountFourth"))
                 {
-                    AVSettings.Save(vConfiguration, "LedCountFourth", "0");
+                    SettingSave(vConfiguration, "LedCountFourth", "0");
                 }
 
                 //Check - Led Output
-                if (ConfigurationManager.AppSettings["LedOutput"] == null)
+                if (!SettingCheck(vConfiguration, "LedOutput"))
                 {
-                    AVSettings.Save(vConfiguration, "LedOutput", "0");
+                    SettingSave(vConfiguration, "LedOutput", "0");
                 }
 
                 //Check - Update Rate
-                if (ConfigurationManager.AppSettings["UpdateRate"] == null)
+                if (!SettingCheck(vConfiguration, "UpdateRate"))
                 {
-                    AVSettings.Save(vConfiguration, "UpdateRate", "20");
+                    SettingSave(vConfiguration, "UpdateRate", "20");
                 }
 
                 //Check - Led Smoothing
-                if (ConfigurationManager.AppSettings["LedSmoothing"] == null)
+                if (!SettingCheck(vConfiguration, "LedSmoothing"))
                 {
-                    AVSettings.Save(vConfiguration, "LedSmoothing", "4");
+                    SettingSave(vConfiguration, "LedSmoothing", "4");
                 }
 
                 //Check - Capture HDR brightness
-                if (ConfigurationManager.AppSettings["CaptureHdrBrightness"] == null)
+                if (!SettingCheck(vConfiguration, "CaptureHdrBrightness"))
                 {
-                    AVSettings.Save(vConfiguration, "CaptureHdrBrightness", "60");
+                    SettingSave(vConfiguration, "CaptureHdrBrightness", "60");
                 }
 
                 //Check - Debug Mode
-                if (ConfigurationManager.AppSettings["DebugBlackBar"] == null)
+                if (!SettingCheck(vConfiguration, "DebugBlackBar"))
                 {
-                    AVSettings.Save(vConfiguration, "DebugBlackBar", "False");
+                    SettingSave(vConfiguration, "DebugBlackBar", "False");
                 }
-                if (ConfigurationManager.AppSettings["DebugLedPreview"] == null)
+                if (!SettingCheck(vConfiguration, "DebugLedPreview"))
                 {
-                    AVSettings.Save(vConfiguration, "DebugLedPreview", "True");
+                    SettingSave(vConfiguration, "DebugLedPreview", "True");
                 }
-                if (ConfigurationManager.AppSettings["DebugColor"] == null)
+                if (!SettingCheck(vConfiguration, "DebugColor"))
                 {
-                    AVSettings.Save(vConfiguration, "DebugColor", "True");
+                    SettingSave(vConfiguration, "DebugColor", "True");
                 }
             }
             catch

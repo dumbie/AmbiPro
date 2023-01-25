@@ -1,5 +1,4 @@
-﻿using ArnoldVinkCode;
-using System;
+﻿using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
@@ -9,6 +8,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using static AmbiPro.AppVariables;
+using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro.Settings
 {
@@ -55,7 +55,7 @@ namespace AmbiPro.Settings
 
                     if (Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                     {
-                        AVSettings.Save(vConfiguration, "ComPort", PortNumberRaw.ToString());
+                        SettingSave(vConfiguration, "ComPort", PortNumberRaw.ToString());
                     }
                 }
 
@@ -109,8 +109,8 @@ namespace AmbiPro.Settings
                 sldr_LedMinBrightness.Value = Convert.ToInt32(ConfigurationManager.AppSettings["LedMinBrightness"]);
 
                 //Load - Led Gamma
-                tb_LedGamma.Text = "Gamma curve: " + AVSettings.Load(vConfiguration, "LedGamma3", typeof(float)).ToString("0.00");
-                sldr_LedGamma.Value = AVSettings.Load(vConfiguration, "LedGamma3", typeof(float));
+                tb_LedGamma.Text = "Gamma curve: " + SettingLoad(vConfiguration, "LedGamma3", typeof(float)).ToString("0.00");
+                sldr_LedGamma.Value = SettingLoad(vConfiguration, "LedGamma3", typeof(float));
 
                 //Load - Led Saturation
                 tb_LedSaturation.Text = "Color saturation: " + Convert.ToInt32(ConfigurationManager.AppSettings["LedSaturation"]) + "%";

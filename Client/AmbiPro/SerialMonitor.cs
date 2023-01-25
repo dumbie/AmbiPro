@@ -15,6 +15,7 @@ using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
 using static AmbiPro.PreloadSettings;
 using static ArnoldVinkCode.AVActions;
+using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro
 {
@@ -394,7 +395,7 @@ namespace AmbiPro
                 ResetVariables();
 
                 //Set first launch setting to false
-                AVSettings.Save(vConfiguration, "FirstLaunch2", "False");
+                SettingSave(vConfiguration, "FirstLaunch2", "False");
 
                 //Check led display mode
                 if (setLedMode == 0) { await ModeScreenCapture(initByteSize, totalByteSize, serialBytes); }

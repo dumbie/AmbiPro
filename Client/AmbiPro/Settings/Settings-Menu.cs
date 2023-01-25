@@ -1,9 +1,9 @@
-﻿using ArnoldVinkCode;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using static AmbiPro.AppVariables;
+using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro.Settings
 {
@@ -109,7 +109,7 @@ namespace AmbiPro.Settings
                         vDebugCaptureAllowed = true;
 
                         //Show debug led preview
-                        if (AVSettings.Load(vConfiguration, "DebugLedPreview", typeof(bool)))
+                        if (SettingLoad(vConfiguration, "DebugLedPreview", typeof(bool)))
                         {
                             grid_LedPreview.Visibility = Visibility.Visible;
                         }

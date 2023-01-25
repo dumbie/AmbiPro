@@ -9,6 +9,7 @@ using System.Windows.Media;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
+using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro.Settings
 {
@@ -24,7 +25,7 @@ namespace AmbiPro.Settings
                 //Save - Com Port
                 cb_ComPort.SelectionChanged += async (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "ComPort", (cb_ComPort.SelectedIndex + 1).ToString());
+                    SettingSave(vConfiguration, "ComPort", (cb_ComPort.SelectedIndex + 1).ToString());
                     if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                     {
                         await LedSwitch(LedSwitches.Restart);
@@ -41,13 +42,13 @@ namespace AmbiPro.Settings
                 cb_LedAutoOnOffBefore.Click += (sender, e) =>
                 {
                     bool enabledDisabled = (bool)cb_LedAutoOnOffBefore.IsChecked;
-                    AVSettings.Save(vConfiguration, "LedAutoOnOffBefore", enabledDisabled.ToString());
+                    SettingSave(vConfiguration, "LedAutoOnOffBefore", enabledDisabled.ToString());
                     timepicker_LedAutoTimeBefore.IsEnabled = enabledDisabled;
                 };
                 cb_LedAutoOnOffAfter.Click += (sender, e) =>
                 {
                     bool enabledDisabled = (bool)cb_LedAutoOnOffAfter.IsChecked;
-                    AVSettings.Save(vConfiguration, "LedAutoOnOffAfter", enabledDisabled.ToString());
+                    SettingSave(vConfiguration, "LedAutoOnOffAfter", enabledDisabled.ToString());
                     timepicker_LedAutoTimeAfter.IsEnabled = enabledDisabled;
                 };
 
@@ -56,7 +57,7 @@ namespace AmbiPro.Settings
                 {
                     try
                     {
-                        AVSettings.Save(vConfiguration, "LedAutoTimeBefore", dateTime.Value.ToString(vAppCultureInfo));
+                        SettingSave(vConfiguration, "LedAutoTimeBefore", dateTime.Value.ToString(vAppCultureInfo));
                     }
                     catch { }
                 };
@@ -64,7 +65,7 @@ namespace AmbiPro.Settings
                 {
                     try
                     {
-                        AVSettings.Save(vConfiguration, "LedAutoTimeAfter", dateTime.Value.ToString(vAppCultureInfo));
+                        SettingSave(vConfiguration, "LedAutoTimeAfter", dateTime.Value.ToString(vAppCultureInfo));
                     }
                     catch { }
                 };
@@ -78,8 +79,8 @@ namespace AmbiPro.Settings
                 //Save - Adjust Black Bars
                 cb_AdjustBlackBars.Click += async (sender, e) =>
                 {
-                    if ((bool)cb_AdjustBlackBars.IsChecked) { AVSettings.Save(vConfiguration, "AdjustBlackBars", "True"); }
-                    else { AVSettings.Save(vConfiguration, "AdjustBlackBars", "False"); }
+                    if ((bool)cb_AdjustBlackBars.IsChecked) { SettingSave(vConfiguration, "AdjustBlackBars", "True"); }
+                    else { SettingSave(vConfiguration, "AdjustBlackBars", "False"); }
                     if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                     {
                         await LedSwitch(LedSwitches.Restart);
@@ -89,7 +90,7 @@ namespace AmbiPro.Settings
                 //Save - Monitor Capture
                 cb_MonitorCapture.SelectionChanged += async (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "MonitorCapture", cb_MonitorCapture.SelectedIndex.ToString());
+                    SettingSave(vConfiguration, "MonitorCapture", cb_MonitorCapture.SelectedIndex.ToString());
                     if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                     {
                         await LedSwitch(LedSwitches.Restart);
@@ -100,7 +101,7 @@ namespace AmbiPro.Settings
                 //Save - Led Mode
                 cb_LedMode.SelectionChanged += async (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "LedMode", cb_LedMode.SelectedIndex.ToString());
+                    SettingSave(vConfiguration, "LedMode", cb_LedMode.SelectedIndex.ToString());
                     if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
                     {
                         await LedSwitch(LedSwitches.Restart);
@@ -111,63 +112,63 @@ namespace AmbiPro.Settings
                 //Save - Led Bottom Gap
                 sldr_LedBottomGap.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "LedBottomGap", sldr_LedBottomGap.Value.ToString("0"));
+                    SettingSave(vConfiguration, "LedBottomGap", sldr_LedBottomGap.Value.ToString("0"));
                     tb_LedBottomGap.Text = "Led gap bottom stand: " + sldr_LedBottomGap.Value.ToString("0") + " leds";
                 };
 
                 //Save - Led contrast level
                 sldr_LedContrast.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "LedContrast", sldr_LedContrast.Value.ToString("0"));
+                    SettingSave(vConfiguration, "LedContrast", sldr_LedContrast.Value.ToString("0"));
                     tb_LedContrast.Text = "Contrast level: " + sldr_LedContrast.Value.ToString("0");
                 };
 
                 //Save - Led brightness level
                 sldr_LedBrightness.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "LedBrightness", sldr_LedBrightness.Value.ToString("0"));
+                    SettingSave(vConfiguration, "LedBrightness", sldr_LedBrightness.Value.ToString("0"));
                     tb_LedBrightness.Text = "Brightness level: " + sldr_LedBrightness.Value.ToString("0") + "%";
                 };
 
                 //Save - Led Energy Saving Mode
                 cb_LedEnergyMode.Click += (sender, e) =>
                 {
-                    if ((bool)cb_LedEnergyMode.IsChecked) { AVSettings.Save(vConfiguration, "LedEnergyMode", "True"); }
-                    else { AVSettings.Save(vConfiguration, "LedEnergyMode", "False"); }
+                    if ((bool)cb_LedEnergyMode.IsChecked) { SettingSave(vConfiguration, "LedEnergyMode", "True"); }
+                    else { SettingSave(vConfiguration, "LedEnergyMode", "False"); }
                 };
 
                 //Save - Led Minimum Brightness
                 sldr_LedMinBrightness.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "LedMinBrightness", sldr_LedMinBrightness.Value.ToString("0"));
+                    SettingSave(vConfiguration, "LedMinBrightness", sldr_LedMinBrightness.Value.ToString("0"));
                     tb_LedMinBrightness.Text = "Minimum brightness level: " + sldr_LedMinBrightness.Value.ToString("0") + "%";
                 };
 
                 //Save - Led Gamma
                 sldr_LedGamma.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "LedGamma3", sldr_LedGamma.Value);
+                    SettingSave(vConfiguration, "LedGamma3", sldr_LedGamma.Value);
                     tb_LedGamma.Text = "Gamma curve: " + sldr_LedGamma.Value.ToString("0.00");
                 };
 
                 //Save - Led Saturation
                 sldr_LedSaturation.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "LedSaturation", sldr_LedSaturation.Value.ToString("0"));
+                    SettingSave(vConfiguration, "LedSaturation", sldr_LedSaturation.Value.ToString("0"));
                     tb_LedSaturation.Text = "Color saturation: " + sldr_LedSaturation.Value.ToString("0") + "%";
                 };
 
                 //Save - Color Loop Speed
                 sldr_ColorLoopSpeed.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "ColorLoopSpeed", sldr_ColorLoopSpeed.Value.ToString("0"));
+                    SettingSave(vConfiguration, "ColorLoopSpeed", sldr_ColorLoopSpeed.Value.ToString("0"));
                     tb_ColorLoopSpeed.Text = "Color loop speed: " + sldr_ColorLoopSpeed.Value.ToString("0") + " ms";
                 };
 
                 //Save - Spectrum Rotation Speed
                 sldr_SpectrumRotationSpeed.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "SpectrumRotationSpeed", sldr_SpectrumRotationSpeed.Value.ToString("0"));
+                    SettingSave(vConfiguration, "SpectrumRotationSpeed", sldr_SpectrumRotationSpeed.Value.ToString("0"));
                     tb_SpectrumRotationSpeed.Text = "Spectrum rotation speed: " + sldr_SpectrumRotationSpeed.Value.ToString("0") + " sec";
                 };
 
@@ -179,63 +180,63 @@ namespace AmbiPro.Settings
                     {
                         SolidColorBrush newBrush = new SolidColorBrush((Color)newColor);
                         button_ColorPickerSolid.Background = newBrush;
-                        AVSettings.Save(vConfiguration, "SolidLedColor", newColor.ToString());
+                        SettingSave(vConfiguration, "SolidLedColor", newColor.ToString());
                     }
                 };
 
                 //Save - Led Minimum Color
                 sldr_LedMinColor.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "LedMinColor2", sldr_LedMinColor.Value.ToString("0"));
+                    SettingSave(vConfiguration, "LedMinColor2", sldr_LedMinColor.Value.ToString("0"));
                     tb_LedMinColor.Text = "Minimum color brightness: " + sldr_LedMinColor.Value.ToString("0") + "%";
                 };
 
                 //Save - Led Color Red
                 sldr_LedColorRed.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "LedColorRed", sldr_LedColorRed.Value.ToString("0"));
+                    SettingSave(vConfiguration, "LedColorRed", sldr_LedColorRed.Value.ToString("0"));
                     tb_LedColorRed.Text = "Red: " + sldr_LedColorRed.Value.ToString("0") + "%";
                 };
 
                 //Save - Led Color Green
                 sldr_LedColorGreen.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "LedColorGreen", sldr_LedColorGreen.Value.ToString("0"));
+                    SettingSave(vConfiguration, "LedColorGreen", sldr_LedColorGreen.Value.ToString("0"));
                     tb_LedColorGreen.Text = "Green: " + sldr_LedColorGreen.Value.ToString("0") + "%";
                 };
 
                 //Save - Led Color Blue
                 sldr_LedColorBlue.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "LedColorBlue", sldr_LedColorBlue.Value.ToString("0"));
+                    SettingSave(vConfiguration, "LedColorBlue", sldr_LedColorBlue.Value.ToString("0"));
                     tb_LedColorBlue.Text = "Blue: " + sldr_LedColorBlue.Value.ToString("0") + "%";
                 };
 
                 //Save - Led Capture Range
                 sldr_LedCaptureRange.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "LedCaptureRange", sldr_LedCaptureRange.Value.ToString("0"));
+                    SettingSave(vConfiguration, "LedCaptureRange", sldr_LedCaptureRange.Value.ToString("0"));
                     tb_LedCaptureRange.Text = "Led capture range: " + sldr_LedCaptureRange.Value.ToString("0") + "%";
                 };
 
                 //Save - Blackbar detect range
                 sldr_AdjustBlackbarRange.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "AdjustBlackbarRange", sldr_AdjustBlackbarRange.Value.ToString("0"));
+                    SettingSave(vConfiguration, "AdjustBlackbarRange", sldr_AdjustBlackbarRange.Value.ToString("0"));
                     tb_AdjustBlackbarRange.Text = "Blackbar detection range: " + Convert.ToInt32(sldr_AdjustBlackbarRange.Value) + "%";
                 };
 
                 //Save - Blackbar Brightness
                 sldr_AdjustBlackBarBrightness.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "AdjustBlackBarBrightness", sldr_AdjustBlackBarBrightness.Value.ToString("0"));
+                    SettingSave(vConfiguration, "AdjustBlackBarBrightness", sldr_AdjustBlackBarBrightness.Value.ToString("0"));
                     tb_AdjustBlackBarBrightness.Text = "Blackbar minimum brightness: " + sldr_AdjustBlackBarBrightness.Value.ToString("0") + "%";
                 };
 
                 //Save - Blackbar Update Rate
                 sldr_AdjustBlackbarUpdateRate.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "AdjustBlackbarUpdateRate", sldr_AdjustBlackbarUpdateRate.Value.ToString("0"));
+                    SettingSave(vConfiguration, "AdjustBlackbarUpdateRate", sldr_AdjustBlackbarUpdateRate.Value.ToString("0"));
                     tb_AdjustBlackbarUpdateRate.Text = "Blackbar update rate: " + sldr_AdjustBlackbarUpdateRate.Value.ToString("0") + "ms";
                 };
 
@@ -278,13 +279,13 @@ namespace AmbiPro.Settings
                 //Save - Led Output
                 cb_LedOutput.SelectionChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "LedOutput", cb_LedOutput.SelectedIndex.ToString());
+                    SettingSave(vConfiguration, "LedOutput", cb_LedOutput.SelectedIndex.ToString());
                 };
 
                 //Save - Update Rate
                 sldr_UpdateRate.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "UpdateRate", sldr_UpdateRate.Value.ToString("0"));
+                    SettingSave(vConfiguration, "UpdateRate", sldr_UpdateRate.Value.ToString("0"));
                     int updateRateMs = Convert.ToInt32(sldr_UpdateRate.Value);
                     string updateRateFps = Convert.ToInt32(1000 / updateRateMs).ToString();
                     tb_UpdateRate.Text = "Led update rate: " + updateRateMs + " ms (" + updateRateFps + " fps)";
@@ -293,7 +294,7 @@ namespace AmbiPro.Settings
                 //Save - Led Smoothing
                 sldr_LedSmoothing.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "LedSmoothing", sldr_LedSmoothing.Value.ToString("0"));
+                    SettingSave(vConfiguration, "LedSmoothing", sldr_LedSmoothing.Value.ToString("0"));
                     int smoothingFrames = Convert.ToInt32(sldr_LedSmoothing.Value);
                     tb_LedSmoothing.Text = "Led smoothing: " + smoothingFrames + " frames";
                 };
@@ -301,7 +302,7 @@ namespace AmbiPro.Settings
                 //Save - Capture HDR Brightness
                 sldr_CaptureHdrBrightness.ValueChanged += (sender, e) =>
                 {
-                    AVSettings.Save(vConfiguration, "CaptureHdrBrightness", sldr_CaptureHdrBrightness.Value.ToString("0"));
+                    SettingSave(vConfiguration, "CaptureHdrBrightness", sldr_CaptureHdrBrightness.Value.ToString("0"));
                     int captureHdrBrightness = Convert.ToInt32(sldr_CaptureHdrBrightness.Value);
                     tb_CaptureHdrBrightness.Text = "HDR capture brightness: " + captureHdrBrightness;
                     if (!Convert.ToBoolean(ConfigurationManager.AppSettings["FirstLaunch2"]))
@@ -321,11 +322,11 @@ namespace AmbiPro.Settings
                 {
                     if ((bool)checkbox_DebugBlackBar.IsChecked)
                     {
-                        AVSettings.Save(vConfiguration, "DebugBlackBar", "True");
+                        SettingSave(vConfiguration, "DebugBlackBar", "True");
                     }
                     else
                     {
-                        AVSettings.Save(vConfiguration, "DebugBlackBar", "False");
+                        SettingSave(vConfiguration, "DebugBlackBar", "False");
                     }
                 };
 
@@ -334,12 +335,12 @@ namespace AmbiPro.Settings
                 {
                     if ((bool)checkbox_DebugLedPreview.IsChecked)
                     {
-                        AVSettings.Save(vConfiguration, "DebugLedPreview", "True");
+                        SettingSave(vConfiguration, "DebugLedPreview", "True");
                         grid_LedPreview.Visibility = Visibility.Visible;
                     }
                     else
                     {
-                        AVSettings.Save(vConfiguration, "DebugLedPreview", "False");
+                        SettingSave(vConfiguration, "DebugLedPreview", "False");
                         grid_LedPreview.Visibility = Visibility.Collapsed;
                     }
                 };
@@ -349,11 +350,11 @@ namespace AmbiPro.Settings
                 {
                     if ((bool)checkbox_DebugColor.IsChecked)
                     {
-                        AVSettings.Save(vConfiguration, "DebugColor", "True");
+                        SettingSave(vConfiguration, "DebugColor", "True");
                     }
                     else
                     {
-                        AVSettings.Save(vConfiguration, "DebugColor", "False");
+                        SettingSave(vConfiguration, "DebugColor", "False");
                     }
                 };
             }
@@ -373,7 +374,7 @@ namespace AmbiPro.Settings
                 {
                     if (settingName.StartsWith("LedRotate") && settingName.Contains(":"))
                     {
-                        AVSettings.Save(vConfiguration, settingName, "0");
+                        SettingSave(vConfiguration, settingName, "0");
                     }
                 }
             }
@@ -386,7 +387,7 @@ namespace AmbiPro.Settings
             try
             {
                 //Save the new led side setting
-                AVSettings.Save(vConfiguration, sideName, sideIndex);
+                SettingSave(vConfiguration, sideName, sideIndex);
 
                 //Reset led rotate setting
                 SettingResetLedRotate();
@@ -421,7 +422,7 @@ namespace AmbiPro.Settings
                 if (intBaudRate < 1 || intBaudRate > 268435456) { textbox_BaudRate.BorderBrush = BrushInvalid; return; }
 
                 //Save the new baud rate setting
-                AVSettings.Save(vConfiguration, "BaudRate", textbox_BaudRate.Text);
+                SettingSave(vConfiguration, "BaudRate", textbox_BaudRate.Text);
                 textbox_BaudRate.BorderBrush = BrushValid;
 
                 //Restart the leds
@@ -462,10 +463,10 @@ namespace AmbiPro.Settings
                 if (invalidCount) { return; }
 
                 //Save the new led count setting
-                AVSettings.Save(vConfiguration, "LedCountFirst", textbox_LedCountFirst.Text);
-                AVSettings.Save(vConfiguration, "LedCountSecond", textbox_LedCountSecond.Text);
-                AVSettings.Save(vConfiguration, "LedCountThird", textbox_LedCountThird.Text);
-                AVSettings.Save(vConfiguration, "LedCountFourth", textbox_LedCountFourth.Text);
+                SettingSave(vConfiguration, "LedCountFirst", textbox_LedCountFirst.Text);
+                SettingSave(vConfiguration, "LedCountSecond", textbox_LedCountSecond.Text);
+                SettingSave(vConfiguration, "LedCountThird", textbox_LedCountThird.Text);
+                SettingSave(vConfiguration, "LedCountFourth", textbox_LedCountFourth.Text);
                 textbox_LedCountFirst.BorderBrush = BrushValid;
                 textbox_LedCountSecond.BorderBrush = BrushValid;
                 textbox_LedCountThird.BorderBrush = BrushValid;
@@ -510,7 +511,7 @@ namespace AmbiPro.Settings
                 int ServerPort = Convert.ToInt32(tb_ServerPort.Text);
                 if (ServerPort < 1 || ServerPort > 65535) { tb_ServerPort.BorderBrush = BrushInvalid; return; }
 
-                AVSettings.Save(vConfiguration, "ServerPort", tb_ServerPort.Text);
+                SettingSave(vConfiguration, "ServerPort", tb_ServerPort.Text);
                 tb_ServerPort.BorderBrush = BrushValid;
 
                 //Restart the socket server
