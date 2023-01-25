@@ -160,7 +160,7 @@
                                 <Image Height="30" Source="/Assets/Icons/Transparent.png"/>
                             </Button>
                             <Image Height="30" Margin="5" Source="/Assets/Icons/Brightness.png"/>
-                            <Slider Width="335" Margin="5" Value="1.0" Minimum="0.05" Maximum="1.50" ValueChanged="slider_BackgroundSolidBrightness_ValueChanged"/>
+                            <Slider Width="335" Margin="5" TickFrequency="0.05" Value="1.00" Minimum="0.05" Maximum="1.50" Style="{StaticResource SliderBlockBlack}" ValueChanged="slider_BackgroundSolidBrightness_ValueChanged"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
