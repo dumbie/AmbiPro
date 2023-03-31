@@ -16,7 +16,7 @@ namespace AmbiPro
     partial class SocketHandlers
     {
         //Handle received socket data
-        public static async Task ReceivedSocketHandler(TcpClient tcpClient, UdpEndPointDetails endPoint, byte[] receivedBytes)
+        public static void ReceivedSocketHandler(TcpClient tcpClient, UdpEndPointDetails endPoint, byte[] bytesReceived)
         {
             try
             {
@@ -24,21 +24,21 @@ namespace AmbiPro
                 {
                     try
                     {
-                        await ReceivedSocketHandlerThread(tcpClient, receivedBytes);
+                        await ReceivedSocketHandlerThread(tcpClient, bytesReceived);
                     }
                     catch { }
                 }
-                await AVActions.TaskStart(TaskAction);
+                AVActions.TaskStartBackground(TaskAction);
             }
             catch { }
         }
 
-        public static async Task ReceivedSocketHandlerThread(TcpClient tcpClient, byte[] receivedBytes)
+        public static async Task ReceivedSocketHandlerThread(TcpClient tcpClient, byte[] bytesReceived)
         {
             try
             {
                 //Receive message
-                string StringReceived = Encoding.UTF8.GetString(receivedBytes, 0, receivedBytes.Length);
+                string StringReceived = Encoding.UTF8.GetString(bytesReceived, 0, bytesReceived.Length);
                 StringReceived = WebUtility.UrlDecode(StringReceived);
                 StringReceived = WebUtility.HtmlDecode(StringReceived);
                 StringReceived = StringReceived.TrimEnd('\0');

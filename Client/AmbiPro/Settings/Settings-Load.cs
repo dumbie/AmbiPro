@@ -187,10 +187,20 @@ namespace AmbiPro.Settings
                 tb_LedSmoothing.Text = "Led smoothing: " + smoothingFrames + " frames";
                 sldr_LedSmoothing.Value = smoothingFrames;
 
-                //Load - Capture HDR Brightness
-                int captureHdrBrightness = SettingLoad(vConfiguration, "CaptureHdrBrightness", typeof(int));
-                tb_CaptureHdrBrightness.Text = "HDR capture brightness: " + captureHdrBrightness;
-                sldr_CaptureHdrBrightness.Value = captureHdrBrightness;
+                //Load - Capture Blur
+                int captureBlur = SettingLoad(vConfiguration, "CaptureBlur", typeof(int));
+                tb_CaptureBlur.Text = "Capture blur: " + captureBlur;
+                sldr_CaptureBlur.Value = captureBlur;
+
+                //Load - Capture HDR Paper White
+                int captureHDRPaperWhite = SettingLoad(vConfiguration, "CaptureHDRPaperWhite", typeof(int));
+                tb_CaptureHDRPaperWhite.Text = "HDR paper white: " + captureHDRPaperWhite;
+                sldr_CaptureHDRPaperWhite.Value = captureHDRPaperWhite;
+
+                //Load - Capture HDR Maximum Nits
+                int captureHDRMaximumNits = SettingLoad(vConfiguration, "CaptureHDRMaximumNits", typeof(int));
+                tb_CaptureHDRMaximumNits.Text = "HDR maximum nits: " + captureHDRMaximumNits;
+                sldr_CaptureHDRMaximumNits.Value = captureHDRMaximumNits;
 
                 //Load - Debug Mode
                 checkbox_DebugBlackBar.IsChecked = SettingLoad(vConfiguration, "DebugBlackBar", typeof(bool));

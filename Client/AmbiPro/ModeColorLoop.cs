@@ -76,7 +76,7 @@ namespace AmbiPro
                     }
 
                     //Delay the loop task
-                    await TaskDelayLoop(setColorLoopSpeed, vTask_UpdateLed);
+                    await TaskDelay(setColorLoopSpeed, vTask_UpdateLed);
                 }
 
                 //Show failed connection message

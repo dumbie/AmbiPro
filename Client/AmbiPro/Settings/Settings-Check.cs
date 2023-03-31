@@ -88,7 +88,7 @@ namespace AmbiPro.Settings
                 //Check - Blackbar Update Rate
                 if (!SettingCheck(vConfiguration, "AdjustBlackbarUpdateRate"))
                 {
-                    SettingSave(vConfiguration, "AdjustBlackbarUpdateRate", "200");
+                    SettingSave(vConfiguration, "AdjustBlackbarUpdateRate", "100");
                 }
 
                 //Check - Led Bottom Gap
@@ -235,10 +235,22 @@ namespace AmbiPro.Settings
                     SettingSave(vConfiguration, "LedSmoothing", "4");
                 }
 
-                //Check - Capture HDR brightness
-                if (!SettingCheck(vConfiguration, "CaptureHdrBrightness"))
+                //Check - Capture Blur
+                if (!SettingCheck(vConfiguration, "CaptureBlur"))
                 {
-                    SettingSave(vConfiguration, "CaptureHdrBrightness", "60");
+                    SettingSave(vConfiguration, "CaptureBlur", "0");
+                }
+
+                //Check - Capture HDR Paper White
+                if (!SettingCheck(vConfiguration, "CaptureHDRPaperWhite"))
+                {
+                    SettingSave(vConfiguration, "CaptureHDRPaperWhite", "80");
+                }
+
+                //Check - Capture HDR Maximum Nits
+                if (!SettingCheck(vConfiguration, "CaptureHDRMaximumNits"))
+                {
+                    SettingSave(vConfiguration, "CaptureHDRMaximumNits", "1000");
                 }
 
                 //Check - Debug Mode

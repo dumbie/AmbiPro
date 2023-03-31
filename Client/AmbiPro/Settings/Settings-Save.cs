@@ -299,12 +299,36 @@ namespace AmbiPro.Settings
                     tb_LedSmoothing.Text = "Led smoothing: " + smoothingFrames + " frames";
                 };
 
-                //Save - Capture HDR Brightness
-                sldr_CaptureHdrBrightness.ValueChanged += (sender, e) =>
+                //Save - Capture Blur
+                sldr_CaptureBlur.ValueChanged += (sender, e) =>
                 {
-                    SettingSave(vConfiguration, "CaptureHdrBrightness", sldr_CaptureHdrBrightness.Value.ToString("0"));
-                    int captureHdrBrightness = Convert.ToInt32(sldr_CaptureHdrBrightness.Value);
-                    tb_CaptureHdrBrightness.Text = "HDR capture brightness: " + captureHdrBrightness;
+                    SettingSave(vConfiguration, "CaptureBlur", sldr_CaptureBlur.Value.ToString("0"));
+                    int captureBlur = Convert.ToInt32(sldr_CaptureBlur.Value);
+                    tb_CaptureBlur.Text = "Capture blur: " + captureBlur;
+                    if (!SettingLoad(vConfiguration, "FirstLaunch2", typeof(bool)))
+                    {
+                        UpdateCaptureSettings();
+                    }
+                };
+
+                //Save - Capture HDR Paper White
+                sldr_CaptureHDRPaperWhite.ValueChanged += (sender, e) =>
+                {
+                    SettingSave(vConfiguration, "CaptureHDRPaperWhite", sldr_CaptureHDRPaperWhite.Value.ToString("0"));
+                    int captureHDRPaperWhite = Convert.ToInt32(sldr_CaptureHDRPaperWhite.Value);
+                    tb_CaptureHDRPaperWhite.Text = "HDR paper white: " + captureHDRPaperWhite;
+                    if (!SettingLoad(vConfiguration, "FirstLaunch2", typeof(bool)))
+                    {
+                        UpdateCaptureSettings();
+                    }
+                };
+
+                //Save - Capture HDR Maximum Nits
+                sldr_CaptureHDRMaximumNits.ValueChanged += (sender, e) =>
+                {
+                    SettingSave(vConfiguration, "CaptureHDRMaximumNits", sldr_CaptureHDRMaximumNits.Value.ToString("0"));
+                    int captureHDRMaximumNits = Convert.ToInt32(sldr_CaptureHDRMaximumNits.Value);
+                    tb_CaptureHDRMaximumNits.Text = "HDR maximum nits: " + captureHDRMaximumNits;
                     if (!SettingLoad(vConfiguration, "FirstLaunch2", typeof(bool)))
                     {
                         UpdateCaptureSettings();

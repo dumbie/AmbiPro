@@ -16,6 +16,33 @@ namespace AmbiPro
 {
     partial class SerialMonitor
     {
+        //Set capture settings variable
+        private static void SetCaptureSettings()
+        {
+            try
+            {
+                //Load capture settings
+                int captureMonitor = SettingLoad(vConfiguration, "MonitorCapture", typeof(int));
+                float captureBlur = SettingLoad(vConfiguration, "CaptureBlur", typeof(float));
+                float captureHDRPaperWhite = SettingLoad(vConfiguration, "CaptureHDRPaperWhite", typeof(float));
+                float captureHDRMaximumNits = SettingLoad(vConfiguration, "CaptureHDRMaximumNits", typeof(float));
+
+                //Set capture settings variable
+                vCaptureSettings = new CaptureSettings
+                {
+                    MonitorId = captureMonitor,
+                    MaxPixelDimension = 200,
+                    Blur = captureBlur,
+                    HDRtoSDR = true,
+                    HDRPaperWhite = captureHDRPaperWhite,
+                    HDRMaximumNits = captureHDRMaximumNits
+                };
+
+                Debug.WriteLine("Set capture settings variable.");
+            }
+            catch { }
+        }
+
         //Initialize Screen Capture
         private static async Task<bool> InitializeScreenCapture(int delayTime)
         {
@@ -23,17 +50,8 @@ namespace AmbiPro
             {
                 Debug.WriteLine("Initializing screen capture: " + DateTime.Now);
 
-                //Load capture settings
-                int captureMonitor = SettingLoad(vConfiguration, "MonitorCapture", typeof(int));
-                float captureHdrBrightness = SettingLoad(vConfiguration, "CaptureHdrBrightness", typeof(float));
-
                 //Set capture settings
-                vCaptureSettings = new CaptureSettings
-                {
-                    MonitorId = captureMonitor,
-                    MaxPixelDimension = 200,
-                    HDRBrightness = captureHdrBrightness
-                };
+                SetCaptureSettings();
 
                 //Initialize screen capture
                 bool captureInitialized = CaptureImport.CaptureInitialize(vCaptureSettings, out vCaptureDetails);
@@ -42,7 +60,7 @@ namespace AmbiPro
                 UpdateCaptureVariables();
 
                 //Update screen information
-                ActionDispatcherInvoke(delegate
+                DispatcherInvoke(delegate
                 {
                     vFormSettings.UpdateScreenInformation();
                 });
@@ -225,7 +243,7 @@ namespace AmbiPro
                         }
 
                         //Delay the loop task
-                        await TaskDelayLoop(setUpdateRate, vTask_UpdateLed);
+                        await TaskDelay(setUpdateRate, vTask_UpdateLed);
                     }
                     catch (Exception ex)
                     {
@@ -261,17 +279,8 @@ namespace AmbiPro
         {
             try
             {
-                //Load capture settings
-                int captureMonitor = SettingLoad(vConfiguration, "MonitorCapture", typeof(int));
-                float captureHdrBrightness = SettingLoad(vConfiguration, "CaptureHdrBrightness", typeof(float));
-
                 //Set capture settings
-                vCaptureSettings = new CaptureSettings
-                {
-                    MonitorId = captureMonitor,
-                    MaxPixelDimension = 200,
-                    HDRBrightness = captureHdrBrightness
-                };
+                SetCaptureSettings();
 
                 //Update capture settings
                 bool settingsUpdated = CaptureImport.CaptureUpdateSettings(vCaptureSettings);
@@ -285,7 +294,7 @@ namespace AmbiPro
             try
             {
                 //Update debug screen capture preview
-                ActionDispatcherInvoke(delegate
+                DispatcherInvoke(delegate
                 {
                     try
                     {
@@ -301,7 +310,7 @@ namespace AmbiPro
         {
             try
             {
-                ActionDispatcherInvoke(delegate
+                DispatcherInvoke(delegate
                 {
                     if (ledSide == LedSideTypes.LeftBottomToTop)
                     {

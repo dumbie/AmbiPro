@@ -1,9 +1,9 @@
 using System.Diagnostics;
 using static AmbiPro.AppClasses;
 
-namespace AmbiPro.Resources
+namespace AmbiPro
 {
-    public class ColorProcessing
+    public class ScreenColorProcessing
     {
         //Get the color of a pixel
         public static ColorRGBA GetPixelColor(byte[] bitmapByteArray, int screenWidth, int screenHeight, int pixelHor, int pixelVer)

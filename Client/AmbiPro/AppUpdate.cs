@@ -5,8 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using static ArnoldVinkCode.ApiGitHub;
 using static ArnoldVinkCode.AVFiles;
-using static ArnoldVinkCode.ProcessFunctions;
-using static ArnoldVinkCode.ProcessWin32Functions;
+using static ArnoldVinkCode.AVProcess;
 
 namespace AmbiPro
 {
@@ -19,7 +18,7 @@ namespace AmbiPro
                 Debug.WriteLine("Checking application update.");
 
                 //Close running application updater
-                if (CloseProcessesByNameOrTitle("Updater.exe", false, true))
+                if (Close_ProcessesByName("Updater", true))
                 {
                     await Task.Delay(1000);
                 }
@@ -49,7 +48,7 @@ namespace AmbiPro
                     string MsgBoxResult = await new AVMessageBox().Popup(null, "A newer version has been found: " + onlineVersion, "Would you like to update the application to the newest version available?", MsgBoxAnswers);
                     if (MsgBoxResult == "Update")
                     {
-                        await ProcessLauncherWin32Async("Updater.exe", "", "", false, false);
+                        AVProcess.Launch_ShellExecute("Updater.exe", "", "", true);
                         await AppStartup.Exit();
                     }
                 }

@@ -1,5 +1,4 @@
-﻿using AmbiPro.Resources;
-using ArnoldVinkCode;
+﻿using ArnoldVinkCode;
 using System;
 using System.Diagnostics;
 using static AmbiPro.AppClasses;
@@ -318,12 +317,12 @@ namespace AmbiPro
                             CaptureZoneVerRange = -captureSizeStep;
                         }
 
-                        ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange);
+                        ColorRGBA ColorPixel = ScreenColorProcessing.GetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange);
                         if (ColorPixel != null)
                         {
                             if (vDebugCaptureAllowed && setDebugBlackBar)
                             {
-                                ColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange, ColorRGBA.Orange);
+                                ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange, ColorRGBA.Orange);
                             }
 
                             //Calculate color luminance
@@ -405,12 +404,12 @@ namespace AmbiPro
                             CaptureZoneVerRange = -captureSizeStep;
                         }
 
-                        ColorRGBA ColorPixel = ColorProcessing.GetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange);
+                        ColorRGBA ColorPixel = ScreenColorProcessing.GetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange);
                         if (ColorPixel != null)
                         {
                             if (vDebugCaptureAllowed && setDebugColor)
                             {
-                                ColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange, ColorRGBA.Purple);
+                                ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange, ColorRGBA.Purple);
                             }
 
                             //Add pixel color to average color

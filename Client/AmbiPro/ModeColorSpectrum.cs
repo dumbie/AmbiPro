@@ -109,7 +109,7 @@ namespace AmbiPro
                     }
 
                     //Delay the loop task
-                    await TaskDelayLoop(setSpectrumRotationSpeed * 1000, vTask_UpdateLed);
+                    await TaskDelay(setSpectrumRotationSpeed * 1000, vTask_UpdateLed);
                 }
 
                 //Show failed connection message

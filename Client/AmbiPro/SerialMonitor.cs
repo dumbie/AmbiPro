@@ -49,7 +49,7 @@ namespace AmbiPro
                         await LedsDisable(false);
 
                         //Update screen information
-                        ActionDispatcherInvoke(delegate
+                        DispatcherInvoke(delegate
                         {
                             vFormSettings.UpdateScreenInformation();
                         });
@@ -78,7 +78,7 @@ namespace AmbiPro
             {
                 if (ledsOn && setLedMode == 0)
                 {
-                    ActionDispatcherInvoke(delegate
+                    DispatcherInvoke(delegate
                     {
                         vFormSettings.listbox_LedPreviewLeft.Items.Clear();
                         vFormSettings.listbox_LedPreviewTop.Items.Clear();
@@ -98,7 +98,7 @@ namespace AmbiPro
                 }
                 else
                 {
-                    ActionDispatcherInvoke(delegate
+                    DispatcherInvoke(delegate
                     {
                         vFormSettings.border_LedPreviewLeft.Visibility = System.Windows.Visibility.Collapsed;
                         vFormSettings.border_LedPreviewTop.Visibility = System.Windows.Visibility.Collapsed;
@@ -158,7 +158,7 @@ namespace AmbiPro
             {
                 if (ledsOn)
                 {
-                    ActionDispatcherInvoke(delegate
+                    DispatcherInvoke(delegate
                     {
                         vFormSettings.image_SwitchLedsOnOrOff.Source = new BitmapImage(new Uri("/Assets/Icons/Leds.png", UriKind.RelativeOrAbsolute));
                     });
@@ -166,7 +166,7 @@ namespace AmbiPro
                 }
                 else
                 {
-                    ActionDispatcherInvoke(delegate
+                    DispatcherInvoke(delegate
                     {
                         vFormSettings.image_SwitchLedsOnOrOff.Source = new BitmapImage(new Uri("/Assets/Icons/LedsOff.png", UriKind.RelativeOrAbsolute));
                     });
@@ -277,7 +277,7 @@ namespace AmbiPro
         {
             try
             {
-                AVActions.ActionDispatcherInvoke(delegate
+                AVActions.DispatcherInvoke(delegate
                 {
                     vFormSettings.Show();
                 });
@@ -291,7 +291,7 @@ namespace AmbiPro
             try
             {
                 Debug.WriteLine("There are currently no leds configured.");
-                AVActions.ActionDispatcherInvoke(async delegate
+                AVActions.DispatcherInvoke(async delegate
                 {
                     List<string> MsgBoxAnswers = new List<string>();
                     MsgBoxAnswers.Add("Ok");
@@ -307,7 +307,7 @@ namespace AmbiPro
         {
             try
             {
-                AVActions.ActionDispatcherInvoke(async delegate
+                AVActions.DispatcherInvoke(async delegate
                 {
                     List<string> MsgBoxAnswers = new List<string>();
                     MsgBoxAnswers.Add("Change com port");
@@ -338,7 +338,7 @@ namespace AmbiPro
         {
             try
             {
-                AVActions.ActionDispatcherInvoke(async delegate
+                AVActions.DispatcherInvoke(async delegate
                 {
                     List<string> MsgBoxAnswers = new List<string>();
                     MsgBoxAnswers.Add("Change monitor setting");

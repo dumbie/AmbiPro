@@ -15,7 +15,7 @@ namespace AmbiPro
                     UpdateSettingsPreload();
 
                     //Delay the loop task
-                    await TaskDelayLoop(2000, vTask_UpdateSettings);
+                    await TaskDelay(2000, vTask_UpdateSettings);
                 }
             }
             catch { }

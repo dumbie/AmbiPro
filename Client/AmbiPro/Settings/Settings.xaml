@@ -359,12 +359,20 @@
                                 <Slider Name="sldr_UpdateRate" Style="{StaticResource SliderBlockWhite}" Minimum="1" Maximum="50"/>
 
                                 <TextBlock Margin="0,10,0,0" Name="tb_LedSmoothing" Text="Led smoothing:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                                <TextBlock Text="Merge previous colors with current color to smoothen led updates.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                                <TextBlock Text="Merge previous colors with current color to reduce flashing.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
                                 <Slider Name="sldr_LedSmoothing" Style="{StaticResource SliderBlockWhite}" Minimum="0" Maximum="20"/>
 
-                                <TextBlock Margin="0,10,0,0" Name="tb_CaptureHdrBrightness" Text="HDR capture brightness:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                                <TextBlock Text="Adjust the HDR capture brightness to your displayed content, when colors like orange turn into yellow or white reduce the brightness." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
-                                <AVStyles:SliderDelay Name="sldr_CaptureHdrBrightness" Style="{StaticResource SliderBlockWhite}" DelayIgnoreDrag="True" Minimum="20" Maximum="100"/>
+                                <TextBlock Margin="0,10,0,0" Name="tb_CaptureBlur" Text="Capture blur:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Blur screen capture to improve display of smaller moving objects.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                                <AVStyles:SliderDelay Name="sldr_CaptureBlur" Style="{StaticResource SliderBlockWhite}" DelayIgnoreDrag="True" Minimum="0" Maximum="20"/>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_CaptureHDRPaperWhite" Text="HDR paper white:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Adjust HDR paper white to your monitor, this effects whites level." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                                <AVStyles:SliderDelay Name="sldr_CaptureHDRPaperWhite" Style="{StaticResource SliderBlockWhite}" DelayIgnoreDrag="True" Minimum="5" Maximum="100"/>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_CaptureHDRMaximumNits" Text="HDR maximum nits:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
+                                <TextBlock Text="Adjust HDR maximum nits to your displayed content, when colors like orange turn into yellow or white reduce the maximum nits." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
+                                <AVStyles:SliderDelay Name="sldr_CaptureHDRMaximumNits" Style="{StaticResource SliderBlockWhite}" DelayIgnoreDrag="True" Minimum="500" Maximum="3000"/>
 
                                 <TextBlock Margin="0,10,0,0" Text="* This setting has impact on capture and your system performance." Style="{StaticResource TextBlockGrayLight}"/>
                             </StackPanel>
