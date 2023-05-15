@@ -142,7 +142,7 @@ namespace AmbiPro
                         //Capture screenshot
                         try
                         {
-                            bitmapIntPtr = CaptureImport.CaptureScreenshot();
+                            bitmapIntPtr = CaptureImport.CaptureScreenBytes();
                         }
                         catch { }
 
@@ -248,14 +248,6 @@ namespace AmbiPro
                     catch (Exception ex)
                     {
                         Debug.WriteLine("Screen capture loop failed: " + ex.Message);
-                    }
-                    finally
-                    {
-                        //Clear screen capture resources
-                        if (bitmapIntPtr != IntPtr.Zero)
-                        {
-                            CaptureImport.CaptureFreeMemory(bitmapIntPtr);
-                        }
                     }
                 }
 

@@ -88,7 +88,7 @@ namespace AmbiPro.Settings
                 //Check - Blackbar Update Rate
                 if (!SettingCheck(vConfiguration, "AdjustBlackbarUpdateRate"))
                 {
-                    SettingSave(vConfiguration, "AdjustBlackbarUpdateRate", "100");
+                    SettingSave(vConfiguration, "AdjustBlackbarUpdateRate", "40");
                 }
 
                 //Check - Led Bottom Gap
@@ -112,7 +112,7 @@ namespace AmbiPro.Settings
                 //Check - Led Gamma
                 if (!SettingCheck(vConfiguration, "LedGamma3"))
                 {
-                    SettingSave(vConfiguration, "LedGamma3", "2.00");
+                    SettingSave(vConfiguration, "LedGamma3", "2.10");
                 }
 
                 //Check - Led Saturation
@@ -232,7 +232,7 @@ namespace AmbiPro.Settings
                 //Check - Led Smoothing
                 if (!SettingCheck(vConfiguration, "LedSmoothing"))
                 {
-                    SettingSave(vConfiguration, "LedSmoothing", "4");
+                    SettingSave(vConfiguration, "LedSmoothing", "8");
                 }
 
                 //Check - Capture Blur
@@ -260,11 +260,11 @@ namespace AmbiPro.Settings
                 }
                 if (!SettingCheck(vConfiguration, "DebugLedPreview"))
                 {
-                    SettingSave(vConfiguration, "DebugLedPreview", "True");
+                    SettingSave(vConfiguration, "DebugLedPreview", "False");
                 }
                 if (!SettingCheck(vConfiguration, "DebugColor"))
                 {
-                    SettingSave(vConfiguration, "DebugColor", "True");
+                    SettingSave(vConfiguration, "DebugColor", "False");
                 }
             }
             catch
