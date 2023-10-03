@@ -19,7 +19,7 @@ namespace AmbiPro
                 int CurrentLedRotate = 0;
 
                 //Current byte information
-                while (!vTask_UpdateLed.TaskStopRequest)
+                while (!vTask_UpdateLed.TaskStopRequested)
                 {
                     //Set the used colors and adjust them
                     ColorRGBA Color0 = ColorRGBA.HexToRGBA("#f8d000");

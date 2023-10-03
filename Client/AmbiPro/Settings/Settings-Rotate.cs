@@ -76,8 +76,8 @@ namespace AmbiPro.Settings
                 }
 
                 //Get the current screen resolution and ratio
-                vCurrentRatio = AVFunctions.ScreenAspectRatio(vCaptureDetails.Width, vCaptureDetails.Height, false);
-                string captureInfo = vCaptureDetails.Width + "x" + vCaptureDetails.Height + " (" + vCurrentRatio + ")";
+                vCurrentRatio = AVFunctions.ScreenAspectRatio(vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, false);
+                string captureInfo = vCaptureDetails.OutputWidth + "x" + vCaptureDetails.OutputHeight + " (" + vCurrentRatio + ")";
                 if (vCaptureDetails.HDREnabled)
                 {
                     captureInfo += " (HDR)";
@@ -107,7 +107,7 @@ namespace AmbiPro.Settings
         {
             try
             {
-                if (vCaptureDetails.Width == 0 || vCaptureDetails.Height == 0)
+                if (vCaptureDetails.OutputWidth == 0 || vCaptureDetails.OutputHeight == 0)
                 {
                     btn_RotateClockwise.IsEnabled = false;
                     btn_RotateCounterwise.IsEnabled = false;

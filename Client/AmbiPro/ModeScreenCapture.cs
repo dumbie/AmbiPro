@@ -54,7 +54,7 @@ namespace AmbiPro
                 SetCaptureSettings();
 
                 //Initialize screen capture
-                bool captureInitialized = CaptureImport.CaptureInitialize(vCaptureSettings, out vCaptureDetails);
+                bool captureInitialized = CaptureImport.CaptureInitialize(0, vCaptureSettings, out vCaptureDetails);
 
                 //Update capture variables
                 UpdateCaptureVariables();
@@ -83,19 +83,19 @@ namespace AmbiPro
             try
             {
                 //Set capture range
-                if (vCaptureDetails.Height < vCaptureDetails.Width)
+                if (vCaptureDetails.OutputHeight < vCaptureDetails.OutputWidth)
                 {
-                    vCaptureRange = (setLedCaptureRange * vCaptureDetails.Height) / 100 / 2;
+                    vCaptureRange = (setLedCaptureRange * vCaptureDetails.OutputHeight) / 100 / 2;
                 }
                 else
                 {
-                    vCaptureRange = (setLedCaptureRange * vCaptureDetails.Width) / 100 / 2;
+                    vCaptureRange = (setLedCaptureRange * vCaptureDetails.OutputWidth) / 100 / 2;
                 }
                 //Debug.WriteLine("Capture range set to: " + vCaptureRange);
 
                 //Set blackbar range
-                vBlackbarRangeVertical = (setAdjustBlackbarRange * vCaptureDetails.Height) / 100;
-                vBlackbarRangeHorizontal = (setAdjustBlackbarRange * vCaptureDetails.Width) / 100;
+                vBlackbarRangeVertical = (setAdjustBlackbarRange * vCaptureDetails.OutputHeight) / 100;
+                vBlackbarRangeHorizontal = (setAdjustBlackbarRange * vCaptureDetails.OutputWidth) / 100;
                 //Debug.WriteLine("Blackbar range set to: V" + vBlackBarRangeVertical + "/H" + vBlackBarRangeHorizontal);
             }
             catch { }
@@ -107,7 +107,7 @@ namespace AmbiPro
             try
             {
                 Debug.WriteLine("Resetting screen capture: " + DateTime.Now);
-                return CaptureImport.CaptureReset();
+                return CaptureImport.CaptureReset(0);
             }
             catch
             {
@@ -133,7 +133,7 @@ namespace AmbiPro
                 }
 
                 //Start updating the leds
-                while (!vTask_UpdateLed.TaskStopRequest)
+                while (!vTask_UpdateLed.TaskStopRequested)
                 {
                     int currentSerialByte = initByteSize;
                     IntPtr bitmapIntPtr = IntPtr.Zero;
@@ -142,7 +142,7 @@ namespace AmbiPro
                         //Capture screenshot
                         try
                         {
-                            bitmapIntPtr = CaptureImport.CaptureScreenBytes();
+                            bitmapIntPtr = CaptureImport.CaptureScreenBytes(0);
                         }
                         catch { }
 
@@ -275,7 +275,7 @@ namespace AmbiPro
                 SetCaptureSettings();
 
                 //Update capture settings
-                bool settingsUpdated = CaptureImport.CaptureUpdateSettings(vCaptureSettings);
+                bool settingsUpdated = CaptureImport.CaptureUpdateSettings(0, vCaptureSettings);
                 Debug.WriteLine("Capture settings updated: " + settingsUpdated);
             }
             catch { }

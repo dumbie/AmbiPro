@@ -34,17 +34,17 @@ namespace AmbiPro
                 if (sideType == LedSideTypes.TopLeftToRight)
                 {
                     captureZoneHor = 0;
-                    captureZoneVer = vCaptureDetails.Height;
-                    captureZoneSize = vCaptureDetails.Width / directionLedCount;
-                    captureDiffMax = (vCaptureDetails.Width - (captureZoneSize * directionLedCount)) / 2;
+                    captureZoneVer = vCaptureDetails.OutputHeight;
+                    captureZoneSize = vCaptureDetails.OutputWidth / directionLedCount;
+                    captureDiffMax = (vCaptureDetails.OutputWidth - (captureZoneSize * directionLedCount)) / 2;
                     captureDiffMin = directionLedCount - captureDiffMax;
                 }
                 else if (sideType == LedSideTypes.TopRightToLeft)
                 {
-                    captureZoneHor = vCaptureDetails.Width;
-                    captureZoneVer = vCaptureDetails.Height;
-                    captureZoneSize = vCaptureDetails.Width / directionLedCount;
-                    captureDiffMax = (vCaptureDetails.Width - (captureZoneSize * directionLedCount)) / 2;
+                    captureZoneHor = vCaptureDetails.OutputWidth;
+                    captureZoneVer = vCaptureDetails.OutputHeight;
+                    captureZoneSize = vCaptureDetails.OutputWidth / directionLedCount;
+                    captureDiffMax = (vCaptureDetails.OutputWidth - (captureZoneSize * directionLedCount)) / 2;
                     captureDiffMin = directionLedCount - captureDiffMax;
                 }
                 else if (sideType == LedSideTypes.BottomLeftToRight)
@@ -52,8 +52,8 @@ namespace AmbiPro
                     directionLedCount += setLedBottomGap;
                     captureZoneHor = 0;
                     captureZoneVer = 0;
-                    captureZoneSize = vCaptureDetails.Width / directionLedCount;
-                    captureDiffMax = (vCaptureDetails.Width - (captureZoneSize * directionLedCount)) / 2;
+                    captureZoneSize = vCaptureDetails.OutputWidth / directionLedCount;
+                    captureDiffMax = (vCaptureDetails.OutputWidth - (captureZoneSize * directionLedCount)) / 2;
                     captureDiffMin = directionLedCount - captureDiffMax;
                     int BottomGapDiff = setLedBottomGap / 2;
                     int BottomGapTarget = directionLedCount / 2;
@@ -63,10 +63,10 @@ namespace AmbiPro
                 else if (sideType == LedSideTypes.BottomRightToLeft)
                 {
                     directionLedCount += setLedBottomGap;
-                    captureZoneHor = vCaptureDetails.Width;
+                    captureZoneHor = vCaptureDetails.OutputWidth;
                     captureZoneVer = 0;
-                    captureZoneSize = vCaptureDetails.Width / directionLedCount;
-                    captureDiffMax = (vCaptureDetails.Width - (captureZoneSize * directionLedCount)) / 2;
+                    captureZoneSize = vCaptureDetails.OutputWidth / directionLedCount;
+                    captureDiffMax = (vCaptureDetails.OutputWidth - (captureZoneSize * directionLedCount)) / 2;
                     captureDiffMin = directionLedCount - captureDiffMax;
                     int bottomGapDiff = setLedBottomGap / 2;
                     int bottomGapTarget = directionLedCount / 2;
@@ -77,32 +77,32 @@ namespace AmbiPro
                 {
                     captureZoneHor = 0;
                     captureZoneVer = 0;
-                    captureZoneSize = vCaptureDetails.Height / directionLedCount;
-                    captureDiffMax = (vCaptureDetails.Height - (captureZoneSize * directionLedCount)) / 2;
+                    captureZoneSize = vCaptureDetails.OutputHeight / directionLedCount;
+                    captureDiffMax = (vCaptureDetails.OutputHeight - (captureZoneSize * directionLedCount)) / 2;
                     captureDiffMin = directionLedCount - captureDiffMax;
                 }
                 else if (sideType == LedSideTypes.LeftTopToBottom)
                 {
                     captureZoneHor = 0;
-                    captureZoneVer = vCaptureDetails.Height;
-                    captureZoneSize = vCaptureDetails.Height / directionLedCount;
-                    captureDiffMax = (vCaptureDetails.Height - (captureZoneSize * directionLedCount)) / 2;
+                    captureZoneVer = vCaptureDetails.OutputHeight;
+                    captureZoneSize = vCaptureDetails.OutputHeight / directionLedCount;
+                    captureDiffMax = (vCaptureDetails.OutputHeight - (captureZoneSize * directionLedCount)) / 2;
                     captureDiffMin = directionLedCount - captureDiffMax;
                 }
                 else if (sideType == LedSideTypes.RightBottomToTop)
                 {
-                    captureZoneHor = vCaptureDetails.Width;
+                    captureZoneHor = vCaptureDetails.OutputWidth;
                     captureZoneVer = 0;
-                    captureZoneSize = vCaptureDetails.Height / directionLedCount;
-                    captureDiffMax = (vCaptureDetails.Height - (captureZoneSize * directionLedCount)) / 2;
+                    captureZoneSize = vCaptureDetails.OutputHeight / directionLedCount;
+                    captureDiffMax = (vCaptureDetails.OutputHeight - (captureZoneSize * directionLedCount)) / 2;
                     captureDiffMin = directionLedCount - captureDiffMax;
                 }
                 else if (sideType == LedSideTypes.RightTopToBottom)
                 {
-                    captureZoneHor = vCaptureDetails.Width;
-                    captureZoneVer = vCaptureDetails.Height;
-                    captureZoneSize = vCaptureDetails.Height / directionLedCount;
-                    captureDiffMax = (vCaptureDetails.Height - (captureZoneSize * directionLedCount)) / 2;
+                    captureZoneHor = vCaptureDetails.OutputWidth;
+                    captureZoneVer = vCaptureDetails.OutputHeight;
+                    captureZoneSize = vCaptureDetails.OutputHeight / directionLedCount;
+                    captureDiffMax = (vCaptureDetails.OutputHeight - (captureZoneSize * directionLedCount)) / 2;
                     captureDiffMin = directionLedCount - captureDiffMax;
                 }
                 //Debug.WriteLine("Zone range: " + vCaptureZoneRange + " / Zone size: " + CaptureZoneSize + " / Zone difference: " + CaptureZoneDiff + " / Leds: " + DirectionLedCount);
@@ -317,12 +317,12 @@ namespace AmbiPro
                             CaptureZoneVerRange = -captureSizeStep;
                         }
 
-                        ColorRGBA ColorPixel = ScreenColorProcessing.GetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange);
+                        ColorRGBA ColorPixel = ScreenColorProcessing.GetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange);
                         if (ColorPixel != null)
                         {
                             if (vDebugCaptureAllowed && setDebugBlackBar)
                             {
-                                ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange, ColorRGBA.Orange);
+                                ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange, ColorRGBA.Orange);
                             }
 
                             //Calculate color luminance
@@ -404,12 +404,12 @@ namespace AmbiPro
                             CaptureZoneVerRange = -captureSizeStep;
                         }
 
-                        ColorRGBA ColorPixel = ScreenColorProcessing.GetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange);
+                        ColorRGBA ColorPixel = ScreenColorProcessing.GetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange);
                         if (ColorPixel != null)
                         {
                             if (vDebugCaptureAllowed && setDebugColor)
                             {
-                                ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.Width, vCaptureDetails.Height, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange, ColorRGBA.Purple);
+                                ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange, ColorRGBA.Purple);
                             }
 
                             //Add pixel color to average color

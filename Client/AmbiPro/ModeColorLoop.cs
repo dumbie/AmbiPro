@@ -19,7 +19,7 @@ namespace AmbiPro
                 int ColorLoopState = 0;
 
                 //Current byte information
-                while (!vTask_UpdateLed.TaskStopRequest)
+                while (!vTask_UpdateLed.TaskStopRequested)
                 {
                     //Set the used colors
                     if (ColorLoopState == 0) //Red

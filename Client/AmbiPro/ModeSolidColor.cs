@@ -17,7 +17,7 @@ namespace AmbiPro
                 bool ConnectionFailed = false;
 
                 //Current byte information
-                while (!vTask_UpdateLed.TaskStopRequest)
+                while (!vTask_UpdateLed.TaskStopRequested)
                 {
                     //Set the used colors and adjust it
                     ColorRGBA CurrentColor = ColorRGBA.HexToRGBA(setSolidLedColor);

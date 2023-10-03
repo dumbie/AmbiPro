@@ -338,7 +338,7 @@ namespace AmbiPro.Settings
                 //Save - Windows Startup
                 cb_WindowsStartup.Click += (sender, e) =>
                 {
-                    AVSettings.ManageStartupShortcut("Launcher.exe");
+                    AVSettings.StartupShortcutManage("Launcher.exe", false);
                 };
 
                 //Save - Debug BlackBar
