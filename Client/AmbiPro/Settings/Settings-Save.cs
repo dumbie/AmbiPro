@@ -341,19 +341,6 @@ namespace AmbiPro.Settings
                     AVSettings.StartupShortcutManage("Launcher.exe", false);
                 };
 
-                //Save - Debug BlackBar
-                checkbox_DebugBlackBar.Click += (sender, e) =>
-                {
-                    if ((bool)checkbox_DebugBlackBar.IsChecked)
-                    {
-                        SettingSave(vConfiguration, "DebugBlackBar", "True");
-                    }
-                    else
-                    {
-                        SettingSave(vConfiguration, "DebugBlackBar", "False");
-                    }
-                };
-
                 //Save - Debug LedPreview
                 checkbox_DebugLedPreview.Click += (sender, e) =>
                 {

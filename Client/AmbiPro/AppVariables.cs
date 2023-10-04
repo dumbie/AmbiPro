@@ -41,10 +41,10 @@ namespace AmbiPro
         public static int vBlackbarRangeVertical = 0;
         public static bool vBlackbarRunUpdate = false;
         public static int vBlackbarLastUpdate = 0;
-        public static int[] vBlackbarLedMarginTop = new int[1000];
-        public static int[] vBlackbarLedMarginBottom = new int[1000];
-        public static int[] vBlackbarLedMarginLeft = new int[1000];
-        public static int[] vBlackbarLedMarginRight = new int[1000];
+        public static int[] vBlackbarRangesTop = new int[1000];
+        public static int[] vBlackbarRangesBottom = new int[1000];
+        public static int[] vBlackbarRangesLeft = new int[1000];
+        public static int[] vBlackbarRangesRight = new int[1000];
 
         //Screen capture Variables
         public static int vCaptureRange = 0;
@@ -68,10 +68,10 @@ namespace AmbiPro
                 vBlackbarRangeVertical = 0;
                 vBlackbarRunUpdate = false;
                 vBlackbarLastUpdate = 0;
-                vBlackbarLedMarginTop = new int[1000];
-                vBlackbarLedMarginBottom = new int[1000];
-                vBlackbarLedMarginLeft = new int[1000];
-                vBlackbarLedMarginRight = new int[1000];
+                vBlackbarRangesTop = new int[1000];
+                vBlackbarRangesBottom = new int[1000];
+                vBlackbarRangesLeft = new int[1000];
+                vBlackbarRangesRight = new int[1000];
 
                 //Screen capture Variables
                 vCaptureRange = 0;

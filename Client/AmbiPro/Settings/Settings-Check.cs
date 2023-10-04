@@ -254,10 +254,6 @@ namespace AmbiPro.Settings
                 }
 
                 //Check - Debug Mode
-                if (!SettingCheck(vConfiguration, "DebugBlackBar"))
-                {
-                    SettingSave(vConfiguration, "DebugBlackBar", "False");
-                }
                 if (!SettingCheck(vConfiguration, "DebugLedPreview"))
                 {
                     SettingSave(vConfiguration, "DebugLedPreview", "False");

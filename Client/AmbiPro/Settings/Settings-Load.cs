@@ -203,7 +203,6 @@ namespace AmbiPro.Settings
                 sldr_CaptureHDRMaximumNits.Value = captureHDRMaximumNits;
 
                 //Load - Debug Mode
-                checkbox_DebugBlackBar.IsChecked = SettingLoad(vConfiguration, "DebugBlackBar", typeof(bool));
                 checkbox_DebugLedPreview.IsChecked = SettingLoad(vConfiguration, "DebugLedPreview", typeof(bool));
                 checkbox_DebugColor.IsChecked = SettingLoad(vConfiguration, "DebugColor", typeof(bool));
 

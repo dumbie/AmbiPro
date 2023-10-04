@@ -51,7 +51,6 @@ namespace AmbiPro
         public static int setLedCountTotal = 0;
 
         //Debug settings
-        public static bool setDebugBlackBar = false;
         public static bool setDebugLedPreview = false;
         public static bool setDebugColor = true;
 
@@ -103,7 +102,6 @@ namespace AmbiPro
                 setLedCountTotal = setLedCountFirst + setLedCountSecond + setLedCountThird + setLedCountFourth;
 
                 //Debug settings
-                setDebugBlackBar = SettingLoad(vConfiguration, "DebugBlackBar", typeof(bool));
                 setDebugLedPreview = SettingLoad(vConfiguration, "DebugLedPreview", typeof(bool));
                 setDebugColor = SettingLoad(vConfiguration, "DebugColor", typeof(bool));
 
