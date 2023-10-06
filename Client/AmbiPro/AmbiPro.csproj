@@ -108,6 +108,7 @@
     <Compile Include="AppVariables.cs" />
     <Compile Include="AppTasks.cs" />
     <Compile Include="AppUpdate.cs" />
+    <Compile Include="ScreenBlackbars.cs" />
     <Compile Include="Settings\Settings-Preload.cs" />
     <Compile Include="Settings\Settings-Rotate.cs" />
     <Compile Include="ModeColorSpectrum.cs" />

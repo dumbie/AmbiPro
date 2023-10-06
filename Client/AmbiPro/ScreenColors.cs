@@ -10,7 +10,7 @@ namespace AmbiPro
 {
     public partial class SerialMonitor
     {
-        //Get screen shot colors and set it to byte array
+        //Get screenshot colors and set it to byte array
         private static void ScreenColors(LedSideTypes ledSideType, int directionLedCount, byte[] serialBytes, byte[] bitmapByteArray, ref int currentSerialByte)
         {
             try
@@ -22,7 +22,6 @@ namespace AmbiPro
                 }
 
                 //Calculate led color direction and bottom gap
-                int captureRange = 0;
                 int captureZoneHor = 0;
                 int captureZoneVer = 0;
                 int captureZoneSize = 0;
@@ -104,7 +103,7 @@ namespace AmbiPro
                     captureDiffMax = (vCaptureDetails.OutputHeight - (captureZoneSize * directionLedCount)) / 2;
                     captureDiffMin = directionLedCount - captureDiffMax;
                 }
-                //Debug.WriteLine("Zone range: " + vCaptureZoneRange + " / Zone size: " + CaptureZoneSize + " / Zone difference: " + CaptureZoneDiff + " / Leds: " + DirectionLedCount);
+                //Debug.WriteLine("ZoneHor: " + captureZoneHor + " / ZoneVer: " + captureZoneVer + " / ZoneSize: " + captureZoneSize + " / ZoneDiff: " + captureDiffMin + " / Leds: " + directionLedCount);
 
                 //Get colors from the bitmap
                 for (int ledCurrentIndex = 0; ledCurrentIndex < directionLedCount; ledCurrentIndex++)
@@ -126,80 +125,37 @@ namespace AmbiPro
                     //Skip bottom gap leds
                     if (bottomGapMax != 0 && AVFunctions.BetweenNumbers(ledCurrentIndex, bottomGapMin, bottomGapMax, false))
                     {
-                        //Debug.WriteLine("Led: " + currentLed + " / GapMin: " + BottomGapMin + " / GapMax: " + BottomGapMax + " / GapLeds: " + setLedBottomGap);
+                        //Debug.WriteLine("Led: " + ledCurrentIndex + " / GapMin: " + bottomGapMin + " / GapMax: " + bottomGapMax + " / GapLeds: " + setLedBottomGap);
                     }
                     else
                     {
-                        if (ledSideType == LedSideTypes.LeftBottomToTop || ledSideType == LedSideTypes.LeftTopToBottom)
-                        {
-                            //Detect led blackbar range
-                            if (vBlackbarRunUpdate)
-                            {
-                                int colorMargin = BlackbarColorAlgorithm(bitmapByteArray, captureZoneHor, captureZoneVer, captureZoneSize, vBlackbarRangeHorizontal, ledSideType);
-                                UpdateBlackBarMargin(colorMargin, ref vBlackbarRangesLeft[ledCurrentIndex]);
-                            }
+                        //Get blackbar range
+                        int captureRange = GetBlackbarRanges(ledSideType, ledCurrentIndex);
 
-                            //Set capture range
-                            captureRange = vCaptureRange + vBlackbarRangesLeft[ledCurrentIndex];
-                        }
-                        else if (ledSideType == LedSideTypes.RightBottomToTop || ledSideType == LedSideTypes.RightTopToBottom)
-                        {
-                            //Detect led blackbar range
-                            if (vBlackbarRunUpdate)
-                            {
-                                int colorMargin = BlackbarColorAlgorithm(bitmapByteArray, captureZoneHor, captureZoneVer, captureZoneSize, vBlackbarRangeHorizontal, ledSideType);
-                                UpdateBlackBarMargin(colorMargin, ref vBlackbarRangesRight[ledCurrentIndex]);
-                            }
+                        //Capture average color
+                        CaptureScreenColorAlgorithm(bitmapByteArray, out ColorRGBA colorCapture, out bool colorFound, out int colorFirstRange, captureZoneHor, captureZoneVer, captureZoneSize, captureRange, ledSideType);
+                        //Debug.WriteLine("Captured average color R" + colorCapture.R + "G" + colorCapture.G + "B" + colorCapture.B + " from the bitmap data.");
 
-                            //Set capture range
-                            captureRange = vCaptureRange + vBlackbarRangesRight[ledCurrentIndex];
-                        }
-                        else if (ledSideType == LedSideTypes.TopLeftToRight || ledSideType == LedSideTypes.TopRightToLeft)
-                        {
-                            //Detect led blackbar range
-                            if (vBlackbarRunUpdate)
-                            {
-                                int colorMargin = BlackbarColorAlgorithm(bitmapByteArray, captureZoneHor, captureZoneVer, captureZoneSize, vBlackbarRangeVertical, ledSideType);
-                                UpdateBlackBarMargin(colorMargin, ref vBlackbarRangesTop[ledCurrentIndex]);
-                            }
-
-                            //Set capture range
-                            captureRange = vCaptureRange + vBlackbarRangesTop[ledCurrentIndex];
-                        }
-                        else if (ledSideType == LedSideTypes.BottomLeftToRight || ledSideType == LedSideTypes.BottomRightToLeft)
-                        {
-                            //Detect led blackbar range
-                            if (vBlackbarRunUpdate)
-                            {
-                                int colorMargin = BlackbarColorAlgorithm(bitmapByteArray, captureZoneHor, captureZoneVer, captureZoneSize, vBlackbarRangeVertical, ledSideType);
-                                UpdateBlackBarMargin(colorMargin, ref vBlackbarRangesBottom[ledCurrentIndex]);
-                            }
-
-                            //Set capture range
-                            captureRange = vCaptureRange + vBlackbarRangesBottom[ledCurrentIndex];
-                        }
-
-                        //Capture the average color
-                        CaptureScreenColorAlgorithm(bitmapByteArray, out ColorRGBA captureColor, captureZoneHor, captureZoneVer, captureZoneSize, captureRange, ledSideType, ledCurrentIndex);
-                        //Debug.WriteLine("Captured average color R" + captureColor.R + "G" + captureColor.G + "B" + captureColor.B + " from the bitmap data.");
+                        //Detect blackbar ranges
+                        DetectBlackbarRanges(ledSideType, ledCurrentIndex, colorFound, colorFirstRange);
 
                         //Update debug led colors preview
                         if (vDebugCaptureAllowed && setDebugLedPreview)
                         {
-                            UpdateLedColorsPreview(ledSideType, ledCurrentIndex, captureColor);
+                            UpdateLedColorsPreview(ledSideType, ledCurrentIndex, colorCapture);
                         }
 
                         //Adjust the colors to settings
-                        AdjustLedColors(ref captureColor);
+                        AdjustLedColors(ref colorCapture);
 
                         //Set the color to color byte array
-                        serialBytes[currentSerialByte] = captureColor.R;
+                        serialBytes[currentSerialByte] = colorCapture.R;
                         currentSerialByte++;
 
-                        serialBytes[currentSerialByte] = captureColor.G;
+                        serialBytes[currentSerialByte] = colorCapture.G;
                         currentSerialByte++;
 
-                        serialBytes[currentSerialByte] = captureColor.B;
+                        serialBytes[currentSerialByte] = colorCapture.B;
                         currentSerialByte++;
                     }
 
@@ -233,122 +189,12 @@ namespace AmbiPro
             }
         }
 
-        //Update blackbar margin
-        private static void UpdateBlackBarMargin(int colorMargin, ref int captureMargin)
-        {
-            try
-            {
-                //Debug.WriteLine("Color detected at: " + colorMargin);
-                //Debug.WriteLine("Current margin at: " + captureMargin);
-                if (captureMargin < colorMargin)
-                {
-                    int newMargin = captureMargin + vBlackbarAdjustStep;
-                    if (newMargin < colorMargin)
-                    {
-                        captureMargin = newMargin;
-                    }
-                    else
-                    {
-                        captureMargin = colorMargin;
-                    }
-                }
-                else if (captureMargin > colorMargin)
-                {
-                    int newMargin = captureMargin - vBlackbarAdjustStep;
-                    if (newMargin > colorMargin)
-                    {
-                        captureMargin = newMargin;
-                    }
-                    else
-                    {
-                        captureMargin = colorMargin;
-                    }
-                }
-            }
-            catch { }
-        }
-
-        //Check color for blackbars
-        private static int BlackbarColorAlgorithm(byte[] bitmapByteArray, int captureZoneHor, int captureZoneVer, int captureZoneSize, int captureZoneRange, LedSideTypes sideType)
-        {
-            int captureSizeStep = 0;
-            int captureRangeStep = 0;
-            try
-            {
-                int CaptureZoneHorRange = 0;
-                int CaptureZoneVerRange = 0;
-                for (captureRangeStep = 0; captureRangeStep < captureZoneRange; captureRangeStep += vBlackbarDetectAccuracy)
-                {
-                    for (captureSizeStep = 0; captureSizeStep < captureZoneSize; captureSizeStep += vBlackbarDetectAccuracy)
-                    {
-                        if (sideType == LedSideTypes.TopLeftToRight)
-                        {
-                            CaptureZoneHorRange = captureSizeStep;
-                            CaptureZoneVerRange = -captureRangeStep;
-                        }
-                        else if (sideType == LedSideTypes.TopRightToLeft)
-                        {
-                            CaptureZoneHorRange = -captureSizeStep;
-                            CaptureZoneVerRange = -captureRangeStep;
-                        }
-                        else if (sideType == LedSideTypes.BottomLeftToRight)
-                        {
-                            CaptureZoneHorRange = captureSizeStep;
-                            CaptureZoneVerRange = captureRangeStep;
-                        }
-                        else if (sideType == LedSideTypes.BottomRightToLeft)
-                        {
-                            CaptureZoneHorRange = -captureSizeStep;
-                            CaptureZoneVerRange = captureRangeStep;
-                        }
-                        else if (sideType == LedSideTypes.LeftBottomToTop)
-                        {
-                            CaptureZoneHorRange = captureRangeStep;
-                            CaptureZoneVerRange = captureSizeStep;
-                        }
-                        else if (sideType == LedSideTypes.LeftTopToBottom)
-                        {
-                            CaptureZoneHorRange = captureRangeStep;
-                            CaptureZoneVerRange = -captureSizeStep;
-                        }
-                        else if (sideType == LedSideTypes.RightBottomToTop)
-                        {
-                            CaptureZoneHorRange = -captureRangeStep;
-                            CaptureZoneVerRange = captureSizeStep;
-                        }
-                        else if (sideType == LedSideTypes.RightTopToBottom)
-                        {
-                            CaptureZoneHorRange = -captureRangeStep;
-                            CaptureZoneVerRange = -captureSizeStep;
-                        }
-
-                        ColorRGBA ColorPixel = ScreenColorProcessing.GetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + CaptureZoneHorRange, captureZoneVer + CaptureZoneVerRange);
-                        if (ColorPixel != null)
-                        {
-                            //Calculate color luminance
-                            int colorLuminance = (ColorPixel.R + ColorPixel.G + ColorPixel.B) / 3;
-
-                            //Check if color is detected
-                            if (colorLuminance > setAdjustBlackBarBrightness)
-                            {
-                                //Debug.WriteLine("Color detected at: " + captureRangeStep);
-                                return captureRangeStep;
-                            }
-                        }
-                    }
-                }
-                return captureRangeStep;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Failed to check colors for blackbar: " + ex.Message);
-                return captureRangeStep;
-            }
-        }
-
         //Capture screen color
-        private static void CaptureScreenColorAlgorithm(byte[] bitmapByteArray, out ColorRGBA averageColor, int captureZoneHor, int captureZoneVer, int captureZoneSize, int captureRangeSize, LedSideTypes ledSideType, int ledCurrentIndex)
+        private static void CaptureScreenColorAlgorithm(byte[] bitmapByteArray, out ColorRGBA colorCapture, out bool colorFound, out int colorFirstRange, int captureZoneHor, int captureZoneVer, int captureZoneSize, int captureRangeSize, LedSideTypes ledSideType)
         {
+            colorCapture = ColorRGBA.Black;
+            colorFound = false;
+            colorFirstRange = 0;
             try
             {
                 int colorCount = 0;
@@ -409,39 +255,58 @@ namespace AmbiPro
                         ColorRGBA ColorPixel = ScreenColorProcessing.GetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + captureZoneHorRange, captureZoneVer + captureZoneVerRange);
                         if (ColorPixel != null)
                         {
-                            if (vDebugCaptureAllowed && setDebugColor)
+                            if (vDebugCaptureAllowed)
                             {
-                                ColorRGBA debugSideColor = ColorRGBA.White;
-                                if (ledSideType == LedSideTypes.TopLeftToRight || ledSideType == LedSideTypes.TopRightToLeft)
+                                if (setDebugColorLeftRight)
                                 {
-                                    debugSideColor = ColorRGBA.Blue;
+                                    if (ledSideType == LedSideTypes.LeftBottomToTop || ledSideType == LedSideTypes.LeftTopToBottom)
+                                    {
+                                        ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + captureZoneHorRange, captureZoneVer + captureZoneVerRange, ColorRGBA.Red);
+                                    }
+                                    if (ledSideType == LedSideTypes.RightBottomToTop || ledSideType == LedSideTypes.RightTopToBottom)
+                                    {
+                                        ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + captureZoneHorRange, captureZoneVer + captureZoneVerRange, ColorRGBA.Green);
+                                    }
                                 }
-                                else if (ledSideType == LedSideTypes.BottomLeftToRight || ledSideType == LedSideTypes.BottomRightToLeft)
+                                if (setDebugColorTopBottom)
                                 {
-                                    debugSideColor = ColorRGBA.Yellow;
+                                    if (ledSideType == LedSideTypes.TopLeftToRight || ledSideType == LedSideTypes.TopRightToLeft)
+                                    {
+                                        ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + captureZoneHorRange, captureZoneVer + captureZoneVerRange, ColorRGBA.Blue);
+                                    }
+                                    if (ledSideType == LedSideTypes.BottomLeftToRight || ledSideType == LedSideTypes.BottomRightToLeft)
+                                    {
+                                        ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + captureZoneHorRange, captureZoneVer + captureZoneVerRange, ColorRGBA.Yellow);
+                                    }
                                 }
-                                else if (ledSideType == LedSideTypes.LeftBottomToTop || ledSideType == LedSideTypes.LeftTopToBottom)
-                                {
-                                    debugSideColor = ColorRGBA.Red;
-                                }
-                                else if (ledSideType == LedSideTypes.RightBottomToTop || ledSideType == LedSideTypes.RightTopToBottom)
-                                {
-                                    debugSideColor = ColorRGBA.Green;
-                                }
-                                ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + captureZoneHorRange, captureZoneVer + captureZoneVerRange, debugSideColor);
                             }
 
-                            //Add pixel color to average color
-                            colorAverageR += ColorPixel.R;
-                            colorAverageG += ColorPixel.G;
-                            colorAverageB += ColorPixel.B;
-                            colorCount++;
+                            //Calculate color luminance
+                            int colorLuminance = (ColorPixel.R + ColorPixel.G + ColorPixel.B) / 3;
+
+                            //Check blackbar brightness
+                            if (colorLuminance > setAdjustBlackBarBrightness)
+                            {
+                                //Add pixel color to average color
+                                colorAverageR += ColorPixel.R;
+                                colorAverageG += ColorPixel.G;
+                                colorAverageB += ColorPixel.B;
+                                colorCount++;
+
+                                //Check if color found and set range
+                                if (!colorFound)
+                                {
+                                    colorFound = true;
+                                    colorFirstRange = captureRangeStep;
+                                    Debug.WriteLine("Blackbar color found at: " + captureRangeStep);
+                                }
+                            }
                         }
                     }
                 }
 
-                //Calculate the average color
-                averageColor = new ColorRGBA()
+                //Calculate average color
+                colorCapture = new ColorRGBA()
                 {
                     R = (byte)(colorAverageR / colorCount),
                     G = (byte)(colorAverageG / colorCount),
@@ -451,7 +316,6 @@ namespace AmbiPro
             catch (Exception ex)
             {
                 Debug.WriteLine("Failed to capture screen colors: " + ex.Message);
-                averageColor = ColorRGBA.Black;
             }
         }
     }
