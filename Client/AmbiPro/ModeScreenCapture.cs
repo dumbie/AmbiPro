@@ -27,11 +27,16 @@ namespace AmbiPro
                 float captureHDRPaperWhite = SettingLoad(vConfiguration, "CaptureHDRPaperWhite", typeof(float));
                 float captureHDRMaximumNits = SettingLoad(vConfiguration, "CaptureHDRMaximumNits", typeof(float));
 
+                //Calculate maximum pixel dimension
+                int maximumPixelDimension = AVFunctions.MathMaxMulti(setLedCountFirst, setLedCountSecond, setLedCountThird, setLedCountFourth) * 2;
+                if (maximumPixelDimension < 180) { maximumPixelDimension = 180; }
+                Debug.WriteLine("Capture requested maximum pixel dimension: " + maximumPixelDimension);
+
                 //Set capture settings variable
                 vCaptureSettings = new CaptureSettings
                 {
                     MonitorId = captureMonitor,
-                    MaxPixelDimension = 200,
+                    MaxPixelDimension = maximumPixelDimension,
                     Blur = captureBlur,
                     HDRtoSDR = true,
                     HDRPaperWhite = captureHDRPaperWhite,
@@ -53,6 +58,9 @@ namespace AmbiPro
                 //Set capture settings
                 SetCaptureSettings();
 
+                //Reset screen capture
+                bool captureReset = CaptureImport.CaptureReset(0);
+
                 //Initialize screen capture
                 bool captureInitialized = CaptureImport.CaptureInitialize(0, vCaptureSettings, out vCaptureDetails);
 
@@ -65,7 +73,7 @@ namespace AmbiPro
                     vFormSettings.UpdateScreenInformation();
                 });
 
-                return captureInitialized;
+                return captureReset && captureInitialized;
             }
             catch
             {
@@ -83,20 +91,14 @@ namespace AmbiPro
             try
             {
                 //Set capture range
-                if (vCaptureDetails.OutputHeight < vCaptureDetails.OutputWidth)
-                {
-                    vCaptureRange = (setLedCaptureRange * vCaptureDetails.OutputHeight) / 100 / 2;
-                }
-                else
-                {
-                    vCaptureRange = (setLedCaptureRange * vCaptureDetails.OutputWidth) / 100 / 2;
-                }
-                //Debug.WriteLine("Capture range set to: " + vCaptureRange);
+                vCaptureRangeVertical = (setLedCaptureRange * vCaptureDetails.OutputHeight) / 100 / 2;
+                vCaptureRangeHorizontal = (setLedCaptureRange * vCaptureDetails.OutputWidth) / 100 / 2;
+                //Debug.WriteLine("Capture range set to: V" + vCaptureRangeVertical + "/H" + vCaptureRangeHorizontal);
 
                 //Set blackbar range
                 vBlackbarRangeVertical = (setAdjustBlackbarRange * vCaptureDetails.OutputHeight) / 100;
                 vBlackbarRangeHorizontal = (setAdjustBlackbarRange * vCaptureDetails.OutputWidth) / 100;
-                //Debug.WriteLine("Blackbar range set to: V" + vBlackBarRangeVertical + "/H" + vBlackBarRangeHorizontal);
+                //Debug.WriteLine("Blackbar range set to: V" + vBlackbarRangeVertical + "/H" + vBlackbarRangeHorizontal);
             }
             catch { }
         }
@@ -156,17 +158,6 @@ namespace AmbiPro
 
                         //Convert BitmapIntPtr to BitmapByteArray
                         byte[] bitmapByteArray = CaptureBitmap.BitmapIntPtrToBitmapByteArray(bitmapIntPtr, vCaptureDetails);
-
-                        //Check if blackbar update is needed
-                        if (setAdjustBlackBars && (Environment.TickCount - vBlackbarLastUpdate) > setAdjustBlackBarUpdateRate)
-                        {
-                            vBlackbarRunUpdate = true;
-                            vBlackbarLastUpdate = Environment.TickCount;
-                        }
-                        else
-                        {
-                            vBlackbarRunUpdate = false;
-                        }
 
                         //Check led capture sides color
                         ScreenColors(setLedSideFirst, setLedCountFirst, serialBytes, bitmapByteArray, ref currentSerialByte);

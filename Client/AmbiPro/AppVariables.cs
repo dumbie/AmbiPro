@@ -35,19 +35,17 @@ namespace AmbiPro
         public static ColorRGBA vCurrentLoopColor = new ColorRGBA() { R = 20 };
 
         //Blackbar Variables
-        public const int vBlackbarAdjustStep = 8;
-        public const int vBlackbarDetectAccuracy = 2;
+        public const int vBlackbarAdjustStep = 1;
         public static int vBlackbarRangeHorizontal = 0;
         public static int vBlackbarRangeVertical = 0;
-        public static bool vBlackbarRunUpdate = false;
-        public static int vBlackbarLastUpdate = 0;
         public static int[] vBlackbarRangesTop = new int[1000];
         public static int[] vBlackbarRangesBottom = new int[1000];
         public static int[] vBlackbarRangesLeft = new int[1000];
         public static int[] vBlackbarRangesRight = new int[1000];
 
         //Screen capture Variables
-        public static int vCaptureRange = 0;
+        public static int vCaptureRangeHorizontal = 0;
+        public static int vCaptureRangeVertical = 0;
         public static CaptureDetails vCaptureDetails;
         public static CaptureSettings vCaptureSettings;
         public static byte[][] vCaptureByteHistoryArray = new byte[20][];
@@ -66,15 +64,14 @@ namespace AmbiPro
                 //Blackbar Variables
                 vBlackbarRangeHorizontal = 0;
                 vBlackbarRangeVertical = 0;
-                vBlackbarRunUpdate = false;
-                vBlackbarLastUpdate = 0;
                 vBlackbarRangesTop = new int[1000];
                 vBlackbarRangesBottom = new int[1000];
                 vBlackbarRangesLeft = new int[1000];
                 vBlackbarRangesRight = new int[1000];
 
                 //Screen capture Variables
-                vCaptureRange = 0;
+                vCaptureRangeHorizontal = 0;
+                vCaptureRangeVertical = 0;
                 vCaptureDetails = new CaptureDetails();
                 vCaptureSettings = new CaptureSettings();
                 vCaptureByteHistoryArray = new byte[20][];
