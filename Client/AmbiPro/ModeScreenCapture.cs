@@ -37,6 +37,7 @@ namespace AmbiPro
                 {
                     MonitorId = captureMonitor,
                     MaxPixelDimension = maximumPixelDimension,
+                    MouseDrawCursor = false,
                     Blur = captureBlur,
                     HDRtoSDR = true,
                     HDRPaperWhite = captureHDRPaperWhite,
@@ -99,6 +100,13 @@ namespace AmbiPro
                 vBlackbarRangeVertical = (setAdjustBlackbarRange * vCaptureDetails.OutputHeight) / 100;
                 vBlackbarRangeHorizontal = (setAdjustBlackbarRange * vCaptureDetails.OutputWidth) / 100;
                 //Debug.WriteLine("Blackbar range set to: V" + vBlackbarRangeVertical + "/H" + vBlackbarRangeHorizontal);
+
+                ////Set blackbar step
+                //vBlackbarAdjustStepVertical = (1 * vCaptureDetails.OutputHeight) / 100;
+                //if (vBlackbarAdjustStepVertical < 1) { vBlackbarAdjustStepVertical = 1; }
+                //vBlackbarAdjustStepHorizontal = (1 * vCaptureDetails.OutputWidth) / 100;
+                //if (vBlackbarAdjustStepHorizontal < 1) { vBlackbarAdjustStepHorizontal = 1; }
+                //Debug.WriteLine("Blackbar step set to: V" + vBlackbarAdjustStepVertical + "/H" + vBlackbarAdjustStepHorizontal);
             }
             catch { }
         }
