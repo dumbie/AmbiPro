@@ -74,6 +74,18 @@ namespace AmbiPro
                 }
             }
 
+            public int CalculateLuminance()
+            {
+                try
+                {
+                    return (R + G + B) / 3;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+
             public void AdjustSaturation(float targetAdjust)
             {
                 try
