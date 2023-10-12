@@ -15,19 +15,19 @@ namespace AmbiPro
             {
                 if (ledSideType == LedSideTypes.LeftBottomToTop || ledSideType == LedSideTypes.LeftTopToBottom)
                 {
-                    return vCaptureRange + vBlackbarRangesLeft[ledCurrentIndex];
+                    return vCaptureRangeHorizontal + vBlackbarRangesLeft[ledCurrentIndex];
                 }
                 else if (ledSideType == LedSideTypes.RightBottomToTop || ledSideType == LedSideTypes.RightTopToBottom)
                 {
-                    return vCaptureRange + vBlackbarRangesRight[ledCurrentIndex];
+                    return vCaptureRangeHorizontal + vBlackbarRangesRight[ledCurrentIndex];
                 }
                 else if (ledSideType == LedSideTypes.TopLeftToRight || ledSideType == LedSideTypes.TopRightToLeft)
                 {
-                    return vCaptureRange + vBlackbarRangesTop[ledCurrentIndex];
+                    return vCaptureRangeVertical + vBlackbarRangesTop[ledCurrentIndex];
                 }
                 else if (ledSideType == LedSideTypes.BottomLeftToRight || ledSideType == LedSideTypes.BottomRightToLeft)
                 {
-                    return vCaptureRange + vBlackbarRangesBottom[ledCurrentIndex];
+                    return vCaptureRangeVertical + vBlackbarRangesBottom[ledCurrentIndex];
                 }
                 else
                 {
@@ -57,11 +57,11 @@ namespace AmbiPro
                         int currentBlackbarRange = vBlackbarRangesLeft[ledCurrentIndex];
                         if (currentBlackbarRange < colorFirstRange && currentBlackbarRange < vBlackbarRangeHorizontal)
                         {
-                            vBlackbarRangesLeft[ledCurrentIndex] += vBlackbarAdjustStep;
+                            vBlackbarRangesLeft[ledCurrentIndex] += vBlackbarAdjustStepHorizontal;
                         }
                         else if (currentBlackbarRange > colorFirstRange)
                         {
-                            vBlackbarRangesLeft[ledCurrentIndex] -= vBlackbarAdjustStep;
+                            vBlackbarRangesLeft[ledCurrentIndex] -= vBlackbarAdjustStepHorizontal;
                         }
                     }
                     else if (ledSideType == LedSideTypes.RightBottomToTop || ledSideType == LedSideTypes.RightTopToBottom)
@@ -69,23 +69,23 @@ namespace AmbiPro
                         int currentBlackbarRange = vBlackbarRangesRight[ledCurrentIndex];
                         if (currentBlackbarRange < colorFirstRange && currentBlackbarRange < vBlackbarRangeHorizontal)
                         {
-                            vBlackbarRangesRight[ledCurrentIndex] += vBlackbarAdjustStep;
+                            vBlackbarRangesRight[ledCurrentIndex] += vBlackbarAdjustStepHorizontal;
                         }
-                        else if(currentBlackbarRange > colorFirstRange)
+                        else if (currentBlackbarRange > colorFirstRange)
                         {
-                            vBlackbarRangesRight[ledCurrentIndex] -= vBlackbarAdjustStep;
-                        }                         
+                            vBlackbarRangesRight[ledCurrentIndex] -= vBlackbarAdjustStepHorizontal;
+                        }
                     }
                     else if (ledSideType == LedSideTypes.TopLeftToRight || ledSideType == LedSideTypes.TopRightToLeft)
                     {
                         int currentBlackbarRange = vBlackbarRangesTop[ledCurrentIndex];
                         if (currentBlackbarRange < colorFirstRange && currentBlackbarRange < vBlackbarRangeVertical)
                         {
-                            vBlackbarRangesTop[ledCurrentIndex] += vBlackbarAdjustStep;
+                            vBlackbarRangesTop[ledCurrentIndex] += vBlackbarAdjustStepVertical;
                         }
                         else if (currentBlackbarRange > colorFirstRange)
                         {
-                            vBlackbarRangesTop[ledCurrentIndex] -= vBlackbarAdjustStep;
+                            vBlackbarRangesTop[ledCurrentIndex] -= vBlackbarAdjustStepVertical;
                         }
                     }
                     else if (ledSideType == LedSideTypes.BottomLeftToRight || ledSideType == LedSideTypes.BottomRightToLeft)
@@ -93,11 +93,11 @@ namespace AmbiPro
                         int currentBlackbarRange = vBlackbarRangesBottom[ledCurrentIndex];
                         if (currentBlackbarRange < colorFirstRange && currentBlackbarRange < vBlackbarRangeVertical)
                         {
-                            vBlackbarRangesBottom[ledCurrentIndex] += vBlackbarAdjustStep;
+                            vBlackbarRangesBottom[ledCurrentIndex] += vBlackbarAdjustStepVertical;
                         }
                         else if (currentBlackbarRange > colorFirstRange)
                         {
-                            vBlackbarRangesBottom[ledCurrentIndex] -= vBlackbarAdjustStep;
+                            vBlackbarRangesBottom[ledCurrentIndex] -= vBlackbarAdjustStepVertical;
                         }
                     }
                 }
@@ -108,11 +108,11 @@ namespace AmbiPro
                         int currentBlackbarRange = vBlackbarRangesLeft[ledCurrentIndex];
                         if (currentBlackbarRange < vBlackbarRangeHorizontal)
                         {
-                            vBlackbarRangesLeft[ledCurrentIndex] += vBlackbarAdjustStep;
+                            vBlackbarRangesLeft[ledCurrentIndex] += vBlackbarAdjustStepHorizontal;
                         }
                         else if (currentBlackbarRange > vBlackbarRangeHorizontal)
                         {
-                            vBlackbarRangesLeft[ledCurrentIndex] -= vBlackbarAdjustStep;
+                            vBlackbarRangesLeft[ledCurrentIndex] -= vBlackbarAdjustStepHorizontal;
                         }
                     }
                     else if (ledSideType == LedSideTypes.RightBottomToTop || ledSideType == LedSideTypes.RightTopToBottom)
@@ -120,11 +120,11 @@ namespace AmbiPro
                         int currentBlackbarRange = vBlackbarRangesRight[ledCurrentIndex];
                         if (currentBlackbarRange < vBlackbarRangeHorizontal)
                         {
-                            vBlackbarRangesRight[ledCurrentIndex] += vBlackbarAdjustStep;
+                            vBlackbarRangesRight[ledCurrentIndex] += vBlackbarAdjustStepHorizontal;
                         }
                         else if (currentBlackbarRange > vBlackbarRangeHorizontal)
                         {
-                            vBlackbarRangesRight[ledCurrentIndex] -= vBlackbarAdjustStep;
+                            vBlackbarRangesRight[ledCurrentIndex] -= vBlackbarAdjustStepHorizontal;
                         }
                     }
                     else if (ledSideType == LedSideTypes.TopLeftToRight || ledSideType == LedSideTypes.TopRightToLeft)
@@ -132,11 +132,11 @@ namespace AmbiPro
                         int currentBlackbarRange = vBlackbarRangesTop[ledCurrentIndex];
                         if (currentBlackbarRange < vBlackbarRangeVertical)
                         {
-                            vBlackbarRangesTop[ledCurrentIndex] += vBlackbarAdjustStep;
+                            vBlackbarRangesTop[ledCurrentIndex] += vBlackbarAdjustStepVertical;
                         }
                         else if (currentBlackbarRange > vBlackbarRangeVertical)
                         {
-                            vBlackbarRangesTop[ledCurrentIndex] -= vBlackbarAdjustStep;
+                            vBlackbarRangesTop[ledCurrentIndex] -= vBlackbarAdjustStepVertical;
                         }
                     }
                     else if (ledSideType == LedSideTypes.BottomLeftToRight || ledSideType == LedSideTypes.BottomRightToLeft)
@@ -144,11 +144,11 @@ namespace AmbiPro
                         int currentBlackbarRange = vBlackbarRangesBottom[ledCurrentIndex];
                         if (currentBlackbarRange < vBlackbarRangeVertical)
                         {
-                            vBlackbarRangesBottom[ledCurrentIndex] += vBlackbarAdjustStep;
+                            vBlackbarRangesBottom[ledCurrentIndex] += vBlackbarAdjustStepVertical;
                         }
                         else if (currentBlackbarRange > vBlackbarRangeVertical)
                         {
-                            vBlackbarRangesBottom[ledCurrentIndex] -= vBlackbarAdjustStep;
+                            vBlackbarRangesBottom[ledCurrentIndex] -= vBlackbarAdjustStepVertical;
                         }
                     }
                 }
