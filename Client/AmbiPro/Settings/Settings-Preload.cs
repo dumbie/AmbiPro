@@ -52,7 +52,8 @@ namespace AmbiPro
 
         //Debug settings
         public static bool setDebugLedPreview = false;
-        public static bool setDebugColor = true;
+        public static bool setDebugColorLeftRight = true;
+        public static bool setDebugColorTopBottom = true;
 
         //Update led setting variables
         public static void UpdateSettingsPreload()
@@ -103,7 +104,8 @@ namespace AmbiPro
 
                 //Debug settings
                 setDebugLedPreview = SettingLoad(vConfiguration, "DebugLedPreview", typeof(bool));
-                setDebugColor = SettingLoad(vConfiguration, "DebugColor", typeof(bool));
+                setDebugColorLeftRight = SettingLoad(vConfiguration, "DebugColorLeftRight", typeof(bool));
+                setDebugColorTopBottom = SettingLoad(vConfiguration, "DebugColorTopBottom", typeof(bool));
 
                 //Update capture variables
                 UpdateCaptureVariables();

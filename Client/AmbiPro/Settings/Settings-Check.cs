@@ -258,9 +258,13 @@ namespace AmbiPro.Settings
                 {
                     SettingSave(vConfiguration, "DebugLedPreview", "False");
                 }
-                if (!SettingCheck(vConfiguration, "DebugColor"))
+                if (!SettingCheck(vConfiguration, "DebugColorLeftRight"))
                 {
-                    SettingSave(vConfiguration, "DebugColor", "False");
+                    SettingSave(vConfiguration, "DebugColorLeftRight", "False");
+                }
+                if (!SettingCheck(vConfiguration, "DebugColorTopBottom"))
+                {
+                    SettingSave(vConfiguration, "DebugColorTopBottom", "False");
                 }
             }
             catch

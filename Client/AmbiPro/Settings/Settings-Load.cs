@@ -204,7 +204,8 @@ namespace AmbiPro.Settings
 
                 //Load - Debug Mode
                 checkbox_DebugLedPreview.IsChecked = SettingLoad(vConfiguration, "DebugLedPreview", typeof(bool));
-                checkbox_DebugColor.IsChecked = SettingLoad(vConfiguration, "DebugColor", typeof(bool));
+                checkbox_DebugColorLeftRight.IsChecked = SettingLoad(vConfiguration, "DebugColorLeftRight", typeof(bool));
+                checkbox_DebugColorTopBottom.IsChecked = SettingLoad(vConfiguration, "DebugColorTopBottom", typeof(bool));
 
                 //Check if application is set to launch on Windows startup
                 string targetName = Assembly.GetEntryAssembly().GetName().Name;

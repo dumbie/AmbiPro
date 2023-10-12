@@ -357,16 +357,14 @@ namespace AmbiPro.Settings
                 };
 
                 //Save - Debug color
-                checkbox_DebugColor.Click += (sender, e) =>
+                checkbox_DebugColorLeftRight.Click += (sender, e) =>
                 {
-                    if ((bool)checkbox_DebugColor.IsChecked)
-                    {
-                        SettingSave(vConfiguration, "DebugColor", "True");
-                    }
-                    else
-                    {
-                        SettingSave(vConfiguration, "DebugColor", "False");
-                    }
+                    SettingSave(vConfiguration, "DebugColorLeftRight", (bool)checkbox_DebugColorLeftRight.IsChecked);
+                };
+
+                checkbox_DebugColorTopBottom.Click += (sender, e) =>
+                {
+                    SettingSave(vConfiguration, "DebugColorTopBottom", (bool)checkbox_DebugColorTopBottom.IsChecked);
                 };
             }
             catch (Exception ex)

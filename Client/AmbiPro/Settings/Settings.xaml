@@ -609,7 +609,10 @@
 
                             <!-- Debug -->
                             <StackPanel Name="sp_Debug" Visibility="Collapsed" Margin="5,5,5,5">
-                                <CheckBox Name="checkbox_DebugColor" Content="Enable or disable color capture debug" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
+                                <CheckBox Name="checkbox_DebugColorTopBottom" Content="Enable or disable top bottom side capture debug" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
+                                <TextBlock Text="Enable or disable the color capture areas in the preview." Style="{StaticResource TextBlockGrayLight}"/>
+
+                                <CheckBox Name="checkbox_DebugColorLeftRight" Margin="0,10,0,0" Content="Enable or disable left right side capture debug" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
                                 <TextBlock Text="Enable or disable the color capture areas in the preview." Style="{StaticResource TextBlockGrayLight}"/>
 
                                 <CheckBox Name="checkbox_DebugLedPreview" Margin="0,10,0,0" Content="Enable or disable led strip preview" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light" Style="{StaticResource CheckBoxBlack}"/>
