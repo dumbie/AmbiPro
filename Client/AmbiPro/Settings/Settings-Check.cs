@@ -82,7 +82,7 @@ namespace AmbiPro.Settings
                 //Check - Blackbar Brightness
                 if (!SettingCheck(vConfiguration, "AdjustBlackBarBrightness"))
                 {
-                    SettingSave(vConfiguration, "AdjustBlackBarBrightness", "1");
+                    SettingSave(vConfiguration, "AdjustBlackBarBrightness", "2");
                 }
 
                 //Check - Led Bottom Gap
@@ -148,7 +148,7 @@ namespace AmbiPro.Settings
                 //Check - Led Minimum Color
                 if (!SettingCheck(vConfiguration, "LedMinColor2"))
                 {
-                    SettingSave(vConfiguration, "LedMinColor2", "2");
+                    SettingSave(vConfiguration, "LedMinColor2", "0");
                 }
 
                 //Check - Led Color Red
@@ -220,13 +220,13 @@ namespace AmbiPro.Settings
                 //Check - Update Rate
                 if (!SettingCheck(vConfiguration, "UpdateRate"))
                 {
-                    SettingSave(vConfiguration, "UpdateRate", "20");
+                    SettingSave(vConfiguration, "UpdateRate", "22");
                 }
 
                 //Check - Led Smoothing
                 if (!SettingCheck(vConfiguration, "LedSmoothing"))
                 {
-                    SettingSave(vConfiguration, "LedSmoothing", "8");
+                    SettingSave(vConfiguration, "LedSmoothing", "6");
                 }
 
                 //Check - Capture Blur
