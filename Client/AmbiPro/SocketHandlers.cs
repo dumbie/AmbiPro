@@ -85,6 +85,11 @@ namespace AmbiPro
                     SettingSave(vConfiguration, "SolidLedColor", messageValue);
                     AppEvents.EventUpdateSettingsSolidLedColor();
                 }
+                else
+                {
+                    Debug.WriteLine("Unknown socket message type, switching leds on or off.");
+                    await LedSwitch(LedSwitches.Automatic);
+                }
             }
             catch { }
             return "Ok";
