@@ -38,7 +38,7 @@ this application will capture your screen and sync the colors to your led strip.
 - A DirectX 12 or higher capable graphics adapter.
 
 ## Known Issues
-- Some content with HDR or DRM might not be captured and show as turned off leds.
+- Some content using DRM protection might not be captured leading to leds not lighting up.
 
 ## Support and bug reporting
 When you are walking into any problems or a bug you can go to my help page at https://help.arnoldvink.com so I can try to help you out and get everything working.
@@ -47,6 +47,13 @@ When you are walking into any problems or a bug you can go to my help page at ht
 If you appreciate my project and want to support me with my projects you can make a donation through https://donation.arnoldvink.com
 
 ## Changelog
+v0.25.0.0 (13-October-2023)
+- Rewrote part of blackbar detection to adjust more smoothly.
+
+v0.24.0.0 (22-May-2023)
+- Added HDR white paper setting.
+- Improved blackbar logo detection.
+
 v0.23.0.0 (23-January-2023)
 - Added HDR capture brightness setting.
 
