@@ -35,8 +35,7 @@ namespace AmbiPro.Settings
                 if (lb_Menu.SelectedIndex >= 0)
                 {
                     StackPanel selectedStackPanel = (StackPanel)lb_Menu.SelectedItem;
-
-                    if (selectedStackPanel.Name != "menuButtonUpdate" && selectedStackPanel.Name != "menuButtonClose" && selectedStackPanel.Name != "menuButtonExit")
+                    if (selectedStackPanel.Name != "menuButtonUpdate")
                     {
                         //Update current visible menu
                         vCurrentVisibleMenu = selectedStackPanel.Name;
@@ -123,14 +122,6 @@ namespace AmbiPro.Settings
                     {
                         SwitchBackground(true, false, false, false);
                         sp_LedRotate.Visibility = Visibility.Visible;
-                    }
-                    else if (selectedStackPanel.Name == "menuButtonClose")
-                    {
-                        this.Close();
-                    }
-                    else if (selectedStackPanel.Name == "menuButtonExit")
-                    {
-                        await AppStartup.Exit();
                     }
                 }
             }

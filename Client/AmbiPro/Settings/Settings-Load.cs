@@ -155,10 +155,6 @@ namespace AmbiPro.Settings
                 tb_AdjustBlackBarBrightness.Text = "Blackbar minimum brightness: " + SettingLoad(vConfiguration, "AdjustBlackBarBrightness", typeof(int)) + "%";
                 sldr_AdjustBlackBarBrightness.Value = SettingLoad(vConfiguration, "AdjustBlackBarBrightness", typeof(int));
 
-                //Load - Blackbar Update Rate
-                tb_AdjustBlackbarUpdateRate.Text = "Blackbar update rate: " + SettingLoad(vConfiguration, "AdjustBlackbarUpdateRate", typeof(int)) + "ms";
-                sldr_AdjustBlackbarUpdateRate.Value = SettingLoad(vConfiguration, "AdjustBlackbarUpdateRate", typeof(int));
-
                 //Load - Led Side Types
                 combobox_LedSideFirst.SelectedIndex = SettingLoad(vConfiguration, "LedSideFirst", typeof(int));
                 combobox_LedSideSecond.SelectedIndex = SettingLoad(vConfiguration, "LedSideSecond", typeof(int));

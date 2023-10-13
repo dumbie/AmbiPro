@@ -85,12 +85,6 @@ namespace AmbiPro.Settings
                     SettingSave(vConfiguration, "AdjustBlackBarBrightness", "1");
                 }
 
-                //Check - Blackbar Update Rate
-                if (!SettingCheck(vConfiguration, "AdjustBlackbarUpdateRate"))
-                {
-                    SettingSave(vConfiguration, "AdjustBlackbarUpdateRate", "40");
-                }
-
                 //Check - Led Bottom Gap
                 if (!SettingCheck(vConfiguration, "LedBottomGap"))
                 {

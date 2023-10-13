@@ -233,13 +233,6 @@ namespace AmbiPro.Settings
                     tb_AdjustBlackBarBrightness.Text = "Blackbar minimum brightness: " + sldr_AdjustBlackBarBrightness.Value.ToString("0") + "%";
                 };
 
-                //Save - Blackbar Update Rate
-                sldr_AdjustBlackbarUpdateRate.ValueChanged += (sender, e) =>
-                {
-                    SettingSave(vConfiguration, "AdjustBlackbarUpdateRate", sldr_AdjustBlackbarUpdateRate.Value.ToString("0"));
-                    tb_AdjustBlackbarUpdateRate.Text = "Blackbar update rate: " + sldr_AdjustBlackbarUpdateRate.Value.ToString("0") + "ms";
-                };
-
                 //Save - Led Side Types
                 combobox_LedSideFirst.SelectionChanged += async (sender, e) =>
                 {

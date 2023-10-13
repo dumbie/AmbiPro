@@ -55,12 +55,12 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="4*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Border Grid.Column="1" Grid.Row="1" CornerRadius="10" Background="White"/>
@@ -113,16 +113,30 @@
                         <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
                     </Border.Background>
                     <StackPanel Orientation="Horizontal">
-                        <Button Name="btn_SwitchLedsOnOrOff" Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Switch the leds on or off" Click="Btn_SwitchLedsOnOrOff_Click">
+                        <ProgressBar Width="1" Height="1" Foreground="#F1F1F1" BorderBrush="Transparent" Background="Transparent" IsIndeterminate="True" Opacity="0.10"/>
+                        <Button Name="btn_MoveWindow" Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Move window" PreviewMouseDown="btn_MoveWindow_PreviewMouseDown" PreviewMouseMove="btn_MoveWindow_PreviewMouseMove">
+                            <Image Name="image_MoveWindow" Height="30" Source="/Assets/Icons/Move.png"/>
+                        </Button>
+                        <Button Name="btn_CloseWindow" Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Close window" Click="btn_CloseWindow_Click">
+                            <Image Name="image_CloseWindow" Height="30" Source="/Assets/Icons/Close.png"/>
+                        </Button>
+                        <Button Name="button_ExitApplication" Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Exit AmbiPro" Click="button_ExitApplication_Click">
+                            <Image Name="image_ExitApplication" Height="30" Source="/Assets/Icons/Exit.png"/>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <Border Margin="5,0,0,0" CornerRadius="5">
+                    <Border.Background>
+                        <SolidColorBrush Color="#1D1D1D" Opacity="0.95"/>
+                    </Border.Background>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Name="btn_SwitchLedsOnOrOff" Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Switch leds on or off" Click="Btn_SwitchLedsOnOrOff_Click">
                             <Image Name="image_SwitchLedsOnOrOff" Height="30" Source="/Assets/Icons/LedsOff.png"/>
                         </Button>
                         <Button Name="button_BackgroundSwitch" Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Change test background" Click="button_BackgroundSwitch_Click">
                             <Image Name="image_BackgroundSwitch" Height="30" Source="/Assets/Icons/Background.png"/>
                         </Button>
-                        <Button Name="btn_MoveWindow" Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Move the window" PreviewMouseDown="btn_MoveWindow_PreviewMouseDown" PreviewMouseMove="btn_MoveWindow_PreviewMouseMove">
-                            <Image Name="image_MoveWindow" Height="30" Source="/Assets/Icons/Move.png"/>
-                        </Button>
-                        <ProgressBar Width="1" Height="1" Foreground="#F1F1F1" BorderBrush="Transparent" Background="Transparent" IsIndeterminate="True" Opacity="0.10"/>
                     </StackPanel>
                 </Border>
 
@@ -147,7 +161,7 @@
                             <Button Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Switch blackbar scenario" Click="btn_BlackbarScenario_Click">
                                 <Image Height="30" Source="/Assets/Icons/BlackbarSwitch.png"/>
                             </Button>
-                            <Button Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Show or hide background" Click="button_BackgroundBlackbarsShowHide_Click">
+                            <Button Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Show or hide test background" Click="button_BackgroundBlackbarsShowHide_Click">
                                 <Image Height="30" Source="/Assets/Icons/Transparent.png"/>
                             </Button>
                         </StackPanel>
@@ -160,7 +174,7 @@
                                 <Image Height="30" Source="/Assets/Icons/Transparent.png"/>
                             </Button>
                             <Image Height="30" Margin="5" Source="/Assets/Icons/Brightness.png"/>
-                            <Slider Width="335" Margin="5" TickFrequency="0.05" Value="1.00" Minimum="0.05" Maximum="1.50" Style="{StaticResource SliderBlockBlack}" ValueChanged="slider_BackgroundSolidBrightness_ValueChanged"/>
+                            <Slider Width="245" Margin="5" TickFrequency="0.05" Value="1.00" Minimum="0.05" Maximum="1.50" Style="{StaticResource SliderBlockBlack}" ValueChanged="slider_BackgroundSolidBrightness_ValueChanged"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -222,14 +236,6 @@
                         <StackPanel Name="menuButtonHelp" Style="{StaticResource ListBoxMenuStackPanel}">
                             <Image Source="/Assets/Icons/Help.png" Width="55" HorizontalAlignment="Center"/>
                             <TextBlock Text="Help" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Name="menuButtonClose" Style="{StaticResource ListBoxMenuStackPanel}">
-                            <Image Source="/Assets/Icons/Close.png" Width="55" HorizontalAlignment="Center"/>
-                            <TextBlock Text="Close" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Name="menuButtonExit" Style="{StaticResource ListBoxMenuStackPanel}">
-                            <Image Source="/Assets/Icons/Exit.png" Width="55" HorizontalAlignment="Center"/>
-                            <TextBlock Text="Exit" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </ListBox>
                 </Border>
@@ -391,10 +397,6 @@
                                 <TextBlock Margin="0,10,0,0" Name="tb_AdjustBlackBarBrightness" Text="Blackbar minimum brightness:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
                                 <TextBlock Text="Change the minimum brightness before it is considered a blackbar." TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
                                 <Slider Name="sldr_AdjustBlackBarBrightness" Style="{StaticResource SliderBlockWhite}" Minimum="0" Maximum="20"/>
-
-                                <TextBlock Margin="0,10,0,0" Name="tb_AdjustBlackbarUpdateRate" Text="Blackbar update rate:" Style="{StaticResource TextBlockBlack}" FontSize="{StaticResource TextSizeMedium}" FontWeight="Light"/>
-                                <TextBlock Text="Change the blackbar detection update rate.*" TextWrapping="Wrap" Style="{StaticResource TextBlockGrayLight}"/>
-                                <Slider Name="sldr_AdjustBlackbarUpdateRate" Style="{StaticResource SliderBlockWhite}" Minimum="0" Maximum="1000"/>
 
                                 <TextBlock Margin="0,10,0,0" Text="* This setting has impact on capture and your system performance." Style="{StaticResource TextBlockGrayLight}"/>
                             </StackPanel>

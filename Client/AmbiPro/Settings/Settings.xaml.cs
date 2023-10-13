@@ -60,6 +60,26 @@ namespace AmbiPro.Settings
             catch { }
         }
 
+        //Handle exit button
+        private async void button_ExitApplication_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await AppStartup.Exit();
+            }
+            catch { }
+        }
+
+        //Handle close button
+        private void btn_CloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.Close();
+            }
+            catch { }
+        }
+
         //Handle switch button
         private async void Btn_SwitchLedsOnOrOff_Click(object sender, RoutedEventArgs e)
         {
