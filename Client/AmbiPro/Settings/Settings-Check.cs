@@ -82,7 +82,7 @@ namespace AmbiPro.Settings
                 //Check - Blackbar Brightness
                 if (!SettingCheck(vConfiguration, "AdjustBlackBarBrightness"))
                 {
-                    SettingSave(vConfiguration, "AdjustBlackBarBrightness", "2");
+                    SettingSave(vConfiguration, "AdjustBlackBarBrightness", "1");
                 }
 
                 //Check - Led Bottom Gap

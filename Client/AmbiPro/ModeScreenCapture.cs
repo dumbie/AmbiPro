@@ -59,11 +59,8 @@ namespace AmbiPro
                 //Set capture settings
                 SetCaptureSettings();
 
-                //Reset screen capture
-                bool captureReset = CaptureImport.CaptureReset(0);
-
                 //Initialize screen capture
-                bool captureInitialized = CaptureImport.CaptureInitialize(0, vCaptureSettings, out vCaptureDetails);
+                bool captureInitialized = CaptureImport.CaptureInitialize(0, vCaptureSettings, out vCaptureDetails, true);
 
                 //Update capture variables
                 UpdateCaptureVariables();
@@ -74,7 +71,7 @@ namespace AmbiPro
                     vFormSettings.UpdateScreenInformation();
                 });
 
-                return captureReset && captureInitialized;
+                return captureInitialized;
             }
             catch
             {
