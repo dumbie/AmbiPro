@@ -37,7 +37,7 @@ namespace AmbiPro
                 {
                     MonitorId = captureMonitor,
                     MaxPixelDimension = maximumPixelDimension,
-                    MouseDrawCursor = false,
+                    DrawMouseCursor = false,
                     Blur = captureBlur,
                     HDRtoSDR = true,
                     HDRPaperWhite = captureHDRPaperWhite,
@@ -45,6 +45,16 @@ namespace AmbiPro
                 };
 
                 Debug.WriteLine("Set capture settings variable.");
+            }
+            catch { }
+        }
+
+        public static async void CaptureEventDeviceChangeDetected()
+        {
+            try
+            {
+                Debug.WriteLine("Device change event triggered, restarting capture.");
+                await InitializeScreenCapture(200);
             }
             catch { }
         }
@@ -59,8 +69,11 @@ namespace AmbiPro
                 //Set capture settings
                 SetCaptureSettings();
 
+                //Register capture events
+                CaptureImport.CaptureEventDeviceChangeDetected(CaptureEventDeviceChangeDetected);
+
                 //Initialize screen capture
-                bool captureInitialized = CaptureImport.CaptureInitialize(0, vCaptureSettings, out vCaptureDetails, true);
+                bool captureInitialized = CaptureImport.CaptureInitialize(vCaptureSettings, out vCaptureDetails, true);
 
                 //Update capture variables
                 UpdateCaptureVariables();
@@ -114,7 +127,7 @@ namespace AmbiPro
             try
             {
                 Debug.WriteLine("Resetting screen capture: " + DateTime.Now);
-                return CaptureImport.CaptureReset(0);
+                return CaptureImport.CaptureReset();
             }
             catch
             {
@@ -149,15 +162,13 @@ namespace AmbiPro
                         //Capture screenshot
                         try
                         {
-                            bitmapIntPtr = CaptureImport.CaptureScreenBytes(0);
+                            bitmapIntPtr = CaptureImport.CaptureScreenBytes();
                         }
                         catch { }
 
                         //Check screenshot
                         if (bitmapIntPtr == IntPtr.Zero)
                         {
-                            Debug.WriteLine("Screenshot is corrupted, restarting capture.");
-                            await InitializeScreenCapture(200);
                             continue;
                         }
 
@@ -271,7 +282,7 @@ namespace AmbiPro
                 SetCaptureSettings();
 
                 //Update capture settings
-                bool settingsUpdated = CaptureImport.CaptureUpdateSettings(0, vCaptureSettings);
+                bool settingsUpdated = CaptureImport.CaptureUpdateSettings(vCaptureSettings);
                 Debug.WriteLine("Capture settings updated: " + settingsUpdated);
             }
             catch { }
@@ -286,7 +297,7 @@ namespace AmbiPro
                 {
                     try
                     {
-                        vFormSettings.image_DebugPreview.Source = CaptureBitmap.BitmapByteArrayToBitmapSource(bitmapByteArray, vCaptureDetails, vCaptureSettings);
+                        vFormSettings.image_DebugPreview.Source = CaptureBitmap.BitmapByteArrayToBitmapSource(bitmapByteArray, vCaptureDetails);
                     }
                     catch { }
                 });
