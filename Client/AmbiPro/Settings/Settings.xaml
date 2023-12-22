@@ -325,7 +325,7 @@
                                 <TextBlock Text="Select the mode that you wish to use." Style="{StaticResource TextBlockGrayLight}"/>
                                 <ComboBox Name="cb_LedMode" Style="{StaticResource ComboBoxBlack}">
                                     <ComboBoxItem>Screen capture</ComboBoxItem>
-                                    <ComboBoxItem>Solid color</ComboBoxItem>
+                                    <ComboBoxItem>Color solid</ComboBoxItem>
                                     <ComboBoxItem>Color loop</ComboBoxItem>
                                     <ComboBoxItem>Color spectrum</ComboBoxItem>
                                 </ComboBox>

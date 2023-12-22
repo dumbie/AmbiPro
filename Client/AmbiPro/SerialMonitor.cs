@@ -238,7 +238,7 @@ namespace AmbiPro
                         serialBytes[1] = Encoding.Unicode.GetBytes("d").First();
                         serialBytes[2] = Encoding.Unicode.GetBytes("a").First();
 
-                        //Send the serial bytes to device
+                        //Send serial bytes to device
                         SerialComPortWrite(totalByteSize, serialBytes);
                     }
 

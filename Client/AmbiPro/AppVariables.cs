@@ -19,6 +19,7 @@ namespace AmbiPro
 
         //Led variables
         public static bool vLedSwitching = false;
+        public static bool vMonitorSleeping = false;
 
         //Serial port
         public static SerialPort vSerialComPort = null;

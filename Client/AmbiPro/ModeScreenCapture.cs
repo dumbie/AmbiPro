@@ -2,6 +2,8 @@
 using ScreenCapture;
 using System;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using static AmbiPro.AppClasses;
 using static AmbiPro.AppEnums;
@@ -38,6 +40,7 @@ namespace AmbiPro
                     MonitorId = captureMonitor,
                     MaxPixelDimension = maximumPixelDimension,
                     DrawMouseCursor = false,
+                    DrawBorder = false,
                     Blur = captureBlur,
                     HDRtoSDR = true,
                     HDRPaperWhite = captureHDRPaperWhite,
@@ -143,6 +146,7 @@ namespace AmbiPro
             {
                 //Loop mode variables
                 bool ConnectionFailed = false;
+                int LoopDelayMs = 0;
 
                 //Initialize Screen Capturer
                 if (!await InitializeScreenCapture(200))
@@ -159,102 +163,122 @@ namespace AmbiPro
                     IntPtr bitmapIntPtr = IntPtr.Zero;
                     try
                     {
-                        //Capture screenshot
-                        try
+                        //Check monitor sleeping and send black leds update
+                        if (vMonitorSleeping)
                         {
-                            bitmapIntPtr = CaptureImport.CaptureScreenBytes();
+                            //Set led byte array
+                            serialBytes = new byte[totalByteSize];
+                            serialBytes[0] = Encoding.Unicode.GetBytes("A").First();
+                            serialBytes[1] = Encoding.Unicode.GetBytes("d").First();
+                            serialBytes[2] = Encoding.Unicode.GetBytes("a").First();
+
+                            //Set loop delay time
+                            LoopDelayMs = 500;
                         }
-                        catch { }
-
-                        //Check screenshot
-                        if (bitmapIntPtr == IntPtr.Zero)
+                        else
                         {
-                            continue;
-                        }
-
-                        //Convert BitmapIntPtr to BitmapByteArray
-                        byte[] bitmapByteArray = CaptureBitmap.BitmapIntPtrToBitmapByteArray(bitmapIntPtr, vCaptureDetails);
-
-                        //Check led capture sides color
-                        ScreenColors(setLedSideFirst, setLedCountFirst, serialBytes, bitmapByteArray, ref currentSerialByte);
-                        ScreenColors(setLedSideSecond, setLedCountSecond, serialBytes, bitmapByteArray, ref currentSerialByte);
-                        ScreenColors(setLedSideThird, setLedCountThird, serialBytes, bitmapByteArray, ref currentSerialByte);
-                        ScreenColors(setLedSideFourth, setLedCountFourth, serialBytes, bitmapByteArray, ref currentSerialByte);
-
-                        //Update debug capture preview
-                        if (vDebugCaptureAllowed)
-                        {
-                            UpdateCaptureDebugPreview(bitmapByteArray);
-                        }
-
-                        //Smooth led frame transition
-                        if (setLedSmoothing > 0)
-                        {
-                            //Make copy of current color bytes
-                            byte[] CaptureByteCurrent = CloneByteArray(serialBytes);
-
-                            //Merge current colors with history
-                            for (int ledCount = initByteSize; ledCount < (totalByteSize - initByteSize); ledCount++)
+                            //Capture screenshot
+                            try
                             {
-                                //Debug.WriteLine("Led smoothing old: " + SerialBytes[ledCount]);
+                                bitmapIntPtr = CaptureImport.CaptureScreenBytes();
+                            }
+                            catch { }
 
-                                int ColorCount = 1;
-                                int ColorAverage = serialBytes[ledCount];
-                                for (int smoothCount = 0; smoothCount < setLedSmoothing; smoothCount++)
+                            //Check screenshot
+                            if (bitmapIntPtr == IntPtr.Zero)
+                            {
+                                continue;
+                            }
+
+                            //Convert BitmapIntPtr to BitmapByteArray
+                            byte[] bitmapByteArray = CaptureBitmap.BitmapIntPtrToBitmapByteArray(bitmapIntPtr, vCaptureDetails);
+
+                            //Check led capture sides color
+                            ScreenColors(setLedSideFirst, setLedCountFirst, serialBytes, bitmapByteArray, ref currentSerialByte);
+                            ScreenColors(setLedSideSecond, setLedCountSecond, serialBytes, bitmapByteArray, ref currentSerialByte);
+                            ScreenColors(setLedSideThird, setLedCountThird, serialBytes, bitmapByteArray, ref currentSerialByte);
+                            ScreenColors(setLedSideFourth, setLedCountFourth, serialBytes, bitmapByteArray, ref currentSerialByte);
+
+                            //Update debug capture preview
+                            if (vDebugCaptureAllowed)
+                            {
+                                UpdateCaptureDebugPreview(bitmapByteArray);
+                            }
+
+                            //Smooth led frame transition
+                            if (setLedSmoothing > 0)
+                            {
+                                //Make copy of current color bytes
+                                byte[] CaptureByteCurrent = CloneByteArray(serialBytes);
+
+                                //Merge current colors with history
+                                for (int ledCount = initByteSize; ledCount < (totalByteSize - initByteSize); ledCount++)
                                 {
-                                    if (vCaptureByteHistoryArray[smoothCount] != null)
+                                    //Debug.WriteLine("Led smoothing old: " + SerialBytes[ledCount]);
+
+                                    int ColorCount = 1;
+                                    int ColorAverage = serialBytes[ledCount];
+                                    for (int smoothCount = 0; smoothCount < setLedSmoothing; smoothCount++)
                                     {
-                                        ColorAverage += vCaptureByteHistoryArray[smoothCount][ledCount];
-                                        ColorCount++;
+                                        if (vCaptureByteHistoryArray[smoothCount] != null)
+                                        {
+                                            ColorAverage += vCaptureByteHistoryArray[smoothCount][ledCount];
+                                            ColorCount++;
+                                        }
+                                        else
+                                        {
+                                            break;
+                                        }
                                     }
-                                    else
-                                    {
-                                        break;
-                                    }
+
+                                    serialBytes[ledCount] = (byte)(ColorAverage / ColorCount);
+                                    //Debug.WriteLine("Led smoothing new: " + SerialBytes[ledCount]);
                                 }
 
-                                serialBytes[ledCount] = (byte)(ColorAverage / ColorCount);
-                                //Debug.WriteLine("Led smoothing new: " + SerialBytes[ledCount]);
+                                //Update capture color bytes history
+                                Array.Copy(vCaptureByteHistoryArray, 0, vCaptureByteHistoryArray, 1, vCaptureByteHistoryArray.Length - 1);
+                                vCaptureByteHistoryArray[0] = CaptureByteCurrent;
                             }
 
-                            //Update capture color bytes history
-                            Array.Copy(vCaptureByteHistoryArray, 0, vCaptureByteHistoryArray, 1, vCaptureByteHistoryArray.Length - 1);
-                            vCaptureByteHistoryArray[0] = CaptureByteCurrent;
-                        }
-
-                        //Rotate the leds as calibrated
-                        if (setLedRotate > 0)
-                        {
-                            for (int RotateCount = 0; RotateCount < setLedRotate; RotateCount++)
+                            //Rotate the leds as calibrated
+                            if (setLedRotate > 0)
                             {
-                                AVFunctions.MoveByteInArrayLeft(totalByteSize, serialBytes, 3, totalByteSize - 1);
-                                AVFunctions.MoveByteInArrayLeft(totalByteSize, serialBytes, 3, totalByteSize - 1);
-                                AVFunctions.MoveByteInArrayLeft(totalByteSize, serialBytes, 3, totalByteSize - 1);
+                                for (int RotateCount = 0; RotateCount < setLedRotate; RotateCount++)
+                                {
+                                    AVFunctions.MoveByteInArrayLeft(totalByteSize, serialBytes, 3, totalByteSize - 1);
+                                    AVFunctions.MoveByteInArrayLeft(totalByteSize, serialBytes, 3, totalByteSize - 1);
+                                    AVFunctions.MoveByteInArrayLeft(totalByteSize, serialBytes, 3, totalByteSize - 1);
+                                }
                             }
-                        }
-                        else if (setLedRotate < 0)
-                        {
-                            for (int RotateCount = 0; RotateCount < Math.Abs(setLedRotate); RotateCount++)
+                            else if (setLedRotate < 0)
                             {
-                                AVFunctions.MoveByteInArrayRight(totalByteSize, serialBytes, totalByteSize - 1, 3);
-                                AVFunctions.MoveByteInArrayRight(totalByteSize, serialBytes, totalByteSize - 1, 3);
-                                AVFunctions.MoveByteInArrayRight(totalByteSize, serialBytes, totalByteSize - 1, 3);
+                                for (int RotateCount = 0; RotateCount < Math.Abs(setLedRotate); RotateCount++)
+                                {
+                                    AVFunctions.MoveByteInArrayRight(totalByteSize, serialBytes, totalByteSize - 1, 3);
+                                    AVFunctions.MoveByteInArrayRight(totalByteSize, serialBytes, totalByteSize - 1, 3);
+                                    AVFunctions.MoveByteInArrayRight(totalByteSize, serialBytes, totalByteSize - 1, 3);
+                                }
                             }
+
+                            //Set loop delay time
+                            LoopDelayMs = setUpdateRate;
                         }
 
-                        //Send the serial bytes to device
+                        //Send serial bytes to device
                         if (!SerialComPortWrite(totalByteSize, serialBytes))
                         {
                             ConnectionFailed = true;
                             break;
                         }
-
-                        //Delay the loop task
-                        await TaskDelay(setUpdateRate, vTask_UpdateLed);
                     }
                     catch (Exception ex)
                     {
                         Debug.WriteLine("Screen capture loop failed: " + ex.Message);
+                    }
+                    finally
+                    {
+                        //Delay the loop task
+                        await TaskDelay(LoopDelayMs, vTask_UpdateLed);
                     }
                 }
 

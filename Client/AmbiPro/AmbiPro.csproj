@@ -118,7 +118,7 @@
     <Compile Include="Settings\Settings-Background.cs" />
     <Compile Include="SocketHandlers.cs" />
     <Compile Include="ScreenColorProcessing.cs" />
-    <Compile Include="ModeSolidColor.cs" />
+    <Compile Include="ModeColorSolid.cs" />
     <Compile Include="ModeColorLoop.cs" />
     <Compile Include="ModeScreenCapture.cs" />
     <Compile Include="ScreenColors.cs" />

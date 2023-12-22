@@ -26,7 +26,7 @@ namespace AmbiPro
                 //Create sub menus
                 MenuItem MenuModes = new MenuItem("Led mode");
                 MenuModes.MenuItems.Add(new MenuItem("Screen capture", OnChangeMode));
-                MenuModes.MenuItems.Add(new MenuItem("Solid color", OnChangeMode));
+                MenuModes.MenuItems.Add(new MenuItem("Color solid", OnChangeMode));
                 MenuModes.MenuItems.Add(new MenuItem("Color loop", OnChangeMode));
                 MenuModes.MenuItems.Add(new MenuItem("Color spectrum", OnChangeMode));
 
@@ -99,7 +99,7 @@ namespace AmbiPro
             {
                 MenuItem ClickMenuItem = (sender as MenuItem);
                 if (ClickMenuItem.Text == "Screen capture") { SettingSave(vConfiguration, "LedMode", "0"); }
-                else if (ClickMenuItem.Text == "Solid color") { SettingSave(vConfiguration, "LedMode", "1"); }
+                else if (ClickMenuItem.Text == "Color solid") { SettingSave(vConfiguration, "LedMode", "1"); }
                 else if (ClickMenuItem.Text == "Color loop") { SettingSave(vConfiguration, "LedMode", "2"); }
                 else if (ClickMenuItem.Text == "Color spectrum") { SettingSave(vConfiguration, "LedMode", "3"); }
                 await LedSwitch(LedSwitches.Restart);
