@@ -42,13 +42,13 @@ namespace AmbiPro.Settings
                 cb_LedAutoOnOffBefore.Click += (sender, e) =>
                 {
                     bool enabledDisabled = (bool)cb_LedAutoOnOffBefore.IsChecked;
-                    SettingSave(vConfiguration, "LedAutoOnOffBefore", enabledDisabled.ToString());
+                    SettingSave(vConfiguration, "LedAutoOnOffBefore", enabledDisabled);
                     timepicker_LedAutoTimeBefore.IsEnabled = enabledDisabled;
                 };
                 cb_LedAutoOnOffAfter.Click += (sender, e) =>
                 {
                     bool enabledDisabled = (bool)cb_LedAutoOnOffAfter.IsChecked;
-                    SettingSave(vConfiguration, "LedAutoOnOffAfter", enabledDisabled.ToString());
+                    SettingSave(vConfiguration, "LedAutoOnOffAfter", enabledDisabled);
                     timepicker_LedAutoTimeAfter.IsEnabled = enabledDisabled;
                 };
 
@@ -79,8 +79,7 @@ namespace AmbiPro.Settings
                 //Save - Adjust Black Bars
                 cb_AdjustBlackBars.Click += async (sender, e) =>
                 {
-                    if ((bool)cb_AdjustBlackBars.IsChecked) { SettingSave(vConfiguration, "AdjustBlackBars", "True"); }
-                    else { SettingSave(vConfiguration, "AdjustBlackBars", "False"); }
+                    SettingSave(vConfiguration, "AdjustBlackBars", (bool)cb_AdjustBlackBars.IsChecked);
                     if (!SettingLoad(vConfiguration, "FirstLaunch2", typeof(bool)))
                     {
                         await LedSwitch(LedSwitches.Restart);
@@ -133,8 +132,13 @@ namespace AmbiPro.Settings
                 //Save - Led Energy Saving Mode
                 cb_LedEnergyMode.Click += (sender, e) =>
                 {
-                    if ((bool)cb_LedEnergyMode.IsChecked) { SettingSave(vConfiguration, "LedEnergyMode", "True"); }
-                    else { SettingSave(vConfiguration, "LedEnergyMode", "False"); }
+                    SettingSave(vConfiguration, "LedEnergyMode", (bool)cb_LedEnergyMode.IsChecked);
+                };
+
+                //Save - Led Off Monitor Sleep
+                cb_LedOffMonitorSleep.Click += (sender, e) =>
+                {
+                    SettingSave(vConfiguration, "LedOffMonitorSleep", (bool)cb_LedOffMonitorSleep.IsChecked);
                 };
 
                 //Save - Led Minimum Brightness

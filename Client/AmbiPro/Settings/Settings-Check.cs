@@ -139,6 +139,12 @@ namespace AmbiPro.Settings
                     SettingSave(vConfiguration, "LedEnergyMode", "False");
                 }
 
+                //Check - Led Off Monitor Sleep
+                if (!SettingCheck(vConfiguration, "LedOffMonitorSleep"))
+                {
+                    SettingSave(vConfiguration, "LedOffMonitorSleep", "True");
+                }
+
                 //Check - Led Minimum Brightness
                 if (!SettingCheck(vConfiguration, "LedMinBrightness"))
                 {

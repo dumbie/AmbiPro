@@ -164,7 +164,7 @@ namespace AmbiPro
                     try
                     {
                         //Check monitor sleeping and send black leds update
-                        if (vMonitorSleeping)
+                        if (setLedOffMonitorSleep && vMonitorSleeping)
                         {
                             //Set led byte array
                             serialBytes = new byte[totalByteSize];

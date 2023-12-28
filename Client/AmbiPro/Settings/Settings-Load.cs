@@ -103,6 +103,9 @@ namespace AmbiPro.Settings
                 //Load - Led Energy Saving Mode
                 cb_LedEnergyMode.IsChecked = SettingLoad(vConfiguration, "LedEnergyMode", typeof(bool));
 
+                //Load - Led Off Monitor Sleep
+                cb_LedOffMonitorSleep.IsChecked = SettingLoad(vConfiguration, "LedOffMonitorSleep", typeof(bool));
+
                 //Load - Led Minimum Brightness
                 tb_LedMinBrightness.Text = "Minimum brightness level: " + SettingLoad(vConfiguration, "LedMinBrightness", typeof(int)) + "%";
                 sldr_LedMinBrightness.Value = SettingLoad(vConfiguration, "LedMinBrightness", typeof(int));

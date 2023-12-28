@@ -21,6 +21,7 @@ namespace AmbiPro
         public static int setLedSmoothing = 0;
         public static int setLedBottomGap = 0;
         public static bool setLedEnergyMode = true;
+        public static bool setLedOffMonitorSleep = true;
 
         public static float setLedSaturation = 0;
         public static float setLedColorRed = 0;
@@ -73,6 +74,7 @@ namespace AmbiPro
                 setLedSmoothing = SettingLoad(vConfiguration, "LedSmoothing", typeof(int));
                 setLedBottomGap = SettingLoad(vConfiguration, "LedBottomGap", typeof(int));
                 setLedEnergyMode = SettingLoad(vConfiguration, "LedEnergyMode", typeof(bool));
+                setLedOffMonitorSleep = SettingLoad(vConfiguration, "LedOffMonitorSleep", typeof(bool));
 
                 setLedSaturation = SettingLoad(vConfiguration, "LedSaturation", typeof(float)) / 100;
                 setLedColorRed = SettingLoad(vConfiguration, "LedColorRed", typeof(float)) / 100;
