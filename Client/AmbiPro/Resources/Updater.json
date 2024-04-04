@@ -20,5 +20,8 @@
     "AmbiPro-Admin.exe",
     "AmbiPro-Admin.exe.config",
     "Updater.exe.config"
+  ],
+  "FilesMove": [
+    [ "AmbiPro.exe.Config", "AmbiPro.exe.csettings" ]
   ]
 }

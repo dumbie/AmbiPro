@@ -39,14 +39,11 @@ namespace AmbiPro.Settings
             }
         }
 
-        //Load - Application Settings
-        public async Task SettingsLoad()
+        //Load - Update connected com ports
+        public void SettingsUpdateComPorts()
         {
             try
             {
-                Debug.WriteLine("Loading application settings...");
-
-                //Check connected com ports
                 foreach (string PortName in SerialPort.GetPortNames())
                 {
                     int PortNumberRaw = Convert.ToInt32(PortName.Replace("COM", string.Empty));
@@ -57,6 +54,19 @@ namespace AmbiPro.Settings
                         SettingSave(vConfiguration, "ComPort", PortNumberRaw.ToString());
                     }
                 }
+            }
+            catch { }
+        }
+
+        //Load - Application Settings
+        public async Task SettingsLoad()
+        {
+            try
+            {
+                Debug.WriteLine("Loading application settings...");
+
+                //Update connected com ports
+                SettingsUpdateComPorts();
 
                 //Load - Com Port
                 cb_ComPort.SelectedIndex = SettingLoad(vConfiguration, "ComPort", typeof(int)) - 1;

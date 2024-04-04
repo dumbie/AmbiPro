@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
+using static ArnoldVinkCode.AVFunctions;
 using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro
@@ -14,7 +15,7 @@ namespace AmbiPro
     {
         //Application Variables
         public static NotifyIcon NotifyIcon = new NotifyIcon();
-        private static ContextMenu ContextMenu = new ContextMenu();
+        private static ContextMenuStrip ContextMenu = new ContextMenuStrip();
 
         //Create the tray menu
         public static void CreateTrayMenu()
@@ -24,31 +25,31 @@ namespace AmbiPro
                 Debug.WriteLine("Creating application tray menu...");
 
                 //Create sub menus
-                MenuItem MenuModes = new MenuItem("Led mode");
-                MenuModes.MenuItems.Add(new MenuItem("Screen capture", OnChangeMode));
-                MenuModes.MenuItems.Add(new MenuItem("Color solid", OnChangeMode));
-                MenuModes.MenuItems.Add(new MenuItem("Color loop", OnChangeMode));
-                MenuModes.MenuItems.Add(new MenuItem("Color spectrum", OnChangeMode));
+                ToolStripMenuItem MenuModes = new ToolStripMenuItem("Led mode");
+                MenuModes.DropDownItems.Add("Screen capture", null, OnChangeMode);
+                MenuModes.DropDownItems.Add("Color solid", null, OnChangeMode);
+                MenuModes.DropDownItems.Add("Color loop", null, OnChangeMode);
+                MenuModes.DropDownItems.Add("Color spectrum", null, OnChangeMode);
 
-                //Create a context menu for systray.
-                ContextMenu.MenuItems.Add("On/Off", OnSwitchOnOff);
-                ContextMenu.MenuItems.Add(MenuModes);
-                ContextMenu.MenuItems.Add("Settings", OnSettings);
-                ContextMenu.MenuItems.Add("Website", OnWebsite);
-                ContextMenu.MenuItems.Add("Exit", OnExit);
+                //Create a context menu for systray
+                ContextMenu.Items.Add("On/Off", null, OnSwitchOnOff);
+                ContextMenu.Items.Add(MenuModes);
+                ContextMenu.Items.Add("Settings", null, OnSettings);
+                ContextMenu.Items.Add("Website", null, OnWebsite);
+                ContextMenu.Items.Add("Exit", null, OnExit);
 
                 //Initialize the tray notify icon. 
                 NotifyIcon.Text = "AmbiPro";
                 NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon-Disabled.ico"));
 
-                // Handle Double Click event
+                //Handle Double Click event
                 NotifyIcon.DoubleClick += NotifyIcon_DoubleClick;
 
-                // Handle Middle Click event
+                //Handle Middle Click event
                 NotifyIcon.MouseClick += NotifyIcon_MiddleClick;
 
-                // Add menu to tray icon and show it.  
-                NotifyIcon.ContextMenu = ContextMenu;
+                //Add menu to tray icon and show it
+                NotifyIcon.ContextMenuStrip = ContextMenu;
                 NotifyIcon.Visible = true;
             }
             catch { }
@@ -97,11 +98,11 @@ namespace AmbiPro
         {
             try
             {
-                MenuItem ClickMenuItem = (sender as MenuItem);
-                if (ClickMenuItem.Text == "Screen capture") { SettingSave(vConfiguration, "LedMode", "0"); }
-                else if (ClickMenuItem.Text == "Color solid") { SettingSave(vConfiguration, "LedMode", "1"); }
-                else if (ClickMenuItem.Text == "Color loop") { SettingSave(vConfiguration, "LedMode", "2"); }
-                else if (ClickMenuItem.Text == "Color spectrum") { SettingSave(vConfiguration, "LedMode", "3"); }
+                ToolStripMenuItem clickedMenuItem = (sender as ToolStripMenuItem);
+                if (clickedMenuItem.Text == "Screen capture") { SettingSave(vConfiguration, "LedMode", "0"); }
+                else if (clickedMenuItem.Text == "Color solid") { SettingSave(vConfiguration, "LedMode", "1"); }
+                else if (clickedMenuItem.Text == "Color loop") { SettingSave(vConfiguration, "LedMode", "2"); }
+                else if (clickedMenuItem.Text == "Color spectrum") { SettingSave(vConfiguration, "LedMode", "3"); }
                 await LedSwitch(LedSwitches.Restart);
             }
             catch { }
@@ -111,7 +112,7 @@ namespace AmbiPro
         {
             try
             {
-                Process.Start("https://projects.arnoldvink.com");
+                OpenWebsiteBrowser("https://projects.arnoldvink.com");
             }
             catch { }
         }

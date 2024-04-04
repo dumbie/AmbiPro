@@ -5,13 +5,14 @@ using System.Configuration;
 using System.Globalization;
 using System.IO.Ports;
 using static AmbiPro.AppClasses;
+using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro
 {
     partial class AppVariables
     {
         //Application Variables
-        public static Configuration vConfiguration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+        public static Configuration vConfiguration = SettingLoadConfig("AmbiPro.exe.csettings");
         public static CultureInfo vAppCultureInfo = CultureInfo.InvariantCulture;
 
         //Application Windows
