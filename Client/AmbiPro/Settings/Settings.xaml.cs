@@ -13,6 +13,7 @@ using System.Windows.Media;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
+using static ArnoldVinkCode.AVFunctions;
 using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro.Settings
@@ -27,7 +28,7 @@ namespace AmbiPro.Settings
         {
             try
             {
-                Process.Start("http://ambipro.arnoldvink.com?ip=" + tb_RemoteIp.Text + "&port=" + tb_ServerPort.Text);
+                OpenWebsiteBrowser("http://ambipro.arnoldvink.com?ip=" + tb_RemoteIp.Text + "&port=" + tb_ServerPort.Text);
             }
             catch { }
         }

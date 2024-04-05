@@ -4,7 +4,7 @@
   "FileName": "AmbiPro.zip",
   "ExtractName": "AmbiPro",
   "ProcessLaunch": [
-    "Launcher"
+    "Launcher.exe"
   ],
   "ProcessClose": [
     "AmbiPro",
