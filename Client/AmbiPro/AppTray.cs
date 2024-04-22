@@ -1,7 +1,7 @@
-﻿using System;
+﻿using ArnoldVinkCode;
+using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.Reflection;
 using System.Windows.Forms;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
@@ -40,7 +40,7 @@ namespace AmbiPro
 
                 //Initialize the tray notify icon. 
                 NotifyIcon.Text = "AmbiPro";
-                NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon-Disabled.ico"));
+                NotifyIcon.Icon = new Icon(AVEmbedded.EmbeddedResourceToStream(null, "AmbiPro.Assets.ApplicationIcon-Disabled.ico"));
 
                 //Handle Double Click event
                 NotifyIcon.DoubleClick += NotifyIcon_DoubleClick;

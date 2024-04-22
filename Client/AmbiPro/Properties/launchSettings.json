@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AmbiPro": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

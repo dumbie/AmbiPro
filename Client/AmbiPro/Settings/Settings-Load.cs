@@ -1,9 +1,9 @@
-﻿using System;
+﻿using ArnoldVinkCode;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using static AmbiPro.AppVariables;
@@ -217,7 +217,7 @@ namespace AmbiPro.Settings
                 checkbox_DebugColorTopBottom.IsChecked = SettingLoad(vConfiguration, "DebugColorTopBottom", typeof(bool));
 
                 //Check if application is set to launch on Windows startup
-                string targetName = Assembly.GetEntryAssembly().GetName().Name;
+                string targetName = AVFunctions.ApplicationName();
                 string targetFileShortcut = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), targetName + ".url");
                 if (File.Exists(targetFileShortcut)) { cb_WindowsStartup.IsChecked = true; }
 

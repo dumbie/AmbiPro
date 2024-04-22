@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows;
-using static ArnoldVinkCode.AVAssembly;
+﻿using System.Windows;
 
 namespace AmbiPro
 {
@@ -10,9 +8,6 @@ namespace AmbiPro
         {
             try
             {
-                //Resolve missing assembly dll files
-                AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolveFile;
-
                 //Run application startup code
                 await AppStartup.Startup();
             }

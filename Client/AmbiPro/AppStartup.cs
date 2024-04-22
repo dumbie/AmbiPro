@@ -2,13 +2,10 @@
 using ArnoldVinkCode;
 using System;
 using System.Diagnostics;
-using System.Reflection;
 using System.Threading.Tasks;
 using static AmbiPro.AppEnums;
-using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
-using static ArnoldVinkCode.AVFirewall;
 using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro
@@ -26,10 +23,6 @@ namespace AmbiPro
 
                 //Application update checks
                 await AppUpdate.UpdateCheck(true);
-
-                //Allow application in firewall
-                string appFilePath = Assembly.GetEntryAssembly().Location;
-                Firewall_ExecutableAllow("AmbiPro", appFilePath, true);
 
                 //Check application settings
                 SettingsFunction.SettingsCheck();
@@ -106,7 +99,7 @@ namespace AmbiPro
                 await LedSwitch(LedSwitches.Disable);
 
                 //Stop all the background tasks
-                await TasksBackgroundStop();
+                await AppTasks.TasksBackgroundStop();
 
                 //Disable the socket server
                 if (vArnoldVinkSockets != null)

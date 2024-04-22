@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -162,7 +161,7 @@ namespace AmbiPro
                     {
                         vFormSettings.image_SwitchLedsOnOrOff.Source = new BitmapImage(new Uri("/Assets/Icons/Leds.png", UriKind.RelativeOrAbsolute));
                     });
-                    AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon.ico"));
+                    AppTray.NotifyIcon.Icon = new Icon(AVEmbedded.EmbeddedResourceToStream(null, "AmbiPro.Assets.ApplicationIcon.ico"));
                 }
                 else
                 {
@@ -170,7 +169,7 @@ namespace AmbiPro
                     {
                         vFormSettings.image_SwitchLedsOnOrOff.Source = new BitmapImage(new Uri("/Assets/Icons/LedsOff.png", UriKind.RelativeOrAbsolute));
                     });
-                    AppTray.NotifyIcon.Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("AmbiPro.Assets.ApplicationIcon-Disabled.ico"));
+                    AppTray.NotifyIcon.Icon = new Icon(AVEmbedded.EmbeddedResourceToStream(null, "AmbiPro.Assets.ApplicationIcon-Disabled.ico"));
                 }
             }
             catch { }

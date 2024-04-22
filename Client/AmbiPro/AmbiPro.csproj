@@ -1,19 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+		<TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
 		<OutputType>WinExe</OutputType>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
 		<UseWindowsForms>true</UseWindowsForms>
 		<UseWPF>true</UseWPF>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<Optimize>True</Optimize>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<NoWarn>CA1416;</NoWarn>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<DebugType>none</DebugType>
 		<Optimize>True</Optimize>
+		<NoWarn>CA1416;</NoWarn>
 	</PropertyGroup>
 	<PropertyGroup>
 		<ApplicationIcon>Assets\ApplicationIcon.ico</ApplicationIcon>
@@ -26,17 +29,6 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<None Remove="AmbiPro.exe.csettings" />
-	</ItemGroup>
-	<ItemGroup>
-		<Compile Include="..\..\..\ScreenCaptureDLL\ScreenCaptureShared\CaptureBitmap.cs">
-			<Link>ScreenCapture\CaptureBitmap.cs</Link>
-		</Compile>
-		<Compile Include="..\..\..\ScreenCaptureDLL\ScreenCaptureShared\CaptureClasses.cs">
-			<Link>ScreenCapture\CaptureClasses.cs</Link>
-		</Compile>
-		<Compile Include="..\..\..\ScreenCaptureDLL\ScreenCaptureShared\CaptureImport.cs">
-			<Link>ScreenCapture\CaptureImport.cs</Link>
-		</Compile>
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="AmbiPro.exe.csettings">
@@ -123,6 +115,9 @@
 		<Content Include="Script\Script.ino">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
+		<Content Include="..\..\..\ScreenCaptureDLL\Build\x64\Release\Resources\ScreenCapture.dll" Link="Resources\ScreenCapture.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="Assets\ApplicationIcon-Disabled.ico" />
@@ -130,11 +125,12 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\ArnoldVinkCode\Desktop\ArnoldVinkCode.csproj" />
+		<ProjectReference Include="..\..\..\ScreenCaptureDLL\ScreenCaptureImport\ScreenCaptureImport.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="System.IO.Ports" Version="8.0.0" />
 	</ItemGroup>
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="if $(Configuration) == Release (&#xD;&#xA;$(SolutionDir)SignToolExe.exe&#xD;&#xA;move /y $(TargetDir)\*.dll $(TargetDir)\Resources\&#xD;&#xA;move /y $(TargetDir)\runtimes\win\lib\net6.0\*.dll $(TargetDir)\Resources\&#xD;&#xA;move /y $(TargetDir)\Resources\AmbiPro.dll $(TargetDir)&#xD;&#xA;move /y $(TargetDir)\Resources\ArnoldVinkCode.dll $(TargetDir)&#xD;&#xA;rd /s /q $(TargetDir)\runtimes&#xD;&#xA;del /q $(TargetDir)\*.deps.json&#xD;&#xA;)" />
+	<Target Name="DonePublish" AfterTargets="Publish">
+		<Exec Command="$(SolutionDir)SignToolExe.exe" />
 	</Target>
 </Project>

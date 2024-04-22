@@ -1,7 +1,6 @@
-﻿using System;
+﻿using ArnoldVinkCode;
+using System;
 using System.Diagnostics;
-using System.IO;
-using System.Reflection;
 
 namespace AmbiPro
 {
@@ -27,11 +26,7 @@ namespace AmbiPro
                 }
 
                 //Set the working directory to executable directory
-                try
-                {
-                    Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
-                }
-                catch { }
+                AVFunctions.ApplicationUpdateWorkingPath();
 
                 //Set the application priority level
                 try

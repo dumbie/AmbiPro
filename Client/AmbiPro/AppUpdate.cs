@@ -1,7 +1,6 @@
 ﻿using ArnoldVinkCode;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Reflection;
 using System.Threading.Tasks;
 using static ArnoldVinkCode.ApiGitHub;
 using static ArnoldVinkCode.AVFiles;
@@ -38,7 +37,7 @@ namespace AmbiPro
             try
             {
                 string onlineVersion = (await ApiGitHub_GetLatestVersion("dumbie", "AmbiPro")).ToLower();
-                string currentVersion = "v" + Assembly.GetEntryAssembly().FullName.Split('=')[1].Split(',')[0];
+                string currentVersion = "v" + AVFunctions.ApplicationVersion();
                 if (!string.IsNullOrWhiteSpace(onlineVersion) && onlineVersion != currentVersion)
                 {
                     List<string> MsgBoxAnswers = new List<string>();

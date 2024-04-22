@@ -1,5 +1,5 @@
-﻿using System.Diagnostics;
-using System.Reflection;
+﻿using ArnoldVinkCode;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using static ArnoldVinkCode.AVFunctions;
@@ -61,7 +61,7 @@ namespace AmbiPro.Settings
 
                     //Set the version text
                     sp_Help_Text.Children.Add(new TextBlock() { Text = "\r\nApplication made by Arnold Vink", Style = (Style)App.Current.Resources["TextBlockBlack"] });
-                    sp_Help_Text.Children.Add(new TextBlock() { Text = "Version: v" + Assembly.GetEntryAssembly().FullName.Split('=')[1].Split(',')[0], Style = (Style)App.Current.Resources["TextBlockGrayLight"], TextWrapping = TextWrapping.Wrap });
+                    sp_Help_Text.Children.Add(new TextBlock() { Text = "Version: v" + AVFunctions.ApplicationVersion(), Style = (Style)App.Current.Resources["TextBlockGrayLight"], TextWrapping = TextWrapping.Wrap });
                 }
             }
             catch { }

@@ -1,6 +1,6 @@
 ﻿using AmbiPro.Settings;
 using ArnoldVinkCode;
-using ScreenCapture;
+using ScreenCaptureImport;
 using System.Configuration;
 using System.Globalization;
 using System.IO.Ports;
