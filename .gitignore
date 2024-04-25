@@ -2,6 +2,7 @@ bin
 obj
 debug
 release
+publish
 packages
 *.suo
 *.user

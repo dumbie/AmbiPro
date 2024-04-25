@@ -1,31 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+		<NoWarn>CA1416</NoWarn>
 		<OutputType>WinExe</OutputType>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
-		<UseWindowsForms>true</UseWindowsForms>
-		<UseWPF>true</UseWPF>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<Optimize>True</Optimize>
-		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-		<NoWarn>CA1416;</NoWarn>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<DebugType>none</DebugType>
-		<Optimize>True</Optimize>
-		<NoWarn>CA1416;</NoWarn>
-	</PropertyGroup>
-	<PropertyGroup>
 		<ApplicationIcon>Assets\ApplicationIcon.ico</ApplicationIcon>
-	</PropertyGroup>
-	<PropertyGroup>
+		<ApplicationManifest>Properties\App.manifest</ApplicationManifest>
 		<StartupObject>AmbiPro.App</StartupObject>
 	</PropertyGroup>
 	<PropertyGroup>
-		<ApplicationManifest>Properties\App.manifest</ApplicationManifest>
+		<UseWPF>True</UseWPF>
+		<UseWindowsForms>True</UseWindowsForms>
+		<GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+		<ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<AppendTargetFrameworkToOutputPath>False</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>False</AppendRuntimeIdentifierToOutputPath>
+		<OutputPath>$(SolutionDir)Build\$(Configuration)\</OutputPath>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<Optimize>True</Optimize>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<Optimize>True</Optimize>
+		<DebugType>none</DebugType>
 	</PropertyGroup>
 	<ItemGroup>
 		<Content Include="AmbiPro.exe.Config">
@@ -56,7 +53,7 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
 		<Resource Include="Assets\Icons\Shortcut.png">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
 		<Resource Include="Assets\Icons\Update.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -113,9 +110,6 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
 		<Content Include="Script\Script.ino">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="..\..\..\ScreenCaptureDLL\Build\x64\Release\Resources\ScreenCapture.dll" Link="Resources\ScreenCapture.dll">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
