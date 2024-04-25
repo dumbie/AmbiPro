@@ -67,7 +67,11 @@ namespace AmbiPro
                     }
                 }
 
-                //Enable the socket server
+                //Start keyboard hotkeys
+                AVInputOutputHotKey.Start();
+                AVInputOutputHotKey.EventHotKeyPressed += AppHotKey.EventHotKeyPressed;
+
+                //Enable socket server
                 await EnableSocketServer();
             }
             catch { }

@@ -221,6 +221,10 @@
                             <Image Source="/Assets/Icons/Rotate.png" Width="55" HorizontalAlignment="Center"/>
                             <TextBlock Text="Rotate" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
                         </StackPanel>
+                        <StackPanel Name="menuButtonShortcuts" Style="{StaticResource ListBoxMenuStackPanel}">
+                            <Image Source="/Assets/Icons/Shortcut.png" Width="55" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Shortcuts" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                        </StackPanel>
                         <StackPanel Name="menuButtonRemote" Style="{StaticResource ListBoxMenuStackPanel}">
                             <Image Source="/Assets/Icons/Remote.png" Width="55" HorizontalAlignment="Center"/>
                             <TextBlock Text="Remote" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
@@ -403,7 +407,7 @@
 
                             <!-- Rotate -->
                             <StackPanel Name="sp_LedRotate" Margin="10" Visibility="Collapsed">
-                                <TextBlock Style="{StaticResource TextBlockBlack}" TextWrapping="Wrap" Text="Welcome to the rotate screen, please make sure the colors and dark sides on this screen are matched with the leds placed around the screen for the best possible backlight result."/>
+                                <TextBlock Style="{StaticResource TextBlockBlack}" TextWrapping="Wrap" Text="Welcome to the rotate screen, please make sure the colors and dark sides on this screen are matched with the leds placed around the screen for the most accurate backlight result."/>
 
                                 <Button Name="btn_RotateClockwise" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Rotate leds clockwise" Click="btn_RotateClockwise_Click"/>
                                 <Button Name="btn_RotateCounterwise" Margin="0,10,0,0" Style="{StaticResource ButtonAccentBlack}" Content="Rotate leds counterwise" Click="btn_RotateCounterwise_Click"/>
@@ -593,6 +597,18 @@
                                     <ComboBoxItem>GRB (Green, red and blue)</ComboBoxItem>
                                     <ComboBoxItem>BGR (Blue, green and red)</ComboBoxItem>
                                 </ComboBox>
+                            </StackPanel>
+
+                            <!-- Shortcuts -->
+                            <StackPanel Name="sp_Shortcuts" Visibility="Collapsed" Margin="5,5,5,5">
+                                <CheckBox Name="cb_SettingsShortcutSwitchOnOff" Content="Switch the leds on or off" Margin="0,10,0,0" Style="{StaticResource CheckBoxBlack}"/>
+                                <TextBlock Text="By pressing Windows+F12 on the keyboard" TextWrapping="Wrap" Style="{StaticResource TextBlockGray}"/>
+
+                                <CheckBox Name="cb_SettingsShortcutModeScreenCapture" Content="Switch mode to screen capture" Margin="0,10,0,0" Style="{StaticResource CheckBoxBlack}"/>
+                                <TextBlock Text="By pressing Windows+F11 on the keyboard" TextWrapping="Wrap" Style="{StaticResource TextBlockGray}"/>
+
+                                <CheckBox Name="cb_SettingsShortcutModeSolidColor" Content="Switch mode to solid color" Margin="0,10,0,0" Style="{StaticResource CheckBoxBlack}"/>
+                                <TextBlock Text="By pressing Windows+F10 on the keyboard" TextWrapping="Wrap" Style="{StaticResource TextBlockGray}"/>
                             </StackPanel>
 
                             <!-- Remote -->

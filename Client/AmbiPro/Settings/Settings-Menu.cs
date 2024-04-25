@@ -55,6 +55,7 @@ namespace AmbiPro.Settings
                         sp_LedRotate.Visibility = Visibility.Collapsed;
                         sp_Leds.Visibility = Visibility.Collapsed;
                         sp_Adjust.Visibility = Visibility.Collapsed;
+                        sp_Shortcuts.Visibility = Visibility.Collapsed;
                         sp_Remote.Visibility = Visibility.Collapsed;
                         sp_Debug.Visibility = Visibility.Collapsed;
                         sp_Help.Visibility = Visibility.Collapsed;
@@ -84,6 +85,11 @@ namespace AmbiPro.Settings
                     {
                         SwitchBackground(false, false, true, false);
                         sp_Adjust.Visibility = Visibility.Visible;
+                    }
+                    else if (selectedStackPanel.Name == "menuButtonShortcuts")
+                    {
+                        SwitchBackground(false, false, false, true);
+                        sp_Shortcuts.Visibility = Visibility.Visible;
                     }
                     else if (selectedStackPanel.Name == "menuButtonRemote")
                     {

@@ -253,6 +253,20 @@ namespace AmbiPro.Settings
                     SettingSave(vConfiguration, "CaptureHDRMaximumNits", "1000");
                 }
 
+                //Check - Shortcuts
+                if (!SettingCheck(vConfiguration, "ShortcutSwitchOnOff"))
+                {
+                    SettingSave(vConfiguration, "ShortcutSwitchOnOff", "True");
+                }
+                if (!SettingCheck(vConfiguration, "ShortcutModeSolidColor"))
+                {
+                    SettingSave(vConfiguration, "ShortcutModeSolidColor", "True");
+                }
+                if (!SettingCheck(vConfiguration, "ShortcutModeScreenCapture"))
+                {
+                    SettingSave(vConfiguration, "ShortcutModeScreenCapture", "True");
+                }
+
                 //Check - Debug Mode
                 if (!SettingCheck(vConfiguration, "DebugLedPreview"))
                 {
