@@ -31,6 +31,9 @@
 		<Content Include="Resources\Updater.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
+		<Content Include="$(SolutionDir)Build\$(Configuration)\Resources\ScreenCapture.dll" Link="Resources\ScreenCapture.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 		<Resource Include="Assets\Icons\Close-Dark.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
