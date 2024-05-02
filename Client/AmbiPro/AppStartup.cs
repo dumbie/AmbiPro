@@ -1,5 +1,4 @@
-﻿using AmbiPro.Settings;
-using ArnoldVinkCode;
+﻿using ArnoldVinkCode;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -24,8 +23,8 @@ namespace AmbiPro
                 //Application update checks
                 await AppUpdate.UpdateCheck(true);
 
-                //Check application settings
-                SettingsFunction.SettingsCheck();
+                //Application settings checks
+                vFormSettings.SettingsCheck();
 
                 //Create application tray menu
                 AppTray.CreateTrayMenu();
@@ -68,8 +67,8 @@ namespace AmbiPro
                 }
 
                 //Start keyboard hotkeys
-                AVInputOutputHotKey.Start();
-                AVInputOutputHotKey.EventHotKeyPressed += AppHotKey.EventHotKeyPressed;
+                AVInputOutputHotkey.Start();
+                AVInputOutputHotkey.EventHotkeyPressed += AppHotkeys.EventHotkeyPressed;
 
                 //Enable socket server
                 await EnableSocketServer();

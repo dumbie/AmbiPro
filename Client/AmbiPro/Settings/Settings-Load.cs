@@ -211,11 +211,6 @@ namespace AmbiPro.Settings
                 tb_CaptureHDRMaximumNits.Text = "HDR maximum nits: " + captureHDRMaximumNits;
                 sldr_CaptureHDRMaximumNits.Value = captureHDRMaximumNits;
 
-                //Load - Shortcuts
-                cb_SettingsShortcutSwitchOnOff.IsChecked = SettingLoad(vConfiguration, "ShortcutSwitchOnOff", typeof(bool));
-                cb_SettingsShortcutModeSolidColor.IsChecked = SettingLoad(vConfiguration, "ShortcutModeSolidColor", typeof(bool));
-                cb_SettingsShortcutModeScreenCapture.IsChecked = SettingLoad(vConfiguration, "ShortcutModeScreenCapture", typeof(bool));
-
                 //Load - Debug Mode
                 checkbox_DebugLedPreview.IsChecked = SettingLoad(vConfiguration, "DebugLedPreview", typeof(bool));
                 checkbox_DebugColorLeftRight.IsChecked = SettingLoad(vConfiguration, "DebugColorLeftRight", typeof(bool));

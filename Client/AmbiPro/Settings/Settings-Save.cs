@@ -332,20 +332,6 @@ namespace AmbiPro.Settings
                     }
                 };
 
-                //Save - Shortcuts
-                cb_SettingsShortcutSwitchOnOff.Click += (sender, e) =>
-                {
-                    SettingSave(vConfiguration, "ShortcutSwitchOnOff", (bool)cb_SettingsShortcutSwitchOnOff.IsChecked);
-                };
-                cb_SettingsShortcutModeSolidColor.Click += (sender, e) =>
-                {
-                    SettingSave(vConfiguration, "ShortcutModeSolidColor", (bool)cb_SettingsShortcutModeSolidColor.IsChecked);
-                };
-                cb_SettingsShortcutModeScreenCapture.Click += (sender, e) =>
-                {
-                    SettingSave(vConfiguration, "ShortcutModeScreenCapture", (bool)cb_SettingsShortcutModeScreenCapture.IsChecked);
-                };
-
                 //Save - Windows Startup
                 cb_WindowsStartup.Click += (sender, e) =>
                 {
