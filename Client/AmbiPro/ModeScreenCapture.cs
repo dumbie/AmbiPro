@@ -57,6 +57,8 @@ namespace AmbiPro
             try
             {
                 Debug.WriteLine("Device change event triggered, restarting capture.");
+
+                //Initialize Screen Capturer
                 await InitializeScreenCapture(200);
             }
             catch { }
@@ -87,11 +89,18 @@ namespace AmbiPro
                     vFormSettings.UpdateScreenInformation();
                 });
 
+                //Check if initialized
+                if (!captureInitialized)
+                {
+                    Debug.WriteLine("Failed initializing screen capturer.");
+                    ShowFailedCaptureMessage();
+                }
+
                 return captureInitialized;
             }
-            catch
+            catch (Exception ex)
             {
-                Debug.WriteLine("Failed to initialize screen capture.");
+                Debug.WriteLine("Failed initializing screen capturer: " + ex.Message);
                 return false;
             }
             finally
@@ -151,8 +160,6 @@ namespace AmbiPro
                 //Initialize Screen Capturer
                 if (!await InitializeScreenCapture(200))
                 {
-                    Debug.WriteLine("Failed to initialize the screen capturer.");
-                    ShowFailedCaptureMessage();
                     return;
                 }
 
