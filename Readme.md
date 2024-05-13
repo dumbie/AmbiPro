@@ -33,12 +33,14 @@ this application will capture your screen and sync the colors to your led strip.
 * You can run it as administrator by using the "AmbiPro-Admin" executable.
 
 ## Requirements
+- Microsoft .NET Core Runtime installed.
 - Microsoft Visual C++ Redistributable installed.
-- Windows operating system 10 64-bit or higher is required.
+- Microsoft Windows 11 64-bit or higher is required.
 - A DirectX 12 or higher capable graphics adapter.
 
 ## Known Issues
 - Some content using DRM protection might not be captured leading to leds not lighting up.
+- You may temporarily see a yellow border around your screen when screen capture is activated.
 
 ## Support and bug reporting
 When you are walking into any problems or a bug you can go to my help page at https://help.arnoldvink.com so I can try to help you out and get everything working.
@@ -47,6 +49,11 @@ When you are walking into any problems or a bug you can go to my help page at ht
 If you appreciate my project and want to support me with my projects you can make a donation through https://donation.arnoldvink.com
 
 ## Changelog
+v0.26.0.0 (13-May-2024)
+- Added keyboard shortcuts to turn leds on or off.
+- Added setting to turn off leds when monitor is sleeping.
+- Switched to new screen capture method improving game performance upto 6%
+
 v0.25.0.0 (13-October-2023)
 - Rewrote part of blackbar detection to adjust more smoothly.
 
