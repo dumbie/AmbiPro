@@ -21,7 +21,17 @@ namespace AmbiPro.Settings
     public partial class FormSettings : Window
     {
         //Form initialization
-        public FormSettings() { InitializeComponent(); }
+        public FormSettings()
+        {
+            try
+            {
+                InitializeComponent();
+            }
+            catch
+            {
+                Debug.WriteLine("Failed to initialize settings, check app.xaml styles.");
+            }
+        }
 
         //Open remote site
         private void Btn_Remote_Open_Click(object sender, RoutedEventArgs e)

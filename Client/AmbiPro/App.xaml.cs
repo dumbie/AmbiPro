@@ -8,7 +8,6 @@ namespace AmbiPro
         {
             try
             {
-                //Run application startup code
                 await AppStartup.Startup();
             }
             catch { }
