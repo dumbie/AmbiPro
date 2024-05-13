@@ -10,13 +10,13 @@ using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro
 {
-    class AppStartup
+    public class AppStartup
     {
         public async static Task Startup()
         {
             try
             {
-                Debug.WriteLine("Welcome to AmbiPro.");
+                Debug.WriteLine("Welcome to application.");
 
                 //Setup application defaults
                 AVStartup.SetupDefaults(ProcessPriority.High, true);
@@ -77,7 +77,6 @@ namespace AmbiPro
             catch { }
         }
 
-        //Enable the socket server
         private static async Task EnableSocketServer()
         {
             try
@@ -88,34 +87,6 @@ namespace AmbiPro
                 vArnoldVinkSockets.vSocketTimeout = 2000;
                 vArnoldVinkSockets.EventBytesReceived += SocketHandlers.ReceivedSocketHandler;
                 await vArnoldVinkSockets.SocketServerEnable();
-            }
-            catch { }
-        }
-
-        //Application Exit
-        public static async Task Exit()
-        {
-            try
-            {
-                Debug.WriteLine("Exiting application.");
-
-                //Stop updating the leds
-                await LedSwitch(LedSwitches.Disable);
-
-                //Stop all the background tasks
-                await AppTasks.TasksBackgroundStop();
-
-                //Disable the socket server
-                if (vArnoldVinkSockets != null)
-                {
-                    await vArnoldVinkSockets.SocketServerDisable();
-                }
-
-                //Hide the tray icon
-                AppTray.NotifyIcon.Visible = false;
-
-                //Exit the application
-                Environment.Exit(0);
             }
             catch { }
         }

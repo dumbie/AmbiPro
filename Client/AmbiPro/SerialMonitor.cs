@@ -325,7 +325,7 @@ namespace AmbiPro
                     }
                     else if (MsgBoxResult == "Close application")
                     {
-                        await AppStartup.Exit();
+                        await AppExit.Exit();
                     }
                 });
             }
@@ -362,7 +362,7 @@ namespace AmbiPro
                     }
                     else if (MsgBoxResult == "Close application")
                     {
-                        await AppStartup.Exit();
+                        await AppExit.Exit();
                     }
                 });
             }

@@ -76,7 +76,7 @@ namespace AmbiPro.Settings
         {
             try
             {
-                await AppStartup.Exit();
+                await AppExit.Exit();
             }
             catch { }
         }

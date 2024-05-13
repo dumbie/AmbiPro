@@ -49,7 +49,7 @@ namespace AmbiPro
                     if (MsgBoxResult == "Update")
                     {
                         AVProcess.Launch_ShellExecute("Updater.exe", "", "", true);
-                        await AppStartup.Exit();
+                        await AppExit.Exit();
                     }
                 }
                 else

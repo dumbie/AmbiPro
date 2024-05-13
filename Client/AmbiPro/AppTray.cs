@@ -121,7 +121,7 @@ namespace AmbiPro
         {
             try
             {
-                await AppStartup.Exit();
+                await AppExit.Exit();
             }
             catch { }
         }
