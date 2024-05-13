@@ -52,20 +52,21 @@ namespace AmbiPro
             catch { }
         }
 
-        public static async void CaptureEventDeviceChangeDetected()
+        //Screen capture events
+        public static void CaptureEventDeviceChangeDetected()
         {
             try
             {
                 Debug.WriteLine("Device change event triggered, restarting capture.");
 
-                //Initialize Screen Capturer
-                await InitializeScreenCapture(200);
+                //Initialize Screen Capture
+                InitializeScreenCapture();
             }
             catch { }
         }
 
-        //Initialize Screen Capture
-        private static async Task<bool> InitializeScreenCapture(int delayTime)
+        //Initialize screen capture
+        private static CaptureStatus InitializeScreenCapture()
         {
             try
             {
@@ -78,7 +79,15 @@ namespace AmbiPro
                 CaptureImport.CaptureEventDeviceChangeDetected(CaptureEventDeviceChangeDetected);
 
                 //Initialize screen capture
-                bool captureInitialized = CaptureImport.CaptureInitialize(vCaptureSettings, out vCaptureDetails, true);
+                CaptureStatus captureInitialized = CaptureImport.CaptureInitialize(vCaptureSettings, true);
+                if (captureInitialized == CaptureStatus.Initialized)
+                {
+                    vCaptureDetails = CaptureImport.CaptureGetDetails();
+                }
+                else if (captureInitialized == CaptureStatus.Failed)
+                {
+                    ShowFailedCaptureMessage();
+                }
 
                 //Update capture variables
                 UpdateCaptureVariables();
@@ -89,23 +98,12 @@ namespace AmbiPro
                     vFormSettings.UpdateScreenInformation();
                 });
 
-                //Check if initialized
-                if (!captureInitialized)
-                {
-                    Debug.WriteLine("Failed initializing screen capturer.");
-                    ShowFailedCaptureMessage();
-                }
-
                 return captureInitialized;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine("Failed initializing screen capturer: " + ex.Message);
-                return false;
-            }
-            finally
-            {
-                await Task.Delay(delayTime);
+                return CaptureStatus.Failed;
             }
         }
 
@@ -157,8 +155,9 @@ namespace AmbiPro
                 bool ConnectionFailed = false;
                 int LoopDelayMs = 0;
 
-                //Initialize Screen Capturer
-                if (!await InitializeScreenCapture(200))
+                //Initialize Screen Capture
+                CaptureStatus initializeResult = InitializeScreenCapture();
+                if (initializeResult == CaptureStatus.Failed || initializeResult == CaptureStatus.Busy)
                 {
                     return;
                 }
