@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
+using static ArnoldVinkCode.AVInteropDll;
 using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro
@@ -17,8 +18,8 @@ namespace AmbiPro
             {
                 Debug.WriteLine("Welcome to AmbiPro.");
 
-                //Application startup checks
-                AppCheck.StartupCheck("AmbiPro", ProcessPriorityClass.High);
+                //Setup application defaults
+                AVStartup.SetupDefaults(ProcessPriority.High);
 
                 //Application update checks
                 await AppUpdate.UpdateCheck(true);
