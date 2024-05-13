@@ -196,11 +196,6 @@ namespace AmbiPro.Settings
                 tb_LedSmoothing.Text = "Led smoothing: " + smoothingFrames + " frames";
                 sldr_LedSmoothing.Value = smoothingFrames;
 
-                //Load - Capture Blur
-                int captureBlur = SettingLoad(vConfiguration, "CaptureBlur", typeof(int));
-                tb_CaptureBlur.Text = "Capture blur: " + captureBlur;
-                sldr_CaptureBlur.Value = captureBlur;
-
                 //Load - Capture HDR Paper White
                 int captureHDRPaperWhite = SettingLoad(vConfiguration, "CaptureHDRPaperWhite", typeof(int));
                 tb_CaptureHDRPaperWhite.Text = "HDR paper white: " + captureHDRPaperWhite;

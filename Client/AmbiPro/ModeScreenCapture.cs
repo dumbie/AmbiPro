@@ -25,7 +25,6 @@ namespace AmbiPro
             {
                 //Load capture settings
                 int captureMonitor = SettingLoad(vConfiguration, "MonitorCapture", typeof(int));
-                float captureBlur = SettingLoad(vConfiguration, "CaptureBlur", typeof(float));
                 float captureHDRPaperWhite = SettingLoad(vConfiguration, "CaptureHDRPaperWhite", typeof(float));
                 float captureHDRMaximumNits = SettingLoad(vConfiguration, "CaptureHDRMaximumNits", typeof(float));
 
@@ -41,7 +40,6 @@ namespace AmbiPro
                     MaxPixelDimension = maximumPixelDimension,
                     DrawMouseCursor = false,
                     DrawBorder = false,
-                    Blur = captureBlur,
                     HDRtoSDR = true,
                     HDRPaperWhite = captureHDRPaperWhite,
                     HDRMaximumNits = captureHDRMaximumNits

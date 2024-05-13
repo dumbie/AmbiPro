@@ -373,10 +373,6 @@
                                 <TextBlock Text="Merge previous colors with current color to reduce flashing." TextWrapping="Wrap" Style="{StaticResource TextBlockGray}"/>
                                 <Slider Name="sldr_LedSmoothing" Style="{StaticResource SliderBlockWhite}" Minimum="0" Maximum="20"/>
 
-                                <TextBlock Margin="0,10,0,0" Name="tb_CaptureBlur" Text="Capture blur:" Style="{StaticResource TextBlockBlack}"/>
-                                <TextBlock Text="Blur screen capture to improve display of smaller moving objects." TextWrapping="Wrap" Style="{StaticResource TextBlockGray}"/>
-                                <AVStyles:SliderDelay Name="sldr_CaptureBlur" Style="{StaticResource SliderBlockWhite}" DelayIgnoreDrag="True" Minimum="0" Maximum="20"/>
-
                                 <TextBlock Margin="0,10,0,0" Name="tb_CaptureHDRPaperWhite" Text="HDR paper white:" Style="{StaticResource TextBlockBlack}"/>
                                 <TextBlock Text="Adjust HDR paper white to your monitor, this effects whites level." TextWrapping="Wrap" Style="{StaticResource TextBlockGray}"/>
                                 <AVStyles:SliderDelay Name="sldr_CaptureHDRPaperWhite" Style="{StaticResource SliderBlockWhite}" DelayIgnoreDrag="True" Minimum="5" Maximum="100"/>

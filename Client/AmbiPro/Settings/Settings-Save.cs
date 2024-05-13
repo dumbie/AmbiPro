@@ -296,18 +296,6 @@ namespace AmbiPro.Settings
                     tb_LedSmoothing.Text = "Led smoothing: " + smoothingFrames + " frames";
                 };
 
-                //Save - Capture Blur
-                sldr_CaptureBlur.ValueChanged += (sender, e) =>
-                {
-                    SettingSave(vConfiguration, "CaptureBlur", sldr_CaptureBlur.Value.ToString("0"));
-                    int captureBlur = Convert.ToInt32(sldr_CaptureBlur.Value);
-                    tb_CaptureBlur.Text = "Capture blur: " + captureBlur;
-                    if (!SettingLoad(vConfiguration, "FirstLaunch2", typeof(bool)))
-                    {
-                        UpdateCaptureSettings();
-                    }
-                };
-
                 //Save - Capture HDR Paper White
                 sldr_CaptureHDRPaperWhite.ValueChanged += (sender, e) =>
                 {

@@ -101,7 +101,7 @@ namespace AmbiPro.Settings
                 //Check - Led Brightness Level
                 if (!SettingCheck(vConfiguration, "LedBrightness"))
                 {
-                    SettingSave(vConfiguration, "LedBrightness", "90");
+                    SettingSave(vConfiguration, "LedBrightness", "80");
                 }
 
                 //Check - Led Gamma
@@ -233,13 +233,7 @@ namespace AmbiPro.Settings
                 //Check - Led Smoothing
                 if (!SettingCheck(vConfiguration, "LedSmoothing"))
                 {
-                    SettingSave(vConfiguration, "LedSmoothing", "6");
-                }
-
-                //Check - Capture Blur
-                if (!SettingCheck(vConfiguration, "CaptureBlur"))
-                {
-                    SettingSave(vConfiguration, "CaptureBlur", "0");
+                    SettingSave(vConfiguration, "LedSmoothing", "5");
                 }
 
                 //Check - Capture HDR Paper White
