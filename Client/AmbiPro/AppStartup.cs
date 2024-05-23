@@ -24,8 +24,11 @@ namespace AmbiPro
                 //Application update checks
                 await AppUpdate.UpdateCheck(true);
 
-                //Application settings checks
+                //Application initialize settings
                 vFormSettings.SettingsCheck();
+
+                //Application initialize shortcuts
+                vFormSettings.ShortcutsCheck();
 
                 //Create application tray menu
                 AppTray.CreateTrayMenu();

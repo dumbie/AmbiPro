@@ -1,10 +1,13 @@
 ﻿using AmbiPro.Settings;
 using ArnoldVinkCode;
 using ScreenCaptureImport;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.IO.Ports;
 using static AmbiPro.AppClasses;
+using static ArnoldVinkCode.AVClasses;
+using static ArnoldVinkCode.AVJsonFunctions;
 using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro
@@ -58,6 +61,9 @@ namespace AmbiPro
 
         //Sockets Variables
         public static ArnoldVinkSockets vArnoldVinkSockets = null;
+
+        //Application Lists
+        public static List<ShortcutTriggerKeyboard> vShortcutTriggers = JsonLoadFile<List<ShortcutTriggerKeyboard>>(@"Profiles\ShortcutKeyboard.json");
 
         //Reset default variables
         public static void ResetVariables()

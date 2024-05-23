@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
+using static ArnoldVinkCode.AVClasses;
 using static ArnoldVinkCode.AVInputOutputClass;
 using static ArnoldVinkCode.AVInputOutputHotkey;
 using static ArnoldVinkCode.AVSettings;
@@ -15,43 +17,39 @@ namespace AmbiPro
         {
             try
             {
-                //Check hotkeys
-                List<KeysVirtual> usedKeysSwitchLedsOnOff = new List<KeysVirtual>
+                ShortcutTriggerKeyboard shortcutTrigger = vShortcutTriggers.Where(x => x.Name == "SwitchLedsOnOff").FirstOrDefault();
+                if (shortcutTrigger != null)
                 {
-                    (KeysVirtual)SettingLoad(vConfiguration, "Hotkey0SwitchLedsOnOff", typeof(byte)),
-                    (KeysVirtual)SettingLoad(vConfiguration, "Hotkey1SwitchLedsOnOff", typeof(byte)),
-                    (KeysVirtual)SettingLoad(vConfiguration, "Hotkey2SwitchLedsOnOff", typeof(byte))
-                };
-                List<KeysVirtual> usedKeysModeScreenCapture = new List<KeysVirtual>
-                {
-                    (KeysVirtual)SettingLoad(vConfiguration, "Hotkey0ModeScreenCapture", typeof(byte)),
-                    (KeysVirtual)SettingLoad(vConfiguration, "Hotkey1ModeScreenCapture", typeof(byte)),
-                    (KeysVirtual)SettingLoad(vConfiguration, "Hotkey2ModeScreenCapture", typeof(byte))
-                };
-                List<KeysVirtual> usedKeysModeSolidColor = new List<KeysVirtual>
-                {
-                    (KeysVirtual)SettingLoad(vConfiguration, "Hotkey0ModeSolidColor", typeof(byte)),
-                    (KeysVirtual)SettingLoad(vConfiguration, "Hotkey1ModeSolidColor", typeof(byte)),
-                    (KeysVirtual)SettingLoad(vConfiguration, "Hotkey2ModeSolidColor", typeof(byte))
-                };
+                    if (CheckHotkeyPress(keysPressed, shortcutTrigger.Trigger))
+                    {
+                        Debug.WriteLine("Button Global - SwitchLedsOnOff");
+                        await LedSwitch(LedSwitches.Automatic);
+                        return;
+                    }
+                }
 
-                //Check presses
-                if (CheckHotkeyPress(keysPressed, usedKeysSwitchLedsOnOff))
+                shortcutTrigger = vShortcutTriggers.Where(x => x.Name == "ModeScreenCapture").FirstOrDefault();
+                if (shortcutTrigger != null)
                 {
-                    Debug.WriteLine("Button Global - SwitchLedsOnOff");
-                    await LedSwitch(LedSwitches.Automatic);
+                    if (CheckHotkeyPress(keysPressed, shortcutTrigger.Trigger))
+                    {
+                        Debug.WriteLine("Button Global - ModeScreenCapture");
+                        SettingSave(vConfiguration, "LedMode", "0");
+                        await LedSwitch(LedSwitches.Restart);
+                        return;
+                    }
                 }
-                else if (CheckHotkeyPress(keysPressed, usedKeysModeScreenCapture))
+
+                shortcutTrigger = vShortcutTriggers.Where(x => x.Name == "ModeSolidColor").FirstOrDefault();
+                if (shortcutTrigger != null)
                 {
-                    Debug.WriteLine("Button Global - ModeScreenCapture");
-                    SettingSave(vConfiguration, "LedMode", "0");
-                    await LedSwitch(LedSwitches.Restart);
-                }
-                else if (CheckHotkeyPress(keysPressed, usedKeysModeSolidColor))
-                {
-                    Debug.WriteLine("Button Global - ModeSolidColor");
-                    SettingSave(vConfiguration, "LedMode", "1");
-                    await LedSwitch(LedSwitches.Restart);
+                    if (CheckHotkeyPress(keysPressed, shortcutTrigger.Trigger))
+                    {
+                        Debug.WriteLine("Button Global - ModeSolidColor");
+                        SettingSave(vConfiguration, "LedMode", "1");
+                        await LedSwitch(LedSwitches.Restart);
+                        return;
+                    }
                 }
             }
             catch { }

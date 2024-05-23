@@ -1,4 +1,4 @@
-﻿using ArnoldVinkCode;
+﻿using ArnoldVinkCode.Styles;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -118,7 +118,7 @@ namespace AmbiPro.Settings
         {
             try
             {
-                Color? newColor = await new AVColorPicker().Popup(null);
+                Color? newColor = await new ColorPickerPreset().Popup(null);
                 if (newColor != null)
                 {
                     grid_BackgroundSolidColor.Background = new SolidColorBrush((Color)newColor);

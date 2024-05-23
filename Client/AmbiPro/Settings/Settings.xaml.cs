@@ -106,11 +106,15 @@ namespace AmbiPro.Settings
         {
             try
             {
-                //Load and save the settings
+                //Load and save settings
                 await SettingsLoad();
                 SettingsSave();
 
-                //Load and set the help text
+                //Load and save shortcuts
+                ShortcutsLoad();
+                ShortcutsSave();
+
+                //Load and set help text
                 Load_Help_Text();
 
                 //Check if resolution has changed

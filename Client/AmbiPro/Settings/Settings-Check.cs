@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using static AmbiPro.AppVariables;
-using static ArnoldVinkCode.AVInputOutputClass;
 using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro.Settings
@@ -261,28 +261,10 @@ namespace AmbiPro.Settings
                 {
                     SettingSave(vConfiguration, "DebugColorTopBottom", "False");
                 }
-
-                //Check hotkey settings
-                if (!SettingCheck(vConfiguration, "Hotkey0SwitchLedsOnOff")) { SettingSave(vConfiguration, "Hotkey0SwitchLedsOnOff", (byte)KeysVirtual.WindowsLeft); }
-                if (!SettingCheck(vConfiguration, "Hotkey1SwitchLedsOnOff")) { SettingSave(vConfiguration, "Hotkey1SwitchLedsOnOff", (byte)KeysVirtual.None); }
-                if (!SettingCheck(vConfiguration, "Hotkey2SwitchLedsOnOff")) { SettingSave(vConfiguration, "Hotkey2SwitchLedsOnOff", (byte)KeysVirtual.F12); }
-
-                if (!SettingCheck(vConfiguration, "Hotkey0ModeScreenCapture")) { SettingSave(vConfiguration, "Hotkey0ModeScreenCapture", (byte)KeysVirtual.WindowsLeft); }
-                if (!SettingCheck(vConfiguration, "Hotkey1ModeScreenCapture")) { SettingSave(vConfiguration, "Hotkey1ModeScreenCapture", (byte)KeysVirtual.None); }
-                if (!SettingCheck(vConfiguration, "Hotkey2ModeScreenCapture")) { SettingSave(vConfiguration, "Hotkey2ModeScreenCapture", (byte)KeysVirtual.F11); }
-
-                if (!SettingCheck(vConfiguration, "Hotkey0ModeSolidColor")) { SettingSave(vConfiguration, "Hotkey0ModeSolidColor", (byte)KeysVirtual.WindowsLeft); }
-                if (!SettingCheck(vConfiguration, "Hotkey1ModeSolidColor")) { SettingSave(vConfiguration, "Hotkey1ModeSolidColor", (byte)KeysVirtual.None); }
-                if (!SettingCheck(vConfiguration, "Hotkey2ModeSolidColor")) { SettingSave(vConfiguration, "Hotkey2ModeSolidColor", (byte)KeysVirtual.F10); }
-
-                //Set hotkey settings
-                hotkey_SwitchLedsOnOff.Configuration = vConfiguration;
-                hotkey_ModeScreenCapture.Configuration = vConfiguration;
-                hotkey_ModeSolidColor.Configuration = vConfiguration;
             }
-            catch
+            catch (Exception ex)
             {
-                Debug.WriteLine("Failed to check the settings.");
+                Debug.WriteLine("Failed to check application settings: " + ex.Message);
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using ArnoldVinkCode;
+using ArnoldVinkCode.Styles;
 using System;
 using System.Configuration;
 using System.Diagnostics;
@@ -179,7 +180,7 @@ namespace AmbiPro.Settings
                 //Select - Solid Led Color
                 button_ColorPickerSolid.Click += async (sender, e) =>
                 {
-                    Color? newColor = await new AVColorPicker().Popup(null);
+                    Color? newColor = await new ColorPickerPreset().Popup(null);
                     if (newColor != null)
                     {
                         SolidColorBrush newBrush = new SolidColorBrush((Color)newColor);
@@ -354,7 +355,7 @@ namespace AmbiPro.Settings
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Failed to save the settings: " + ex.Message);
+                Debug.WriteLine("Failed to save application settings: " + ex.Message);
             }
         }
 
