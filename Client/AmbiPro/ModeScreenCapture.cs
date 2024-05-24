@@ -80,6 +80,7 @@ namespace AmbiPro
                 CaptureStatus captureInitialized = CaptureImport.CaptureInitialize(vCaptureSettings, true);
                 if (captureInitialized == CaptureStatus.Initialized)
                 {
+                    //Update capture details
                     vCaptureDetails = CaptureImport.CaptureGetDetails();
                 }
                 else if (captureInitialized == CaptureStatus.Failed)
@@ -100,6 +101,7 @@ namespace AmbiPro
             }
             catch (Exception ex)
             {
+                ShowFailedCaptureMessage();
                 Debug.WriteLine("Failed initializing screen capturer: " + ex.Message);
                 return CaptureStatus.Failed;
             }

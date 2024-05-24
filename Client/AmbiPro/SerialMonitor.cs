@@ -332,7 +332,7 @@ namespace AmbiPro
             catch { }
         }
 
-        //Show monitor screen message
+        //Show failed capture message
         private static void ShowFailedCaptureMessage()
         {
             try
@@ -345,7 +345,7 @@ namespace AmbiPro
                     MsgBoxAnswers.Add("Retry to capture screen");
                     MsgBoxAnswers.Add("Close application");
 
-                    string MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to start capturing your monitor screen", "Please make sure the correct monitor screen is selected, all the requirements are installed on your PC, that you have a 64bit Windows installation and that you have a DirectX 12 or higher capable graphics adapter installed.", MsgBoxAnswers);
+                    string MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to start capturing your screen", "Please make sure the correct screen is selected, all the requirements are installed on your PC, that you have a Windows 11 64bit installation and that you have a DirectX 12 or higher capable graphics adapter installed.", MsgBoxAnswers);
                     if (MsgBoxResult == "Change monitor setting")
                     {
                         await LedSwitch(LedSwitches.Disable);

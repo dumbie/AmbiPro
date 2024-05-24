@@ -12,7 +12,8 @@
   ],
   "FilesIgnore": [
     ".exe.Config",
-    ".csettings"
+    ".csettings",
+    "ShortcutKeyboard.json"
   ],
   "FoldersDelete": [
     "Resources"
