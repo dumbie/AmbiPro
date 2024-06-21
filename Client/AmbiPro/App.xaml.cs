@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using static ArnoldVinkCode.AVInteropDll;
+using static ArnoldVinkCode.AVStartup;
 
 namespace AmbiPro
 {
@@ -8,6 +11,10 @@ namespace AmbiPro
         {
             try
             {
+                //Setup application defaults
+                SetupDefaults(ProcessPriority.High, false);
+
+                //Run application startup code
                 await AppStartup.Startup();
             }
             catch { }

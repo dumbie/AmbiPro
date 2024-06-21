@@ -18,9 +18,6 @@ namespace AmbiPro
             {
                 Debug.WriteLine("Welcome to application.");
 
-                //Setup application defaults
-                AVStartup.SetupDefaults(ProcessPriority.High, true);
-
                 //Application update checks
                 await AppUpdate.UpdateCheck(true);
 
