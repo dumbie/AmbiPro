@@ -591,13 +591,13 @@
                             <!-- Shortcuts -->
                             <StackPanel Name="sp_Shortcuts" Visibility="Collapsed" Margin="5,5,5,5">
                                 <TextBlock Text="Switch the leds on or off" TextWrapping="Wrap" Style="{StaticResource TextBlockBlack}"/>
-                                <AVStyles:KeyboardPicker Name="hotkey_SwitchLedsOnOff"/>
+                                <AVStyles:ShortcutKeyboard Name="keyboard_SwitchLedsOnOff" TriggerName="SwitchLedsOnOff"/>
 
                                 <TextBlock Margin="0,10,0,0" Text="Switch mode to screen capture" TextWrapping="Wrap" Style="{StaticResource TextBlockBlack}"/>
-                                <AVStyles:KeyboardPicker Name="hotkey_ModeScreenCapture"/>
+                                <AVStyles:ShortcutKeyboard Name="keyboard_ModeScreenCapture" TriggerName="ModeScreenCapture"/>
 
                                 <TextBlock Margin="0,10,0,0" Text="Switch mode to solid color" TextWrapping="Wrap" Style="{StaticResource TextBlockBlack}"/>
-                                <AVStyles:KeyboardPicker Name="hotkey_ModeSolidColor"/>
+                                <AVStyles:ShortcutKeyboard Name="keyboard_ModeSolidColor" TriggerName="ModeSolidColor"/>
                             </StackPanel>
 
                             <!-- Remote -->

@@ -19,7 +19,7 @@ namespace AmbiPro.Settings
             try
             {
                 string[] scriptLines = File.ReadAllLines(@"Script\Script.ino");
-                string ledCountString = scriptLines.Where(x => x.StartsWith("#define LedAmount")).FirstOrDefault();
+                string ledCountString = scriptLines.FirstOrDefault(x => x.StartsWith("#define LedAmount"));
                 if (!string.IsNullOrWhiteSpace(ledCountString))
                 {
                     int ledCountInt = Convert.ToInt32(ledCountString.Replace("#define LedAmount", string.Empty));

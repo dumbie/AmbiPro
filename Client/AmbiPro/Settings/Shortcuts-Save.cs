@@ -1,9 +1,9 @@
 ﻿using ArnoldVinkCode;
 using System;
 using System.Diagnostics;
-using System.Linq;
 using static AmbiPro.AppVariables;
 using static ArnoldVinkCode.AVClasses;
+using static ArnoldVinkCode.AVJsonFunctions;
 
 namespace AmbiPro.Settings
 {
@@ -16,38 +16,26 @@ namespace AmbiPro.Settings
             {
                 Debug.WriteLine("Saving application shortcuts...");
 
-                hotkey_SwitchLedsOnOff.TriggerChanged += (triggers) =>
-                {
-                    ShortcutTriggerKeyboard shortcutTrigger = vShortcutTriggers.Where(x => x.Name == "SwitchLedsOnOff").FirstOrDefault();
-                    if (shortcutTrigger != null)
-                    {
-                        shortcutTrigger.Trigger = triggers;
-                        AVJsonFunctions.JsonSaveObject(vShortcutTriggers, @"Profiles\ShortcutKeyboard.json");
-                    }
-                };
-                hotkey_ModeScreenCapture.TriggerChanged += (triggers) =>
-                {
-                    ShortcutTriggerKeyboard shortcutTrigger = vShortcutTriggers.Where(x => x.Name == "ModeScreenCapture").FirstOrDefault();
-                    if (shortcutTrigger != null)
-                    {
-                        shortcutTrigger.Trigger = triggers;
-                        AVJsonFunctions.JsonSaveObject(vShortcutTriggers, @"Profiles\ShortcutKeyboard.json");
-                    }
-                };
-                hotkey_ModeSolidColor.TriggerChanged += (triggers) =>
-                {
-                    ShortcutTriggerKeyboard shortcutTrigger = vShortcutTriggers.Where(x => x.Name == "ModeSolidColor").FirstOrDefault();
-                    if (shortcutTrigger != null)
-                    {
-                        shortcutTrigger.Trigger = triggers;
-                        AVJsonFunctions.JsonSaveObject(vShortcutTriggers, @"Profiles\ShortcutKeyboard.json");
-                    }
-                };
+                keyboard_SwitchLedsOnOff.TriggerChanged += Shortcut_Keyboard_TriggerChanged;
+                keyboard_ModeScreenCapture.TriggerChanged += Shortcut_Keyboard_TriggerChanged;
+                keyboard_ModeSolidColor.TriggerChanged += Shortcut_Keyboard_TriggerChanged;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine("Failed to save application shortcuts: " + ex.Message);
             }
+        }
+
+        void Shortcut_Keyboard_TriggerChanged(ShortcutTriggerKeyboard triggers)
+        {
+            try
+            {
+                if (vShortcutTriggers.ListReplaceFirstItem(x => x.Name == triggers.Name, triggers))
+                {
+                    JsonSaveObject(vShortcutTriggers, @"Profiles\ShortcutKeyboard.json");
+                }
+            }
+            catch { }
         }
     }
 }

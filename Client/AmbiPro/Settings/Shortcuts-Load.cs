@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Linq;
 using static AmbiPro.AppVariables;
-using static ArnoldVinkCode.AVClasses;
 
 namespace AmbiPro.Settings
 {
@@ -14,21 +13,9 @@ namespace AmbiPro.Settings
             {
                 Debug.WriteLine("Loading application shortcuts...");
 
-                ShortcutTriggerKeyboard shortcutTrigger = vShortcutTriggers.Where(x => x.Name == "SwitchLedsOnOff").FirstOrDefault();
-                if (shortcutTrigger != null)
-                {
-                    hotkey_SwitchLedsOnOff.Set(shortcutTrigger.Trigger);
-                }
-                shortcutTrigger = vShortcutTriggers.Where(x => x.Name == "ModeScreenCapture").FirstOrDefault();
-                if (shortcutTrigger != null)
-                {
-                    hotkey_ModeScreenCapture.Set(shortcutTrigger.Trigger);
-                }
-                shortcutTrigger = vShortcutTriggers.Where(x => x.Name == "ModeSolidColor").FirstOrDefault();
-                if (shortcutTrigger != null)
-                {
-                    hotkey_ModeSolidColor.Set(shortcutTrigger.Trigger);
-                }
+                keyboard_SwitchLedsOnOff.Set(vShortcutTriggers.FirstOrDefault(x => x.Name == keyboard_SwitchLedsOnOff.TriggerName));
+                keyboard_ModeScreenCapture.Set(vShortcutTriggers.FirstOrDefault(x => x.Name == keyboard_ModeScreenCapture.TriggerName));
+                keyboard_ModeSolidColor.Set(vShortcutTriggers.FirstOrDefault(x => x.Name == keyboard_ModeSolidColor.TriggerName));
             }
             catch (Exception ex)
             {
