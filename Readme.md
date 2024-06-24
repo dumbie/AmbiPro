@@ -53,6 +53,7 @@ v0.26.0.0 (13-May-2024)
 - Added keyboard shortcuts to turn leds on or off.
 - Added setting to turn off leds when monitor is sleeping.
 - Switched to new screen capture method improving game performance upto 6%
+- Ported application to .NET8 framework.
 
 v0.25.0.0 (13-October-2023)
 - Rewrote part of blackbar detection to adjust more smoothly.
