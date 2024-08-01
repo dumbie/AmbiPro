@@ -37,7 +37,7 @@ namespace AmbiPro
                     {
                         Debug.WriteLine("Restarting the led updates.");
                         await LedsDisable(true);
-                        LedsEnable();
+                        await LedsEnable();
                         return;
                     }
 
@@ -56,7 +56,7 @@ namespace AmbiPro
                     else
                     {
                         //Enable the leds
-                        LedsEnable();
+                        await LedsEnable();
                     }
                 }
             }
@@ -176,7 +176,7 @@ namespace AmbiPro
         }
 
         //Enable the led updates
-        private static void LedsEnable()
+        private static async Task LedsEnable()
         {
             try
             {
@@ -185,7 +185,7 @@ namespace AmbiPro
                 //Check led count
                 if (setLedCountTotal <= 0)
                 {
-                    ShowNoLedsSideCountSetup();
+                    await ShowNoLedsSideCountSetup();
                     return;
                 }
 
@@ -285,12 +285,12 @@ namespace AmbiPro
         }
 
         //Show led setup message
-        private static void ShowNoLedsSideCountSetup()
+        private static async Task ShowNoLedsSideCountSetup()
         {
             try
             {
                 Debug.WriteLine("There are currently no leds configured.");
-                AVActions.DispatcherInvoke(async delegate
+                await AVActions.DispatcherInvoke(async delegate
                 {
                     List<string> MsgBoxAnswers = new List<string>();
                     MsgBoxAnswers.Add("Ok");
@@ -302,11 +302,11 @@ namespace AmbiPro
         }
 
         //Show device connection message
-        private static void ShowFailedConnectionMessage()
+        private static async Task ShowFailedConnectionMessage()
         {
             try
             {
-                AVActions.DispatcherInvoke(async delegate
+                await AVActions.DispatcherInvoke(async delegate
                 {
                     List<string> MsgBoxAnswers = new List<string>();
                     MsgBoxAnswers.Add("Change com port");
@@ -333,11 +333,11 @@ namespace AmbiPro
         }
 
         //Show failed capture message
-        private static void ShowFailedCaptureMessage()
+        private static async Task ShowFailedCaptureMessage()
         {
             try
             {
-                AVActions.DispatcherInvoke(async delegate
+                await AVActions.DispatcherInvoke(async delegate
                 {
                     List<string> MsgBoxAnswers = new List<string>();
                     MsgBoxAnswers.Add("Change monitor setting");
@@ -405,7 +405,7 @@ namespace AmbiPro
             catch (Exception ex)
             {
                 Debug.WriteLine("Failed to update the leds: " + ex.Message);
-                ShowFailedConnectionMessage();
+                await ShowFailedConnectionMessage();
             }
         }
     }

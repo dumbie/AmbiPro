@@ -129,7 +129,7 @@ namespace AmbiPro.Settings
         }
 
         //Update solid led color
-        void UpdateSettingsSolidLedColor()
+        public void UpdateSettingsSolidLedColor()
         {
             try
             {

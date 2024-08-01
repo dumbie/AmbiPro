@@ -114,7 +114,7 @@ namespace AmbiPro
                 //Show failed connection message
                 if (ConnectionFailed)
                 {
-                    ShowFailedConnectionMessage();
+                    await ShowFailedConnectionMessage();
                 }
             }
             catch { }

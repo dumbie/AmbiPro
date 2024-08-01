@@ -13,7 +13,7 @@ using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro
 {
-    partial class SocketHandlers
+    public partial class SocketHandlers
     {
         //Handle received socket data
         public static void ReceivedSocketHandler(TcpClient tcpClient, UdpEndPointDetails endPoint, byte[] bytesReceived)
@@ -83,7 +83,10 @@ namespace AmbiPro
                 else if (messageType.Contains("SolidLedColor"))
                 {
                     SettingSave(vConfiguration, "SolidLedColor", messageValue);
-                    AppEvents.EventUpdateSettingsSolidLedColor();
+                    if (AppEvents.EventUpdateSettingsSolidLedColor != null)
+                    {
+                        AppEvents.EventUpdateSettingsSolidLedColor();
+                    }
                 }
                 else
                 {

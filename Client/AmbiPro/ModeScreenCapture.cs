@@ -51,20 +51,20 @@ namespace AmbiPro
         }
 
         //Screen capture events
-        public static void CaptureEventDeviceChangeDetected()
+        public static async void CaptureEventDeviceChangeDetected()
         {
             try
             {
                 Debug.WriteLine("Device change event triggered, restarting capture.");
 
                 //Initialize Screen Capture
-                InitializeScreenCapture();
+                await InitializeScreenCapture();
             }
             catch { }
         }
 
         //Initialize screen capture
-        private static CaptureStatus InitializeScreenCapture()
+        private static async Task<CaptureStatus> InitializeScreenCapture()
         {
             try
             {
@@ -85,7 +85,7 @@ namespace AmbiPro
                 }
                 else if (captureInitialized == CaptureStatus.Failed)
                 {
-                    ShowFailedCaptureMessage();
+                    await ShowFailedCaptureMessage();
                 }
 
                 //Update capture variables
@@ -101,7 +101,7 @@ namespace AmbiPro
             }
             catch (Exception ex)
             {
-                ShowFailedCaptureMessage();
+                await ShowFailedCaptureMessage();
                 Debug.WriteLine("Failed initializing screen capturer: " + ex.Message);
                 return CaptureStatus.Failed;
             }
@@ -156,7 +156,7 @@ namespace AmbiPro
                 int LoopDelayMs = 0;
 
                 //Initialize Screen Capture
-                CaptureStatus initializeResult = InitializeScreenCapture();
+                CaptureStatus initializeResult = await InitializeScreenCapture();
                 if (initializeResult == CaptureStatus.Failed || initializeResult == CaptureStatus.Busy)
                 {
                     return;
@@ -291,7 +291,7 @@ namespace AmbiPro
                 //Show failed connection message
                 if (ConnectionFailed)
                 {
-                    ShowFailedConnectionMessage();
+                    await ShowFailedConnectionMessage();
                 }
             }
             catch (Exception ex)

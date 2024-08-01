@@ -13,12 +13,9 @@ namespace AmbiPro
         {
             try
             {
-                while (TaskCheckLoop(vTask_UpdateSettings))
+                while (await TaskCheckLoop(vTask_UpdateSettings, 2000))
                 {
                     UpdateSettingsPreload();
-
-                    //Delay the loop task
-                    await TaskDelay(2000, vTask_UpdateSettings);
                 }
             }
             catch { }
@@ -28,7 +25,7 @@ namespace AmbiPro
         {
             try
             {
-                while (TaskCheckLoop(vTask_UpdateStatus))
+                while (await TaskCheckLoop(vTask_UpdateStatus, 2000))
                 {
                     //Check if monitor is sleeping
                     if (setLedOffMonitorSleep)
@@ -51,9 +48,6 @@ namespace AmbiPro
                         //Update status variables
                         AppVariables.vMonitorSleeping = monitorSleeping;
                     }
-
-                    //Delay the loop task
-                    await TaskDelay(2000, vTask_UpdateStatus);
                 }
             }
             catch { }

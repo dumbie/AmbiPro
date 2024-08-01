@@ -2,8 +2,8 @@
 
 namespace AmbiPro
 {
-    partial class AppEvents
+    public partial class AppEvents
     {
-        public static event Action EventUpdateSettingsSolidLedColor;
+        public static Action EventUpdateSettingsSolidLedColor;
     }
 }

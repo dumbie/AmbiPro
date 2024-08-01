@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
-using static ArnoldVinkCode.AVInteropDll;
 using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro
@@ -69,7 +68,7 @@ namespace AmbiPro
 
                 //Start keyboard hotkeys
                 AVInputOutputHotkey.Start();
-                AVInputOutputHotkey.EventHotkeyPressed += AppHotkeys.EventHotkeyPressed;
+                AVInputOutputHotkey.EventHotkeyPressedList += AppHotkeys.EventHotkeyPressed;
 
                 //Enable socket server
                 await EnableSocketServer();
