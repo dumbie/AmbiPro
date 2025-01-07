@@ -1,18 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
 using static ArnoldVinkCode.AVClasses;
-using static ArnoldVinkCode.AVInputOutputClass;
-using static ArnoldVinkCode.AVInputOutputHotkey;
+using static ArnoldVinkCode.AVInputOutputHotkeyHook;
 using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro
 {
     public partial class AppHotkeys
     {
-        public static async void EventHotkeyPressed(List<KeysVirtual> keysPressed)
+        public static async void EventHotkeyPressed(bool[] keysPressed)
         {
             try
             {
@@ -20,7 +18,7 @@ namespace AmbiPro
                 {
                     if (shortcutTrigger.Name == "SwitchLedsOnOff")
                     {
-                        if (CheckHotkeyPress(keysPressed, shortcutTrigger.Trigger))
+                        if (CheckHotkeyPressed(keysPressed, shortcutTrigger.Trigger))
                         {
                             Debug.WriteLine("Button Global - SwitchLedsOnOff");
                             await LedSwitch(LedSwitches.Automatic);
@@ -29,7 +27,7 @@ namespace AmbiPro
                     }
                     else if (shortcutTrigger.Name == "ModeScreenCapture")
                     {
-                        if (CheckHotkeyPress(keysPressed, shortcutTrigger.Trigger))
+                        if (CheckHotkeyPressed(keysPressed, shortcutTrigger.Trigger))
                         {
                             Debug.WriteLine("Button Global - ModeScreenCapture");
                             SettingSave(vConfiguration, "LedMode", "0");
@@ -39,7 +37,7 @@ namespace AmbiPro
                     }
                     else if (shortcutTrigger.Name == "ModeSolidColor")
                     {
-                        if (CheckHotkeyPress(keysPressed, shortcutTrigger.Trigger))
+                        if (CheckHotkeyPressed(keysPressed, shortcutTrigger.Trigger))
                         {
                             Debug.WriteLine("Button Global - ModeSolidColor");
                             SettingSave(vConfiguration, "LedMode", "1");
