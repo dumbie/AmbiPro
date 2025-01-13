@@ -136,6 +136,9 @@
                         <Button Name="button_BackgroundSwitch" Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Switch test background" Click="button_BackgroundSwitch_Click">
                             <Image Name="image_BackgroundSwitch" Height="30" Source="/Assets/Icons/Background.png"/>
                         </Button>
+                        <Button Name="button_BackgroundShowHide" Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Show or hide test background" Click="button_BackgroundShowHide_Click" IsEnabled="False">
+                            <Image Height="30" Source="/Assets/Icons/Transparent.png"/>
+                        </Button>
                     </StackPanel>
                 </Border>
 
@@ -151,26 +154,17 @@
                             <Button Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Decrease block sizes" Click="sp_DecreaseBlockSize_PreviewMouseUp">
                                 <Image Height="30" Source="/Assets/Icons/Minus.png"/>
                             </Button>
-                            <Button Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Show or hide background" Click="button_BackgroundBlocksShowHide_Click">
-                                <Image Height="30" Source="/Assets/Icons/Transparent.png"/>
-                            </Button>
                         </StackPanel>
 
                         <StackPanel Name="grid_ColorMenu_Blackbars" Orientation="Horizontal" Visibility="Collapsed">
                             <Button Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Switch blackbar scenario" Click="btn_BlackbarScenario_Click">
                                 <Image Height="30" Source="/Assets/Icons/BlackbarSwitch.png"/>
                             </Button>
-                            <Button Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Show or hide test background" Click="button_BackgroundBlackbarsShowHide_Click">
-                                <Image Height="30" Source="/Assets/Icons/Transparent.png"/>
-                            </Button>
                         </StackPanel>
 
                         <StackPanel Name="grid_ColorMenu_SolidColor" Orientation="Horizontal" Visibility="Collapsed">
                             <Button Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Change test color" Click="button_BackgroundSolidChange_Click">
                                 <Image Height="30" Source="/Assets/Icons/ColorSwitch.png"/>
-                            </Button>
-                            <Button Margin="5" Style="{StaticResource ButtonImageTransparentNoBorder}" ToolTipService.ToolTip="Show or hide background" Click="button_BackgroundSolidShowHide_Click">
-                                <Image Height="30" Source="/Assets/Icons/Transparent.png"/>
                             </Button>
                             <Image Height="30" Margin="5" Source="/Assets/Icons/Brightness.png"/>
                             <Slider Width="245" Margin="5" TickFrequency="0.05" Value="1.00" Minimum="0.05" Maximum="1.50" Style="{StaticResource SliderBlockBlack}" ValueChanged="slider_BackgroundSolidBrightness_ValueChanged"/>
@@ -367,9 +361,13 @@
                                 <TextBlock Text="Change the screen capture update rate target, lowering this will cause less output delay." TextWrapping="Wrap" Style="{StaticResource TextBlockGray}"/>
                                 <Slider Name="sldr_UpdateRate" Style="{StaticResource SliderBlockWhite}" Minimum="1" Maximum="50"/>
 
-                                <TextBlock Margin="0,10,0,0" Name="tb_LedSmoothing" Text="Led smoothing:" Style="{StaticResource TextBlockBlack}"/>
-                                <TextBlock Text="Merge previous colors with current color to reduce flashing." TextWrapping="Wrap" Style="{StaticResource TextBlockGray}"/>
-                                <Slider Name="sldr_LedSmoothing" Style="{StaticResource SliderBlockWhite}" Minimum="0" Maximum="20"/>
+                                <TextBlock Margin="0,10,0,0" Name="tb_LedSmoothFrame" Text="Frame smoothing:" Style="{StaticResource TextBlockBlack}"/>
+                                <TextBlock Text="Blend previous colors with current color to reduce flashing." TextWrapping="Wrap" Style="{StaticResource TextBlockGray}"/>
+                                <Slider Name="sldr_LedSmoothFrame" Style="{StaticResource SliderBlockWhite}" Minimum="0" Maximum="20"/>
+
+                                <TextBlock Margin="0,10,0,0" Name="tb_LedSmoothObject" Text="Object smoothing:" Style="{StaticResource TextBlockBlack}"/>
+                                <TextBlock Text="Blend neighbouring colors to reduce flickering when objects move." TextWrapping="Wrap" Style="{StaticResource TextBlockGray}"/>
+                                <Slider Name="sldr_LedSmoothObject" Style="{StaticResource SliderBlockWhite}" Minimum="0" Maximum="5"/>
 
                                 <TextBlock Margin="0,10,0,0" Name="tb_CaptureHDRPaperWhite" Text="HDR paper white:" Style="{StaticResource TextBlockBlack}"/>
                                 <TextBlock Text="Adjust HDR paper white to your monitor, this effects whites level." TextWrapping="Wrap" Style="{StaticResource TextBlockGray}"/>
@@ -539,7 +537,7 @@
                                 <TextBlock Margin="0,10,0,0" Name="tb_LedSaturation" Text="Color saturation:" Style="{StaticResource TextBlockBlack}"/>
                                 <TextBlock Text="Change the led color saturation to your liking." Style="{StaticResource TextBlockGray}"/>
                                 <Image Margin="0,2,0,0" Source="/Assets/SaturationSpectrum.png"/>
-                                <Slider Name="sldr_LedSaturation" Style="{StaticResource SliderBlockWhite}" Minimum="0" Maximum="200"/>
+                                <Slider Name="sldr_LedSaturation" Style="{StaticResource SliderBlockWhite}" Minimum="0" Maximum="120"/>
 
                                 <TextBlock Margin="0,10,0,0" Name="tb_LedMinBrightness" Text="Minimum brightness level:" Style="{StaticResource TextBlockBlack}"/>
                                 <TextBlock Text="Change the minimum displayed led brightness." Style="{StaticResource TextBlockGray}"/>

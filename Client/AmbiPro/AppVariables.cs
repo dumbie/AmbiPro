@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Globalization;
 using System.IO.Ports;
 using static AmbiPro.AppClasses;
+using static AmbiPro.AppEnums;
 using static ArnoldVinkCode.AVClasses;
 using static ArnoldVinkCode.AVJsonFunctions;
 using static ArnoldVinkCode.AVSettings;
@@ -29,11 +30,11 @@ namespace AmbiPro
         public static SerialPort vSerialComPort = null;
 
         //Setting Variables
+        public static BackgroundMode vCurrentBackgroundMode = BackgroundMode.Transparent;
         public static string vCurrentVisibleMenu = string.Empty;
         public static string vCurrentRatio = string.Empty;
         public static int vCurrentRotation = 0;
         public static int vCurrentBlackbar = 0;
-        public static int vCurrentBackground = 0;
         public static int vCurrentSolidColor = 0;
 
         //Color loop Variables

@@ -289,12 +289,20 @@ namespace AmbiPro.Settings
                     tb_UpdateRate.Text = "Led update rate: " + updateRateMs + " ms (" + updateRateFps + " fps)";
                 };
 
-                //Save - Led Smoothing
-                sldr_LedSmoothing.ValueChanged += (sender, e) =>
+                //Save - Led Smooth Frame
+                sldr_LedSmoothFrame.ValueChanged += (sender, e) =>
                 {
-                    SettingSave(vConfiguration, "LedSmoothing", sldr_LedSmoothing.Value.ToString("0"));
-                    int smoothingFrames = Convert.ToInt32(sldr_LedSmoothing.Value);
-                    tb_LedSmoothing.Text = "Led smoothing: " + smoothingFrames + " frames";
+                    SettingSave(vConfiguration, "LedSmoothFrame", sldr_LedSmoothFrame.Value.ToString("0"));
+                    int smoothingFrames = Convert.ToInt32(sldr_LedSmoothFrame.Value);
+                    tb_LedSmoothFrame.Text = "Frame smoothing: " + smoothingFrames + " frames";
+                };
+
+                //Save - Led Smooth Object
+                sldr_LedSmoothObject.ValueChanged += (sender, e) =>
+                {
+                    SettingSave(vConfiguration, "LedSmoothObject", sldr_LedSmoothObject.Value.ToString("0"));
+                    int smoothingLeds = Convert.ToInt32(sldr_LedSmoothObject.Value);
+                    tb_LedSmoothObject.Text = "Object smoothing: " + smoothingLeds + " leds";
                 };
 
                 //Save - Capture HDR Paper White

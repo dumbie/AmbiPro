@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
+using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
 
 namespace AmbiPro.Settings
@@ -15,12 +16,40 @@ namespace AmbiPro.Settings
         {
             try
             {
-                SwitchBackground(false, false, false, false);
+                SwitchBackground();
             }
             catch { }
         }
 
-        private void SwitchBackground(bool forceBlocks, bool forceBlackbars, bool forceSolid, bool forceTransparent)
+        //Show hide test background
+        private void button_BackgroundShowHide_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ShowHideBackground();
+            }
+            catch { }
+        }
+
+        private void ShowHideBackground()
+        {
+            try
+            {
+                if (grid_BackgroundSolid.Visibility == Visibility.Visible || grid_BackgroundBlocks.Visibility == Visibility.Visible || grid_BackgroundBlackbars.Visibility == Visibility.Visible)
+                {
+                    //Hide backgrounds
+                    HideBackgrounds();
+                }
+                else
+                {
+                    //Show background
+                    ShowBackground(vCurrentBackgroundMode);
+                }
+            }
+            catch { }
+        }
+
+        private void HideBackgrounds()
         {
             try
             {
@@ -34,81 +63,85 @@ namespace AmbiPro.Settings
                 grid_ColorMenu_Blocks.Visibility = Visibility.Collapsed;
                 grid_ColorMenu_Blackbars.Visibility = Visibility.Collapsed;
                 grid_ColorMenu_SolidColor.Visibility = Visibility.Collapsed;
+            }
+            catch { }
+        }
 
-                //Change background forced
-                if (forceBlocks)
+        private void ShowBackground(BackgroundMode backgroundMode)
+        {
+            try
+            {
+                //Hide backgrounds
+                HideBackgrounds();
+
+                //Change background
+                if (backgroundMode == BackgroundMode.Blocks)
                 {
                     border_ColorMenu.Visibility = Visibility.Visible;
                     grid_ColorMenu_Blocks.Visibility = Visibility.Visible;
                     grid_BackgroundBlocks.Visibility = Visibility.Visible;
-                    vCurrentBackground = 1;
-                    return;
+                    vCurrentBackgroundMode = BackgroundMode.Blocks;
                 }
-                else if (forceBlackbars)
+                else if (backgroundMode == BackgroundMode.Solid)
+                {
+                    border_ColorMenu.Visibility = Visibility.Visible;
+                    grid_ColorMenu_SolidColor.Visibility = Visibility.Visible;
+                    grid_BackgroundSolid.Visibility = Visibility.Visible;
+                    vCurrentBackgroundMode = BackgroundMode.Solid;
+                }
+                else if (backgroundMode == BackgroundMode.Blackbars)
                 {
                     grid_MainWindow.Margin = new Thickness(0, 0, 0, 0);
                     border_ColorMenu.Visibility = Visibility.Visible;
                     grid_ColorMenu_Blackbars.Visibility = Visibility.Visible;
                     grid_BackgroundBlackbars.Visibility = Visibility.Visible;
-                    vCurrentBackground = 2;
-                    return;
+                    vCurrentBackgroundMode = BackgroundMode.Blackbars;
                 }
-                else if (forceSolid)
+                else if (backgroundMode == BackgroundMode.Transparent)
                 {
-                    border_ColorMenu.Visibility = Visibility.Visible;
-                    grid_ColorMenu_SolidColor.Visibility = Visibility.Visible;
-                    grid_BackgroundSolid.Visibility = Visibility.Visible;
-                    vCurrentBackground = 3;
-                    return;
-                }
-                else if (forceTransparent)
-                {
-                    vCurrentBackground = 0;
-                    return;
-                }
-
-                //Change background automatic
-                if (vCurrentBackground == 0)
-                {
-                    border_ColorMenu.Visibility = Visibility.Visible;
-                    grid_ColorMenu_Blocks.Visibility = Visibility.Visible;
-                    grid_BackgroundBlocks.Visibility = Visibility.Visible;
-                    vCurrentBackground = 1;
-                }
-                else if (vCurrentBackground == 1)
-                {
-                    grid_MainWindow.Margin = new Thickness(0, 0, 0, 0);
-                    border_ColorMenu.Visibility = Visibility.Visible;
-                    grid_ColorMenu_Blackbars.Visibility = Visibility.Visible;
-                    grid_BackgroundBlackbars.Visibility = Visibility.Visible;
-                    vCurrentBackground = 2;
-                }
-                else if (vCurrentBackground == 2)
-                {
-                    border_ColorMenu.Visibility = Visibility.Visible;
-                    grid_ColorMenu_SolidColor.Visibility = Visibility.Visible;
-                    grid_BackgroundSolid.Visibility = Visibility.Visible;
-                    vCurrentBackground = 3;
-                }
-                else if (vCurrentBackground == 3)
-                {
-                    vCurrentBackground = 0;
+                    vCurrentBackgroundMode = BackgroundMode.Transparent;
                 }
             }
             catch { }
         }
 
-        private void button_BackgroundSolidShowHide_Click(object sender, RoutedEventArgs e)
+        private void SwitchBackground()
         {
             try
             {
-                if (grid_BackgroundSolid.Visibility == Visibility.Visible)
+                //Hide backgrounds
+                HideBackgrounds();
+
+                //Change background
+                if (vCurrentBackgroundMode == BackgroundMode.Transparent)
                 {
-                    grid_BackgroundSolid.Visibility = Visibility.Collapsed;
+                    border_ColorMenu.Visibility = Visibility.Visible;
+                    grid_ColorMenu_Blocks.Visibility = Visibility.Visible;
+                    grid_BackgroundBlocks.Visibility = Visibility.Visible;
+                    button_BackgroundShowHide.IsEnabled = true;
+                    vCurrentBackgroundMode = BackgroundMode.Blocks;
                 }
-                else
+                else if (vCurrentBackgroundMode == BackgroundMode.Blocks)
                 {
+                    border_ColorMenu.Visibility = Visibility.Visible;
+                    grid_ColorMenu_SolidColor.Visibility = Visibility.Visible;
                     grid_BackgroundSolid.Visibility = Visibility.Visible;
+                    button_BackgroundShowHide.IsEnabled = true;
+                    vCurrentBackgroundMode = BackgroundMode.Solid;
+                }
+                else if (vCurrentBackgroundMode == BackgroundMode.Solid)
+                {
+                    grid_MainWindow.Margin = new Thickness(0, 0, 0, 0);
+                    border_ColorMenu.Visibility = Visibility.Visible;
+                    grid_ColorMenu_Blackbars.Visibility = Visibility.Visible;
+                    grid_BackgroundBlackbars.Visibility = Visibility.Visible;
+                    button_BackgroundShowHide.IsEnabled = true;
+                    vCurrentBackgroundMode = BackgroundMode.Blackbars;
+                }
+                else if (vCurrentBackgroundMode == BackgroundMode.Blackbars)
+                {
+                    button_BackgroundShowHide.IsEnabled = false;
+                    vCurrentBackgroundMode = BackgroundMode.Transparent;
                 }
             }
             catch { }
@@ -141,22 +174,6 @@ namespace AmbiPro.Settings
                 {
                     grid_BackgroundSolid.Background = new SolidColorBrush(Colors.Black);
                     grid_BackgroundSolidColor.Opacity = senderSlider.Value;
-                }
-            }
-            catch { }
-        }
-
-        private void button_BackgroundBlocksShowHide_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (grid_BackgroundBlocks.Visibility == Visibility.Visible)
-                {
-                    grid_BackgroundBlocks.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    grid_BackgroundBlocks.Visibility = Visibility.Visible;
                 }
             }
             catch { }

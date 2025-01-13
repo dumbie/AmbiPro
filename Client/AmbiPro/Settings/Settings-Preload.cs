@@ -18,7 +18,8 @@ namespace AmbiPro
         public static int setAdjustBlackbarRange = 0;
         public static int setAdjustBlackBarBrightness = 0;
         public static int setUpdateRate = 0;
-        public static int setLedSmoothing = 0;
+        public static int setLedSmoothFrame = 0;
+        public static int setLedSmoothObject = 0;
         public static int setLedBottomGap = 0;
         public static bool setLedEnergyMode = true;
         public static bool setLedOffMonitorSleep = true;
@@ -71,7 +72,8 @@ namespace AmbiPro
                 setAdjustBlackbarRange = SettingLoad(vConfiguration, "AdjustBlackbarRange", typeof(int));
                 setAdjustBlackBarBrightness = SettingLoad(vConfiguration, "AdjustBlackBarBrightness", typeof(int));
                 setUpdateRate = SettingLoad(vConfiguration, "UpdateRate", typeof(int));
-                setLedSmoothing = SettingLoad(vConfiguration, "LedSmoothing", typeof(int));
+                setLedSmoothFrame = SettingLoad(vConfiguration, "LedSmoothFrame", typeof(int));
+                setLedSmoothObject = SettingLoad(vConfiguration, "LedSmoothObject", typeof(int));
                 setLedBottomGap = SettingLoad(vConfiguration, "LedBottomGap", typeof(int));
                 setLedEnergyMode = SettingLoad(vConfiguration, "LedEnergyMode", typeof(bool));
                 setLedOffMonitorSleep = SettingLoad(vConfiguration, "LedOffMonitorSleep", typeof(bool));

@@ -5,22 +5,6 @@ namespace AmbiPro.Settings
 {
     partial class FormSettings
     {
-        private void button_BackgroundBlackbarsShowHide_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (grid_BackgroundBlackbars.Visibility == Visibility.Visible)
-                {
-                    grid_BackgroundBlackbars.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    grid_BackgroundBlackbars.Visibility = Visibility.Visible;
-                }
-            }
-            catch { }
-        }
-
         private void btn_BlackbarScenario_Click(object sender, RoutedEventArgs e)
         {
             try

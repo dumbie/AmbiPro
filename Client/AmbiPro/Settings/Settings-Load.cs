@@ -191,10 +191,15 @@ namespace AmbiPro.Settings
                 tb_UpdateRate.Text = "Led update rate: " + updateRateMs + " ms (" + updateRateFps + " fps)";
                 sldr_UpdateRate.Value = updateRateMs;
 
-                //Load - Led Smoothing
-                int smoothingFrames = SettingLoad(vConfiguration, "LedSmoothing", typeof(int));
-                tb_LedSmoothing.Text = "Led smoothing: " + smoothingFrames + " frames";
-                sldr_LedSmoothing.Value = smoothingFrames;
+                //Load - Led Smooth Frame
+                int smoothingFrame = SettingLoad(vConfiguration, "LedSmoothFrame", typeof(int));
+                tb_LedSmoothFrame.Text = "Frame smoothing: " + smoothingFrame + " frames";
+                sldr_LedSmoothFrame.Value = smoothingFrame;
+
+                //Load - Led Smooth Object
+                int smoothingObject = SettingLoad(vConfiguration, "LedSmoothObject", typeof(int));
+                tb_LedSmoothObject.Text = "Object smoothing: " + smoothingObject + " leds";
+                sldr_LedSmoothObject.Value = smoothingObject;
 
                 //Load - Capture HDR Paper White
                 int captureHDRPaperWhite = SettingLoad(vConfiguration, "CaptureHDRPaperWhite", typeof(int));

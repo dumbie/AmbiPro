@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
 using static ArnoldVinkCode.AVSettings;
 
@@ -63,37 +64,37 @@ namespace AmbiPro.Settings
 
                     if (selectedStackPanel.Name == "menuButtonBasics")
                     {
-                        SwitchBackground(false, false, false, true);
+                        ShowBackground(BackgroundMode.Transparent);
                         sp_Basics.Visibility = Visibility.Visible;
                     }
                     else if (selectedStackPanel.Name == "menuButtonModes")
                     {
-                        SwitchBackground(false, false, false, true);
+                        ShowBackground(BackgroundMode.Transparent);
                         sp_Modes.Visibility = Visibility.Visible;
                     }
                     else if (selectedStackPanel.Name == "menuButtonScreen")
                     {
-                        SwitchBackground(false, false, false, true);
+                        ShowBackground(BackgroundMode.Transparent);
                         sp_Screen.Visibility = Visibility.Visible;
                     }
                     else if (selectedStackPanel.Name == "menuButtonLeds")
                     {
-                        SwitchBackground(true, false, false, false);
+                        ShowBackground(BackgroundMode.Blocks);
                         sp_Leds.Visibility = Visibility.Visible;
                     }
                     else if (selectedStackPanel.Name == "menuButtonAdjust")
                     {
-                        SwitchBackground(false, false, true, false);
+                        ShowBackground(BackgroundMode.Solid);
                         sp_Adjust.Visibility = Visibility.Visible;
                     }
                     else if (selectedStackPanel.Name == "menuButtonShortcuts")
                     {
-                        SwitchBackground(false, false, false, true);
+                        ShowBackground(BackgroundMode.Transparent);
                         sp_Shortcuts.Visibility = Visibility.Visible;
                     }
                     else if (selectedStackPanel.Name == "menuButtonRemote")
                     {
-                        SwitchBackground(false, false, false, true);
+                        ShowBackground(BackgroundMode.Transparent);
                         sp_Remote.Visibility = Visibility.Visible;
                     }
                     else if (selectedStackPanel.Name == "menuButtonUpdate")
@@ -102,12 +103,12 @@ namespace AmbiPro.Settings
                     }
                     else if (selectedStackPanel.Name == "menuButtonHelp")
                     {
-                        SwitchBackground(false, false, false, true);
+                        ShowBackground(BackgroundMode.Transparent);
                         sp_Help.Visibility = Visibility.Visible;
                     }
                     else if (selectedStackPanel.Name == "menuButtonDebug")
                     {
-                        SwitchBackground(false, false, false, true);
+                        ShowBackground(BackgroundMode.Transparent);
                         sp_Debug.Visibility = Visibility.Visible;
 
                         //Enable debug capture
@@ -121,12 +122,12 @@ namespace AmbiPro.Settings
                     }
                     else if (selectedStackPanel.Name == "menuButtonBlackbars")
                     {
-                        SwitchBackground(false, true, false, false);
+                        ShowBackground(BackgroundMode.Blackbars);
                         sp_Blackbars.Visibility = Visibility.Visible;
                     }
                     else if (selectedStackPanel.Name == "menuButtonRotate")
                     {
-                        SwitchBackground(true, false, false, false);
+                        ShowBackground(BackgroundMode.Blocks);
                         sp_LedRotate.Visibility = Visibility.Visible;
                     }
                 }
