@@ -23,6 +23,18 @@ namespace AmbiPro
             public static ColorRGBA Black = new ColorRGBA() { R = 0, G = 0, B = 0, A = 255 };
             public static ColorRGBA White = new ColorRGBA() { R = 255, G = 255, B = 255, A = 255 };
 
+            public static ColorRGBA RGBToRGBA(byte Red, byte Green, byte Blue)
+            {
+                try
+                {
+                    return new ColorRGBA() { R = Red, G = Green, B = Blue };
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+
             public static ColorRGBA HexToRGBA(string hexString)
             {
                 try
@@ -178,7 +190,7 @@ namespace AmbiPro
                     float gFloat = G / 255.0F;
                     float bFloat = B / 255.0F;
 
-                    float adjustGamma = targetAdjust / 1.0F;
+                    float adjustGamma = 1.0F / targetAdjust;
                     float rAdjusted = (float)Math.Pow(rFloat, adjustGamma);
                     float gAdjusted = (float)Math.Pow(gFloat, adjustGamma);
                     float bAdjusted = (float)Math.Pow(bFloat, adjustGamma);
@@ -188,7 +200,6 @@ namespace AmbiPro
                     B = ValidateColor(255.0F * bAdjusted);
 
                     //Debug.WriteLine("Gamma adjusted: R" + R + "/G" + G + "/B" + B + "/T" + targetAdjust);
-
                 }
                 catch { }
             }
