@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using static AmbiPro.AppClasses;
 using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
 using static AmbiPro.PreloadSettings;
 using static ArnoldVinkCode.AVActions;
+using static ArnoldVinkCode.AVArrayFunctions;
 
 namespace AmbiPro
 {
     partial class SerialMonitor
     {
         //Set the solid color to the leds
-        private static async Task ModeSolidColor(int initByteSize, int totalByteSize, byte[] serialBytes)
+        private static async Task ModeSolidColor()
         {
             try
             {
@@ -22,49 +21,46 @@ namespace AmbiPro
                 bool ConnectionFailed = false;
                 int LoopDelayMs = 0;
 
-                //Current byte information
-                while (!vTask_UpdateLed.TaskStopRequested)
+                //Create byte array
+                ColorRGBA[] colorArray = CreateArray(setLedCountTotal, ColorRGBA.Black);
+
+                //Start updating leds
+                while (await TaskCheckLoop(vTask_UpdateLed, LoopDelayMs))
                 {
                     try
                     {
                         //Check monitor sleeping and send black leds update
                         if (setLedOffMonitorSleep && vMonitorSleeping)
                         {
-                            //Set led byte array
-                            serialBytes = new byte[totalByteSize];
-                            serialBytes[0] = Encoding.Unicode.GetBytes("A").First();
-                            serialBytes[1] = Encoding.Unicode.GetBytes("d").First();
-                            serialBytes[2] = Encoding.Unicode.GetBytes("a").First();
+                            //Reset color array
+                            ResetArray(colorArray, ColorRGBA.Black);
 
                             //Set loop delay time
                             LoopDelayMs = 500;
                         }
                         else
                         {
-                            //Set the used colors and adjust it
+                            //Get current color
                             ColorRGBA CurrentColor = ColorRGBA.HexToRGBA(setSolidLedColor);
-                            AdjustLedColors(ref CurrentColor);
 
-                            //Set the current color to the bytes
-                            int CurrentSerialByte = initByteSize;
-                            while (CurrentSerialByte < totalByteSize)
+                            //Set color to array
+                            for (int i = 0; i < colorArray.Length; i++)
                             {
-                                serialBytes[CurrentSerialByte] = CurrentColor.R;
-                                CurrentSerialByte++;
-
-                                serialBytes[CurrentSerialByte] = CurrentColor.G;
-                                CurrentSerialByte++;
-
-                                serialBytes[CurrentSerialByte] = CurrentColor.B;
-                                CurrentSerialByte++;
+                                colorArray[i] = ColorRGBA.Clone(CurrentColor);
                             }
+
+                            //Adjust leds color to settings
+                            AdjustLedColors(colorArray);
+
+                            //Adjust leds to energy mode
+                            AdjustLedEnergyMode(colorArray);
 
                             //Set loop delay time
                             LoopDelayMs = 1000;
                         }
 
                         //Send serial bytes to device
-                        if (!SerialComPortWrite(totalByteSize, serialBytes))
+                        if (!SerialComPortWrite(colorArray))
                         {
                             ConnectionFailed = true;
                             break;
@@ -73,11 +69,6 @@ namespace AmbiPro
                     catch (Exception ex)
                     {
                         Debug.WriteLine("Mode color solid loop failed: " + ex.Message);
-                    }
-                    finally
-                    {
-                        //Delay the loop task
-                        await TaskDelay(LoopDelayMs, vTask_UpdateLed);
                     }
                 }
 

@@ -9,11 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using static AmbiPro.AppClasses;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
 using static AmbiPro.PreloadSettings;
 using static ArnoldVinkCode.AVActions;
+using static ArnoldVinkCode.AVArrayFunctions;
 using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro
@@ -226,19 +228,11 @@ namespace AmbiPro
                     //Send black leds update
                     if (!restartLeds)
                     {
-                        //Calculate bytes size
-                        int initByteSize = 3;
-                        int ledByteSize = setLedCountTotal * 3;
-                        int totalByteSize = initByteSize + ledByteSize;
-
-                        //Create led byte array
-                        byte[] serialBytes = new byte[totalByteSize];
-                        serialBytes[0] = Encoding.Unicode.GetBytes("A").First();
-                        serialBytes[1] = Encoding.Unicode.GetBytes("d").First();
-                        serialBytes[2] = Encoding.Unicode.GetBytes("a").First();
+                        //Create led ColorRGBA array
+                        ColorRGBA[] colorArray = CreateArray(setLedCountTotal, ColorRGBA.Black);
 
                         //Send serial bytes to device
-                        SerialComPortWrite(totalByteSize, serialBytes);
+                        SerialComPortWrite(colorArray);
                     }
 
                     vSerialComPort.Close();
@@ -252,15 +246,15 @@ namespace AmbiPro
         }
 
         //Write to serial com port
-        public static bool SerialComPortWrite(int totalByteSize, byte[] serialBytes)
+        public static bool SerialComPortWrite(ColorRGBA[] colorArray)
         {
             try
             {
-                //Adjust to led energy mode
-                AdjustLedEnergyMode(totalByteSize, serialBytes);
+                //Convert led ColorRGBA to byte array
+                byte[] serialBytes = ConvertColorRGBAtoLedByteArray(colorArray);
 
                 //Write bytes to serial com port
-                vSerialComPort.Write(serialBytes, 0, totalByteSize);
+                vSerialComPort.Write(serialBytes, 0, serialBytes.Length);
                 //Debug.WriteLine("Bytes written to com port: " + totalByteSize);
                 return true;
             }
@@ -369,8 +363,8 @@ namespace AmbiPro
             catch { }
         }
 
-        //Update the leds in loop
-        private static async Task LoopUpdateLeds()
+        //Convert ColorRGBA array to led byte array
+        public static byte[] ConvertColorRGBAtoLedByteArray(ColorRGBA[] colorArray)
         {
             try
             {
@@ -379,16 +373,43 @@ namespace AmbiPro
                 int ledByteSize = setLedCountTotal * 3;
                 int totalByteSize = initByteSize + ledByteSize;
 
-                //Connect to the device
-                vSerialComPort = new SerialPort(setSerialPortName, setSerialBaudRate);
-                vSerialComPort.Open();
-                Debug.WriteLine("Connected to the com port device: " + setSerialPortName + "/" + setSerialBaudRate);
-
                 //Create led byte array
                 byte[] serialBytes = new byte[totalByteSize];
                 serialBytes[0] = Encoding.Unicode.GetBytes("A").First();
                 serialBytes[1] = Encoding.Unicode.GetBytes("d").First();
                 serialBytes[2] = Encoding.Unicode.GetBytes("a").First();
+
+                //Convert color array
+                int currentSerialByte = initByteSize;
+                foreach (ColorRGBA colorRGBA in colorArray)
+                {
+                    serialBytes[currentSerialByte] = colorRGBA.R;
+                    currentSerialByte++;
+
+                    serialBytes[currentSerialByte] = colorRGBA.G;
+                    currentSerialByte++;
+
+                    serialBytes[currentSerialByte] = colorRGBA.B;
+                    currentSerialByte++;
+                }
+
+                return serialBytes;
+            }
+            catch
+            {
+                return Array.Empty<byte>();
+            }
+        }
+
+        //Update leds in loop
+        private static async Task LoopUpdateLeds()
+        {
+            try
+            {
+                //Connect to the device
+                vSerialComPort = new SerialPort(setSerialPortName, setSerialBaudRate);
+                vSerialComPort.Open();
+                Debug.WriteLine("Connected to the com port device: " + setSerialPortName + "/" + setSerialBaudRate);
 
                 //Reset default variables
                 ResetVariables();
@@ -397,10 +418,10 @@ namespace AmbiPro
                 SettingSave(vConfiguration, "FirstLaunch2", "False");
 
                 //Check led display mode
-                if (setLedMode == 0) { await ModeScreenCapture(initByteSize, totalByteSize, serialBytes); }
-                else if (setLedMode == 1) { await ModeSolidColor(initByteSize, totalByteSize, serialBytes); }
-                else if (setLedMode == 2) { await ModeColorLoop(initByteSize, totalByteSize, serialBytes); }
-                else if (setLedMode == 3) { await ModeColorSpectrum(initByteSize, totalByteSize, serialBytes); }
+                if (setLedMode == 0) { await ModeScreenCapture(); }
+                else if (setLedMode == 1) { await ModeSolidColor(); }
+                else if (setLedMode == 2) { await ModeColorLoop(); }
+                else if (setLedMode == 3) { await ModeColorSpectrum(); }
             }
             catch (Exception ex)
             {

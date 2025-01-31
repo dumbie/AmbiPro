@@ -2,16 +2,13 @@
 using ScreenCaptureImport;
 using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using static AmbiPro.AppClasses;
-using static AmbiPro.AppEnums;
 using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
 using static AmbiPro.PreloadSettings;
 using static ArnoldVinkCode.AVActions;
-using static ArnoldVinkCode.AVClassConverters;
+using static ArnoldVinkCode.AVArrayFunctions;
 using static ArnoldVinkCode.AVSettings;
 
 namespace AmbiPro
@@ -85,6 +82,7 @@ namespace AmbiPro
                 }
                 else if (captureInitialized == CaptureStatus.Failed)
                 {
+                    //Show failed capture message
                     await ShowFailedCaptureMessage();
                 }
 
@@ -101,6 +99,7 @@ namespace AmbiPro
             }
             catch (Exception ex)
             {
+                //Show failed capture message
                 await ShowFailedCaptureMessage();
                 Debug.WriteLine("Failed initializing screen capturer: " + ex.Message);
                 return CaptureStatus.Failed;
@@ -146,14 +145,17 @@ namespace AmbiPro
             }
         }
 
-        //Loop cature the screen
-        private static async Task ModeScreenCapture(int initByteSize, int totalByteSize, byte[] serialBytes)
+        //Loop capture the screen
+        private static async Task ModeScreenCapture()
         {
             try
             {
                 //Loop mode variables
                 bool ConnectionFailed = false;
                 int LoopDelayMs = 0;
+
+                //Create led ColorRGBA array
+                ColorRGBA[] colorArray = CreateArray(setLedCountTotal, ColorRGBA.Black);
 
                 //Initialize Screen Capture
                 CaptureStatus initializeResult = await InitializeScreenCapture();
@@ -162,21 +164,18 @@ namespace AmbiPro
                     return;
                 }
 
-                //Start updating the leds
-                while (!vTask_UpdateLed.TaskStopRequested)
+                //Start updating leds
+                while (await TaskCheckLoop(vTask_UpdateLed, LoopDelayMs))
                 {
-                    int currentSerialByte = initByteSize;
+                    int colorCurrentIndex = 0;
                     IntPtr bitmapIntPtr = IntPtr.Zero;
                     try
                     {
                         //Check monitor sleeping and send black leds update
                         if (setLedOffMonitorSleep && vMonitorSleeping)
                         {
-                            //Set led byte array
-                            serialBytes = new byte[totalByteSize];
-                            serialBytes[0] = Encoding.Unicode.GetBytes("A").First();
-                            serialBytes[1] = Encoding.Unicode.GetBytes("d").First();
-                            serialBytes[2] = Encoding.Unicode.GetBytes("a").First();
+                            //Reset color array
+                            ResetArray(colorArray, ColorRGBA.Black);
 
                             //Set loop delay time
                             LoopDelayMs = 500;
@@ -199,79 +198,36 @@ namespace AmbiPro
                             //Convert BitmapIntPtr to BitmapByteArray
                             byte[] bitmapByteArray = CaptureBitmap.BitmapIntPtrToBitmapByteArray(bitmapIntPtr, vCaptureDetails);
 
-                            //Check led capture sides color
-                            ScreenColors(setLedSideFirst, setLedCountFirst, serialBytes, bitmapByteArray, ref currentSerialByte);
-                            ScreenColors(setLedSideSecond, setLedCountSecond, serialBytes, bitmapByteArray, ref currentSerialByte);
-                            ScreenColors(setLedSideThird, setLedCountThird, serialBytes, bitmapByteArray, ref currentSerialByte);
-                            ScreenColors(setLedSideFourth, setLedCountFourth, serialBytes, bitmapByteArray, ref currentSerialByte);
+                            //Get led capture sides color
+                            ScreenColors(setLedSideFirst, setLedCountFirst, bitmapByteArray, colorArray, ref colorCurrentIndex);
+                            ScreenColors(setLedSideSecond, setLedCountSecond, bitmapByteArray, colorArray, ref colorCurrentIndex);
+                            ScreenColors(setLedSideThird, setLedCountThird, bitmapByteArray, colorArray, ref colorCurrentIndex);
+                            ScreenColors(setLedSideFourth, setLedCountFourth, bitmapByteArray, colorArray, ref colorCurrentIndex);
 
-                            //Update debug capture preview
-                            if (vDebugCaptureAllowed)
-                            {
-                                UpdateCaptureDebugPreview(bitmapByteArray);
-                            }
+                            //Update debug screen capture preview
+                            DebugUpdateCapturePreview(bitmapByteArray);
 
-                            //Smooth led frame transition
-                            if (setLedSmoothing > 0)
-                            {
-                                //Make copy of current color bytes
-                                byte[] CaptureByteCurrent = CloneByteArray(serialBytes);
+                            //Adjust leds color to settings
+                            AdjustLedColors(colorArray);
 
-                                //Merge current colors with history
-                                for (int ledCount = initByteSize; ledCount < (totalByteSize - initByteSize); ledCount++)
-                                {
-                                    //Debug.WriteLine("Led smoothing old: " + SerialBytes[ledCount]);
+                            //Smooth object movement
+                            AdjustLedSmoothObject(colorArray);
 
-                                    int ColorCount = 1;
-                                    int ColorAverage = serialBytes[ledCount];
-                                    for (int smoothCount = 0; smoothCount < setLedSmoothing; smoothCount++)
-                                    {
-                                        if (vCaptureByteHistoryArray[smoothCount] != null)
-                                        {
-                                            ColorAverage += vCaptureByteHistoryArray[smoothCount][ledCount];
-                                            ColorCount++;
-                                        }
-                                        else
-                                        {
-                                            break;
-                                        }
-                                    }
+                            //Smooth frame transition
+                            AdjustLedSmoothFrame(colorArray);
 
-                                    serialBytes[ledCount] = (byte)(ColorAverage / ColorCount);
-                                    //Debug.WriteLine("Led smoothing new: " + SerialBytes[ledCount]);
-                                }
+                            //Adjust leds to energy mode
+                            AdjustLedEnergyMode(colorArray);
 
-                                //Update capture color bytes history
-                                Array.Copy(vCaptureByteHistoryArray, 0, vCaptureByteHistoryArray, 1, vCaptureByteHistoryArray.Length - 1);
-                                vCaptureByteHistoryArray[0] = CaptureByteCurrent;
-                            }
-
-                            //Rotate the leds as calibrated
-                            if (setLedRotate > 0)
-                            {
-                                for (int RotateCount = 0; RotateCount < setLedRotate; RotateCount++)
-                                {
-                                    AVFunctions.MoveByteInArrayLeft(totalByteSize, serialBytes, 3, totalByteSize - 1);
-                                    AVFunctions.MoveByteInArrayLeft(totalByteSize, serialBytes, 3, totalByteSize - 1);
-                                    AVFunctions.MoveByteInArrayLeft(totalByteSize, serialBytes, 3, totalByteSize - 1);
-                                }
-                            }
-                            else if (setLedRotate < 0)
-                            {
-                                for (int RotateCount = 0; RotateCount < Math.Abs(setLedRotate); RotateCount++)
-                                {
-                                    AVFunctions.MoveByteInArrayRight(totalByteSize, serialBytes, totalByteSize - 1, 3);
-                                    AVFunctions.MoveByteInArrayRight(totalByteSize, serialBytes, totalByteSize - 1, 3);
-                                    AVFunctions.MoveByteInArrayRight(totalByteSize, serialBytes, totalByteSize - 1, 3);
-                                }
-                            }
+                            //Rotate leds as calibrated
+                            AdjustLedRotate(colorArray);
 
                             //Set loop delay time
                             LoopDelayMs = setUpdateRate;
                         }
 
                         //Send serial bytes to device
-                        if (!SerialComPortWrite(totalByteSize, serialBytes))
+                        if (!SerialComPortWrite(colorArray))
                         {
                             ConnectionFailed = true;
                             break;
@@ -280,11 +236,6 @@ namespace AmbiPro
                     catch (Exception ex)
                     {
                         Debug.WriteLine("Screen capture loop failed: " + ex.Message);
-                    }
-                    finally
-                    {
-                        //Delay the loop task
-                        await TaskDelay(LoopDelayMs, vTask_UpdateLed);
                     }
                 }
 
@@ -314,74 +265,6 @@ namespace AmbiPro
                 //Update capture settings
                 bool settingsUpdated = CaptureImport.CaptureUpdateSettings(vCaptureSettings);
                 Debug.WriteLine("Capture settings updated: " + settingsUpdated);
-            }
-            catch { }
-        }
-
-        private static void UpdateCaptureDebugPreview(byte[] bitmapByteArray)
-        {
-            try
-            {
-                //Update debug screen capture preview
-                DispatcherInvoke(delegate
-                {
-                    try
-                    {
-                        vFormSettings.image_DebugPreview.Source = CaptureBitmap.BitmapByteArrayToBitmapSource(bitmapByteArray, vCaptureDetails);
-                    }
-                    catch { }
-                });
-            }
-            catch { }
-        }
-
-        private static void UpdateLedColorsPreview(LedSideTypes ledSide, int currentLed, ColorRGBA colorRGBA)
-        {
-            try
-            {
-                DispatcherInvoke(delegate
-                {
-                    if (ledSide == LedSideTypes.LeftBottomToTop)
-                    {
-                        int countLed = vFormSettings.listbox_LedPreviewLeft.Items.Count - 1;
-                        vFormSettings.listbox_LedPreviewLeft.Items[countLed - currentLed] = colorRGBA.AsSolidColorBrush();
-                    }
-                    else if (ledSide == LedSideTypes.LeftTopToBottom)
-                    {
-                        int countLed = vFormSettings.listbox_LedPreviewLeft.Items.Count - 1;
-                        vFormSettings.listbox_LedPreviewLeft.Items[currentLed] = colorRGBA.AsSolidColorBrush();
-                    }
-                    else if (ledSide == LedSideTypes.TopRightToLeft)
-                    {
-                        int countLed = vFormSettings.listbox_LedPreviewTop.Items.Count - 1;
-                        vFormSettings.listbox_LedPreviewTop.Items[countLed - currentLed] = colorRGBA.AsSolidColorBrush();
-                    }
-                    else if (ledSide == LedSideTypes.TopLeftToRight)
-                    {
-                        int countLed = vFormSettings.listbox_LedPreviewTop.Items.Count - 1;
-                        vFormSettings.listbox_LedPreviewTop.Items[currentLed] = colorRGBA.AsSolidColorBrush();
-                    }
-                    else if (ledSide == LedSideTypes.RightBottomToTop)
-                    {
-                        int countLed = vFormSettings.listbox_LedPreviewRight.Items.Count - 1;
-                        vFormSettings.listbox_LedPreviewRight.Items[countLed - currentLed] = colorRGBA.AsSolidColorBrush();
-                    }
-                    else if (ledSide == LedSideTypes.RightTopToBottom)
-                    {
-                        int countLed = vFormSettings.listbox_LedPreviewRight.Items.Count - 1;
-                        vFormSettings.listbox_LedPreviewRight.Items[currentLed] = colorRGBA.AsSolidColorBrush();
-                    }
-                    else if (ledSide == LedSideTypes.BottomRightToLeft)
-                    {
-                        int countLed = vFormSettings.listbox_LedPreviewBottom.Items.Count - 1;
-                        vFormSettings.listbox_LedPreviewBottom.Items[countLed - currentLed] = colorRGBA.AsSolidColorBrush();
-                    }
-                    else if (ledSide == LedSideTypes.BottomLeftToRight)
-                    {
-                        int countLed = vFormSettings.listbox_LedPreviewBottom.Items.Count - 1;
-                        vFormSettings.listbox_LedPreviewBottom.Items[currentLed] = colorRGBA.AsSolidColorBrush();
-                    }
-                });
             }
             catch { }
         }

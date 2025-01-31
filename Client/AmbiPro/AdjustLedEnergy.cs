@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using static AmbiPro.AppClasses;
 using static AmbiPro.PreloadSettings;
 
 namespace AmbiPro
@@ -7,29 +8,26 @@ namespace AmbiPro
     public partial class SerialMonitor
     {
         //Adjust to led energy mode
-        private static void AdjustLedEnergyMode(int totalByteSize, byte[] serialBytes)
+        private static void AdjustLedEnergyMode(ColorRGBA[] colorArray)
         {
             try
             {
                 if (setLedEnergyMode)
                 {
-                    int CurrentSerialByte = 3;
-                    int CurrentLedEnergySkip = 6;
-                    while (CurrentSerialByte < totalByteSize)
+                    int currentLedSkip = 0;
+                    foreach (ColorRGBA colorRGBA in colorArray)
                     {
-                        if (CurrentSerialByte == CurrentLedEnergySkip)
+                        if (currentLedSkip == 0)
                         {
-                            serialBytes[CurrentSerialByte] = 0;
-                            CurrentSerialByte++;
-                            serialBytes[CurrentSerialByte] = 0;
-                            CurrentSerialByte++;
-                            serialBytes[CurrentSerialByte] = 0;
-                            CurrentSerialByte++;
-                            CurrentLedEnergySkip += 6;
+                            currentLedSkip = 1;
                         }
                         else
                         {
-                            CurrentSerialByte += 3;
+                            colorRGBA.R = 0;
+                            colorRGBA.G = 0;
+                            colorRGBA.B = 0;
+                            colorRGBA.A = 255;
+                            currentLedSkip = 0;
                         }
                     }
                 }

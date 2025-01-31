@@ -11,7 +11,7 @@ namespace AmbiPro
     public partial class SerialMonitor
     {
         //Get screenshot colors and set it to byte array
-        private static void ScreenColors(LedSideTypes ledSideType, int directionLedCount, byte[] serialBytes, byte[] bitmapByteArray, ref int currentSerialByte)
+        private static void ScreenColors(LedSideTypes ledSideType, int directionLedCount, byte[] bitmapByteArray, ColorRGBA[] colorArray, ref int colorCurrentIndex)
         {
             try
             {
@@ -111,14 +111,9 @@ namespace AmbiPro
                     //Set led off color byte array
                     if (ledSideType == LedSideTypes.LedsOff)
                     {
-                        serialBytes[currentSerialByte] = 0;
-                        currentSerialByte++;
-
-                        serialBytes[currentSerialByte] = 0;
-                        currentSerialByte++;
-
-                        serialBytes[currentSerialByte] = 0;
-                        currentSerialByte++;
+                        //Set color to array
+                        colorArray[colorCurrentIndex] = ColorRGBA.Black;
+                        colorCurrentIndex++;
                         continue;
                     }
 
@@ -139,24 +134,12 @@ namespace AmbiPro
                         //Detect blackbar ranges
                         DetectBlackbarRanges(ledSideType, ledCurrentIndex, colorFound, colorFirstRange);
 
-                        //Update debug led colors preview
-                        if (vDebugCaptureAllowed && setDebugLedPreview)
-                        {
-                            UpdateLedColorsPreview(ledSideType, ledCurrentIndex, colorCapture);
-                        }
+                        //Update debug led strip preview
+                        DebugUpdateLedStripPreview(ledSideType, ledCurrentIndex, colorCapture);
 
-                        //Adjust the colors to settings
-                        AdjustLedColors(ref colorCapture);
-
-                        //Set the color to color byte array
-                        serialBytes[currentSerialByte] = colorCapture.R;
-                        currentSerialByte++;
-
-                        serialBytes[currentSerialByte] = colorCapture.G;
-                        currentSerialByte++;
-
-                        serialBytes[currentSerialByte] = colorCapture.B;
-                        currentSerialByte++;
+                        //Set color to array
+                        colorArray[colorCurrentIndex] = colorCapture;
+                        colorCurrentIndex++;
                     }
 
                     //Zone difference correction
@@ -265,59 +248,7 @@ namespace AmbiPro
                         if (colorPixel != null)
                         {
                             //Draw debug pixel colors
-                            if (vDebugCaptureAllowed)
-                            {
-                                if (setDebugColorLeftRight)
-                                {
-                                    if (ledSideType == LedSideTypes.LeftBottomToTop || ledSideType == LedSideTypes.LeftTopToBottom)
-                                    {
-                                        if (captureInBlackbarRange)
-                                        {
-                                            ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + captureZoneHorRange, captureZoneVer + captureZoneVerRange, ColorRGBA.Purple);
-                                        }
-                                        else
-                                        {
-                                            ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + captureZoneHorRange, captureZoneVer + captureZoneVerRange, ColorRGBA.Red);
-                                        }
-                                    }
-                                    if (ledSideType == LedSideTypes.RightBottomToTop || ledSideType == LedSideTypes.RightTopToBottom)
-                                    {
-                                        if (captureInBlackbarRange)
-                                        {
-                                            ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + captureZoneHorRange, captureZoneVer + captureZoneVerRange, ColorRGBA.Purple);
-                                        }
-                                        else
-                                        {
-                                            ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + captureZoneHorRange, captureZoneVer + captureZoneVerRange, ColorRGBA.Green);
-                                        }
-                                    }
-                                }
-                                if (setDebugColorTopBottom)
-                                {
-                                    if (ledSideType == LedSideTypes.TopLeftToRight || ledSideType == LedSideTypes.TopRightToLeft)
-                                    {
-                                        if (captureInBlackbarRange)
-                                        {
-                                            ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + captureZoneHorRange, captureZoneVer + captureZoneVerRange, ColorRGBA.Purple);
-                                        }
-                                        else
-                                        {
-                                            ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + captureZoneHorRange, captureZoneVer + captureZoneVerRange, ColorRGBA.Blue);
-                                        }
-                                    }
-                                    if (ledSideType == LedSideTypes.BottomLeftToRight || ledSideType == LedSideTypes.BottomRightToLeft)
-                                    {
-                                        if (captureInBlackbarRange)
-                                        {
-                                            ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + captureZoneHorRange, captureZoneVer + captureZoneVerRange, ColorRGBA.Purple);
-                                        }
-                                        else
-                                        {
-                                            ScreenColorProcessing.SetPixelColor(bitmapByteArray, vCaptureDetails.OutputWidth, vCaptureDetails.OutputHeight, captureZoneHor + captureZoneHorRange, captureZoneVer + captureZoneVerRange, ColorRGBA.Yellow);
-                                        }
-                                    }
-                                }
-                            }
+                            DebugDrawPixelColors(bitmapByteArray, captureZoneHor, captureZoneVer, ledSideType, captureZoneHorRange, captureZoneVerRange, captureInBlackbarRange);
 
                             //Calculate color luminance
                             int colorLuminance = colorPixel.CalculateLuminance();
