@@ -121,8 +121,8 @@ namespace AmbiPro.Settings
                 sldr_LedMinBrightness.Value = SettingLoad(vConfiguration, "LedMinBrightness", typeof(int));
 
                 //Load - Led Gamma
-                tb_LedGamma.Text = "Gamma curve: " + SettingLoad(vConfiguration, "LedGamma3", typeof(float)).ToString("0.00");
-                sldr_LedGamma.Value = SettingLoad(vConfiguration, "LedGamma3", typeof(float));
+                tb_LedGamma.Text = "Gamma curve: " + SettingLoad(vConfiguration, "LedGamma4", typeof(float)).ToString("0.00");
+                sldr_LedGamma.Value = SettingLoad(vConfiguration, "LedGamma4", typeof(float));
 
                 //Load - Led Saturation
                 tb_LedSaturation.Text = "Color saturation: " + SettingLoad(vConfiguration, "LedSaturation", typeof(int)) + "%";

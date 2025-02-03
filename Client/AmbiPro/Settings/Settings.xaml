@@ -363,11 +363,11 @@
 
                                 <TextBlock Margin="0,10,0,0" Name="tb_LedSmoothFrame" Text="Frame smoothing:" Style="{StaticResource TextBlockBlack}"/>
                                 <TextBlock Text="Blend previous colors with current color to reduce flashing." TextWrapping="Wrap" Style="{StaticResource TextBlockGray}"/>
-                                <Slider Name="sldr_LedSmoothFrame" Style="{StaticResource SliderBlockWhite}" Minimum="0" Maximum="20"/>
+                                <Slider Name="sldr_LedSmoothFrame" Style="{StaticResource SliderBlockWhite}" Minimum="0" Maximum="10"/>
 
                                 <TextBlock Margin="0,10,0,0" Name="tb_LedSmoothObject" Text="Object smoothing:" Style="{StaticResource TextBlockBlack}"/>
                                 <TextBlock Text="Blend neighbouring colors to reduce flickering when objects move." TextWrapping="Wrap" Style="{StaticResource TextBlockGray}"/>
-                                <Slider Name="sldr_LedSmoothObject" Style="{StaticResource SliderBlockWhite}" Minimum="0" Maximum="5"/>
+                                <Slider Name="sldr_LedSmoothObject" Style="{StaticResource SliderBlockWhite}" Minimum="0" Maximum="8"/>
 
                                 <TextBlock Margin="0,10,0,0" Name="tb_CaptureHDRPaperWhite" Text="HDR paper white:" Style="{StaticResource TextBlockBlack}"/>
                                 <TextBlock Text="Adjust HDR paper white to your monitor, this effects whites level." TextWrapping="Wrap" Style="{StaticResource TextBlockGray}"/>
@@ -523,7 +523,7 @@
                             <StackPanel Name="sp_Adjust" Visibility="Collapsed" Margin="5,5,5,5">
                                 <TextBlock Name="tb_LedBrightness" Text="Brightness level:" Style="{StaticResource TextBlockBlack}"/>
                                 <TextBlock Text="Change the displayed led brightness level." Style="{StaticResource TextBlockGray}"/>
-                                <Slider Name="sldr_LedBrightness" Style="{StaticResource SliderBlockWhite}" Minimum="0" Maximum="100"/>
+                                <Slider Name="sldr_LedBrightness" Style="{StaticResource SliderBlockWhite}" Minimum="20" Maximum="100"/>
 
                                 <TextBlock Margin="0,10,0,0" Name="tb_LedContrast" Text="Contrast level:" Style="{StaticResource TextBlockBlack}"/>
                                 <TextBlock Text="Change the displayed led contrast level." Style="{StaticResource TextBlockGray}"/>
@@ -626,8 +626,10 @@
                                 <CheckBox Name="checkbox_DebugLedPreview" Margin="0,10,0,0" Content="Enable or disable led strip preview" Style="{StaticResource CheckBoxBlack}"/>
                                 <TextBlock Text="Enable or disable the led strip preview showing the colors." Style="{StaticResource TextBlockGray}"/>
 
-                                <TextBlock Name="textblock_DebugPreview" Margin="0,10,0,0" Text="Screen capture preview:" Style="{StaticResource TextBlockBlack}"/>
-                                <Image Name="image_DebugPreview"/>
+                                <TextBlock Name="textblock_DebugInfo" Margin="0,10,0,0" Text="Capture details:" Style="{StaticResource TextBlockBlack}"/>
+                                <TextBlock Name="textblock_DebugFramerate" Text="Capture framerate:" Style="{StaticResource TextBlockBlack}"/>
+
+                                <Image Name="image_DebugPreview" Margin="0,10,0,0" />
                             </StackPanel>
 
                             <!-- Help -->

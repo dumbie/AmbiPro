@@ -21,7 +21,7 @@ namespace AmbiPro
                 bool ConnectionFailed = false;
                 int LoopDelayMs = 0;
 
-                //Create byte array
+                //Create led ColorRGBA array
                 ColorRGBA[] colorArray = CreateArray(setLedCountTotal, ColorRGBA.Black);
 
                 //Start updating leds

@@ -51,11 +51,12 @@ namespace AmbiPro
         public static int[] vBlackbarRangesRight = new int[1000];
 
         //Screen capture Variables
+        public static int vCaptureTickCount = 0;
         public static int vCaptureRangeHorizontal = 0;
         public static int vCaptureRangeVertical = 0;
         public static CaptureDetails vCaptureDetails;
         public static CaptureSettings vCaptureSettings;
-        public static byte[][] vCaptureByteHistoryArray = new byte[20][];
+        public static ColorRGBA[][] vCaptureHistoryArray = new ColorRGBA[20][];
 
         //Debug Variables
         public static bool vDebugCaptureAllowed = false;
@@ -86,7 +87,7 @@ namespace AmbiPro
                 vCaptureRangeVertical = 0;
                 vCaptureDetails = new CaptureDetails();
                 vCaptureSettings = new CaptureSettings();
-                vCaptureByteHistoryArray = new byte[20][];
+                vCaptureHistoryArray = new ColorRGBA[20][];
             }
             catch { }
         }

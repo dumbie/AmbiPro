@@ -152,7 +152,7 @@ namespace AmbiPro.Settings
                 //Save - Led Gamma
                 sldr_LedGamma.ValueChanged += (sender, e) =>
                 {
-                    SettingSave(vConfiguration, "LedGamma3", sldr_LedGamma.Value);
+                    SettingSave(vConfiguration, "LedGamma4", sldr_LedGamma.Value);
                     tb_LedGamma.Text = "Gamma curve: " + sldr_LedGamma.Value.ToString("0.00");
                 };
 

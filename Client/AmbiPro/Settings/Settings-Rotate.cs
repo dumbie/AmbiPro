@@ -69,7 +69,8 @@ namespace AmbiPro.Settings
                     btn_RotateCounterwise.IsEnabled = false;
                     btn_RotateClockwise.IsEnabled = false;
                     btn_RotateReset.IsEnabled = false;
-                    textblock_DebugPreview.Text = "Select screen capture mode and turn leds on to debug.";
+                    textblock_DebugInfo.Text = "Select screen capture mode and turn leds on to debug.";
+                    textblock_DebugFramerate.Text = string.Empty;
                     image_DebugPreview.Source = null;
                     tb_RotateResolution.Text = "Select screen capture mode and turn leds on to start calibration.";
                     return;
@@ -87,8 +88,8 @@ namespace AmbiPro.Settings
                     captureInfo += " (SDR)";
                 }
 
-                //Update debug screen
-                textblock_DebugPreview.Text = "Screen capture preview " + captureInfo + ":";
+                //Update debug information
+                textblock_DebugInfo.Text = "Capture information: " + captureInfo;
 
                 //Update rotation screen
                 if (SettingCheck(vConfiguration, "LedRotate" + vCurrentRatio))

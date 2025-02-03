@@ -84,7 +84,7 @@ namespace AmbiPro
                 setLedColorBlue = SettingLoad(vConfiguration, "LedColorBlue", typeof(float)) / 100;
                 setLedContrast = SettingLoad(vConfiguration, "LedContrast", typeof(float)) / 100;
                 setLedBrightness = SettingLoad(vConfiguration, "LedBrightness", typeof(float)) / 100;
-                setLedGamma = SettingLoad(vConfiguration, "LedGamma3", typeof(float));
+                setLedGamma = SettingLoad(vConfiguration, "LedGamma4", typeof(float));
 
                 setLedMinBrightness = SettingLoad(vConfiguration, "LedMinBrightness", typeof(byte));
                 setLedMinColor = SettingLoad(vConfiguration, "LedMinColor2", typeof(int));

@@ -105,15 +105,15 @@ namespace AmbiPro.Settings
                 }
 
                 //Check - Led Gamma
-                if (!SettingCheck(vConfiguration, "LedGamma3"))
+                if (!SettingCheck(vConfiguration, "LedGamma4"))
                 {
-                    SettingSave(vConfiguration, "LedGamma3", "2.15");
+                    SettingSave(vConfiguration, "LedGamma4", "0.60");
                 }
 
                 //Check - Led Saturation
                 if (!SettingCheck(vConfiguration, "LedSaturation"))
                 {
-                    SettingSave(vConfiguration, "LedSaturation", "105");
+                    SettingSave(vConfiguration, "LedSaturation", "100");
                 }
 
                 //Check - Color Loop Speed
@@ -233,13 +233,13 @@ namespace AmbiPro.Settings
                 //Check - Led Smooth Frame
                 if (!SettingCheck(vConfiguration, "LedSmoothFrame"))
                 {
-                    SettingSave(vConfiguration, "LedSmoothFrame", "4");
+                    SettingSave(vConfiguration, "LedSmoothFrame", "3");
                 }
 
                 //Check - Led Smooth Object
                 if (!SettingCheck(vConfiguration, "LedSmoothObject"))
                 {
-                    SettingSave(vConfiguration, "LedSmoothObject", "1");
+                    SettingSave(vConfiguration, "LedSmoothObject", "2");
                 }
 
                 //Check - Capture HDR Paper White
