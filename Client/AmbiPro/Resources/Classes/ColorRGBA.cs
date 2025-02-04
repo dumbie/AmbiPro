@@ -13,7 +13,7 @@ namespace AmbiPro
             public byte R = 0;
             public byte G = 0;
             public byte B = 0;
-            public byte A = 0;
+            public byte A = 255;
             public static ColorRGBA Red = new ColorRGBA() { R = 255, A = 255 };
             public static ColorRGBA Green = new ColorRGBA() { G = 255, A = 255 };
             public static ColorRGBA Blue = new ColorRGBA() { B = 255, A = 255 };
