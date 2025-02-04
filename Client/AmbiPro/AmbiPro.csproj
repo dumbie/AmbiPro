@@ -125,12 +125,12 @@
 		<ProjectReference Include="..\..\..\ScreenCaptureDLL\ScreenCaptureImport\ScreenCaptureImport.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="System.IO.Ports" Version="8.0.0" />
+		<PackageReference Include="System.IO.Ports" Version="9.0.1" />
 	</ItemGroup>
 	<Target Name="DonePublish" AfterTargets="Publish">
 		<Exec Command="$(SolutionDir)SignToolExe.exe" />
 	</Target>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="if $(Configuration) == Release (&#xD;&#xA;$(SolutionDir)SignToolExe.exe&#xD;&#xA;mkdir $(TargetDir)\Resources&#xD;&#xA;move /y $(TargetDir)\*.dll $(TargetDir)\Resources\&#xD;&#xA;move /y $(TargetDir)\runtimes\win\lib\net8.0\*.dll $(TargetDir)\Resources\&#xD;&#xA;move /y $(TargetDir)\Resources\AmbiPro.dll $(TargetDir)&#xD;&#xA;move /y $(TargetDir)\Resources\ArnoldVinkCode.dll $(TargetDir)&#xD;&#xA;rd /s /q $(TargetDir)\runtimes&#xD;&#xA;del /q $(TargetDir)\*.deps.json&#xD;&#xA;)" />
+		<Exec Command="if $(Configuration) == Release (&#xD;&#xA;$(SolutionDir)SignToolExe.exe&#xD;&#xA;mkdir $(TargetDir)\Resources&#xD;&#xA;move /y $(TargetDir)\*.dll $(TargetDir)\Resources\&#xD;&#xA;move /y $(TargetDir)\runtimes\win\lib\net8.0\*.dll $(TargetDir)\Resources\&#xD;&#xA;move /y $(TargetDir)\Resources\AmbiPro.dll $(TargetDir)&#xD;&#xA;move /y $(TargetDir)\Resources\ArnoldVinkCode.dll $(TargetDir)&#xD;&#xA;move /y $(TargetDir)\Resources\WinRT.Runtime.dll $(TargetDir)&#xD;&#xA;move /y $(TargetDir)\ScreenCaptureImport.deps.json $(TargetDir)\Resources&#xD;&#xA;rd /s /q $(TargetDir)\runtimes&#xD;&#xA;del /q $(TargetDir)\*.pdb&#xD;&#xA;del /q $(TargetDir)\*.xml&#xD;&#xA;)" />
 	</Target>
 </Project>
