@@ -80,6 +80,7 @@ namespace AmbiPro.Settings
                     border_ColorMenu.Visibility = Visibility.Visible;
                     grid_ColorMenu_Blocks.Visibility = Visibility.Visible;
                     grid_BackgroundBlocks.Visibility = Visibility.Visible;
+                    button_BackgroundShowHide.IsEnabled = true;
                     vCurrentBackgroundMode = BackgroundMode.Blocks;
                 }
                 else if (backgroundMode == BackgroundMode.Solid)
@@ -87,6 +88,7 @@ namespace AmbiPro.Settings
                     border_ColorMenu.Visibility = Visibility.Visible;
                     grid_ColorMenu_SolidColor.Visibility = Visibility.Visible;
                     grid_BackgroundSolid.Visibility = Visibility.Visible;
+                    button_BackgroundShowHide.IsEnabled = true;
                     vCurrentBackgroundMode = BackgroundMode.Solid;
                 }
                 else if (backgroundMode == BackgroundMode.Blackbars)
@@ -95,10 +97,12 @@ namespace AmbiPro.Settings
                     border_ColorMenu.Visibility = Visibility.Visible;
                     grid_ColorMenu_Blackbars.Visibility = Visibility.Visible;
                     grid_BackgroundBlackbars.Visibility = Visibility.Visible;
+                    button_BackgroundShowHide.IsEnabled = true;
                     vCurrentBackgroundMode = BackgroundMode.Blackbars;
                 }
                 else if (backgroundMode == BackgroundMode.Transparent)
                 {
+                    button_BackgroundShowHide.IsEnabled = false;
                     vCurrentBackgroundMode = BackgroundMode.Transparent;
                 }
             }
@@ -109,39 +113,21 @@ namespace AmbiPro.Settings
         {
             try
             {
-                //Hide backgrounds
-                HideBackgrounds();
-
-                //Change background
                 if (vCurrentBackgroundMode == BackgroundMode.Transparent)
                 {
-                    border_ColorMenu.Visibility = Visibility.Visible;
-                    grid_ColorMenu_Blocks.Visibility = Visibility.Visible;
-                    grid_BackgroundBlocks.Visibility = Visibility.Visible;
-                    button_BackgroundShowHide.IsEnabled = true;
-                    vCurrentBackgroundMode = BackgroundMode.Blocks;
+                    ShowBackground(BackgroundMode.Blocks);
                 }
                 else if (vCurrentBackgroundMode == BackgroundMode.Blocks)
                 {
-                    border_ColorMenu.Visibility = Visibility.Visible;
-                    grid_ColorMenu_SolidColor.Visibility = Visibility.Visible;
-                    grid_BackgroundSolid.Visibility = Visibility.Visible;
-                    button_BackgroundShowHide.IsEnabled = true;
-                    vCurrentBackgroundMode = BackgroundMode.Solid;
+                    ShowBackground(BackgroundMode.Solid);
                 }
                 else if (vCurrentBackgroundMode == BackgroundMode.Solid)
                 {
-                    grid_MainWindow.Margin = new Thickness(0, 0, 0, 0);
-                    border_ColorMenu.Visibility = Visibility.Visible;
-                    grid_ColorMenu_Blackbars.Visibility = Visibility.Visible;
-                    grid_BackgroundBlackbars.Visibility = Visibility.Visible;
-                    button_BackgroundShowHide.IsEnabled = true;
-                    vCurrentBackgroundMode = BackgroundMode.Blackbars;
+                    ShowBackground(BackgroundMode.Blackbars);
                 }
                 else if (vCurrentBackgroundMode == BackgroundMode.Blackbars)
                 {
-                    button_BackgroundShowHide.IsEnabled = false;
-                    vCurrentBackgroundMode = BackgroundMode.Transparent;
+                    ShowBackground(BackgroundMode.Transparent);
                 }
             }
             catch { }
