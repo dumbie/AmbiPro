@@ -54,7 +54,7 @@ namespace AmbiPro
                             adjustColor.R = setLedMinBrightness;
                             adjustColor.G = setLedMinBrightness;
                             adjustColor.B = setLedMinBrightness;
-                            return;
+                            continue;
                         }
                     }
 
