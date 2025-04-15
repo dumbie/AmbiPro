@@ -327,7 +327,7 @@ namespace AmbiPro
         }
 
         //Show failed capture message
-        private static async Task ShowFailedCaptureMessage()
+        private static async Task ShowFailedCaptureMessage(string captureMessage)
         {
             try
             {
@@ -335,17 +335,17 @@ namespace AmbiPro
                 {
                     List<string> MsgBoxAnswers = new List<string>();
                     MsgBoxAnswers.Add("Change monitor setting");
-                    MsgBoxAnswers.Add("Change the led mode");
+                    MsgBoxAnswers.Add("Change current led mode");
                     MsgBoxAnswers.Add("Retry to capture screen");
                     MsgBoxAnswers.Add("Close application");
 
-                    string MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to start capturing your screen", "Please make sure the correct screen is selected, all the requirements are installed on your PC, that you have a Windows 11 64bit installation and that you have a DirectX 12 or higher capable graphics adapter installed.", MsgBoxAnswers);
+                    string MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to start capturing your screen", "Please make sure the correct screen is selected, all the requirements are installed on your PC, that you have a Windows 11 64bit installation and that you have a DirectX 12 or higher capable graphics adapter.\n\nError: " + captureMessage, MsgBoxAnswers);
                     if (MsgBoxResult == "Change monitor setting")
                     {
                         await LedSwitch(LedSwitches.Disable);
                         ShowSettings();
                     }
-                    else if (MsgBoxResult == "Change the led mode")
+                    else if (MsgBoxResult == "Change current led mode")
                     {
                         await LedSwitch(LedSwitches.Disable);
                         ShowSettings();

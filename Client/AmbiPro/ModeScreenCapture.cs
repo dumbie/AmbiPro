@@ -61,7 +61,7 @@ namespace AmbiPro
         }
 
         //Initialize screen capture
-        private static async Task<CaptureStatus> InitializeScreenCapture()
+        private static async Task<CaptureResult> InitializeScreenCapture()
         {
             try
             {
@@ -74,16 +74,17 @@ namespace AmbiPro
                 CaptureImport.CaptureEventDeviceChangeDetected(CaptureEventDeviceChangeDetected);
 
                 //Initialize screen capture
-                CaptureStatus captureInitialized = CaptureImport.CaptureInitialize(vCaptureSettings, true);
-                if (captureInitialized == CaptureStatus.Initialized)
+                CaptureResult captureResult = CaptureImport.CaptureInitialize(vCaptureSettings, true);
+                Debug.WriteLine("Capture result: " + captureResult.Status + " / " + captureResult.Message);
+                if (captureResult.Status == CaptureStatus.Success)
                 {
                     //Update capture details
                     vCaptureDetails = CaptureImport.CaptureGetDetails();
                 }
-                else if (captureInitialized == CaptureStatus.Failed)
+                else
                 {
                     //Show failed capture message
-                    await ShowFailedCaptureMessage();
+                    await ShowFailedCaptureMessage(captureResult.Message);
                 }
 
                 //Update capture variables
@@ -95,14 +96,18 @@ namespace AmbiPro
                     vFormSettings.UpdateScreenInformation();
                 });
 
-                return captureInitialized;
+                //Return capture result
+                return captureResult;
             }
             catch (Exception ex)
             {
-                //Show failed capture message
-                await ShowFailedCaptureMessage();
                 Debug.WriteLine("Failed initializing screen capturer: " + ex.Message);
-                return CaptureStatus.Failed;
+
+                //Show failed capture message
+                await ShowFailedCaptureMessage(ex.Message);
+
+                //Return capture result
+                return new CaptureResult() { Status = CaptureStatus.Failed, Message = ex.Message };
             }
         }
 
@@ -131,7 +136,7 @@ namespace AmbiPro
         }
 
         //Reset Screen Capture
-        private static bool ResetScreenCapture()
+        private static CaptureResult ResetScreenCapture()
         {
             try
             {
@@ -141,7 +146,7 @@ namespace AmbiPro
             catch
             {
                 Debug.WriteLine("Failed to reset screen capture.");
-                return false;
+                return new CaptureResult { Status = CaptureStatus.Failed };
             }
         }
 
@@ -158,8 +163,8 @@ namespace AmbiPro
                 ColorRGBA[] colorArray = CreateArray(setLedCountTotal, ColorRGBA.Black);
 
                 //Initialize Screen Capture
-                CaptureStatus initializeResult = await InitializeScreenCapture();
-                if (initializeResult == CaptureStatus.Failed || initializeResult == CaptureStatus.Busy)
+                CaptureResult initializeResult = await InitializeScreenCapture();
+                if (initializeResult.Status != CaptureStatus.Success)
                 {
                     return;
                 }
@@ -207,20 +212,21 @@ namespace AmbiPro
                             //Update debug screen capture preview
                             DebugUpdateCapturePreview(bitmapByteArray);
 
-                            //Adjust leds color to settings
-                            AdjustLedColors(colorArray);
-
                             //Smooth object movement
                             AdjustLedSmoothObject(colorArray);
 
-                            //Smooth frame transition
-                            AdjustLedSmoothFrame(colorArray);
+                            //Adjust leds color to settings
+                            AdjustLedColors(colorArray);
 
-                            //Adjust leds to energy mode
-                            AdjustLedEnergyMode(colorArray);
+                            //Smooth frame transition
+                            //AdjustLedSmoothFrameOpacity(colorArray);
+                            AdjustLedSmoothFrameMerge(colorArray);
 
                             //Rotate leds as calibrated
                             AdjustLedRotate(colorArray);
+
+                            //Adjust leds to energy mode
+                            AdjustLedEnergyMode(colorArray);
 
                             //Set loop delay time
                             LoopDelayMs = setUpdateRate;
@@ -263,8 +269,8 @@ namespace AmbiPro
                 SetCaptureSettings();
 
                 //Update capture settings
-                bool settingsUpdated = CaptureImport.CaptureUpdateSettings(vCaptureSettings);
-                Debug.WriteLine("Capture settings updated: " + settingsUpdated);
+                CaptureResult captureResult = CaptureImport.CaptureUpdateSettings(vCaptureSettings);
+                Debug.WriteLine("Capture settings updated: " + captureResult.Status);
             }
             catch { }
         }
