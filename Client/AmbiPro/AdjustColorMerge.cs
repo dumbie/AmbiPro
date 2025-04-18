@@ -25,7 +25,7 @@ namespace AmbiPro
             }
         }
 
-        //Merge two colors (Linear Interpolation)
+        //Merge two colors (Linear interpolation)
         public static ColorRGBA ColorMergeLerp(ColorRGBA colorBase, ColorRGBA colorAdd, float amountAdd)
         {
             try

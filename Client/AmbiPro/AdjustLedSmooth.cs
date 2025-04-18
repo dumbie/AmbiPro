@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using static AmbiPro.AdjustColorMerge;
 using static AmbiPro.AppClasses;
 using static AmbiPro.AppVariables;
 using static AmbiPro.PreloadSettings;
@@ -12,50 +14,72 @@ namespace AmbiPro
         //Adjust leds to smooth frame transition
         /// <summary>
         /// Note: this reduces flickering when scenes change quickly or camera is pointed to flames or helicopter blades
+        /// Opacity method is more cpu efficient but it darkens color.
         /// </summary>
-        private static void AdjustLedSmoothFrame(ColorRGBA[] colorArray)
+        private static void AdjustLedSmoothFrameOpacity(ColorRGBA[] colorArray)
         {
             try
             {
-                if (setLedSmoothFrame > 0)
+                if (setLedSmoothFrame <= 0) { return; }
+                float setLedSmoothFrameTemp = setLedSmoothFrame / 100;
+
+                //Merge current with previous color
+                if (vCaptureColorHistoryOpacity != null)
                 {
-                    //Make copy of current colors
-                    ColorRGBA[] colorArrayCopy = CloneObjectArray(colorArray);
-
-                    //Blend current with history led colors
-                    for (int ledCount = 0; ledCount < colorArray.Length; ledCount++)
+                    for (int ledIndex = 0; ledIndex < colorArray.Length; ledIndex++)
                     {
-                        int colorCount = 1;
-                        int colorAverageR = colorArray[ledCount].R;
-                        int colorAverageG = colorArray[ledCount].G;
-                        int colorAverageB = colorArray[ledCount].B;
-                        //Debug.WriteLine("Frame smoothing old: R" + colorArray[ledCount].R + "/G" + colorArray[ledCount].G + "/B" + colorArray[ledCount].B);
+                        //Merge colors
+                        colorArray[ledIndex] = ColorMergeSqrt(colorArray[ledIndex], vCaptureColorHistoryOpacity[ledIndex], setLedSmoothFrameTemp);
+                    }
+                }
 
-                        for (int smoothCount = 0; smoothCount < setLedSmoothFrame; smoothCount++)
+                //Update previous capture color
+                vCaptureColorHistoryOpacity = CloneObjectArray(colorArray);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed to smooth frame: " + ex.Message);
+            }
+        }
+
+        private static void AdjustLedSmoothFrameMerge(ColorRGBA[] colorArray)
+        {
+            try
+            {
+                if (setLedSmoothFrame <= 0) { return; }
+
+                //Make copy of current colors
+                ColorRGBA[] colorArrayCopy = CloneObjectArray(colorArray);
+
+                //Blend current with history led colors
+                List<ColorRGBA> colorMergeList = [];
+                for (int ledIndex = 0; ledIndex < colorArray.Length; ledIndex++)
+                {
+                    //Add current color
+                    colorMergeList.Add(colorArray[ledIndex]);
+
+                    //Add colors from history
+                    for (int smoothCount = 0; smoothCount < setLedSmoothFrame; smoothCount++)
+                    {
+                        if (vCaptureColorHistoryMerge[smoothCount] != null)
                         {
-                            if (vCaptureHistoryArray[smoothCount] != null)
-                            {
-                                ColorRGBA colorHistory = vCaptureHistoryArray[smoothCount][ledCount];
-                                colorAverageR += colorHistory.R;
-                                colorAverageG += colorHistory.G;
-                                colorAverageB += colorHistory.B;
-                                colorCount++;
-                            }
-                            else
-                            {
-                                break;
-                            }
+                            colorMergeList.Add(vCaptureColorHistoryMerge[smoothCount][ledIndex]);
                         }
-
-                        colorArray[ledCount].R = (byte)(colorAverageR / colorCount);
-                        colorArray[ledCount].G = (byte)(colorAverageG / colorCount);
-                        colorArray[ledCount].B = (byte)(colorAverageB / colorCount);
-                        //Debug.WriteLine("Frame smoothing new: R" + colorArray[ledCount].R + "/G" + colorArray[ledCount].G + "/B" + colorArray[ledCount].B + "/C" + colorCount);
+                        else
+                        {
+                            break;
+                        }
                     }
 
-                    //Update capture color history
-                    InsertObjectBegin(vCaptureHistoryArray, colorArrayCopy);
+                    //Merge colors
+                    colorArray[ledIndex] = ColorMergeSqrt(colorMergeList);
+
+                    //Update variables
+                    colorMergeList.Clear();
                 }
+
+                //Update capture color history
+                InsertObjectBegin(vCaptureColorHistoryMerge, colorArrayCopy);
             }
             catch (Exception ex)
             {
@@ -71,43 +95,33 @@ namespace AmbiPro
         {
             try
             {
-                if (setLedSmoothObject > 0)
+                if (setLedSmoothObject <= 0) { return; }
+
+                //Merge neighboring led colors together
+                int colorMergeCount = 0;
+                List<ColorRGBA> colorMergeList = [];
+                int colorSmoothCount = setLedSmoothObject + 1;
+                for (int ledIndex = 0; ledIndex < colorArray.Length; ledIndex++)
                 {
-                    //Blend neighboring led colors together
-                    int colorAverageR = 0;
-                    int colorAverageG = 0;
-                    int colorAverageB = 0;
-                    int colorBlendCount = 0;
-                    int colorSmoothCount = setLedSmoothObject + 1;
-                    for (int ledCount = 0; ledCount < colorArray.Length; ledCount++)
+                    //Accumulate colors
+                    colorMergeList.Add(colorArray[ledIndex]);
+
+                    //Update merge count
+                    colorMergeCount++;
+
+                    //Check merge count
+                    if (colorMergeCount == colorSmoothCount)
                     {
-                        //Accumulate colors
-                        colorAverageR += colorArray[ledCount].R;
-                        colorAverageG += colorArray[ledCount].G;
-                        colorAverageB += colorArray[ledCount].B;
+                        //Merge colors
+                        ColorRGBA colorMerge = ColorMergeSqrt(colorMergeList);
+                        for (int mergeIndex = 0; mergeIndex < colorSmoothCount; mergeIndex++)
+                        {
+                            colorArray[ledIndex - mergeIndex] = ColorRGBA.Clone(colorMerge);
+                        }
 
                         //Update variables
-                        colorBlendCount++;
-
-                        if (colorBlendCount == colorSmoothCount)
-                        {
-                            //Blend colors
-                            byte colorBlendR = (byte)(colorAverageR / colorBlendCount);
-                            byte colorBlendG = (byte)(colorAverageG / colorBlendCount);
-                            byte colorBlendB = (byte)(colorAverageB / colorBlendCount);
-                            for (int blendIndex = 0; blendIndex < colorSmoothCount; blendIndex++)
-                            {
-                                colorArray[ledCount - blendIndex].R = colorBlendR;
-                                colorArray[ledCount - blendIndex].G = colorBlendG;
-                                colorArray[ledCount - blendIndex].B = colorBlendB;
-                            }
-
-                            //Update variables
-                            colorAverageR = 0;
-                            colorAverageG = 0;
-                            colorAverageB = 0;
-                            colorBlendCount = 0;
-                        }
+                        colorMergeList.Clear();
+                        colorMergeCount = 0;
                     }
                 }
             }
