@@ -56,7 +56,8 @@ namespace AmbiPro
         public static int vCaptureRangeVertical = 0;
         public static CaptureDetails vCaptureDetails;
         public static CaptureSettings vCaptureSettings;
-        public static ColorRGBA[][] vCaptureHistoryArray = new ColorRGBA[20][];
+        public static ColorRGBA[] vCaptureColorHistoryOpacity = null;
+        public static ColorRGBA[][] vCaptureColorHistoryMerge = new ColorRGBA[20][];
 
         //Debug Variables
         public static bool vDebugCaptureAllowed = false;
@@ -87,7 +88,8 @@ namespace AmbiPro
                 vCaptureRangeVertical = 0;
                 vCaptureDetails = new CaptureDetails();
                 vCaptureSettings = new CaptureSettings();
-                vCaptureHistoryArray = new ColorRGBA[20][];
+                vCaptureColorHistoryOpacity = null;
+                vCaptureColorHistoryMerge = new ColorRGBA[20][];
             }
             catch { }
         }

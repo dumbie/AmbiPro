@@ -1,6 +1,8 @@
 ﻿using ArnoldVinkCode;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using static AmbiPro.AppClasses;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
@@ -180,10 +182,7 @@ namespace AmbiPro
             colorFirstRange = 0;
             try
             {
-                int colorCount = 0;
-                int colorAverageR = 0;
-                int colorAverageG = 0;
-                int colorAverageB = 0;
+                List<ColorRGBA> captureColors = [];
                 int captureSizeStep = 0;
                 int captureEvenStep = 1;
                 int captureRangeStep = 0;
@@ -250,18 +249,15 @@ namespace AmbiPro
                             //Draw debug pixel colors
                             DebugDrawPixelColors(bitmapByteArray, captureZoneHor, captureZoneVer, ledSideType, captureZoneHorRange, captureZoneVerRange, captureInBlackbarRange);
 
+                            //Check blackbar range and add captured pixel color
+                            if (!captureInBlackbarRange)
+                            {
+                                captureColors.Add(colorPixel);
+                            }
+
                             //Calculate color luminance
                             int colorLuminance = colorPixel.CalculateLuminance();
                             bool colorIsNotBlack = colorLuminance > setAdjustBlackBarBrightness;
-
-                            //Check blackbar range and add pixel color to average color
-                            if (!captureInBlackbarRange || colorIsNotBlack)
-                            {
-                                colorAverageR += colorPixel.R;
-                                colorAverageG += colorPixel.G;
-                                colorAverageB += colorPixel.B;
-                                colorCount++;
-                            }
 
                             //Check if color found and set first found range
                             if (!colorFound && colorIsNotBlack)
@@ -274,15 +270,10 @@ namespace AmbiPro
                     }
                 }
 
-                //Calculate average color
-                if (colorCount > 0)
+                //Merge captured pixel colors
+                if (captureColors.Any())
                 {
-                    colorCapture = new ColorRGBA()
-                    {
-                        R = (byte)(colorAverageR / colorCount),
-                        G = (byte)(colorAverageG / colorCount),
-                        B = (byte)(colorAverageB / colorCount)
-                    };
+                    colorCapture = AdjustColorMerge.ColorMergeSqrt(captureColors);
                 }
             }
             catch (Exception ex)
