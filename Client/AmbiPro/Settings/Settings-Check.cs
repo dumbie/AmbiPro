@@ -107,7 +107,7 @@ namespace AmbiPro.Settings
                 //Check - Led Gamma
                 if (!SettingCheck(vConfiguration, "LedGamma4"))
                 {
-                    SettingSave(vConfiguration, "LedGamma4", "0.60");
+                    SettingSave(vConfiguration, "LedGamma4", "0.65");
                 }
 
                 //Check - Led Saturation
@@ -233,7 +233,7 @@ namespace AmbiPro.Settings
                 //Check - Led Smooth Frame
                 if (!SettingCheck(vConfiguration, "LedSmoothFrame"))
                 {
-                    SettingSave(vConfiguration, "LedSmoothFrame", "3");
+                    SettingSave(vConfiguration, "LedSmoothFrame", "4");
                 }
 
                 //Check - Led Smooth Object
