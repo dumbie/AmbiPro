@@ -155,7 +155,7 @@ namespace AmbiPro.Settings
                 //Check - Led Minimum Color
                 if (!SettingCheck(vConfiguration, "LedMinColor2"))
                 {
-                    SettingSave(vConfiguration, "LedMinColor2", "2");
+                    SettingSave(vConfiguration, "LedMinColor2", "3");
                 }
 
                 //Check - Led Color Red
