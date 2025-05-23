@@ -74,6 +74,12 @@ namespace AmbiPro.Settings
                     SettingSave(vConfiguration, "AdjustBlackBars", "True");
                 }
 
+                //Check - Blackbar Update Rate
+                if (!SettingCheck(vConfiguration, "AdjustBlackbarRate2"))
+                {
+                    SettingSave(vConfiguration, "AdjustBlackbarRate2", "60");
+                }
+
                 //Check - Blackbar Update Range
                 if (!SettingCheck(vConfiguration, "AdjustBlackbarRange"))
                 {
@@ -155,7 +161,7 @@ namespace AmbiPro.Settings
                 //Check - Led Minimum Color
                 if (!SettingCheck(vConfiguration, "LedMinColor2"))
                 {
-                    SettingSave(vConfiguration, "LedMinColor2", "3");
+                    SettingSave(vConfiguration, "LedMinColor2", "0");
                 }
 
                 //Check - Led Color Red

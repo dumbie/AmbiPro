@@ -385,6 +385,10 @@
                                 <CheckBox Margin="0,15,0,0" Name="cb_AdjustBlackBars" Content="Adjust to screen black bars" Style="{StaticResource CheckBoxBlack}"/>
                                 <TextBlock Text="Automatically adjust leds to black bars displayed on the screen." Style="{StaticResource TextBlockGray}"/>
 
+                                <TextBlock Margin="0,10,0,0" Name="tb_AdjustBlackbarRate" Text="Blackbar detection rate:" Style="{StaticResource TextBlockBlack}"/>
+                                <TextBlock Text="Change the black bars detection rate." TextWrapping="Wrap" Style="{StaticResource TextBlockGray}"/>
+                                <Slider Name="sldr_AdjustBlackbarRate" Style="{StaticResource SliderBlockWhite}" Minimum="0" Maximum="100"/>
+
                                 <TextBlock Margin="0,10,0,0" Name="tb_AdjustBlackbarRange" Text="Blackbar detection range:" Style="{StaticResource TextBlockBlack}"/>
                                 <TextBlock Text="Change the black bars detection range to move farther in." TextWrapping="Wrap" Style="{StaticResource TextBlockGray}"/>
                                 <Slider Name="sldr_AdjustBlackbarRange" Style="{StaticResource SliderBlockWhite}" Minimum="5" Maximum="25"/>

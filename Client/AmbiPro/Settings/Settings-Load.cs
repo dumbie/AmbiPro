@@ -160,6 +160,12 @@ namespace AmbiPro.Settings
                 tb_LedCaptureRange.Text = "Led capture range: " + SettingLoad(vConfiguration, "LedCaptureRange", typeof(int)) + "%";
                 sldr_LedCaptureRange.Value = SettingLoad(vConfiguration, "LedCaptureRange", typeof(int));
 
+                //Load - Blackbar detect rate
+                int updateRateBarMs = SettingLoad(vConfiguration, "AdjustBlackbarRate2", typeof(int));
+                string updateRateBarFps = Convert.ToInt32(1000 / updateRateBarMs).ToString();
+                tb_AdjustBlackbarRate.Text = "Blackbar detection rate: " + updateRateBarMs + " ms (" + updateRateBarFps + " fps)";
+                sldr_AdjustBlackbarRate.Value = updateRateBarMs;
+
                 //Load - Blackbar detect range
                 tb_AdjustBlackbarRange.Text = "Blackbar detection range: " + SettingLoad(vConfiguration, "AdjustBlackbarRange", typeof(int)) + "%";
                 sldr_AdjustBlackbarRange.Value = SettingLoad(vConfiguration, "AdjustBlackbarRange", typeof(int));
@@ -186,10 +192,10 @@ namespace AmbiPro.Settings
                 cb_LedOutput.SelectedIndex = SettingLoad(vConfiguration, "LedOutput", typeof(int));
 
                 //Load - Update Rate
-                int updateRateMs = SettingLoad(vConfiguration, "UpdateRate", typeof(int));
-                string updateRateFps = Convert.ToInt32(1000 / updateRateMs).ToString();
-                tb_UpdateRate.Text = "Led update rate: " + updateRateMs + " ms (" + updateRateFps + " fps)";
-                sldr_UpdateRate.Value = updateRateMs;
+                int updateRateScreenMs = SettingLoad(vConfiguration, "UpdateRate", typeof(int));
+                string updateRateScreenFps = Convert.ToInt32(1000 / updateRateScreenMs).ToString();
+                tb_UpdateRate.Text = "Led update rate: " + updateRateScreenMs + " ms (" + updateRateScreenFps + " fps)";
+                sldr_UpdateRate.Value = updateRateScreenMs;
 
                 //Load - Led Smooth Frame
                 int smoothingFrame = SettingLoad(vConfiguration, "LedSmoothFrame", typeof(int));

@@ -203,11 +203,21 @@ namespace AmbiPro
                             //Convert BitmapIntPtr to BitmapByteArray
                             byte[] bitmapByteArray = CaptureBitmap.BitmapIntPtrToBitmapByteArray(bitmapIntPtr, vCaptureDetails);
 
+                            //Check if blackbar detection is needed
+                            long currentTicks = GetSystemTicksMs();
+                            vBlackbarDetect = (currentTicks - vBlackbarDetectLast) > setAdjustBlackbarRate;
+
                             //Get led capture sides color
                             ScreenColors(setLedSideFirst, setLedCountFirst, bitmapByteArray, colorArray, ref colorCurrentIndex);
                             ScreenColors(setLedSideSecond, setLedCountSecond, bitmapByteArray, colorArray, ref colorCurrentIndex);
                             ScreenColors(setLedSideThird, setLedCountThird, bitmapByteArray, colorArray, ref colorCurrentIndex);
                             ScreenColors(setLedSideFourth, setLedCountFourth, bitmapByteArray, colorArray, ref colorCurrentIndex);
+
+                            //Update last blackbar detection time
+                            if (vBlackbarDetect)
+                            {
+                                vBlackbarDetectLast = currentTicks;
+                            }
 
                             //Update debug screen capture preview
                             DebugUpdateCapturePreview(bitmapByteArray);

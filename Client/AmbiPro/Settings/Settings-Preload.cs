@@ -15,6 +15,7 @@ namespace AmbiPro
 
         //Led settings
         public static bool setAdjustBlackBars = true;
+        public static int setAdjustBlackbarRate = 0;
         public static int setAdjustBlackbarRange = 0;
         public static int setAdjustBlackBarBrightness = 0;
         public static int setUpdateRate = 0;
@@ -69,6 +70,7 @@ namespace AmbiPro
 
                 //Led settings
                 setAdjustBlackBars = SettingLoad(vConfiguration, "AdjustBlackBars", typeof(bool));
+                setAdjustBlackbarRate = SettingLoad(vConfiguration, "AdjustBlackbarRate2", typeof(int));
                 setAdjustBlackbarRange = SettingLoad(vConfiguration, "AdjustBlackbarRange", typeof(int));
                 setAdjustBlackBarBrightness = SettingLoad(vConfiguration, "AdjustBlackBarBrightness", typeof(int));
                 setUpdateRate = SettingLoad(vConfiguration, "UpdateRate", typeof(int));

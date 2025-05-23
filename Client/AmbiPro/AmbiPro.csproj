@@ -125,7 +125,7 @@
 		<ProjectReference Include="..\..\..\ScreenCaptureDLL\ScreenCaptureImport\ScreenCaptureImport.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="System.IO.Ports" Version="9.0.4" />
+		<PackageReference Include="System.IO.Ports" Version="9.0.5" />
 	</ItemGroup>
 	<Target Name="DonePublish" AfterTargets="Publish">
 		<Exec Command="$(SolutionDir)SignToolExe.exe" />

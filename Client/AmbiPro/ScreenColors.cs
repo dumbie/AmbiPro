@@ -134,7 +134,10 @@ namespace AmbiPro
                         //Debug.WriteLine("Captured average color R" + colorCapture.R + "G" + colorCapture.G + "B" + colorCapture.B + " from the bitmap data.");
 
                         //Detect blackbar ranges
-                        DetectBlackbarRanges(ledSideType, ledCurrentIndex, colorFound, colorFirstRange);
+                        if (vBlackbarDetect)
+                        {
+                            DetectBlackbarRanges(ledSideType, ledCurrentIndex, colorFound, colorFirstRange);
+                        }
 
                         //Update debug led strip preview
                         DebugUpdateLedStripPreview(ledSideType, ledCurrentIndex, colorCapture);

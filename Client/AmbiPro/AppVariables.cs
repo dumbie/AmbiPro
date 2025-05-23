@@ -41,6 +41,8 @@ namespace AmbiPro
         public static ColorRGBA vCurrentLoopColor = new ColorRGBA() { R = 20 };
 
         //Blackbar Variables
+        public static bool vBlackbarDetect = true;
+        public static long vBlackbarDetectLast = 0;
         public static int vBlackbarAdjustStepHorizontal = 1;
         public static int vBlackbarAdjustStepVertical = 1;
         public static int vBlackbarRangeHorizontal = 0;
