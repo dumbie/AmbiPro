@@ -122,7 +122,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\ArnoldVinkCode\Desktop\ArnoldVinkCode.csproj" />
-		<ProjectReference Include="..\..\..\ScreenCaptureDLL\ScreenCaptureImport\ScreenCaptureImport.csproj" />
+		<ProjectReference Include="..\..\..\ScreenCaptureTool\ScreenCaptureImport\ScreenCaptureImport.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="System.IO.Ports" Version="9.0.5" />

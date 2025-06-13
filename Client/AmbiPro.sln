@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmbiPro", "AmbiPro\AmbiPro.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArnoldVinkCode", "..\..\ArnoldVinkCode\Desktop\ArnoldVinkCode.csproj", "{478ED5D3-38AF-47FC-AE14-B67976AB952C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreenCaptureImport", "..\..\ScreenCaptureDLL\ScreenCaptureImport\ScreenCaptureImport.csproj", "{DB56353C-E2DE-4C92-9B46-D21830B9D35C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreenCaptureImport", "..\..\ScreenCaptureTool\ScreenCaptureImport\ScreenCaptureImport.csproj", "{DB56353C-E2DE-4C92-9B46-D21830B9D35C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScreenCaptureDll", "..\..\ScreenCaptureDLL\ScreenCapture\ScreenCapture.vcxproj", "{D41825DF-7633-4BD6-A5C5-119494CF050B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScreenCaptureDll", "..\..\ScreenCaptureTool\ScreenCapture\ScreenCapture.vcxproj", "{D41825DF-7633-4BD6-A5C5-119494CF050B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
