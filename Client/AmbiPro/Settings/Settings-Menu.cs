@@ -5,6 +5,7 @@ using System.Windows.Input;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
 using static ArnoldVinkCode.AVSettings;
+using static ArnoldVinkCode.AVUpdate;
 
 namespace AmbiPro.Settings
 {
@@ -99,7 +100,8 @@ namespace AmbiPro.Settings
                     }
                     else if (selectedStackPanel.Name == "menuButtonUpdate")
                     {
-                        await AppUpdate.CheckAppUpdate(false);
+                        //Check for available application update
+                        await UpdateCheck("dumbie", "AmbiPro", false);
                     }
                     else if (selectedStackPanel.Name == "menuButtonHelp")
                     {

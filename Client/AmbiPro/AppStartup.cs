@@ -6,6 +6,7 @@ using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
 using static AmbiPro.SerialMonitor;
 using static ArnoldVinkCode.AVSettings;
+using static ArnoldVinkCode.AVUpdate;
 
 namespace AmbiPro
 {
@@ -17,8 +18,11 @@ namespace AmbiPro
             {
                 Debug.WriteLine("Welcome to application.");
 
-                //Application update checks
-                await AppUpdate.UpdateCheck(true);
+                //Clean application update files
+                await UpdateCleanup();
+
+                //Check for available application update
+                await UpdateCheck("dumbie", "AmbiPro", true);
 
                 //Application initialize settings
                 vFormSettings.SettingsCheck();

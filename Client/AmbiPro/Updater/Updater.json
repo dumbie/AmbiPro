@@ -16,6 +16,7 @@
     "ShortcutKeyboard.json"
   ],
   "FoldersDelete": [
-    "Resources"
+    "Resources",
+    "Shaders"
   ]
 }

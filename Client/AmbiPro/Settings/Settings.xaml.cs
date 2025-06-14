@@ -206,7 +206,7 @@ namespace AmbiPro.Settings
                 }
 
                 //Check current socket status
-                if (!vArnoldVinkSockets.vTask_TcpReceiveLoop.TaskRunning)
+                if (vArnoldVinkSockets != null && !vArnoldVinkSockets.vTask_TcpReceiveLoop.TaskRunning)
                 {
                     txt_RemoteErrorServerPort.Visibility = Visibility.Visible;
                 }
