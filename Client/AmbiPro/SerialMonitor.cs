@@ -223,7 +223,7 @@ namespace AmbiPro
                 await AVActions.TaskStopLoop(vTask_UpdateLed, 3000);
 
                 //Disable the serial port
-                if (vSerialComPort.IsOpen)
+                if (vSerialComPort != null && vSerialComPort.IsOpen)
                 {
                     //Send black leds update
                     if (!restartLeds)
@@ -305,7 +305,7 @@ namespace AmbiPro
                     List<string> MsgBoxAnswers = new List<string>();
                     MsgBoxAnswers.Add("Change com port");
                     MsgBoxAnswers.Add("Retry to connect");
-                    MsgBoxAnswers.Add("Close application");
+                    MsgBoxAnswers.Add("Exit application");
 
                     string MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to connect to your com port device", "Please make sure the device is not in use by another application, the correct com port is selected and that the required drivers are installed on your system.", MsgBoxAnswers);
                     if (MsgBoxResult == "Change com port")
@@ -317,7 +317,7 @@ namespace AmbiPro
                     {
                         await LedSwitch(LedSwitches.Restart);
                     }
-                    else if (MsgBoxResult == "Close application")
+                    else if (MsgBoxResult == "Exit application")
                     {
                         await AppExit.Exit();
                     }
@@ -337,7 +337,7 @@ namespace AmbiPro
                     MsgBoxAnswers.Add("Change monitor setting");
                     MsgBoxAnswers.Add("Change current led mode");
                     MsgBoxAnswers.Add("Retry to capture screen");
-                    MsgBoxAnswers.Add("Close application");
+                    MsgBoxAnswers.Add("Exit application");
 
                     string MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to start capturing your screen", "Please make sure the correct screen is selected, all the requirements are installed on your PC, that you have a Windows 11 64bit installation and that you have a DirectX 12 or higher capable graphics adapter.\n\nError: " + captureMessage, MsgBoxAnswers);
                     if (MsgBoxResult == "Change monitor setting")
@@ -354,7 +354,7 @@ namespace AmbiPro
                     {
                         await LedSwitch(LedSwitches.Restart);
                     }
-                    else if (MsgBoxResult == "Close application")
+                    else if (MsgBoxResult == "Exit application")
                     {
                         await AppExit.Exit();
                     }

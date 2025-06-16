@@ -2,7 +2,7 @@
   "UserName": "Dumbie",
   "RepoName": "AmbiPro",
   "FileName": "AmbiPro.zip",
-  "ExtractName": "AmbiPro",
+  "ExtractPathPrepend": "..",
   "ProcessLaunch": [
     "Launcher.exe"
   ],

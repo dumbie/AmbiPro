@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ArnoldVinkCode;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using static AmbiPro.AppEnums;
@@ -9,6 +11,23 @@ namespace AmbiPro
 {
     public class AppExit
     {
+        public static async Task Exit_Prompt()
+        {
+            try
+            {
+                List<string> messageAnswers = new List<string>();
+                messageAnswers.Add("Exit application");
+                messageAnswers.Add("Cancel");
+
+                string messageResult = await new AVMessageBox().Popup(vFormSettings, "Do you really want to exit AmbiPro?", "This will stop updating your led strip and turn it off.", messageAnswers);
+                if (messageResult == "Exit application")
+                {
+                    await Exit();
+                }
+            }
+            catch { }
+        }
+
         public static async Task Exit()
         {
             try
