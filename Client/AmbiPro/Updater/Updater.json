@@ -2,7 +2,8 @@
   "UserName": "Dumbie",
   "RepoName": "AmbiPro",
   "FileName": "AmbiPro.zip",
-  "ExtractPathPrepend": "..",
+  "ExtractName": "AmbiPro",
+  "ExtractPathRemove": [ "AmbiPro" ],
   "ProcessLaunch": [
     "Launcher.exe"
   ],
@@ -12,7 +13,6 @@
   ],
   "FilesIgnore": [
     ".exe.Config",
-    ".csettings",
     "ShortcutKeyboard.json"
   ],
   "FoldersDelete": [
