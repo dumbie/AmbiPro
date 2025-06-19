@@ -222,10 +222,8 @@ namespace AmbiPro.Settings
                 checkbox_DebugColorLeftRight.IsChecked = SettingLoad(vConfiguration, "DebugColorLeftRight", typeof(bool));
                 checkbox_DebugColorTopBottom.IsChecked = SettingLoad(vConfiguration, "DebugColorTopBottom", typeof(bool));
 
-                //Check if application is set to launch on Windows startup
-                string targetName = AVFunctions.ApplicationName();
-                string targetFileShortcut = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), targetName + ".url");
-                if (File.Exists(targetFileShortcut)) { cb_WindowsStartup.IsChecked = true; }
+                //Launch settings
+                cb_WindowsStartup.IsChecked = AVSettings.StartupShortcutCheck();
 
                 //Wait for settings to have loaded
                 await Task.Delay(1500);
