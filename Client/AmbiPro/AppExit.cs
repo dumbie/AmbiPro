@@ -19,7 +19,7 @@ namespace AmbiPro
                 messageAnswers.Add("Exit application");
                 messageAnswers.Add("Cancel");
 
-                string messageResult = await new AVMessageBox().Popup(vFormSettings, "Do you really want to exit AmbiPro?", "This will stop updating your led strip and turn it off.", messageAnswers);
+                string messageResult = AVMessageBox.Popup(vFormSettings, "Do you really want to exit AmbiPro?", "This will stop updating your led strip and turn it off.", messageAnswers);
                 if (messageResult == "Exit application")
                 {
                     await Exit();

@@ -1,4 +1,5 @@
 ﻿using ArnoldVinkCode;
+using ArnoldVinkStyles;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,7 +15,6 @@ using static AmbiPro.AppEnums;
 using static AmbiPro.AppTasks;
 using static AmbiPro.AppVariables;
 using static AmbiPro.PreloadSettings;
-using static ArnoldVinkCode.AVActions;
 using static ArnoldVinkCode.AVArrayFunctions;
 using static ArnoldVinkCode.AVSettings;
 
@@ -39,7 +39,7 @@ namespace AmbiPro
                     {
                         Debug.WriteLine("Restarting the led updates.");
                         await LedsDisable(true);
-                        await LedsEnable();
+                        LedsEnable();
                         return;
                     }
 
@@ -50,7 +50,7 @@ namespace AmbiPro
                         await LedsDisable(false);
 
                         //Update screen information
-                        DispatcherInvoke(delegate
+                        AVDispatcherInvoke.DispatcherInvoke(delegate
                         {
                             vFormSettings.UpdateScreenInformation();
                         });
@@ -58,7 +58,7 @@ namespace AmbiPro
                     else
                     {
                         //Enable the leds
-                        await LedsEnable();
+                        LedsEnable();
                     }
                 }
             }
@@ -79,7 +79,7 @@ namespace AmbiPro
             {
                 if (ledsOn && setLedMode == 0)
                 {
-                    DispatcherInvoke(delegate
+                    AVDispatcherInvoke.DispatcherInvoke(delegate
                     {
                         vFormSettings.listbox_LedPreviewLeft.Items.Clear();
                         vFormSettings.listbox_LedPreviewTop.Items.Clear();
@@ -99,7 +99,7 @@ namespace AmbiPro
                 }
                 else
                 {
-                    DispatcherInvoke(delegate
+                    AVDispatcherInvoke.DispatcherInvoke(delegate
                     {
                         vFormSettings.border_LedPreviewLeft.Visibility = System.Windows.Visibility.Collapsed;
                         vFormSettings.border_LedPreviewTop.Visibility = System.Windows.Visibility.Collapsed;
@@ -159,7 +159,7 @@ namespace AmbiPro
             {
                 if (ledsOn)
                 {
-                    DispatcherInvoke(delegate
+                    AVDispatcherInvoke.DispatcherInvoke(delegate
                     {
                         vFormSettings.image_SwitchLedsOnOrOff.Source = new BitmapImage(new Uri("/Assets/Icons/Leds.png", UriKind.RelativeOrAbsolute));
                     });
@@ -167,7 +167,7 @@ namespace AmbiPro
                 }
                 else
                 {
-                    DispatcherInvoke(delegate
+                    AVDispatcherInvoke.DispatcherInvoke(delegate
                     {
                         vFormSettings.image_SwitchLedsOnOrOff.Source = new BitmapImage(new Uri("/Assets/Icons/LedsOff.png", UriKind.RelativeOrAbsolute));
                     });
@@ -178,7 +178,7 @@ namespace AmbiPro
         }
 
         //Enable the led updates
-        private static async Task LedsEnable()
+        private static void LedsEnable()
         {
             try
             {
@@ -187,7 +187,7 @@ namespace AmbiPro
                 //Check led count
                 if (setLedCountTotal <= 0)
                 {
-                    await ShowNoLedsSideCountSetup();
+                    ShowNoLedsSideCountSetup();
                     return;
                 }
 
@@ -270,7 +270,7 @@ namespace AmbiPro
         {
             try
             {
-                AVActions.DispatcherInvoke(delegate
+                AVDispatcherInvoke.DispatcherInvoke(delegate
                 {
                     vFormSettings.Show();
                 });
@@ -279,17 +279,17 @@ namespace AmbiPro
         }
 
         //Show led setup message
-        private static async Task ShowNoLedsSideCountSetup()
+        private static void ShowNoLedsSideCountSetup()
         {
             try
             {
                 Debug.WriteLine("There are currently no leds configured.");
-                await AVActions.DispatcherInvoke(async delegate
+                AVDispatcherInvoke.DispatcherInvoke(delegate
                 {
                     List<string> MsgBoxAnswers = new List<string>();
                     MsgBoxAnswers.Add("Ok");
 
-                    await new AVMessageBox().Popup(null, "Failed to turn leds on or off", "Please make sure that you have setup your led sides and count.", MsgBoxAnswers);
+                    AVMessageBox.Popup(null, "Failed to turn leds on or off", "Please make sure that you have setup your led sides and count.", MsgBoxAnswers);
                 });
             }
             catch { }
@@ -300,14 +300,14 @@ namespace AmbiPro
         {
             try
             {
-                await AVActions.DispatcherInvoke(async delegate
+                await AVDispatcherInvoke.DispatcherInvoke(async delegate
                 {
                     List<string> MsgBoxAnswers = new List<string>();
                     MsgBoxAnswers.Add("Change com port");
                     MsgBoxAnswers.Add("Retry to connect");
                     MsgBoxAnswers.Add("Exit application");
 
-                    string MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to connect to your com port device", "Please make sure the device is not in use by another application, the correct com port is selected and that the required drivers are installed on your system.", MsgBoxAnswers);
+                    string MsgBoxResult = AVMessageBox.Popup(null, "Failed to connect to your com port device", "Please make sure the device is not in use by another application, the correct com port is selected and that the required drivers are installed on your system.", MsgBoxAnswers);
                     if (MsgBoxResult == "Change com port")
                     {
                         await LedSwitch(LedSwitches.Disable);
@@ -331,7 +331,7 @@ namespace AmbiPro
         {
             try
             {
-                await AVActions.DispatcherInvoke(async delegate
+                await AVDispatcherInvoke.DispatcherInvoke(async delegate
                 {
                     List<string> MsgBoxAnswers = new List<string>();
                     MsgBoxAnswers.Add("Change monitor setting");
@@ -339,7 +339,7 @@ namespace AmbiPro
                     MsgBoxAnswers.Add("Retry to capture screen");
                     MsgBoxAnswers.Add("Exit application");
 
-                    string MsgBoxResult = await new AVMessageBox().Popup(null, "Failed to start capturing your screen", "Please make sure the correct screen is selected, all the requirements are installed on your PC, that you have a Windows 11 64bit installation and that you have a DirectX 12 or higher capable graphics adapter.\n\nError: " + captureMessage, MsgBoxAnswers);
+                    string MsgBoxResult = AVMessageBox.Popup(null, "Failed to start capturing your screen", "Please make sure the correct screen is selected, all the requirements are installed on your PC, that you have a Windows 11 64bit installation and that you have a DirectX 12 or higher capable graphics adapter.\n\nError: " + captureMessage, MsgBoxAnswers);
                     if (MsgBoxResult == "Change monitor setting")
                     {
                         await LedSwitch(LedSwitches.Disable);

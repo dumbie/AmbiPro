@@ -11,16 +11,19 @@
 		<UseWPF>True</UseWPF>
 		<UseWindowsForms>True</UseWindowsForms>
 		<GenerateAssemblyInfo>False</GenerateAssemblyInfo>
-		<ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<AppendTargetFrameworkToOutputPath>False</AppendTargetFrameworkToOutputPath>
 		<AppendRuntimeIdentifierToOutputPath>False</AppendRuntimeIdentifierToOutputPath>
 		<OutputPath>$(SolutionDir)Build\$(Configuration)\$(AssemblyName)</OutputPath>
 	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<PropertyGroup>
+		<Platforms>x86;x64;ARM64</Platforms>
+		<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
 		<Optimize>True</Optimize>
 	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
 		<Optimize>True</Optimize>
 		<DebugType>none</DebugType>
 	</PropertyGroup>
@@ -122,10 +125,11 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\ArnoldVinkCode\Desktop\ArnoldVinkCode.csproj" />
+		<ProjectReference Include="..\..\..\ArnoldVinkStyles\WPF\ArnoldVinkStyles.csproj" />
 		<ProjectReference Include="..\..\..\ScreenCaptureTool\ScreenCaptureImport\ScreenCaptureImport.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="System.IO.Ports" Version="9.0.6" />
+		<PackageReference Include="System.IO.Ports" Version="9.0.9" />
 	</ItemGroup>
 	<Target Name="DonePublish" AfterTargets="Publish">
 		<Exec Command="$(SolutionDir)SignToolExe.exe" />
@@ -133,7 +137,7 @@
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<Exec Command="xcopy /y /e $(TargetDir)..\ScreenCaptureDll $(TargetDir)&#xD;&#xA;" />
 		<Exec Command="if $(Configuration) == Release (&#xD;&#xA;$(SolutionDir)SignToolExe.exe)&#xD;&#xA;)" />
-		<Exec Command="if $(Configuration) == Release (&#xD;&#xA;mkdir $(TargetDir)\Resources&#xD;&#xA;move /y $(TargetDir)\*.dll $(TargetDir)\Resources\&#xD;&#xA;move /y $(TargetDir)\runtimes\win\lib\net8.0\*.dll $(TargetDir)\Resources\&#xD;&#xA;move /y $(TargetDir)\runtimes\win-x64\native\*.dll $(TargetDir)\Resources\&#xD;&#xA;move /y $(TargetDir)\Resources\$(AssemblyName).dll $(TargetDir)&#xD;&#xA;move /y $(TargetDir)\Resources\ArnoldVinkCode.dll $(TargetDir)&#xD;&#xA;)" />
+		<Exec Command="if $(Configuration) == Release (&#xD;&#xA;mkdir $(TargetDir)\Resources&#xD;&#xA;move /y $(TargetDir)\*.dll $(TargetDir)\Resources\&#xD;&#xA;move /y $(TargetDir)\runtimes\win\lib\net8.0\*.dll $(TargetDir)\Resources\&#xD;&#xA;move /y $(TargetDir)\runtimes\win-x64\native\*.dll $(TargetDir)\Resources\&#xD;&#xA;move /y $(TargetDir)\Resources\$(AssemblyName).dll $(TargetDir)&#xD;&#xA;move /y $(TargetDir)\Resources\ArnoldVinkCode.dll $(TargetDir)&#xD;&#xA;move /y $(TargetDir)\Resources\ArnoldVinkStyles.dll $(TargetDir)&#xD;&#xA;)" />
 		<Exec Command="if $(Configuration) == Release (&#xD;&#xA;rd /s /q $(TargetDir)\amd64&#xD;&#xA;rd /s /q $(TargetDir)\arm64&#xD;&#xA;rd /s /q $(TargetDir)\de&#xD;&#xA;rd /s /q $(TargetDir)\es&#xD;&#xA;rd /s /q $(TargetDir)\fr&#xD;&#xA;rd /s /q $(TargetDir)\it&#xD;&#xA;rd /s /q $(TargetDir)\ja&#xD;&#xA;rd /s /q $(TargetDir)\sv&#xD;&#xA;rd /s /q $(TargetDir)\tr&#xD;&#xA;rd /s /q $(TargetDir)\pl&#xD;&#xA;rd /s /q $(TargetDir)\ru&#xD;&#xA;rd /s /q $(TargetDir)\runtimes&#xD;&#xA;rd /s /q $(TargetDir)\x86&#xD;&#xA;rd /s /q $(TargetDir)\zh-CN&#xD;&#xA;rd /s /q $(TargetDir)\zh-Hant&#xD;&#xA;)" />
 		<Exec Command="if $(Configuration) == Release (&#xD;&#xA;del /q $(TargetDir)\*.pdb&#xD;&#xA;del /q $(TargetDir)\*.xml&#xD;&#xA;del /q $(TargetDir)\*.deps.json&#xD;&#xA;)" />
 	</Target>

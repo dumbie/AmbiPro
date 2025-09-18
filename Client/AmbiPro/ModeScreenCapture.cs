@@ -1,4 +1,5 @@
 ﻿using ArnoldVinkCode;
+using ArnoldVinkStyles;
 using ScreenCaptureImport;
 using System;
 using System.Diagnostics;
@@ -91,7 +92,7 @@ namespace AmbiPro
                 UpdateCaptureVariables();
 
                 //Update screen information
-                DispatcherInvoke(delegate
+                AVDispatcherInvoke.DispatcherInvoke(delegate
                 {
                     vFormSettings.UpdateScreenInformation();
                 });

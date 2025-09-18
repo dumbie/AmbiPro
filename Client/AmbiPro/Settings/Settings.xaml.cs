@@ -1,4 +1,5 @@
 ﻿using ArnoldVinkCode;
+using ArnoldVinkStyles;
 using Microsoft.Win32;
 using System;
 using System.ComponentModel;
@@ -134,7 +135,7 @@ namespace AmbiPro.Settings
             try
             {
                 Debug.WriteLine("Updating solid led color in interface.");
-                AVActions.DispatcherInvoke(delegate
+                AVDispatcherInvoke.DispatcherInvoke(delegate
                 {
                     string solidLedColor = SettingLoad(vConfiguration, "SolidLedColor", typeof(string));
                     button_ColorPickerSolid.Background = new BrushConverter().ConvertFrom(solidLedColor) as SolidColorBrush;

@@ -1,5 +1,5 @@
 ﻿using ArnoldVinkCode;
-using ArnoldVinkCode.Styles;
+using ArnoldVinkStyles;
 using System;
 using System.Configuration;
 using System.Diagnostics;

@@ -1,10 +1,10 @@
-﻿using ScreenCaptureImport;
+﻿using ArnoldVinkStyles;
+using ScreenCaptureImport;
 using System;
 using static AmbiPro.AppClasses;
 using static AmbiPro.AppEnums;
 using static AmbiPro.AppVariables;
 using static AmbiPro.PreloadSettings;
-using static ArnoldVinkCode.AVActions;
 
 namespace AmbiPro
 {
@@ -20,7 +20,7 @@ namespace AmbiPro
                     return;
                 }
 
-                DispatcherInvoke(delegate
+                AVDispatcherInvoke.DispatcherInvoke(delegate
                 {
                     //Update framerate
                     int currentTickCount = Environment.TickCount;
@@ -49,7 +49,7 @@ namespace AmbiPro
                     return;
                 }
 
-                DispatcherInvoke(delegate
+                AVDispatcherInvoke.DispatcherInvoke(delegate
                 {
                     if (ledSide == LedSideTypes.LeftBottomToTop)
                     {

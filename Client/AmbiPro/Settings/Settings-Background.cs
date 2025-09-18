@@ -1,4 +1,4 @@
-﻿using ArnoldVinkCode.Styles;
+﻿using ArnoldVinkStyles;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;

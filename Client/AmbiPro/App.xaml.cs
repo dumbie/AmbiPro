@@ -12,7 +12,7 @@ namespace AmbiPro
             try
             {
                 //Setup application defaults
-                SetupDefaults(ProcessPriority.High, true);
+                SetupDefaults(ProcessPriorityClasses.HIGH_PRIORITY_CLASS, true);
 
                 //Run application startup code
                 await AppStartup.Startup();
