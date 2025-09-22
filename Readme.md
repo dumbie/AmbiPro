@@ -49,6 +49,9 @@ When you are walking into any problems or a bug you can go to my help page at ht
 If you appreciate my project and want to support me with my projects you can make a donation through https://donation.arnoldvink.com
 
 ## Changelog
+v0.29.1.0 (22-September-2025)
+- Removed 60 frames per second capture limit.
+
 v0.28.0.0 (29-April-2025)
 - Improved color accuracy by merging colors using square root.
 - Added screen capture error messages.
