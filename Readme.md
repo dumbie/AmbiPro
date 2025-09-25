@@ -2,7 +2,7 @@
 ![AmbiPro](Screenshots/AmbiPro-screenshot2.jpg)
 
 ## Application Description
-AmbiPro captures your screen and synchonizes the colors to your led strip.
+AmbiPro captures your screen and synchronizes the colors to your led strip.
 
 ## Supported Hardware
 - Arduino using FastLED or Adalight script *¹ 
