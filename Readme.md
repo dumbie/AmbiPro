@@ -5,8 +5,9 @@
 AmbiPro captures your screen and synchronizes the colors to your led strip.
 
 ## Supported Hardware
-- Arduino using FastLED or Adalight script *¹ 
+- Arduino using FastLED or Adalight script *¹
 - Led strips Neopixel, WS2801, WS2811, WS2812B, LPD8806, TM1809, and more.
+
 *¹ You can use the included ino script found in the "Script" folder.
 
 ## Application Features
@@ -33,6 +34,7 @@ AmbiPro captures your screen and synchronizes the colors to your led strip.
 - Let AmbiPro automatically launch on Windows startup for easier all time usage.
 - Some users may need to run the application as administrator to let it work properly. *²
 - For more information and help open the "Help" window or tab in the application.
+
 *² You can run it as administrator by using the "Launcher" executable.
 
 ## Requirements
