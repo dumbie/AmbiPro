@@ -30,6 +30,7 @@ namespace AmbiPro
                 MenuModes.DropDownItems.Add("Color solid", null, OnChangeMode);
                 MenuModes.DropDownItems.Add("Color loop", null, OnChangeMode);
                 MenuModes.DropDownItems.Add("Color spectrum", null, OnChangeMode);
+                MenuModes.DropDownItems.Add("Color candle", null, OnChangeMode);
 
                 //Create a context menu for systray
                 ContextMenu.Items.Add("On/Off", null, OnSwitchOnOff);
@@ -99,10 +100,11 @@ namespace AmbiPro
             try
             {
                 ToolStripMenuItem clickedMenuItem = (sender as ToolStripMenuItem);
-                if (clickedMenuItem.Text == "Screen capture") { SettingSave(vConfiguration, "LedMode", "0"); }
-                else if (clickedMenuItem.Text == "Color solid") { SettingSave(vConfiguration, "LedMode", "1"); }
-                else if (clickedMenuItem.Text == "Color loop") { SettingSave(vConfiguration, "LedMode", "2"); }
-                else if (clickedMenuItem.Text == "Color spectrum") { SettingSave(vConfiguration, "LedMode", "3"); }
+                if (clickedMenuItem.Text == "Screen capture") { vSettings.Set("LedMode", "0"); }
+                else if (clickedMenuItem.Text == "Color solid") { vSettings.Set("LedMode", "1"); }
+                else if (clickedMenuItem.Text == "Color loop") { vSettings.Set("LedMode", "2"); }
+                else if (clickedMenuItem.Text == "Color spectrum") { vSettings.Set("LedMode", "3"); }
+                else if (clickedMenuItem.Text == "Color candle") { vSettings.Set("LedMode", "4"); }
                 await LedSwitch(LedSwitches.Restart);
             }
             catch { }

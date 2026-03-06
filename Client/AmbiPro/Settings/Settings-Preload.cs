@@ -65,59 +65,59 @@ namespace AmbiPro
                 //Debug.WriteLine("Updating preload settings.");
 
                 //Device settings
-                setSerialPortName = "COM" + SettingLoad(vConfiguration, "ComPort", typeof(string));
-                setSerialBaudRate = SettingLoad(vConfiguration, "BaudRate", typeof(int));
+                setSerialPortName = "COM" + vSettings.Load("ComPort", typeof(string));
+                setSerialBaudRate = vSettings.Load("BaudRate", typeof(int));
 
                 //Led settings
-                setAdjustBlackBars = SettingLoad(vConfiguration, "AdjustBlackBars", typeof(bool));
-                setAdjustBlackbarRate = SettingLoad(vConfiguration, "AdjustBlackbarRate2", typeof(int));
-                setAdjustBlackbarRange = SettingLoad(vConfiguration, "AdjustBlackbarRange", typeof(int));
-                setAdjustBlackBarBrightness = SettingLoad(vConfiguration, "AdjustBlackBarBrightness", typeof(int));
-                setUpdateRate = SettingLoad(vConfiguration, "UpdateRate", typeof(int));
-                setLedSmoothFrame = SettingLoad(vConfiguration, "LedSmoothFrame", typeof(int));
-                setLedSmoothObject = SettingLoad(vConfiguration, "LedSmoothObject", typeof(int));
-                setLedBottomGap = SettingLoad(vConfiguration, "LedBottomGap", typeof(int));
-                setLedEnergyMode = SettingLoad(vConfiguration, "LedEnergyMode", typeof(bool));
-                setLedOffMonitorSleep = SettingLoad(vConfiguration, "LedOffMonitorSleep", typeof(bool));
+                setAdjustBlackBars = vSettings.Load("AdjustBlackBars", typeof(bool));
+                setAdjustBlackbarRate = vSettings.Load("AdjustBlackbarRate2", typeof(int));
+                setAdjustBlackbarRange = vSettings.Load("AdjustBlackbarRange", typeof(int));
+                setAdjustBlackBarBrightness = vSettings.Load("AdjustBlackBarBrightness", typeof(int));
+                setUpdateRate = vSettings.Load("UpdateRate", typeof(int));
+                setLedSmoothFrame = vSettings.Load("LedSmoothFrame", typeof(int));
+                setLedSmoothObject = vSettings.Load("LedSmoothObject", typeof(int));
+                setLedBottomGap = vSettings.Load("LedBottomGap", typeof(int));
+                setLedEnergyMode = vSettings.Load("LedEnergyMode", typeof(bool));
+                setLedOffMonitorSleep = vSettings.Load("LedOffMonitorSleep", typeof(bool));
 
-                setLedSaturation = SettingLoad(vConfiguration, "LedSaturation", typeof(float)) / 100;
-                setLedColorRed = SettingLoad(vConfiguration, "LedColorRed", typeof(float)) / 100;
-                setLedColorGreen = SettingLoad(vConfiguration, "LedColorGreen", typeof(float)) / 100;
-                setLedColorBlue = SettingLoad(vConfiguration, "LedColorBlue", typeof(float)) / 100;
-                setLedContrast = SettingLoad(vConfiguration, "LedContrast", typeof(float)) / 100;
-                setLedBrightness = SettingLoad(vConfiguration, "LedBrightness", typeof(float)) / 100;
-                setLedGamma = SettingLoad(vConfiguration, "LedGamma4", typeof(float));
+                setLedSaturation = vSettings.Load("LedSaturation", typeof(float)) / 100;
+                setLedColorRed = vSettings.Load("LedColorRed", typeof(float)) / 100;
+                setLedColorGreen = vSettings.Load("LedColorGreen", typeof(float)) / 100;
+                setLedColorBlue = vSettings.Load("LedColorBlue", typeof(float)) / 100;
+                setLedContrast = vSettings.Load("LedContrast", typeof(float)) / 100;
+                setLedBrightness = vSettings.Load("LedBrightness", typeof(float)) / 100;
+                setLedGamma = vSettings.Load("LedGamma4", typeof(float));
 
-                setLedMinBrightness = SettingLoad(vConfiguration, "LedMinBrightness", typeof(byte));
-                setLedMinColor = SettingLoad(vConfiguration, "LedMinColor2", typeof(int));
-                setColorLoopSpeed = SettingLoad(vConfiguration, "ColorLoopSpeed", typeof(int));
-                setSpectrumRotationSpeed = SettingLoad(vConfiguration, "SpectrumRotationSpeed", typeof(int));
-                setSolidLedColor = SettingLoad(vConfiguration, "SolidLedColor", typeof(string));
-                setLedCaptureRange = SettingLoad(vConfiguration, "LedCaptureRange", typeof(int));
-                setLedMode = SettingLoad(vConfiguration, "LedMode", typeof(int));
-                setLedOutput = (LedOutputTypes)SettingLoad(vConfiguration, "LedOutput", typeof(int));
-                setLedSideFirst = (LedSideTypes)SettingLoad(vConfiguration, "LedSideFirst", typeof(int));
-                setLedSideSecond = (LedSideTypes)SettingLoad(vConfiguration, "LedSideSecond", typeof(int));
-                setLedSideThird = (LedSideTypes)SettingLoad(vConfiguration, "LedSideThird", typeof(int));
-                setLedSideFourth = (LedSideTypes)SettingLoad(vConfiguration, "LedSideFourth", typeof(int));
-                setLedCountFirst = SettingLoad(vConfiguration, "LedCountFirst", typeof(int));
-                setLedCountSecond = SettingLoad(vConfiguration, "LedCountSecond", typeof(int));
-                setLedCountThird = SettingLoad(vConfiguration, "LedCountThird", typeof(int));
-                setLedCountFourth = SettingLoad(vConfiguration, "LedCountFourth", typeof(int));
+                setLedMinBrightness = vSettings.Load("LedMinBrightness", typeof(byte));
+                setLedMinColor = vSettings.Load("LedMinColor2", typeof(int));
+                setColorLoopSpeed = vSettings.Load("ColorLoopSpeed", typeof(int));
+                setSpectrumRotationSpeed = vSettings.Load("SpectrumRotationSpeed", typeof(int));
+                setSolidLedColor = vSettings.Load("SolidLedColor", typeof(string));
+                setLedCaptureRange = vSettings.Load("LedCaptureRange", typeof(int));
+                setLedMode = vSettings.Load("LedMode", typeof(int));
+                setLedOutput = (LedOutputTypes)vSettings.Load("LedOutput", typeof(int));
+                setLedSideFirst = (LedSideTypes)vSettings.Load("LedSideFirst", typeof(int));
+                setLedSideSecond = (LedSideTypes)vSettings.Load("LedSideSecond", typeof(int));
+                setLedSideThird = (LedSideTypes)vSettings.Load("LedSideThird", typeof(int));
+                setLedSideFourth = (LedSideTypes)vSettings.Load("LedSideFourth", typeof(int));
+                setLedCountFirst = vSettings.Load("LedCountFirst", typeof(int));
+                setLedCountSecond = vSettings.Load("LedCountSecond", typeof(int));
+                setLedCountThird = vSettings.Load("LedCountThird", typeof(int));
+                setLedCountFourth = vSettings.Load("LedCountFourth", typeof(int));
                 setLedCountTotal = setLedCountFirst + setLedCountSecond + setLedCountThird + setLedCountFourth;
 
                 //Debug settings
-                setDebugLedPreview = SettingLoad(vConfiguration, "DebugLedPreview", typeof(bool));
-                setDebugColorLeftRight = SettingLoad(vConfiguration, "DebugColorLeftRight", typeof(bool));
-                setDebugColorTopBottom = SettingLoad(vConfiguration, "DebugColorTopBottom", typeof(bool));
+                setDebugLedPreview = vSettings.Load("DebugLedPreview", typeof(bool));
+                setDebugColorLeftRight = vSettings.Load("DebugColorLeftRight", typeof(bool));
+                setDebugColorTopBottom = vSettings.Load("DebugColorTopBottom", typeof(bool));
 
                 //Update capture variables
                 UpdateCaptureVariables();
 
                 //Update the rotation based on ratio
-                if (SettingCheck(vConfiguration, "LedRotate" + vCurrentRatio))
+                if (vSettings.Check("LedRotate" + vCurrentRatio))
                 {
-                    setLedRotate = SettingLoad(vConfiguration, "LedRotate" + vCurrentRatio, typeof(int));
+                    setLedRotate = vSettings.Load("LedRotate" + vCurrentRatio, typeof(int));
                 }
                 else
                 {

@@ -37,7 +37,7 @@ namespace AmbiPro
                 AppTasks.TasksBackgroundStart();
 
                 //Settings check if first launch
-                if (SettingLoad(vConfiguration, "FirstLaunch2", typeof(bool)))
+                if (vSettings.Load("FirstLaunch2", typeof(bool)))
                 {
                     Debug.WriteLine("First launch, showing the settings screen.");
                     vFormSettings.Show();
@@ -46,14 +46,14 @@ namespace AmbiPro
                 {
                     //Start updating the leds
                     bool turnLedsOn = false;
-                    if (SettingLoad(vConfiguration, "LedAutoOnOffBefore", typeof(bool)) || SettingLoad(vConfiguration, "LedAutoOnOffAfter", typeof(bool)))
+                    if (vSettings.Load("LedAutoOnOffBefore", typeof(bool)) || vSettings.Load("LedAutoOnOffAfter", typeof(bool)))
                     {
-                        DateTime ledTimeBefore = SettingLoad(vConfiguration, "LedAutoTimeBefore", typeof(DateTime));
+                        DateTime ledTimeBefore = vSettings.Load("LedAutoTimeBefore", typeof(DateTime));
                         if (DateTime.Now.TimeOfDay < ledTimeBefore.TimeOfDay)
                         {
                             turnLedsOn = true;
                         }
-                        DateTime ledTimeAfter = SettingLoad(vConfiguration, "LedAutoTimeAfter", typeof(DateTime));
+                        DateTime ledTimeAfter = vSettings.Load("LedAutoTimeAfter", typeof(DateTime));
                         if (DateTime.Now.TimeOfDay >= ledTimeAfter.TimeOfDay)
                         {
                             turnLedsOn = true;
@@ -84,7 +84,7 @@ namespace AmbiPro
         {
             try
             {
-                int SocketServerPort = SettingLoad(vConfiguration, "ServerPort", typeof(int));
+                int SocketServerPort = vSettings.Load("ServerPort", typeof(int));
 
                 vArnoldVinkSockets = new ArnoldVinkSockets("127.0.0.1", SocketServerPort, true, false);
                 vArnoldVinkSockets.vSocketTimeout = 2000;

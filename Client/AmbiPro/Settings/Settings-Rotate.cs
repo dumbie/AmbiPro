@@ -16,7 +16,7 @@ namespace AmbiPro.Settings
                 Debug.WriteLine("Rotating the leds clockwise.");
                 vCurrentRotation -= 1;
 
-                SettingSave(vConfiguration, "LedRotate" + vCurrentRatio, vCurrentRotation.ToString());
+                vSettings.Set("LedRotate" + vCurrentRatio, vCurrentRotation.ToString());
                 tb_RotateValue.Text = "Led rotation: " + vCurrentRotation;
 
                 //Check the maximum rotation count
@@ -32,7 +32,7 @@ namespace AmbiPro.Settings
                 Debug.WriteLine("Rotating the leds counterwise.");
                 vCurrentRotation += 1;
 
-                SettingSave(vConfiguration, "LedRotate" + vCurrentRatio, vCurrentRotation.ToString());
+                vSettings.Set("LedRotate" + vCurrentRatio, vCurrentRotation.ToString());
                 tb_RotateValue.Text = "Led rotation: " + vCurrentRotation;
 
                 //Check the maximum rotation count
@@ -48,7 +48,7 @@ namespace AmbiPro.Settings
                 Debug.WriteLine("Resetting the led rotation.");
                 vCurrentRotation = 0;
 
-                SettingSave(vConfiguration, "LedRotate" + vCurrentRatio, "0");
+                vSettings.Set("LedRotate" + vCurrentRatio, "0");
                 tb_RotateValue.Text = "Led rotation: 0";
 
                 //Check the maximum rotation count
@@ -63,7 +63,7 @@ namespace AmbiPro.Settings
             try
             {
                 //Check if screen capture is enabled
-                bool captureEnabled = vTask_UpdateLed.TaskRunning && SettingLoad(vConfiguration, "LedMode", typeof(int)) == 0;
+                bool captureEnabled = vTask_UpdateLed.TaskRunning && vSettings.Load("LedMode", typeof(int)) == 0;
                 if (!captureEnabled)
                 {
                     btn_RotateCounterwise.IsEnabled = false;
@@ -92,9 +92,9 @@ namespace AmbiPro.Settings
                 textblock_DebugInfo.Text = "Capture information: " + captureInfo;
 
                 //Update rotation screen
-                if (SettingCheck(vConfiguration, "LedRotate" + vCurrentRatio))
+                if (vSettings.Check("LedRotate" + vCurrentRatio))
                 {
-                    vCurrentRotation = SettingLoad(vConfiguration, "LedRotate" + vCurrentRatio, typeof(int));
+                    vCurrentRotation = vSettings.Load("LedRotate" + vCurrentRatio, typeof(int));
                 }
                 tb_RotateValue.Text = "Led rotation: " + vCurrentRotation;
                 tb_RotateResolution.Text = "Capture resolution: " + captureInfo;
@@ -115,7 +115,7 @@ namespace AmbiPro.Settings
                     return;
                 }
 
-                int maximumLedCount = SettingLoad(vConfiguration, "LedCountFirst", typeof(int)) + SettingLoad(vConfiguration, "LedCountSecond", typeof(int)) + SettingLoad(vConfiguration, "LedCountThird", typeof(int)) + SettingLoad(vConfiguration, "LedCountFourth", typeof(int));
+                int maximumLedCount = vSettings.Load("LedCountFirst", typeof(int)) + vSettings.Load("LedCountSecond", typeof(int)) + vSettings.Load("LedCountThird", typeof(int)) + vSettings.Load("LedCountFourth", typeof(int));
                 if (vCurrentRotation > -maximumLedCount) { btn_RotateClockwise.IsEnabled = true; } else { btn_RotateClockwise.IsEnabled = false; }
                 if (vCurrentRotation < maximumLedCount) { btn_RotateCounterwise.IsEnabled = true; } else { btn_RotateCounterwise.IsEnabled = false; }
                 btn_RotateReset.IsEnabled = true;

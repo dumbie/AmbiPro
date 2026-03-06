@@ -16,7 +16,7 @@ namespace AmbiPro
     partial class AppVariables
     {
         //Application Variables
-        public static Configuration vConfiguration = SettingLoadConfig("AmbiPro.exe.Config");
+        public static AVSettingsConfig vSettings = new AVSettingsConfig("AmbiPro.exe.Config");
         public static CultureInfo vAppCultureInfo = CultureInfo.InvariantCulture;
 
         //Application Windows

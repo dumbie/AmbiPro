@@ -30,7 +30,7 @@ namespace AmbiPro
                         if (CheckHotkeyPressed(keysPressed, shortcutTrigger.Trigger))
                         {
                             Debug.WriteLine("Button Global - ModeScreenCapture");
-                            SettingSave(vConfiguration, "LedMode", "0");
+                            vSettings.Set("LedMode", "0");
                             await LedSwitch(LedSwitches.Restart);
                             return;
                         }
@@ -40,7 +40,7 @@ namespace AmbiPro
                         if (CheckHotkeyPressed(keysPressed, shortcutTrigger.Trigger))
                         {
                             Debug.WriteLine("Button Global - ModeSolidColor");
-                            SettingSave(vConfiguration, "LedMode", "1");
+                            vSettings.Set("LedMode", "1");
                             await LedSwitch(LedSwitches.Restart);
                             return;
                         }

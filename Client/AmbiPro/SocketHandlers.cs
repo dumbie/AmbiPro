@@ -73,16 +73,16 @@ namespace AmbiPro
                 }
                 else if (messageType.Contains("LedBrightness"))
                 {
-                    SettingSave(vConfiguration, "LedBrightness", messageValue);
+                    vSettings.Set("LedBrightness", messageValue);
                 }
                 else if (messageType.Contains("LedMode"))
                 {
-                    SettingSave(vConfiguration, "LedMode", messageValue);
+                    vSettings.Set("LedMode", messageValue);
                     await LedSwitch(LedSwitches.Restart);
                 }
                 else if (messageType.Contains("SolidLedColor"))
                 {
-                    SettingSave(vConfiguration, "SolidLedColor", messageValue);
+                    vSettings.Set("SolidLedColor", messageValue);
                     if (AppEvents.EventUpdateSettingsSolidLedColor != null)
                     {
                         AppEvents.EventUpdateSettingsSolidLedColor();

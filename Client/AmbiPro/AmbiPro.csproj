@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+		<TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
 		<NoWarn>CA1416</NoWarn>
 		<OutputType>WinExe</OutputType>
 		<ApplicationIcon>Assets\ApplicationIcon.ico</ApplicationIcon>
@@ -129,7 +129,7 @@
 		<ProjectReference Include="..\..\..\ScreenCapy\ScreenCaptureImport\ScreenCaptureImport.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="System.IO.Ports" Version="9.0.9" />
+		<PackageReference Include="System.IO.Ports" Version="10.0.3" />
 	</ItemGroup>
 	<Target Name="DonePublish" AfterTargets="Publish">
 		<Exec Command="$(SolutionDir)SignToolExe.exe" />
@@ -137,7 +137,7 @@
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<Exec Command="xcopy /y /e $(TargetDir)..\ScreenCaptureDll $(TargetDir)&#xD;&#xA;" />
 		<Exec Command="if $(Configuration) == Release (&#xD;&#xA;$(SolutionDir)SignToolExe.exe)&#xD;&#xA;)" />
-		<Exec Command="if $(Configuration) == Release (&#xD;&#xA;mkdir $(TargetDir)\Resources&#xD;&#xA;move /y $(TargetDir)\*.dll $(TargetDir)\Resources\&#xD;&#xA;move /y $(TargetDir)\runtimes\win\lib\net8.0\*.dll $(TargetDir)\Resources\&#xD;&#xA;move /y $(TargetDir)\runtimes\win-x64\native\*.dll $(TargetDir)\Resources\&#xD;&#xA;move /y $(TargetDir)\Resources\$(AssemblyName).dll $(TargetDir)&#xD;&#xA;move /y $(TargetDir)\Resources\ArnoldVinkCode.dll $(TargetDir)&#xD;&#xA;move /y $(TargetDir)\Resources\ArnoldVinkStyles.dll $(TargetDir)&#xD;&#xA;)" />
+		<Exec Command="if $(Configuration) == Release (&#xD;&#xA;mkdir $(TargetDir)\Resources&#xD;&#xA;move /y $(TargetDir)\*.dll $(TargetDir)\Resources\&#xD;&#xA;move /y $(TargetDir)\runtimes\win\lib\net10.0\*.dll $(TargetDir)\Resources\&#xD;&#xA;move /y $(TargetDir)\runtimes\win-x64\native\*.dll $(TargetDir)\Resources\&#xD;&#xA;move /y $(TargetDir)\Resources\$(AssemblyName).dll $(TargetDir)&#xD;&#xA;move /y $(TargetDir)\Resources\ArnoldVinkCode.dll $(TargetDir)&#xD;&#xA;move /y $(TargetDir)\Resources\ArnoldVinkStyles.dll $(TargetDir)&#xD;&#xA;)" />
 		<Exec Command="if $(Configuration) == Release (&#xD;&#xA;rd /s /q $(TargetDir)\amd64&#xD;&#xA;rd /s /q $(TargetDir)\arm64&#xD;&#xA;rd /s /q $(TargetDir)\de&#xD;&#xA;rd /s /q $(TargetDir)\es&#xD;&#xA;rd /s /q $(TargetDir)\fr&#xD;&#xA;rd /s /q $(TargetDir)\it&#xD;&#xA;rd /s /q $(TargetDir)\ja&#xD;&#xA;rd /s /q $(TargetDir)\sv&#xD;&#xA;rd /s /q $(TargetDir)\tr&#xD;&#xA;rd /s /q $(TargetDir)\pl&#xD;&#xA;rd /s /q $(TargetDir)\ru&#xD;&#xA;rd /s /q $(TargetDir)\runtimes&#xD;&#xA;rd /s /q $(TargetDir)\x86&#xD;&#xA;rd /s /q $(TargetDir)\zh-CN&#xD;&#xA;rd /s /q $(TargetDir)\zh-Hant&#xD;&#xA;)" />
 		<Exec Command="if $(Configuration) == Release (&#xD;&#xA;del /q $(TargetDir)\*.pdb&#xD;&#xA;del /q $(TargetDir)\*.xml&#xD;&#xA;del /q $(TargetDir)\*.deps.json&#xD;&#xA;)" />
 	</Target>

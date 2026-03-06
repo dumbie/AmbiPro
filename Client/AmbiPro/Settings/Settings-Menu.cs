@@ -117,7 +117,7 @@ namespace AmbiPro.Settings
                         vDebugCaptureAllowed = true;
 
                         //Show debug led preview
-                        if (SettingLoad(vConfiguration, "DebugLedPreview", typeof(bool)))
+                        if (vSettings.Load("DebugLedPreview", typeof(bool)))
                         {
                             grid_LedPreview.Visibility = Visibility.Visible;
                         }

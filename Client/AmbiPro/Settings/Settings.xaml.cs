@@ -137,7 +137,7 @@ namespace AmbiPro.Settings
                 Debug.WriteLine("Updating solid led color in interface.");
                 AVDispatcherInvoke.DispatcherInvoke(delegate
                 {
-                    string solidLedColor = SettingLoad(vConfiguration, "SolidLedColor", typeof(string));
+                    string solidLedColor = vSettings.Load("SolidLedColor", typeof(string));
                     button_ColorPickerSolid.Background = new BrushConverter().ConvertFrom(solidLedColor) as SolidColorBrush;
                 });
             }

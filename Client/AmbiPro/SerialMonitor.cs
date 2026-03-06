@@ -331,6 +331,12 @@ namespace AmbiPro
         {
             try
             {
+                //Check capture message
+                if (captureMessage == "Currently initializing")
+                {
+                    return;
+                }
+
                 await AVDispatcherInvoke.DispatcherInvoke(async delegate
                 {
                     List<string> MsgBoxAnswers = new List<string>();
@@ -415,13 +421,14 @@ namespace AmbiPro
                 ResetVariables();
 
                 //Set first launch setting to false
-                SettingSave(vConfiguration, "FirstLaunch2", "False");
+                vSettings.Set("FirstLaunch2", "False");
 
                 //Check led display mode
                 if (setLedMode == 0) { await ModeScreenCapture(); }
                 else if (setLedMode == 1) { await ModeSolidColor(); }
                 else if (setLedMode == 2) { await ModeColorLoop(); }
                 else if (setLedMode == 3) { await ModeColorSpectrum(); }
+                else if (setLedMode == 4) { await ModeColorCandle(); }
             }
             catch (Exception ex)
             {

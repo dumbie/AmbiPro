@@ -22,9 +22,9 @@ namespace AmbiPro
             try
             {
                 //Load capture settings
-                int captureMonitor = SettingLoad(vConfiguration, "MonitorCapture", typeof(int));
-                float captureHDRPaperWhite = SettingLoad(vConfiguration, "CaptureHDRPaperWhite", typeof(float));
-                float captureHDRMaximumNits = SettingLoad(vConfiguration, "CaptureHDRMaximumNits", typeof(float));
+                int captureMonitor = vSettings.Load("MonitorCapture", typeof(int));
+                float captureHDRPaperWhite = vSettings.Load("CaptureHDRPaperWhite", typeof(float));
+                float captureHDRMaximumNits = vSettings.Load("CaptureHDRMaximumNits", typeof(float));
 
                 //Calculate maximum pixel dimension
                 int maximumPixelDimension = AVFunctions.MathMaxMulti(setLedCountFirst, setLedCountSecond, setLedCountThird, setLedCountFourth) * 2;

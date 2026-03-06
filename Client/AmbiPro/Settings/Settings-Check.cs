@@ -15,263 +15,263 @@ namespace AmbiPro.Settings
                 Debug.WriteLine("Checking application settings...");
 
                 //Check - First launch
-                if (!SettingCheck(vConfiguration, "FirstLaunch2"))
+                if (!vSettings.Check("FirstLaunch2"))
                 {
-                    SettingSave(vConfiguration, "FirstLaunch2", "True");
+                    vSettings.Set("FirstLaunch2", "True");
                 }
 
                 //Check - Com Port
-                if (!SettingCheck(vConfiguration, "ComPort"))
+                if (!vSettings.Check("ComPort"))
                 {
-                    SettingSave(vConfiguration, "ComPort", "1");
+                    vSettings.Set("ComPort", "1");
                 }
 
                 //Check - Baud Rate
-                if (!SettingCheck(vConfiguration, "BaudRate"))
+                if (!vSettings.Check("BaudRate"))
                 {
-                    SettingSave(vConfiguration, "BaudRate", "115200");
+                    vSettings.Set("BaudRate", "115200");
                 }
 
                 //Check - Enable or Disable Led Automatic
-                if (!SettingCheck(vConfiguration, "LedAutoOnOffBefore"))
+                if (!vSettings.Check("LedAutoOnOffBefore"))
                 {
-                    SettingSave(vConfiguration, "LedAutoOnOffBefore", "False");
+                    vSettings.Set("LedAutoOnOffBefore", "False");
                 }
-                if (!SettingCheck(vConfiguration, "LedAutoTimeBefore"))
+                if (!vSettings.Check("LedAutoTimeBefore"))
                 {
-                    SettingSave(vConfiguration, "LedAutoTimeBefore", "01/01/1970 9:00:00");
+                    vSettings.Set("LedAutoTimeBefore", "01/01/1970 9:00:00");
                 }
-                if (!SettingCheck(vConfiguration, "LedAutoOnOffAfter"))
+                if (!vSettings.Check("LedAutoOnOffAfter"))
                 {
-                    SettingSave(vConfiguration, "LedAutoOnOffAfter", "False");
+                    vSettings.Set("LedAutoOnOffAfter", "False");
                 }
-                if (!SettingCheck(vConfiguration, "LedAutoTimeAfter"))
+                if (!vSettings.Check("LedAutoTimeAfter"))
                 {
-                    SettingSave(vConfiguration, "LedAutoTimeAfter", "01/01/1970 17:00:00");
+                    vSettings.Set("LedAutoTimeAfter", "01/01/1970 17:00:00");
                 }
 
                 //Check - Server Port
-                if (!SettingCheck(vConfiguration, "ServerPort"))
+                if (!vSettings.Check("ServerPort"))
                 {
-                    SettingSave(vConfiguration, "ServerPort", "1020");
+                    vSettings.Set("ServerPort", "1020");
                 }
 
                 //Check - Monitor Capture
-                if (!SettingCheck(vConfiguration, "MonitorCapture"))
+                if (!vSettings.Check("MonitorCapture"))
                 {
-                    SettingSave(vConfiguration, "MonitorCapture", "0");
+                    vSettings.Set("MonitorCapture", "0");
                 }
 
                 //Check - Led Mode
-                if (!SettingCheck(vConfiguration, "LedMode"))
+                if (!vSettings.Check("LedMode"))
                 {
-                    SettingSave(vConfiguration, "LedMode", "0");
+                    vSettings.Set("LedMode", "0");
                 }
 
                 //Check - Adjust to Blackbars
-                if (!SettingCheck(vConfiguration, "AdjustBlackBars"))
+                if (!vSettings.Check("AdjustBlackBars"))
                 {
-                    SettingSave(vConfiguration, "AdjustBlackBars", "True");
+                    vSettings.Set("AdjustBlackBars", "True");
                 }
 
                 //Check - Blackbar Update Rate
-                if (!SettingCheck(vConfiguration, "AdjustBlackbarRate2"))
+                if (!vSettings.Check("AdjustBlackbarRate2"))
                 {
-                    SettingSave(vConfiguration, "AdjustBlackbarRate2", "60");
+                    vSettings.Set("AdjustBlackbarRate2", "60");
                 }
 
                 //Check - Blackbar Update Range
-                if (!SettingCheck(vConfiguration, "AdjustBlackbarRange"))
+                if (!vSettings.Check("AdjustBlackbarRange"))
                 {
-                    SettingSave(vConfiguration, "AdjustBlackbarRange", "20");
+                    vSettings.Set("AdjustBlackbarRange", "20");
                 }
 
                 //Check - Blackbar Brightness
-                if (!SettingCheck(vConfiguration, "AdjustBlackBarBrightness"))
+                if (!vSettings.Check("AdjustBlackBarBrightness"))
                 {
-                    SettingSave(vConfiguration, "AdjustBlackBarBrightness", "1");
+                    vSettings.Set("AdjustBlackBarBrightness", "1");
                 }
 
                 //Check - Led Bottom Gap
-                if (!SettingCheck(vConfiguration, "LedBottomGap"))
+                if (!vSettings.Check("LedBottomGap"))
                 {
-                    SettingSave(vConfiguration, "LedBottomGap", "0");
+                    vSettings.Set("LedBottomGap", "0");
                 }
 
                 //Check - Led Contrast Level
-                if (!SettingCheck(vConfiguration, "LedContrast"))
+                if (!vSettings.Check("LedContrast"))
                 {
-                    SettingSave(vConfiguration, "LedContrast", "0");
+                    vSettings.Set("LedContrast", "0");
                 }
 
                 //Check - Led Brightness Level
-                if (!SettingCheck(vConfiguration, "LedBrightness"))
+                if (!vSettings.Check("LedBrightness"))
                 {
-                    SettingSave(vConfiguration, "LedBrightness", "80");
+                    vSettings.Set("LedBrightness", "80");
                 }
 
                 //Check - Led Gamma
-                if (!SettingCheck(vConfiguration, "LedGamma4"))
+                if (!vSettings.Check("LedGamma4"))
                 {
-                    SettingSave(vConfiguration, "LedGamma4", "0.65");
+                    vSettings.Set("LedGamma4", "0.65");
                 }
 
                 //Check - Led Saturation
-                if (!SettingCheck(vConfiguration, "LedSaturation"))
+                if (!vSettings.Check("LedSaturation"))
                 {
-                    SettingSave(vConfiguration, "LedSaturation", "100");
+                    vSettings.Set("LedSaturation", "100");
                 }
 
                 //Check - Color Loop Speed
-                if (!SettingCheck(vConfiguration, "ColorLoopSpeed"))
+                if (!vSettings.Check("ColorLoopSpeed"))
                 {
-                    SettingSave(vConfiguration, "ColorLoopSpeed", "75");
+                    vSettings.Set("ColorLoopSpeed", "75");
                 }
 
                 //Check - Spectrum Rotation Speed
-                if (!SettingCheck(vConfiguration, "SpectrumRotationSpeed"))
+                if (!vSettings.Check("SpectrumRotationSpeed"))
                 {
-                    SettingSave(vConfiguration, "SpectrumRotationSpeed", "20");
+                    vSettings.Set("SpectrumRotationSpeed", "20");
                 }
 
                 //Check - Solid Led Color
-                if (!SettingCheck(vConfiguration, "SolidLedColor"))
+                if (!vSettings.Check("SolidLedColor"))
                 {
-                    SettingSave(vConfiguration, "SolidLedColor", "#FFA500");
+                    vSettings.Set("SolidLedColor", "#FFA500");
                 }
 
                 //Check - Led Energy Saving Mode
-                if (!SettingCheck(vConfiguration, "LedEnergyMode"))
+                if (!vSettings.Check("LedEnergyMode"))
                 {
-                    SettingSave(vConfiguration, "LedEnergyMode", "False");
+                    vSettings.Set("LedEnergyMode", "False");
                 }
 
                 //Check - Led Off Monitor Sleep
-                if (!SettingCheck(vConfiguration, "LedOffMonitorSleep"))
+                if (!vSettings.Check("LedOffMonitorSleep"))
                 {
-                    SettingSave(vConfiguration, "LedOffMonitorSleep", "True");
+                    vSettings.Set("LedOffMonitorSleep", "True");
                 }
 
                 //Check - Led Minimum Brightness
-                if (!SettingCheck(vConfiguration, "LedMinBrightness"))
+                if (!vSettings.Check("LedMinBrightness"))
                 {
-                    SettingSave(vConfiguration, "LedMinBrightness", "0");
+                    vSettings.Set("LedMinBrightness", "0");
                 }
 
                 //Check - Led Minimum Color
-                if (!SettingCheck(vConfiguration, "LedMinColor2"))
+                if (!vSettings.Check("LedMinColor2"))
                 {
-                    SettingSave(vConfiguration, "LedMinColor2", "0");
+                    vSettings.Set("LedMinColor2", "0");
                 }
 
                 //Check - Led Color Red
-                if (!SettingCheck(vConfiguration, "LedColorRed"))
+                if (!vSettings.Check("LedColorRed"))
                 {
-                    SettingSave(vConfiguration, "LedColorRed", "100");
+                    vSettings.Set("LedColorRed", "100");
                 }
 
                 //Check - Led Color Green
-                if (!SettingCheck(vConfiguration, "LedColorGreen"))
+                if (!vSettings.Check("LedColorGreen"))
                 {
-                    SettingSave(vConfiguration, "LedColorGreen", "100");
+                    vSettings.Set("LedColorGreen", "100");
                 }
 
                 //Check - Led Color Blue
-                if (!SettingCheck(vConfiguration, "LedColorBlue"))
+                if (!vSettings.Check("LedColorBlue"))
                 {
-                    SettingSave(vConfiguration, "LedColorBlue", "100");
+                    vSettings.Set("LedColorBlue", "100");
                 }
 
                 //Check - Led Capture Range
-                if (!SettingCheck(vConfiguration, "LedCaptureRange"))
+                if (!vSettings.Check("LedCaptureRange"))
                 {
-                    SettingSave(vConfiguration, "LedCaptureRange", "20");
+                    vSettings.Set("LedCaptureRange", "20");
                 }
 
                 //Check - Led Side Types
-                if (!SettingCheck(vConfiguration, "LedSideFirst"))
+                if (!vSettings.Check("LedSideFirst"))
                 {
-                    SettingSave(vConfiguration, "LedSideFirst", "0");
+                    vSettings.Set("LedSideFirst", "0");
                 }
-                if (!SettingCheck(vConfiguration, "LedSideSecond"))
+                if (!vSettings.Check("LedSideSecond"))
                 {
-                    SettingSave(vConfiguration, "LedSideSecond", "0");
+                    vSettings.Set("LedSideSecond", "0");
                 }
-                if (!SettingCheck(vConfiguration, "LedSideThird"))
+                if (!vSettings.Check("LedSideThird"))
                 {
-                    SettingSave(vConfiguration, "LedSideThird", "0");
+                    vSettings.Set("LedSideThird", "0");
                 }
-                if (!SettingCheck(vConfiguration, "LedSideFourth"))
+                if (!vSettings.Check("LedSideFourth"))
                 {
-                    SettingSave(vConfiguration, "LedSideFourth", "0");
+                    vSettings.Set("LedSideFourth", "0");
                 }
 
                 //Check - Led Count
-                if (!SettingCheck(vConfiguration, "LedCountFirst"))
+                if (!vSettings.Check("LedCountFirst"))
                 {
-                    SettingSave(vConfiguration, "LedCountFirst", "0");
+                    vSettings.Set("LedCountFirst", "0");
                 }
-                if (!SettingCheck(vConfiguration, "LedCountSecond"))
+                if (!vSettings.Check("LedCountSecond"))
                 {
-                    SettingSave(vConfiguration, "LedCountSecond", "0");
+                    vSettings.Set("LedCountSecond", "0");
                 }
-                if (!SettingCheck(vConfiguration, "LedCountThird"))
+                if (!vSettings.Check("LedCountThird"))
                 {
-                    SettingSave(vConfiguration, "LedCountThird", "0");
+                    vSettings.Set("LedCountThird", "0");
                 }
-                if (!SettingCheck(vConfiguration, "LedCountFourth"))
+                if (!vSettings.Check("LedCountFourth"))
                 {
-                    SettingSave(vConfiguration, "LedCountFourth", "0");
+                    vSettings.Set("LedCountFourth", "0");
                 }
 
                 //Check - Led Output
-                if (!SettingCheck(vConfiguration, "LedOutput"))
+                if (!vSettings.Check("LedOutput"))
                 {
-                    SettingSave(vConfiguration, "LedOutput", "0");
+                    vSettings.Set("LedOutput", "0");
                 }
 
                 //Check - Update Rate
-                if (!SettingCheck(vConfiguration, "UpdateRate"))
+                if (!vSettings.Check("UpdateRate"))
                 {
-                    SettingSave(vConfiguration, "UpdateRate", "20");
+                    vSettings.Set("UpdateRate", "20");
                 }
 
                 //Check - Led Smooth Frame
-                if (!SettingCheck(vConfiguration, "LedSmoothFrame"))
+                if (!vSettings.Check("LedSmoothFrame"))
                 {
-                    SettingSave(vConfiguration, "LedSmoothFrame", "4");
+                    vSettings.Set("LedSmoothFrame", "4");
                 }
 
                 //Check - Led Smooth Object
-                if (!SettingCheck(vConfiguration, "LedSmoothObject"))
+                if (!vSettings.Check("LedSmoothObject"))
                 {
-                    SettingSave(vConfiguration, "LedSmoothObject", "2");
+                    vSettings.Set("LedSmoothObject", "2");
                 }
 
                 //Check - Capture HDR Paper White
-                if (!SettingCheck(vConfiguration, "CaptureHDRPaperWhite"))
+                if (!vSettings.Check("CaptureHDRPaperWhite"))
                 {
-                    SettingSave(vConfiguration, "CaptureHDRPaperWhite", "80");
+                    vSettings.Set("CaptureHDRPaperWhite", "80");
                 }
 
                 //Check - Capture HDR Maximum Nits
-                if (!SettingCheck(vConfiguration, "CaptureHDRMaximumNits"))
+                if (!vSettings.Check("CaptureHDRMaximumNits"))
                 {
-                    SettingSave(vConfiguration, "CaptureHDRMaximumNits", "1000");
+                    vSettings.Set("CaptureHDRMaximumNits", "1000");
                 }
 
                 //Check - Debug Mode
-                if (!SettingCheck(vConfiguration, "DebugLedPreview"))
+                if (!vSettings.Check("DebugLedPreview"))
                 {
-                    SettingSave(vConfiguration, "DebugLedPreview", "False");
+                    vSettings.Set("DebugLedPreview", "False");
                 }
-                if (!SettingCheck(vConfiguration, "DebugColorLeftRight"))
+                if (!vSettings.Check("DebugColorLeftRight"))
                 {
-                    SettingSave(vConfiguration, "DebugColorLeftRight", "False");
+                    vSettings.Set("DebugColorLeftRight", "False");
                 }
-                if (!SettingCheck(vConfiguration, "DebugColorTopBottom"))
+                if (!vSettings.Check("DebugColorTopBottom"))
                 {
-                    SettingSave(vConfiguration, "DebugColorTopBottom", "False");
+                    vSettings.Set("DebugColorTopBottom", "False");
                 }
             }
             catch (Exception ex)
